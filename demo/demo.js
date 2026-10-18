@@ -183,6 +183,11 @@ function renderChart(mode) {
   document.querySelector("#legend").replaceChildren(...legendItems);
 }
 
+function wireValue(mode, shown) {
+  const sent = shown / mode.wire.scale;
+  return mode.wire.integer ? Math.round(sent) : sent;
+}
+
 function renderFrame(mode) {
   // Encode the current sample exactly as the firmware lays out a notification.
   const index = Math.max(0, state.visiblePoints - 1);
@@ -195,8 +200,8 @@ function renderFrame(mode) {
       channel: `CH${slot + 2}`,
       meaning: mode.series.at(slot),
       unit: wireUnit(mode, slot),
-      value: fixtures.get(mode.id).series.at(slot).at(index) / scale,
-      precision: precisionFor(mode) + (scale === 1 ? 0 : 1),
+      value: wireValue(mode, fixtures.get(mode.id).series.at(slot).at(index)),
+      precision: mode.wire.integer ? 0 : precisionFor(mode) + (scale === 1 ? 0 : 1),
       color: penColor(mode, slot),
     } : { channel: `CH${slot + 2}`, meaning: "not available", value: Number.NaN });
   }

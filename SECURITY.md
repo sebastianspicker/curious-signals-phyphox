@@ -2,12 +2,15 @@
 
 ## Supported versions
 
-Nothing has been released publicly yet, so there is no supported release line.
+Releases are GitHub releases built from `v*` tags (none has been published
+yet). Fixes land on the default branch and ship in the next release; older
+releases are not patched.
 
 | Ref | Security fixes |
 | --- | --- |
 | Default development branch | Accepted |
-| Tags and release archives | Not supported |
+| Latest GitHub release | Accepted, fixed in a new release |
+| Older tags and release archives | Not supported |
 
 ## Reporting a vulnerability
 

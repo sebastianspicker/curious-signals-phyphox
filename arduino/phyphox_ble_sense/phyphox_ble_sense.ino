@@ -42,6 +42,14 @@ constexpr int kConfigWireSizeBytes = 4;
 // byte so an oversized write cannot masquerade as a valid four-byte mode.
 constexpr int kConfigStorageSizeBytes = kConfigWireSizeBytes + 1;
 
+// Diagnostics go to USB serial at this rate. Nothing waits for a serial
+// monitor, so the board starts the same way on a USB charger.
+constexpr unsigned long kSerialBaud = 115200;
+// BLE init failure pattern on the built-in LED: three short blinks, a pause.
+constexpr int kFailureBlinkCount = 3;
+constexpr unsigned long kFailureBlinkMs = 150;
+constexpr unsigned long kFailurePauseMs = 1000;
+
 BLEService phyphoxService(kPhyphoxServiceUuid);
 BLECharacteristic dataCharacteristic(kDataCharUuid, BLENotify, kPayloadSizeBytes);
 BLECharacteristic configCharacteristic(kConfigCharUuid, BLERead | BLEWrite, kConfigStorageSizeBytes);
@@ -224,20 +232,49 @@ void sendSample() {
   dataCharacteristic.writeValue(payload, sizeof(payload));
 }
 
+const char* okOrFailed(bool ok) {
+  return ok ? "ok" : "FAILED";
+}
+
+void printSensorStatus() {
+  Serial.print("phyphox-sense: sensors imu=");
+  Serial.print(okOrFailed(imuOk));
+  Serial.print(" hts221=");
+  Serial.print(okOrFailed(htsOk));
+  Serial.print(" lps22hb=");
+  Serial.print(okOrFailed(baroOk));
+  Serial.print(" apds9960=");
+  Serial.println(okOrFailed(apdsOk));
+}
+
+void blinkBleFailurePattern() {
+  for (int i = 0; i < kFailureBlinkCount; ++i) {
+    digitalWrite(LED_BUILTIN, HIGH);
+    delay(kFailureBlinkMs);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(kFailureBlinkMs);
+  }
+  delay(kFailurePauseMs);
+}
+
 }  // namespace
 
 void setup() {
   startMs = millis();
+  Serial.begin(kSerialBaud);
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, LOW);
 
   imuOk = IMU.begin();
   htsOk = HTS.begin();
   baroOk = BARO.begin();
   apdsOk = APDS.begin();
+  printSensorStatus();
 
-  if (!BLE.begin()) {
-    while (true) {
-      delay(1000);
-    }
+  // Retry instead of halting, and make the failure visible without a laptop.
+  while (!BLE.begin()) {
+    Serial.println("phyphox-sense: BLE.begin() failed, retrying; LED blinks 3x while this lasts");
+    blinkBleFailurePattern();
   }
 
   BLE.setDeviceName("phyphox-sense");
@@ -250,6 +287,7 @@ void setup() {
   writeActiveModeToConfigCharacteristic();
 
   BLE.advertise();
+  Serial.println("phyphox-sense: advertising");
 }
 
 void pollConfigCharacteristic() {
@@ -274,6 +312,9 @@ void loop() {
   if (!central) {
     return;
   }
+  // Repeated here because boot output is lost unless a serial monitor was open.
+  Serial.println("phyphox-sense: central connected");
+  printSensorStatus();
 
   while (central.connected()) {
     BLE.poll();

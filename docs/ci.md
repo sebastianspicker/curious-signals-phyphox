@@ -6,7 +6,8 @@ same ref, so a branch that is pushed twice only tests once.
 
 ## XML and Python
 
-The first job installs Python 3.11, the `test` extra, `xmllint`, ShellCheck, and `ripgrep`, then runs:
+The first job installs Python 3.11, the `dev` extra (Ruff), `xmllint`, ShellCheck,
+and `ripgrep`, then runs:
 
 ```sh
 make lint
@@ -43,6 +44,11 @@ searches tracked and untracked files for a narrow set of credential patterns in
 bounded batches. A scanner that cannot run fails the gate; when it does find something, the report carries filenames and line numbers
 but never the matched credential contents.
 
+`.github/dependabot.yml` opens monthly, grouped version-update pull requests for
+the pinned GitHub Actions and the Python dependencies. The Arduino CLI version
+and checksum in `ci.yml` and the core and library pins in
+`arduino/toolchain.json` are outside Dependabot's reach and are bumped by hand.
+
 These are repository guardrails. They do not replace supply-chain review,
 firmware review, hardware or electrical testing, or content-provenance review.
 
@@ -57,6 +63,28 @@ This workflow needs a one-time repository setup: under **Settings → Pages**, s
 `https://<owner>.github.io/curious-signals-phyphox/`. The job uploads the `demo/`
 directory as a Pages artifact, so the published site contains only the preview
 and nothing else from the repository.
+
+## Releases
+
+`.github/workflows/release.yml` runs when a tag matching `v*` is pushed. It
+refuses tags whose commit is not on `main`, reruns `make validate` and
+`make check-generated`, then publishes a GitHub release for that tag with the
+`make bundle` ZIP of the seven core experiments, a ZIP of the astronomy
+collection, and every `.phyphox` file as a separate asset. Only this job gets
+`contents: write`.
+
+To cut a release from a commit that is already on `main`:
+
+```sh
+git tag -a v0.1.0-alpha.1 -m "Curious Signals 0.1.0 alpha 1"
+git push origin v0.1.0-alpha.1
+```
+
+Releases are published as full releases, not pre-releases, because
+`releases/latest/download/<file>` links (which the README offers for phyphox QR
+codes) skip pre-releases. GitHub generates the release notes from the commits
+since the previous tag; edit them on GitHub afterwards if testers need more
+context.
 
 ## Running the same checks locally
 

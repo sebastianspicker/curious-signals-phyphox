@@ -1,7 +1,9 @@
 .PHONY: help lint validate check-generated build provision compile security ci bundle
 .DEFAULT_GOAL := help
 
-PYTHON ?= python3
+# Prefer the virtual environment from the documented setup, so make works
+# without activating it.
+PYTHON ?= $(if $(wildcard .venv/bin/python),.venv/bin/python,python3)
 TOOL = PYTHONPATH=src $(PYTHON) -m curious_signals
 RUFF = $(PYTHON) -m ruff
 
@@ -14,7 +16,7 @@ help:
 	@echo "  provision - Install pinned Arduino core and libraries (network)"
 	@echo "  compile  - Verify installed pins and compile Arduino sketch (no installs/upload)"
 	@echo "  security - Credential scan of tracked and untracked files"
-	@echo "  ci       - Run the full checkout-non-mutating local gate"
+	@echo "  ci       - Run every gate; provisions Arduino packages (network), never rewrites tracked files"
 	@echo "  bundle   - Build and zip the seven core sensor experiments"
 
 lint:

@@ -41,12 +41,34 @@ Each mode has its own chart, units, and readouts:
 | --- | --- | --- |
 | ![Acceleration chart with x, y, z, and magnitude](docs/images/mode-1.png) | ![Light chart with ambient, red, green, and blue](docs/images/mode-6.png) | ![Analog input chart with A0, A1, and A2](docs/images/mode-9.png) |
 
+## Get the experiments
+
+You do not need to clone the repository. Once the first release is tagged, each
+[GitHub release](https://github.com/sebastianspicker/curious-signals-phyphox/releases/latest)
+carries:
+
+- `phyphox-experiments.zip`: the seven Arduino experiments;
+- `astronomy-experiments.zip`: the eight astronomy experiments;
+- every `.phyphox` file on its own.
+
+Open a downloaded `.phyphox` file with phyphox on the phone, or turn a file's
+link into a QR code and scan it from phyphox. Links of the form
+`https://github.com/sebastianspicker/curious-signals-phyphox/releases/latest/download/pressure_plot_v1-2.phyphox`
+always point at the newest release.
+
 ## Flash the firmware
 
-1. Open `arduino/phyphox_ble_sense/phyphox_ble_sense.ino` in the Arduino IDE.
-2. Select the **original** Arduino Nano 33 BLE Sense and upload the sketch.
-3. Copy one `experiments/*.phyphox` file to a phone or tablet.
-4. Open it in phyphox and start the experiment.
+1. In the Arduino IDE **Boards Manager**, install **Arduino Mbed OS Nano
+   Boards** 4.5.0.
+2. In the **Library Manager**, install ArduinoBLE 1.5.0, Arduino_LSM9DS1 1.1.1,
+   Arduino_HTS221 1.0.0, Arduino_LPS22HB 1.0.2, and Arduino_APDS9960 1.0.4.
+   These are the versions pinned in `arduino/toolchain.json` and checked by CI.
+3. Open `arduino/phyphox_ble_sense/phyphox_ble_sense.ino`, choose the board
+   **Arduino Nano 33 BLE** (the same entry covers the original Sense), pick the
+   board's port, and upload the sketch.
+4. Put one of the seven experiment files on a phone or tablet (see
+   [Get the experiments](#get-the-experiments)).
+5. Open it in phyphox and start the experiment.
 
 Prefer the command line?
 
@@ -113,7 +135,7 @@ make build            # rewrite the seven tracked generated files
 make provision        # install pinned Arduino packages (network)
 make compile          # check installed pins and compile, no installs or upload
 make security         # credential-pattern scan
-make ci               # full checkout-non-mutating local gate
+make ci               # every gate above except build; provisions, so needs network
 make bundle           # deterministic core experiment ZIP
 ```
 
@@ -123,7 +145,7 @@ and `ripgrep` for the security scan.
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -e '.[test]'
+python -m pip install -e '.[dev]'
 ```
 
 To build into a temporary directory without touching tracked artifacts:
@@ -149,8 +171,10 @@ keeps them in step with that record.
 Know the limits before you build a lesson around it:
 
 - Every board uses the same name and UUIDs, so you cannot tell two boards apart.
-- If BLE initialization fails the sketch stops. There is no status
-  characteristic, serial diagnostic, or error LED to tell you why.
+- If BLE initialization fails, the orange LED blinks three times, pauses, and
+  repeats while the sketch keeps retrying. A serial monitor at 115200 baud shows
+  which sensors started; see the
+  [firmware notes](arduino/phyphox_ble_sense/README.md#diagnostics).
 - The checks in this repository are software checks. They cannot confirm real
   sensor readings, radio behavior, analog wiring, calibration, whether phyphox
   imports and renders a file, content rights, or classroom safety.
@@ -175,7 +199,20 @@ day-to-day workflows, and [docs/ci.md](docs/ci.md) for what runs in CI.
 
 ## License
 
-See [LICENSE](LICENSE). Component provenance and distribution rights have not
-been fully reconciled yet, so a root license file is not a claim that the
-repository is release-ready. Core phyphox attribution notes live in
+Terms differ by component:
+
+| Component | License | Text |
+| --- | --- | --- |
+| Core experiments: `src/phyphox/` and the generated `experiments/*.phyphox` | LGPL-3.0-or-later (each source and generated file's header says "LGPL-3.0+"; the include fragments follow the files they expand into) | [COPYING.LESSER](COPYING.LESSER) together with [LICENSE](LICENSE) |
+| Preview fonts in `demo/fonts/` | SIL Open Font License 1.1 | `demo/fonts/OFL-*.txt` |
+| Astronomy collection: `experiments/astronomy/` | GPL-3.0, matching phyphox; stated in each file's header | [LICENSE](LICENSE) |
+| Everything else: firmware, tooling, scripts, preview code, and documentation | GPL-3.0 | [LICENSE](LICENSE) |
+
+The LGPL is a set of additional permissions on top of the GPL, which is why the
+core experiments need both texts. Attribution for the core experiments lives in
 [src/phyphox/README.md](src/phyphox/README.md).
+
+The astronomy experiments were written by Sebastian J. Spicker at the Astrolab,
+University of Cologne. The images embedded in `missiontomars.phyphox` and
+`transitmethode.phyphox` are either the author's own work or CC0 public-domain
+dedications.

@@ -78,8 +78,28 @@ sensor did not initialize, or has no fresh sample, its output channels stay
 Device time comes from unsigned `millis()` subtraction, so the transmitted time
 restarts after the roughly 49-day `millis()` wrap.
 
-If `BLE.begin()` fails, the sketch drops into an infinite delay loop with no
-serial message and no LED code to tell you why.
+## Diagnostics
+
+The orange built-in LED stays off in normal operation. If `BLE.begin()` fails,
+the LED blinks three times, pauses for a second, and repeats while the sketch
+retries. A board that does this never advertises; power-cycle it, and reflash
+the sketch if the pattern comes back.
+
+The sketch also writes short status lines to USB serial at 115200 baud. Open the
+Arduino IDE Serial Monitor (or `arduino-cli monitor -p <serial-port> -c
+baudrate=115200`) to read them:
+
+```text
+phyphox-sense: sensors imu=ok hts221=ok lps22hb=ok apds9960=ok
+phyphox-sense: advertising
+phyphox-sense: central connected
+phyphox-sense: sensors imu=ok hts221=ok lps22hb=ok apds9960=ok
+```
+
+A sensor marked `FAILED` sends `NaN` in its mode. Lines are dropped while no
+serial monitor is open, so the board behaves the same on a USB charger. Boot
+lines appear only if the monitor was already open; the sensor status repeats
+each time a phone connects. Include these lines in a bug report.
 
 ## Compile and upload
 

@@ -367,6 +367,21 @@ button { font: inherit; color: inherit; }
   text-wrap: pretty;
 }
 
+/* Revealed after a delay so it never flashes before demo.js replaces it. */
+.preview-fallback {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: var(--s-2) var(--s-3);
+  border: 2px solid var(--ruling);
+  color: var(--ruling);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  visibility: hidden;
+  animation: reveal-fallback 0s 1s forwards;
+}
+
+@keyframes reveal-fallback { to { visibility: visible; } }
+
 /* One clear statement that nothing here is live. */
 .simulation-status {
   grid-column: 2;

@@ -21,7 +21,7 @@ flowchart LR
     App["phyphox mobile app"]
     Preview["Static deterministic preview<br/>demo/"]
     Browser["Web browser"]
-    Tests["Contract and behavior tests"]
+    Tests["Contract and behavior tests<br/>maintained outside this repository"]
 
     Contract -. conformance rules .-> Firmware
     Contract -. source and artifact rules .-> CoreSource
@@ -195,8 +195,9 @@ a disposable `Checkout` copy instead of patching module internals.
 
 - Change shared wire or mode facts in `protocol/contract.json`, update every
   affected concrete implementation (firmware, XML sources and includes, preview
-  fixtures, docs tables), and describe the compatibility impact. The firmware,
-  experiment, and preview tests fail until those implementations agree.
+  fixtures, docs tables), and describe the compatibility impact. `make validate`
+  checks the XML against the contract; the firmware and preview are kept in step
+  by hand here and by the maintainer's separate behaviour tests.
 - Edit core experiments under `src/phyphox/` and rebuild their matching root
   artifacts. Generated root experiments never become source inputs.
 - Edit astronomy files directly and retain English root content plus the German

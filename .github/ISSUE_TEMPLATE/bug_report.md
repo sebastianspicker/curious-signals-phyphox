@@ -30,6 +30,7 @@ a fix and a guess, so fill in as much as you can and skip what does not apply.
 - Arduino core version:
 - Arduino library versions:
 - external circuits or sensors:
+- serial monitor lines (115200 baud) and the orange LED pattern, if any:
 
 ## Affected area
 

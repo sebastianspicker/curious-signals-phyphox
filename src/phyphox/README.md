@@ -37,8 +37,9 @@ result byte for byte, which is what CI uses to catch drift.
 
 ## License status
 
-Source and generated file comments say `LGPL-3.0-or-later`, while the root
-`LICENSE` contains the GNU GPL version 3 text. Nothing in the repository yet
-documents how those two statements relate. Astronomy content authorship and
-embedded asset provenance also still need confirmation, so public distribution
-stays blocked until maintainers document the terms component by component.
+The seven sources and the generated files say "LGPL-3.0+" (that is,
+`LGPL-3.0-or-later`) in their header comments. The shared fragments in `includes/` exist only to be expanded
+into those files and are under the same terms. The LGPL text is in
+[`COPYING.LESSER`](../../COPYING.LESSER), and the GPL text it builds on is the
+root [`LICENSE`](../../LICENSE). The root README has the table of terms for each
+component.

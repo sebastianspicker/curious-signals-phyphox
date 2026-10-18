@@ -1,0 +1,20 @@
+# Version-update PRs for the SHA-pinned actions and the Python tooling.
+# arduino-cli, the board core and the sensor libraries (ci.yml and
+# arduino/toolchain.json) are not ecosystems Dependabot knows; bump them by hand.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      actions:
+        patterns: ["*"]
+
+  - package-ecosystem: pip
+    directory: /
+    schedule:
+      interval: monthly
+    groups:
+      python:
+        patterns: ["*"]

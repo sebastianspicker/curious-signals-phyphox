@@ -13,11 +13,13 @@ preview, and the tooling are kept apart, and which of them may depend on which.
 ```sh
 python3 -m venv .venv
 source .venv/bin/activate
-python -m pip install -e '.[test]'
+python -m pip install -e '.[dev]'
 ```
 
-Run the narrower checks while you work and the full gate before you open a pull
-request:
+There is no automated behavioural test suite in this repository; the maintainer
+runs one separately. The `make` targets below are the public gate; `make ci`
+runs them plus the firmware provision and compile steps. Run the narrower checks
+while you work and the full gate before you open a pull request:
 
 ```sh
 make lint

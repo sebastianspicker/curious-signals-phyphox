@@ -79,6 +79,16 @@ def main(argv: list[str] | None = None) -> int:
     except ToolError as error:
         print(error, file=sys.stderr)
         return 2
+    except ModuleNotFoundError as error:
+        if (error.name or "").partition(".")[0] != "defusedxml":
+            raise
+        print(
+            f"defusedxml is not installed for {sys.executable}. Create the virtual "
+            "environment described in CONTRIBUTING.md, or run make with "
+            "PYTHON=<interpreter that has the project installed>.",
+            file=sys.stderr,
+        )
+        return 2
 
 
 if __name__ == "__main__":
