@@ -1,0 +1,23 @@
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=3 by 1,horizontal sep=1.25cm},
+width=0.292\textwidth,height=4.6cm,grid=major,enlarge x limits=false,
+legend style={font=\scriptsize,at={(0.5,1.03)},anchor=south,legend columns=2,draw=none,fill=none},
+title style={font=\scriptsize,at={(0.03,0.98)},anchor=north west,fill=white,inner sep=2pt},
+label style={font=\footnotesize},tick label style={font=\scriptsize}]
+\nextgroupplot[ylabel={Temperature ($^\circ$C)},xlabel={Receive time (s)},ymin=20,ymax=49,title={(a) TMP006 temperature}]
+\addplot[csblue,thick] table[col sep=comma,x=c0,y=c8] {data/drafts/cc2541-ir-temperature.csv};
+\addlegendentry{Object model}
+\addplot[csred,dashed,thick] table[col sep=comma,x=c0,y=c4] {data/drafts/cc2541-ir-temperature.csv};
+\addlegendentry{Die}
+\nextgroupplot[ylabel={Voltage ($\mu$V)},xlabel={Receive time (s)},title={(b) Signed voltage}]
+\addplot[csblue,thick] table[col sep=comma,x=c0,y expr={1000000*\thisrow{c3}}] {data/drafts/cc2541-ir-temperature.csv};
+\addplot[csgray,densely dotted,domain=0:60] {0};
+\nextgroupplot[ylabel={Temperature ($^\circ$C)},xlabel={Displacement (counts)},xmin=0,xmax=3250,ymin=21,ymax=40,title={(c) TMP007 branches},xtick={0,1000,2000,3000}]
+\addplot[csblue,thick,mark=*,mark size=0.8pt] table[col sep=comma,x=c0,y=c1] {data/ir-outward.csv};
+\addlegendentry{Outward}
+\addplot[csred,dashed,thick,mark=square*,mark size=0.8pt] table[col sep=comma,x=c0,y=c1] {data/ir-return.csv};
+\addlegendentry{Return}
+\addplot[csgray,densely dashed] table[col sep=comma,x=c1,y=c3] {data/ir-dist_habitable.csv};
+\addlegendentry{Die}
+\end{groupplot}
+\end{tikzpicture}

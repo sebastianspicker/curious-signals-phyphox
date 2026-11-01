@@ -1,0 +1,131 @@
+\begin{abstract}
+Gyroscope calibration and angle integration depend on the sign of each rate component, information that a positive magnitude trace discards. We separate these issues using records for three instruments: the LSM9DS1 in the Arduino Nano 33 BLE Sense, the IMU-3000 in the CC2541 SensorTag and a PocketLab Voyager. In the Nano record, reversal evaluated against $\pm45\unit{degree\,s^{-1}}$ reference values gives sensitivity 0.87189, close to the ratio 0.87193 between the library conversion and the datasheet sensitivity. A settled CC2541 interval averages $-200.10\unit{degree\,s^{-1}}$ and integrates to approximately $-1961^\circ$ after a local residual-offset correction; the estimated uncertainty contribution from that correction is $1.3^\circ$. In the Voyager record, the corrected $x$ integral nearly cancels to $-0.10^\circ$, although the absolute-component integral exceeds $8100^\circ$. A common rate model explains why stationary offsets, independent reference rates and actual timestamps are needed for all three instruments. The reductions support signed fixed-axis angle and accumulated-motion comparisons; final three-dimensional attitude requires an additional orientation model.
+\end{abstract}
+\begin{IEEEkeywords}
+Gyroscope, rate reversal, bias, angular integration, orientation, uncertainty.
+\end{IEEEkeywords}
+
+\section{The signed rate is the primary observable}
+A gyroscope responds to angular velocity about its sensing axes. For an aligned axis, write
+\begin{equation}
+ y=b+s\Omega+\epsilon,
+ \label{eq:gyro-linear}
+\end{equation}
+where $y$ is the indicated rate, $b$ the zero-rate offset, $s$ the sensitivity, $\Omega$ the reference angular rate and $\epsilon$ the noise. Stationary observations constrain $b$ but contain no information about $s$. Opposed nonzero rates identify both when their magnitudes are independently known and the offset remains stable. The sign is essential: taking a norm before calibration replaces opposite rates with similar positive outputs.
+
+A three-axis model extends Eq.~\ref{eq:gyro-linear} to
+\begin{equation}
+ \bm y=\bm b(T)+G\bm\omega_{\rm ref}+\bm\epsilon,
+ \label{eq:gyro-vector}
+\end{equation}
+with a temperature-dependent offset $\bm b(T)$ and a sensitivity matrix $G$. Its off-diagonal elements combine cross-axis response with the mounting convention. Gravity-referenced static orientations and the motions between them can constrain such inertial calibration parameters, as demonstrated by Tedaldi \emph{et al.}~\cite{tedaldi2014}. An explicit rate reversal makes visible which reference quantity determines each coefficient.
+
+The three records apply that common model to different motion histories. The Nano record contains settled yaw reversals; the CC2541 record has rounded extrema followed by a sustained negative-axis interval; the Voyager record contains large reversals with simultaneous activity on other axes. The comparison concerns methods of inference, not the responses of three devices to one imposed motion.
+
+\section{Reference motion and the numerical rate scale}
+Figure~\ref{fig:gyro-apparatus} defines the reference geometry for rate calibration. An encoder observed against an independent timebase supplies rate from unwrapped angle over a settled interval. A motor command alone is not that reference. A rigid mount, alternating rate signs and magnitudes, and interleaved zero-rate controls help separate alignment, sensitivity and thermal drift. Temperature must vary independently of rate sign if a temperature coefficient is to be estimated.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.92cm,y=0.92cm]
+ \draw[thick] (1.7,0) circle (1.15);
+ \draw[fill=csblue!10] (1.15,-0.3) rectangle (2.25,0.3);
+ \node at (1.7,0) {sensor};
+ \draw[->,thick,csblue] (3.05,-0.7) arc[start angle=-30,end angle=70,radius=1.45];
+ \node at (3.35,0.9) {$\Omega$};
+ \node[draw,align=center] (enc) at (5.7,0.6) {angle encoder\\$\theta_{\rm ref}(t)$};
+ \draw[->] (2.8,0.25)--(enc.west);
+ \node[draw,align=center] (clock) at (5.7,-0.9) {independent\\reference clock};
+ \draw[->,dashed] (clock.north)--(enc.south);
+ \node at (1.7,-1.6) {reversible rotary table};
+\end{tikzpicture}
+\caption{Reference arrangement for rate calibration. One sensor axis is aligned with the table. Encoder angle and reference time establish signed rate; repeated mountings test the separation of alignment from sensitivity.}
+\label{fig:gyro-apparatus}
+\end{figure}
+
+The output conversion precedes any physical comparison. Table~\ref{tab:gyro-conversions} expresses the nominal increment per transmitted count in common units. In the Nano, the pinned Arduino\_LSM9DS1 library configures the gyroscope for $\pm2000\unit{degree\,s^{-1}}$ at a 119-Hz output data rate and converts each count $q$ as $q(2000/32768)$ degrees per second~\cite{arduinoimu}. The datasheet instead gives a typical sensitivity of $0.070\unit{degree\,s^{-1}/LSB}$ at that range~\cite{lsm9ds1}. The ratio is
+\begin{equation}
+ s_{\rm nom}=\frac{2000/32768}{0.070}=0.8719308.
+ \label{eq:gyro-scale}
+\end{equation}
+For a device with the typical sensitivity, the library therefore indicates about 13\% less than the applied rate, and a nominal correction multiplies the indication by 1.14688. Because the datasheet value is typical rather than guaranteed, only a reference-rate calibration establishes the sensitivity of an individual device.
+
+\begin{table}[t]
+\caption{Count-to-rate conversion factors and delivered sampling cadence. Each factor specifies the numerical scaling of one transmitted count.}
+\label{tab:gyro-conversions}
+\centering\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Instrument & Step (deg/s) & Cadence (Hz)\\
+\midrule
+Nano LSM9DS1 & $2000/32768$ & $\simeq20$\\
+CC2541 IMU-3000 & $500/65536$ & $\simeq10$\\
+PocketLab Voyager & $2000/32768$ & $\simeq50$\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The CC2541 SensorTag carries an InvenSense IMU-3000~\cite{cc2541quick}. Its legacy conversion uses a 500-degree-per-second total span~\cite{cc2541protocol}; that span must not be replaced by the range of another sensor merely because both transmit signed words. PocketLab specifies a $\pm2000\unit{degree\,s^{-1}}$ range and 50 samples per second for the Voyager gyroscope~\cite{voyagerspec}. The phyphox definition decodes the Voyager words with that range and in $y,x,z$ packet order~\cite{voyagerprotocol}; neither convention automatically applies to PocketLab One. The corresponding CC2541 and Voyager increments are $1.33158\times10^{-4}$ and $1.06526\times10^{-3}\unit{rad\,s^{-1}/count}$. Correct units, sign and body-axis convention are needed before integration; fine code spacing does not establish a small noise floor.
+
+\section{Reversal identifies scale only with a reference}
+\label{sec:gyro-reversal}
+Figure~\ref{fig:gyro-examples} shows signed components alongside their positive norms. Every interval below is left-closed and right-open on that record's own clock, and observed timestamps are used throughout instead of a nominal fixed timestep.
+
+\begin{figure}[t]
+\centering
+\input{topic-figures/gyroscope-comparison.tex}
+\caption{Selected signed rate components and three-axis norms during the Nano, CC2541 and Voyager motion sequences. Component signs distinguish rotation direction; the norms combine motion across axes. The plots precede the additional local offset corrections used for the CC2541 and Voyager integrals.}
+\label{fig:gyro-examples}
+\end{figure}
+
+The Nano record contains positive and negative yaw plateaux, followed by roll and pitch intervals. The reduction uses an initial baseline $[0,7)$~s, positive yaw $[11,17)$~s and negative yaw $[21,27)$~s. The yaw means are $39.35998$ and $-39.11020\unit{degree\,s^{-1}}$. Using $\pm45\unit{degree\,s^{-1}}$ as the reference values, reversal gives
+\begin{equation}
+ \begin{aligned}
+ \widehat b&=\frac{\bar y_++\bar y_-}{2}=0.12489\unit{degree\,s^{-1}},\\
+ \widehat s&=\frac{\bar y_+-\bar y_-}{90}=0.87189.
+ \end{aligned}
+ \label{eq:gyro-reversal}
+\end{equation}
+The sensitivity agrees with Eq.~\ref{eq:gyro-scale} to within $5\times10^{-5}$. This numerical agreement relates the reversal result to the nominal conversion; a device calibration also includes the uncertainty of the independent reference rates. Initial and final $z$ means, the latter over $[52,59)$~s, are 0.1011 and $0.1502\unit{degree\,s^{-1}}$. Their difference shows why an initial offset need not describe the whole trajectory. Positive roll over $[31,37)$~s and negative pitch over $[41,47)$~s average $52.375$ and $-30.557\unit{degree\,s^{-1}}$ on their selected axes. Interpreting these additional amplitudes as sensitivity estimates likewise requires their own reference rates.
+
+The other two records require a different interval interpretation. CC2541 $z$ means over $[9,11)$ and $[19,21)$~s are $123.20$ and $-123.46\unit{degree\,s^{-1}}$. Voyager $x$ means over $[19,21)$ and $[29,31)$~s are $492.16$ and $-493.40\unit{degree\,s^{-1}}$; its $y$ mean over $[49,51)$~s is $-242.03\unit{degree\,s^{-1}}$. These windows surround smooth extrema rather than constant-rate plateaux. Their means depend on the changing waveform and the window choice, so comparing them directly with peak reference values would confound temporal averaging with sensitivity.
+
+By contrast, the CC2541 $[42,48)$~s interval is settled: its $y$ mean is $-200.10\unit{degree\,s^{-1}}$, and its sample SD is $0.01359\unit{rad\,s^{-1}}$, about $0.78\unit{degree\,s^{-1}}$. That SD describes variation within the interval. The settled mean and its scatter enter different parts of the analysis: the mean enters the rate comparison, while the scatter contributes to uncertainty after temporal correlation is considered.
+
+\section{Fixed-axis angle and accumulated angular travel}
+\label{sec:gyro-integral}
+For a fixed aligned axis, use the calibrated signed rate in a timestamp integral. A local residual offset $\widehat b$ gives the trapezoidal estimator
+\begin{equation}
+ \Delta\theta=\sum_i\frac{(y_i-\widehat b)+(y_{i+1}-\widehat b)}{2}
+ (t_{i+1}-t_i).
+ \label{eq:gyro-integral}
+\end{equation}
+The CC2541 correction uses the final $[56,60)$~s $y$ mean, $-0.0015193\unit{rad\,s^{-1}}$ or $-0.087\unit{degree\,s^{-1}}$. Those 40 stationary observations also have residual $x,z$ means $0.049$ and $0.327\unit{degree\,s^{-1}}$. With a sample SD of $0.86\unit{degree\,s^{-1}}$, the $y$ estimate has a standard error of $0.14\unit{degree\,s^{-1}}$ if successive observations are independent. Voyager instead uses its initial $[0,9)$~s $x$ mean, $-0.00978695\unit{rad\,s^{-1}}$ or $-0.561\unit{degree\,s^{-1}}$; its initial $y,z$ means are $1.139$ and $-0.903\unit{degree\,s^{-1}}$. These local stationary means estimate the residual offsets after the acquisition corrections.
+
+\begin{table}[t]
+\caption{Signed-component, absolute-component and three-axis-norm integrals, in degrees. The first two use locally offset-corrected component rates; the norm integral uses the indicated three-axis magnitude. Each integral uses recorded timestamps.}
+\label{tab:gyro-integrals}
+\centering\small
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Instrument & Window (s) & Signed & Absolute & Norm\\
+\midrule
+CC2541, $y$ & 40--50 & $-1960.76$ & 1960.76 & 1961.65\\
+Voyager, $x$ & 10--40 & $-0.100$ & 8125.01 & 8882.49\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The CC2541 integration uses only samples inside $[40,50)$~s, spanning approximately 40.098--49.902~s. The Voyager subset is $[10,40)$~s, spanning approximately 10.020--39.980~s. No boundary sample is invented at the requested endpoints. Converting angular units before integration yields Table~\ref{tab:gyro-integrals}.
+
+For the nearly single-axis CC2541 interval, signed and absolute integrals differ only in sign. A constant rate of $-200\unit{degree\,s^{-1}}$ over the sampled span corresponds to $-1960.87^\circ$. The corrected integral differs from this value by $0.11^\circ$, less than the $1.3^\circ$ uncertainty contribution from the local offset estimate in Section~\ref{sec:gyro-errors}. Without that correction, the integral is $-1961.62^\circ$. For Voyager, opposite $x$ rotations nearly cancel in the signed integral, while the absolute-component integral counts motion in both directions. The larger norm integral also includes simultaneous transverse motion and the residual and noise contributions of those channels. The norm and component columns do not use identical offset corrections, so their difference is not an isolated transverse-angle estimate. A fully calibrated norm integral can describe accumulated angular travel, but it still cannot reveal turn direction or a net fixed-axis angle.
+
+In general three-dimensional motion, the body axes themselves rotate. Successive rotations about different axes do not commute; integrating three components separately is therefore insufficient to reconstruct final attitude. A rotation-matrix or quaternion evolution with a stated body-frame convention is needed. The Voyager's nearly zero corrected $x$ integral does not demonstrate return to the original pose.
+
+\section{Which errors survive integration?}
+\label{sec:gyro-errors}
+A constant residual bias contributes linearly with duration. Its contribution to angle uncertainty is $T\,u(b)$; a residual $0.05\unit{degree\,s^{-1}}$ over 60~s contributes $3^\circ$. For the CC2541 correction, the $0.14\unit{degree\,s^{-1}}$ standard error contributes $1.3^\circ$ over the 9.8-s integration span. Finer sampling within the integration span does not reduce the effect of a common offset on the integral. Likewise, scale and reference-time errors affect the full integral coherently. Gain/offset covariance, reference-rate uncertainty and the uncertainty of correlated plateau means belong in the calibration budget~\cite{gum}.
+
+El-Sheimy \emph{et al.} describe Allan-variance analysis for separating stochastic inertial error contributions across averaging time~\cite{elsheimy2008}. Stationary runs, combinations of rate and temperature excluded from fitting, and repeated mountings provide complementary checks of long-term bias, thermal response and dynamic linearity.
+
+Delivered sampling must also be distinguished from sensor bandwidth. Unresolved motion can alias into any of these records, while gaps change what can be integrated without interpolation assumptions. The useful hierarchy is consequently a signed component with an established rate scale, a finite-interval integral with an explicit bias and time model, and finally a three-dimensional orientation reconstruction. Taking a positive norm at the first stage cannot supply information needed at the later ones. The reported reversals and timestamp integrals show how sign, offset and timing determine the resulting rate and angle estimates.

@@ -1,0 +1,97 @@
+\begin{abstract}
+A breakaway angle identifies a static-friction estimate only when the inclination belongs to the contact state preceding motion. We combine gravity-sensitive acceleration with a separately timed linear-acceleration trigger and retain the first sustained excursion after arming. In the data, the first above-threshold sample occurs at 20.002~s, confirmation follows at 20.142~s, and the selected pre-slip inclination is $25.104^\circ$, giving $\mu_s=0.4685$. Timing, mounting and contact history enter the interpretation differently: the small local angular scatter does not determine the uncertainty of a material coefficient from one slip event.
+\end{abstract}
+\begin{IEEEkeywords}
+Static friction, breakaway, inclination, accelerometer, event detection.
+\end{IEEEkeywords}
+
+\section{Breakaway as an operational quantity}
+ASTM G219 defines the tangent of the inclination at macroscopic breakaway as the static-friction coefficient for the sliding couple~\cite{astmg2192024}. The measurand belongs to a prepared contact under a specified loading history: surface preparation, prior sliding, dwell and raising rate can all matter. The first slip is therefore the relevant event. A later impact or larger inclination concerns a contact that has already moved.
+
+For a block resting on a ramp at angle $\theta$, the tangential load is $mg\sin\theta$ and the normal force is $mg\cos\theta$. Under the elementary Coulomb model, impending motion gives
+\begin{equation}
+ \mu_s=\tan\theta_c.
+ \label{eq:static-friction-model}
+\end{equation}
+The mass cancels provided gravity and the ramp reaction are the only external loads, the body neither tips nor rolls, and raising is quasi-static. A cable tug or catching edge introduces an additional force and invalidates this balance.
+
+Acceleration during sliding can instead be used to estimate kinetic friction, as in Baldock and Johnson's smartphone investigation~\cite{baldock2016}. Here it only locates the onset event. Contact-age dependence in Dieterich's controlled shear experiments explains why dwell and loading history deserve attention~\cite{dieterich1979}; the rock-specific constitutive parameters are not transferred to the present contact.
+
+\section{Inclination before the acceleration excursion}
+A rigid mount fixes a phone to the rider with the screen plane parallel to the contact plane, as in Fig.~\ref{fig:static-friction-apparatus}. A broad padded tray catches the rider after breakaway. While the assembly is quasi-static, its accelerometer components provide the inclination estimator
+\begin{equation}
+ \hat\theta=\operatorname{atan2}\!\left(\sqrt{g_x^2+g_y^2},|g_z|\right).
+ \label{eq:static-friction-angle}
+\end{equation}
+The absolute normal component permits the screen to face either upwards or downwards. It does not correct a wedge between the phone and ramp. Stationary comparisons at independently known angles are needed to separate mounting error from sensor offsets and cross-axis response; gravity-based accelerometer characterization treats those distinctions explicitly~\cite{geist2017}.
+
+\begin{figure}[!b]
+\centering
+\begin{tikzpicture}[x=0.88cm,y=0.88cm]
+ \draw[thick] (0,0)--(7,0);
+ \draw[thick,csblue] (0.4,0.2)--(6.5,2.55);
+ \begin{scope}[shift={(3.8,1.51)},rotate=21]
+  \draw[fill=black!8] (-0.85,0) rectangle (0.85,0.48);
+  \draw[fill=white] (-0.65,0.48) rectangle (0.65,0.67);
+  \node at (0,0.25) {rider};
+ \end{scope}
+ \node at (4.7,3.55) {phone parallel to ramp};
+ \draw[->] (3.8,1.8)--(3.8,0.4) node[right] {$mg$};
+ \draw[->,csteal] (3.8,1.8)--(3.2,3.2) node[left] {$N$};
+ \draw[->,csred] (3.8,1.8)--(5,2.25) node[right] {$f_s$};
+ \draw (1.2,0.2) arc (0:21:0.8);
+ \node at (1.65,0.45) {$\theta$};
+ \draw[thick] (0,-0.15)--(1.0,-0.15)--(1.0,0.2);
+ \node[below] at (1,-0.2) {catch tray};
+\end{tikzpicture}
+\caption{Inclined-ramp arrangement. The phone is rigidly attached to the rider, with its normal axis perpendicular to the contact plane; the tray catches the rider after breakaway.}
+\label{fig:static-friction-apparatus}
+\end{figure}
+
+Each acceleration stream retains its own timestamps. For the example reduction, arming is at 5~s, the linear-acceleration threshold is $1.0\unit{m\,s^{-2}}$, and the required sustained duration is 0.15~s after the last below-threshold sample. A gap longer than 0.15~s invalidates the onset until another low sample is observed. This prevents missing observations from masquerading as sustained acceleration.
+
+Once an excursion qualifies, inclination is queried 0.10~s before its last low sample. The most recent gravity reading preceding that query is selected; a future reading is never substituted. The accepted reading must be no more than 0.20~s old, have magnitude between 9.3 and $10.3\unit{m\,s^{-2}}$, and give an angle at most $85^\circ$. These screens reject conspicuous inconsistency, but a near-gravitational magnitude does not prove that translational acceleration is absent. The first valid event remains selected even if a later jolt is larger. A visual observation of sliding remains necessary because a tap or rocking motion can also trigger the accelerometer.
+
+\section{The event resolved in the data}
+Figure~\ref{fig:static-friction-example} shows the increasing inclination and the short initial acceleration excursion. The 0--5~s linear-acceleration baseline has mean $0.126\unit{m\,s^{-2}}$ and sample standard deviation $0.079\unit{m\,s^{-2}}$. Its magnitude is positive even in the resting interval; magnitude noise should not be treated as a signed, zero-mean acceleration. The gravity norm over that interval is $9.812\unit{m\,s^{-2}}$, with sample scatter $0.020\unit{m\,s^{-2}}$.
+
+\begin{figure}[t]
+\centering
+\input{figures/static-friction.tex}
+\caption{(a) Gravity-derived inclination and (b) linear-acceleration magnitude around the first sustained excursion. Separate stream timestamps determine the pre-onset inclination used for the friction estimate.}
+\label{fig:static-friction-example}
+\end{figure}
+
+\begin{table}[t]
+\caption{Detection times, pre-slip angle and friction estimate.}
+\label{tab:static-friction-event}
+\centering\small
+\begin{tabular}{@{}lr@{}}
+\toprule
+Quantity & Value\\
+\midrule
+Last below-threshold time (s) & 19.9820\\
+First above-threshold time (s) & 20.0020\\
+Sustained-event confirmation (s) & 20.1421\\
+Selected gravity time (s) & 19.8819\\
+Selected angle (deg) & 25.1043\\
+$\tan\hat\theta$ & 0.46853\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Table~\ref{tab:static-friction-event} separates three times that would otherwise be conflated. Acceleration onset is bracketed by the last low and first high samples, a roughly 20-ms interval. Confirmation is another 0.140~s later. The selected gravity sample is 0.120~s before the first high sample and only 0.00014~s older than the pre-slip query. Its norm is $9.808\unit{m\,s^{-2}}$. The resulting coefficient is 0.4685; confirmation latency has not shifted the angle forward into the slip excursion.
+
+The ramp is not raised at a constant rate. A straight-line fit over 5--19.8~s leaves an angular RMS residual of $0.934^\circ$, so applying one global raising rate as a timing correction would be inappropriate. A local fit over 19--19.8~s gives $0.475\unit{deg\,s^{-1}}$ and residual scatter $0.110^\circ$. Its extrapolated angle change across the 0.120-s selection offset is about $0.057^\circ$. This is a local sensitivity estimate, not a unique bias correction through the curved approach to the plateau.
+
+\section{What the coefficient can support}
+At the selected angle,
+\begin{equation}
+ \mathrm d\mu_s=\sec^2\theta\,\mathrm d\theta,
+ \label{eq:static-friction-sensitivity}
+\end{equation}
+with angular increments in radians. The local $0.110^\circ$ scatter corresponds to a coefficient scale of about 0.0023. A $1^\circ$ mounting error would contribute about 0.021, almost an order of magnitude larger. Averaging many adjacent acceleration readings cannot remove that geometric error or turn one breakaway into repeated trials.
+
+The later 25--29~s inclination is $25.012^\circ$ with $0.133^\circ$ sample scatter, consistent with a ramp that has stopped rising. That average cannot replace the earlier contact state. Repeated preparations and slips characterize contact variability alongside within-event scatter.
+
+The trigger also has a fundamental limit: uniform sliding has zero linear acceleration. Motion can therefore continue below threshold even for an ideal sensor, and slow creep may begin without triggering the detector. The reported coefficient is an operational breakaway estimate conditional on visual confirmation of the first slip and on the stated detection criterion.

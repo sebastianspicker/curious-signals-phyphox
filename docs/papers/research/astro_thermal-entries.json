@@ -1,0 +1,24 @@
+[
+  {
+    "slug": "greenhouse",
+    "related_datasets": [
+      "drafts/greenhouse-single.example.csv"
+    ]
+  },
+  {
+    "slug": "mission-to-mars",
+    "related_datasets": [
+      "drafts/pressure-boiling.example.csv"
+    ]
+  },
+  {
+    "slug": "pt-star",
+    "related_datasets": []
+  },
+  {
+    "slug": "tidal-locking",
+    "related_datasets": [
+      "drafts/seasons-obliquity_observations.example.csv"
+    ]
+  }
+]

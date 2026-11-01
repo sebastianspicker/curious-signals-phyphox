@@ -1,0 +1,130 @@
+\begin{abstract}
+An infrared temperature indication combines scene radiation with the detector's thermal state and application calibration. Two example investigations expose different parts of that inference. A TMP006 compensation model gives a target-temperature rise of 21.88~K while die temperature rises by only 0.204~K; changing sensitivity by ten percent shifts the hot-interval result from 44.91~$^\circ$C to 43.12 or 47.06~$^\circ$C. A separate TMP007 distance sequence has an outward--return difference of 1.040~K at the same displacement. The first example quantifies a calibration dependence hidden by small short-term scatter; the second prevents an equilibrium heating law from being inferred from a history-dependent trace. A constant-view translation geometry separates source-distance heating from changes in the thermometer's view.
+\end{abstract}
+\begin{IEEEkeywords}
+Infrared thermometry, thermopile compensation, application calibration, emissivity, thermal response, radiative balance.
+\end{IEEEkeywords}
+
+\section{From scene radiation to target temperature}
+A thermopile senses radiative exchange rather than making thermal contact with its target. Its indicated object temperature therefore depends on the target's emission, reflected surroundings, angular coverage and the sensor's own temperature. The TMP006 reports thermopile voltage and die temperature for an external calculation\cite{tmp006}; the TMP007 incorporates an object-temperature calculation internally\cite{tmp007}. Neither arrangement removes the need to characterize the optical scene. An output labelled ambient is the detector die temperature, not an independent room-air measurement.
+
+Two distances must also be distinguished. Moving a thermometer away from a fixed target changes the target's angular size and potentially the fraction of the detector view that it fills. Moving target and thermometer together away from a heating lamp can instead preserve their internal viewing geometry while changing incident heating. The astronomical distance--temperature activity\cite{astrolab2022} becomes quantitatively useful only after these causal changes are separated.
+
+Figure~\ref{fig:ir-distance-apparatus} connects stationary calibration to the translating-stage experiment. A high-emissivity target with a contact reference establishes temperature independently of the infrared indication. Target material, aperture, viewing angle and surrounding surfaces remain fixed while calibration temperatures are varied. The calibration then applies to the assembled optical arrangement, including any window or enclosure\cite{tmp006guide,tmp007cal}. A surface that partly fills the field of view or reflects a hot lamp cannot be represented solely by its contact temperature.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.87cm,y=0.87cm]
+ \node[draw,align=center,minimum height=1.0cm,fill=csred!8] (target) at (2.4,1.25) {target\\$T_s$};
+ \node[draw,align=center,fill=csblue!8] (det) at (6.15,1.25) {thermopile\\die $T_d$};
+ \draw[->,csblue,thick] (target.east)--(det.west);
+ \draw[dashed] (det.west)--(2.95,1.95);
+ \draw[dashed] (det.west)--(2.95,.55);
+ \node[above] at (4.6,2.05) {fixed viewing geometry};
+ \node[draw,align=center] at (2.4,-.1) {contact\\reference};
+ \draw[->] (2.4,.35)--(2.4,.7);
+ \draw[dashed] (1.55,-.65) rectangle (7.25,2.55);
+ \node[fill=white,align=center] at (5.0,-.65) {rigid translating stage};
+ \node[draw,align=center] (lamp) at (.35,1.25) {heating\\lamp};
+ \draw[->,csred,thick] (lamp.east)--(target.west);
+ \draw[thick] (.1,-1.25)--(7.3,-1.25);
+ \draw[<->] (.35,-1.7)--(2.4,-1.7);
+ \node[below] at (1.4,-1.7) {$r=r_0+kd$};
+ \node[below,align=center] at (5.35,-1.35) {independent rail reference;\\stop at each position};
+\end{tikzpicture}
+\caption{A contact reference anchors stationary radiometric calibration. For a heating-distance test, target and thermopile move together relative to the lamp, preserving target coverage and viewing angle. An independent rail reference establishes source distance.}
+\label{fig:ir-distance-apparatus}
+\end{figure}
+
+\section{Compensation and application sensitivity}
+The TMP006 example makes the conversion explicit. For die temperature $T_d$ expressed in kelvin, reference temperature $T_{\rm ref}=298.15\unit{K}$ and $\Delta=T_d-T_{\rm ref}$, use
+\begin{equation}
+ \begin{aligned}
+ S&=S_0(1+A_1\Delta+A_2\Delta^2),\\
+ V_{\rm os}&=B_0+B_1\Delta+B_2\Delta^2,\\
+ u&=V_{\rm obj}-V_{\rm os},\qquad f=u+C_2u^2,\\
+ T_o&=(T_d^4+f/S)^{1/4}.
+ \end{aligned}
+ \label{eq:ir-distance-compensation}
+\end{equation}
+This temperature-dependent model follows the TMP006 calibration treatment\cite{tmp006guide}. The numerical reduction uses the example's per-observation sensitivities and offsets, with $S_0=5.0\times10^{-14}\unit{V\,K^{-4}}$ and $C_2=13.4\unit{V^{-1}}$. The nonlinear correction is applied to the voltage residual $u$ at each observation. It is $f$, rather than $u$ alone, that enters the fourth-power relation. Positive sensitivity and a positive fourth-root argument are required; Celsius output is obtained only after subtracting 273.15 from the result in kelvin.
+
+Thermopile voltage retains its sign through this calculation. Twenty-one of the 61 example observations have negative voltage. Such a value is admissible for an offset-referenced radiometric signal and is not a negative absolute radiation level or a negative absolute target temperature. An unsigned interpretation would fail before optical calibration was considered. Signed voltage and die indication provide the observables used by the application-sensitivity model.
+
+Table~\ref{tab:ir-distance-tmp006} gives half-open receive-time windows inside the temperature levels. The ambient interval $[0,9)\unit{s}$ averages $23.024\unit{^\circ C}$ for the model object temperature and $23.049\unit{^\circ C}$ for the die. The hot interval $[28,38)\unit{s}$ gives 44.909 and $23.253\unit{^\circ C}$, respectively. The inferred target change of 21.885~K is therefore distinct from the 0.204-K die change. Intermediate levels accompany corresponding changes in signed thermopile voltage, as Fig.~\ref{fig:ir-distance-examples} shows.
+
+\begin{table}[t]
+\caption{TMP006 die-temperature means and object-temperature means calculated with Eq.~\eqref{eq:ir-distance-compensation} and the adopted sensitivity. SD$_o$ is the within-interval sample standard deviation of object temperature.}
+\label{tab:ir-distance-tmp006}
+\centering\small
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+Window (s) & $T_o$ ($^\circ$C) & $T_d$ ($^\circ$C) & SD$_o$ (K)\\
+\midrule
+0--9 & 23.024 & 23.049 & 0.137\\
+12--19 & 34.971 & 23.136 & 0.063\\
+28--38 & 44.909 & 23.253 & 0.100\\
+42--48 & 30.028 & 23.319 & 0.181\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{figure*}[t]
+\centering\input{topic-figures/ir-distance.tex}
+\caption{TMP006 object-temperature calculation and die indication (a), and signed thermopile voltage (b), on the receive-time axis. The independent TMP007 record (c) shows distinct outward and return temperature branches against mouse displacement, alongside the die indication.}
+\label{fig:ir-distance-examples}
+\end{figure*}
+
+The hot-state object SD is $0.0997\unit{K}$, but that small scatter does not establish sensitivity accuracy. Recalculate each hot observation with $S$ multiplied by 1.1 or 0.9, retaining its voltage, offset and die temperature and the complete nonlinear correction. The mean becomes 43.117 or $47.059\unit{^\circ C}$, compared with $44.909\unit{^\circ C}$. These changed-model values are not confidence limits. They demonstrate a scale dependence much larger than the interval fluctuations.
+
+At fixed corrected signal $f$, the local sensitivity is
+\begin{equation}
+ \frac{\partial T_o}{\partial S}=-\frac{f}{4S^2T_o^3}.
+ \label{eq:ir-distance-sensitivity}
+\end{equation}
+Coefficient covariance, reference temperature and optical coupling also enter a calibration uncertainty. In particular, die compensation from one local temperature need not remove spatial or transient package gradients; unchopped-thermopile measurements require these gradients to be controlled\cite{sebastian2011}. Calibration across independently varied target and die temperatures separates these contributions more effectively than fitting one warming trajectory. Additional temperature combinations and remounting tests assess transfer beyond the fitted conditions.
+
+\section{Distance and acquisition history}
+The TMP007 example adds a displacement coordinate to an object-temperature indication. It spans 27.594--38.125~$^\circ$C, while die temperature spans 22.750--23.188~$^\circ$C and averages 22.993~$^\circ$C. The different ranges are physically meaningful, but their difference is not a measured target-to-air temperature difference.
+
+Signed mouse increments accumulate into two-axis coordinates whose norm is displacement $d$. A straight rail on one side of the reset origin permits the calibration $r=r_0+kd$, with independently determined origin $r_0$ and scale $k$. The example is expressed in displacement counts; conversion to source distance uses the origin and scale in the relation above. The norm describes displacement from the reset position, rather than total travel length.
+
+Infrared and mouse reports retain separate receive timestamps. Each infrared indication is associated with the most recent mouse position. The example infrared spacing is 0.3~s; it does not establish either a synchronized physical trigger or a detector response time. During motion, position age and delivery latency can introduce a position error of order velocity times timing mismatch. Stationary selection suppresses that term but does not by itself establish thermal equilibrium.
+
+At 1750 counts, the outward mean over $[10.5,12)\unit{s}$ is $29.894\unit{^\circ C}$, whereas the return mean over $[26.4,27.3)\unit{s}$ is $28.854\unit{^\circ C}$. Their difference is 1.040~K. Table~\ref{tab:ir-distance-branches} retains endpoint comparisons as well. The branch separation demonstrates dependence on acquisition history at a repeated displacement. Target heat capacity, detector settling, lamp drift and position error can all contribute; this trajectory cannot identify those causes separately.
+
+\begin{table}[t]
+\caption{TMP007 mean object-temperature indications and sample counts $N$ in half-open time windows. Outward and return values at 1750 displacement counts differ by 1.040~K.}
+\label{tab:ir-distance-branches}
+\centering\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Window (s) & Counts & $N$ & Mean ($^\circ$C)\\
+\midrule
+Outward, 0--1.5 & 0 & 5 & 38.031\\
+Outward, 10.5--12 & 1750 & 5 & 29.894\\
+Outward, 19.5--21 & 3250 & 5 & 27.850\\
+Return, 26.4--27.3 & 1750 & 3 & 28.854\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{What an equilibrium heating law would require}
+For a target of heat capacity $C_{\rm th}$, illuminated area $A$, absorptivity $\alpha$ and emissivity $\epsilon$, a useful lumped energy balance is
+\begin{equation}
+ C_{\rm th}\dot T_s=\alpha A F(r)-G(T_s-T_b)
+ -\epsilon\sigma A(T_s^4-T_b^4),
+ \label{eq:ir-distance-balance}
+\end{equation}
+where $G$ represents linearized conductive and convective losses and $T_b$ a thermal background. The fourth-power terms require absolute temperature. An inverse-square source law concerns incident irradiance $F(r)$, rather than Celsius temperature or a thermometer indication. Establishing optical dilution is consequently an earlier part of the experiment, separate from estimating thermal response.
+
+At equilibrium and for $|T_s-T_b|\ll T_b$, linearizing the radiation term gives
+\begin{equation}
+ T_s-T_b\simeq\frac{\alpha A F(r)}{G+4\epsilon\sigma A T_b^3}.
+ \label{eq:ir-distance-smallrise}
+\end{equation}
+A small temperature excess can therefore follow $r^{-2}$ when loss coefficients are constant. In the contrasting radiation-dominated limit with $T_s\gg T_b$, $T_s$ can approach $r^{-1/2}$. Neither limit is established by the history-dependent TMP007 branches, and neither can be selected solely because a falling curve resembles a power law.
+
+The radiometric scene must remain controlled while testing either limit. An opaque surface emits its own radiation and reflects the surroundings. Under a grey approximation, a full-view radiance contribution involves $\epsilon T_s^4+(1-\epsilon)T_{\rm refl}^4$; partial coverage adds surrounding surfaces to the detector view. Application calibration explicitly depends on material, size, distance and environmental heat transfer\cite{tmp007cal}. Size-of-source tests probe this dependence in radiation-thermometer calibration\cite{delucas2022}. Moving target and detector together preserves angular coverage; moving only the detector does not.
+
+The two examples thus impose complementary tests. First establish that a contact-referenced target, scene geometry and detector thermal environment support the temperature conversion. Then establish stationary target temperatures at independently calibrated source distances. Agreement of longer-dwell outward and return observations, including repeated reference positions, is necessary before fitting an equilibrium law. The temperature conversion, equilibrium assessment and radiometric calibration enter as distinct steps in interpreting the temperature--distance relation.

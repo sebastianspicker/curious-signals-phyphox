@@ -23,6 +23,17 @@
             <string original="Voltage">Tension</string>
             <string original="Simple">Simple</string>
             <string original="Raw Data">Raw Data</string>
+        <string original="Calibration">&#xC9;talonnage</string>
+<string original="Gain A0">Facteur A0</string>
+<string original="Offset A0">D&#xE9;calage A0</string>
+<string original="Gain A1">Facteur A1</string>
+<string original="Offset A1">D&#xE9;calage A1</string>
+<string original="Gain A2">Facteur A2</string>
+<string original="Offset A2">D&#xE9;calage A2</string>
+<string original="Setup">Montage</string>
+<string original="Use a common ground, short leads and inputs within 0&#x2013;3.3 V; do not connect mains or negative voltages. Check the terminal voltage with a calibrated meter at two or more levels. Fit U=kq+c for each input, recording source resistance and meter loading. The default 3300/1023 mV/count is a nominal endpoint scale, not a measured ADC reference. High source impedance, sequential channel acquisition and RC loading can alter the result. Use slow signals or an appropriate anti-alias filter.">Utiliser une masse commune, des fils courts et des entr&#xE9;es entre 0 et 3,3 V ; ne pas connecter le secteur ni de tensions n&#xE9;gatives. V&#xE9;rifier la tension aux bornes &#xE0; au moins deux niveaux avec un instrument &#xE9;talonn&#xE9;. Ajuster U=kq+c pour chaque entr&#xE9;e en relevant r&#xE9;sistance de source et charge de mesure. La valeur 3300/1023 mV/compte est une &#xE9;chelle nominale aux extr&#xE9;mit&#xE9;s, sans mesure de la r&#xE9;f&#xE9;rence ADC. Imp&#xE9;dance &#xE9;lev&#xE9;e, acquisition s&#xE9;quentielle et charge RC modifient le r&#xE9;sultat. Utiliser des signaux lents ou un filtre anti-repliement adapt&#xE9;.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Enregistrer une r&#xE9;f&#xE9;rence stable avant et apr&#xE8;s chaque essai. L&#x2019;intervalle BLE est d&#x2019;au moins 50 ms ; les mesures indisponibles restent NaN. Les signaux rapides n&#xE9;cessitent une bande passante v&#xE9;rifi&#xE9;e et un filtre anti-repliement.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Saisir les coefficients mesur&#xE9;s sur ce montage. Les valeurs initiales sont nominales, sans &#xE9;talonnage. Un changement recalcule toute la courbe ; mesures originales et r&#xE9;glages sont export&#xE9;s s&#xE9;par&#xE9;ment. Effacer les donn&#xE9;es r&#xE9;tablit les valeurs initiales.</string>
         </translation>
         <translation locale="de">
             <title>Analogeing&#xE4;nge</title>
@@ -39,6 +50,17 @@
             <string original="Voltage">Spannung</string>
             <string original="Simple">Einfach</string>
             <string original="Raw Data">Rohdaten</string>
+        <string original="Calibration">Kalibrierung</string>
+<string original="Gain A0">Faktor A0</string>
+<string original="Offset A0">Offset A0</string>
+<string original="Gain A1">Faktor A1</string>
+<string original="Offset A1">Offset A1</string>
+<string original="Gain A2">Faktor A2</string>
+<string original="Offset A2">Offset A2</string>
+<string original="Setup">Aufbau</string>
+<string original="Use a common ground, short leads and inputs within 0&#x2013;3.3 V; do not connect mains or negative voltages. Check the terminal voltage with a calibrated meter at two or more levels. Fit U=kq+c for each input, recording source resistance and meter loading. The default 3300/1023 mV/count is a nominal endpoint scale, not a measured ADC reference. High source impedance, sequential channel acquisition and RC loading can alter the result. Use slow signals or an appropriate anti-alias filter.">Gemeinsame Masse, kurze Leitungen und Eing&#xE4;nge innerhalb 0&#x2013;3,3 V verwenden; keine Netzspannung oder negativen Spannungen anschlie&#xDF;en. Klemmenspannung an mindestens zwei Pegeln mit kalibriertem Messger&#xE4;t pr&#xFC;fen. F&#xFC;r jeden Eingang U=kq+c anpassen; Quellwiderstand und Messger&#xE4;tebelastung erfassen. 3300/1023 mV/Z&#xE4;hlwert ist eine nominale Endpunktskala, keine gemessene ADC-Referenz. Hoher Quellwiderstand, sequenzielle Abtastung und RC-Belastung beeinflussen das Ergebnis. Langsame Signale oder geeignete Anti-Aliasing-Filter verwenden.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Vor und nach jedem Versuch eine stabile Referenz aufzeichnen. Das BLE-Intervall betr&#xE4;gt mindestens 50 ms; nicht verf&#xFC;gbare Sensormesswerte bleiben NaN. Schnelle Signale ben&#xF6;tigen eine unabh&#xE4;ngig gepr&#xFC;fte Bandbreite und einen Anti-Aliasing-Filter.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Am eigenen Aufbau gemessene Koeffizienten eingeben. Vorgaben sind Nennwerte, keine Kalibrierung. &#xC4;nderungen berechnen die gesamte Kurve neu; urspr&#xFC;ngliche Messwerte und Einstellungen werden getrennt exportiert. Daten l&#xF6;schen setzt die Vorgaben zur&#xFC;ck.</string>
         </translation>
     </translations>
     <data-containers>
@@ -54,6 +76,12 @@
 	    <container size="0" static="false" init="">CH2_norm</container>
 	    <container size="0" static="false" init="">CH3_norm</container>
 	    <container size="0" static="false" init="">CH4_norm</container>
+    <container size="1" init="3.225806451612903">gain_A0</container>
+<container size="1" init="0">offset_A0</container>
+<container size="1" init="3.225806451612903">gain_A1</container>
+<container size="1" init="0">offset_A1</container>
+<container size="1" init="3.225806451612903">gain_A2</container>
+<container size="1" init="0">offset_A2</container>
     </data-containers>
     <input>
         <bluetooth mode="notification" rate="1" subscribeOnStart="false" id="Sense">
@@ -75,15 +103,15 @@
     <views>
         
         <view label="Graph">
-            <graph label="Voltage at A0" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" history="1" labelX="t" labelY="U" labelZ="" unitX="s" unitY="mV" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Voltage at A0" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" labelX="t" labelY="U" labelZ="" unitX="s" unitY="mV" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2_norm</input>
             </graph>
-            <graph label="Voltage at A1" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" history="1" labelX="t" labelY="U" labelZ="" unitX="s" unitY="mV" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Voltage at A1" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" labelX="t" labelY="U" labelZ="" unitX="s" unitY="mV" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH3_norm</input>
             </graph>
-            <graph label="Voltage at A2" aspectRatio="2.5" style="lines" lineWidth="1" color="yellow" partialUpdate="false" history="1" labelX="t" labelY="U" labelZ="" unitX="s" unitY="mV" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Voltage at A2" aspectRatio="2.5" style="lines" lineWidth="1" color="yellow" partialUpdate="false" labelX="t" labelY="U" labelZ="" unitX="s" unitY="mV" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH4_norm</input>
             </graph>
@@ -103,38 +131,69 @@
         
         <!-- original view of raw sensor data: about 3.3mV per unit -->
         <view label="Raw Data">
-            <graph label="Analog Input A0" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="U" labelZ="" unitX="s" unitY="" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Analog Input A0" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="U" labelZ="" unitX="s" unitY="" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2</input>
             </graph>
-            <graph label="Analog Input A1" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="U" labelZ="" unitX="s" unitY="" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Analog Input A1" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="U" labelZ="" unitX="s" unitY="" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH3</input>
             </graph>
-            <graph label="Analog Input A2" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="U" labelZ="" unitX="s" unitY="" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Analog Input A2" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="U" labelZ="" unitX="s" unitY="" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH4</input>
             </graph>
         </view>
+    <view label="Setup">
+    <info label="Use a common ground, short leads and inputs within 0&#x2013;3.3 V; do not connect mains or negative voltages. Check the terminal voltage with a calibrated meter at two or more levels. Fit U=kq+c for each input, recording source resistance and meter loading. The default 3300/1023 mV/count is a nominal endpoint scale, not a measured ADC reference. High source impedance, sequential channel acquisition and RC loading can alter the result. Use slow signals or an appropriate anti-alias filter."/>
+    <info label="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering."/>
+</view>
+    <view label="Calibration">
+    <info label="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults."/>
+    <edit label="Gain A0" unit="mV/count" default="3.225806451612903" decimal="true" signed="false" min="0.000000001">
+        <output>gain_A0</output>
+    </edit>
+    <edit label="Offset A0" unit="mV" default="0" decimal="true" signed="true">
+        <output>offset_A0</output>
+    </edit>
+    <edit label="Gain A1" unit="mV/count" default="3.225806451612903" decimal="true" signed="false" min="0.000000001">
+        <output>gain_A1</output>
+    </edit>
+    <edit label="Offset A1" unit="mV" default="0" decimal="true" signed="true">
+        <output>offset_A1</output>
+    </edit>
+    <edit label="Gain A2" unit="mV/count" default="3.225806451612903" decimal="true" signed="false" min="0.000000001">
+        <output>gain_A2</output>
+    </edit>
+    <edit label="Offset A2" unit="mV" default="0" decimal="true" signed="true">
+        <output>offset_A2</output>
+    </edit>
+</view>
     </views>
     
-    <!-- 3.226mV per unit to mV if operating with the default 10-bit ADC : 3.3 V = 1023 -->
-    <analysis sleep="0" onUserInput="false">
-        <formula formula="[1_]*3.226">
-            <input clear="false">CH2</input>
-            <output>CH2_norm</output>
-        </formula>
-        <formula formula="[1_]*3.226">
-            <input clear="false">CH3</input>
-            <output>CH3_norm</output>
-        </formula>
-        <formula formula="[1_]*3.226">
-            <input clear="false">CH4</input>
-            <output>CH4_norm</output>
-        </formula>
-    </analysis>
+    <!-- Affine calibration U=kq+c; nominal endpoint scale is 3300/1023 mV/count. -->
+    <analysis sleep="0.05">
+    <formula formula="[1_]*[2]+[3]">
+        <input clear="false">CH2</input>
+        <input clear="false">gain_A0</input>
+        <input clear="false">offset_A0</input>
+        <output clear="true">CH2_norm</output>
+    </formula>
+    <formula formula="[1_]*[2]+[3]">
+        <input clear="false">CH3</input>
+        <input clear="false">gain_A1</input>
+        <input clear="false">offset_A1</input>
+        <output clear="true">CH3_norm</output>
+    </formula>
+    <formula formula="[1_]*[2]+[3]">
+        <input clear="false">CH4</input>
+        <input clear="false">gain_A2</input>
+        <input clear="false">offset_A2</input>
+        <output clear="true">CH4_norm</output>
+    </formula>
+</analysis>
     <export>
-    <set name="Raw data (mV)">
+    <set name="Calibrated data (mV)">
             <data name="Time t (s)">CH1</data>
             <data name="Voltage at A0 (mV)">CH2_norm</data>
             <data name="Voltage at A1 (mV)">CH3_norm</data>
@@ -146,5 +205,17 @@
             <data name="Analog Input A1">CH3</data>
             <data name="Analog Input A2">CH4</data>
         </set>
+    <set name="Calibration settings">
+    <data name="Gain A0 (mV/count)">gain_A0</data>
+    <data name="Offset A0 (mV)">offset_A0</data>
+    <data name="Gain A1 (mV/count)">gain_A1</data>
+    <data name="Offset A1 (mV)">offset_A1</data>
+    <data name="Gain A2 (mV/count)">gain_A2</data>
+    <data name="Offset A2 (mV)">offset_A2</data>
+</set>
+    <set name="Timing">
+    <data name="Device time (s)">CH1</data>
+    <data name="BLE receive time (s)">CH0</data>
+</set>
     </export>
 </phyphox>

@@ -1,0 +1,195 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<phyphox version="1.17" locale="en">
+  <!--Original implementation; lesson context: phyphox/audio_amplitude-magnetometer.phyphox, audio and magnetic input sections. No donor XML copied; donor license is unspecified.-->
+  <title>Draft: Motor sound and magnetic field</title>
+  <category>Curious Signals drafts</category>
+  <description>Phone microphone blocks and phone magnetic-field vector record a fixed low-voltage DC motor during slow on/off cycles. Audio timestamps are analysis block times, not precise acoustic event timestamps.</description>
+  <data-containers>
+    <container size="0">recording</container>
+    <container size="0">audio_raw</container>
+    <container size="1">audio_rate</container>
+    <container size="0">mag_t</container>
+    <container size="0">bx</container>
+    <container size="0">by</container>
+    <container size="0">bz</container>
+    <container size="0">mag_accuracy</container>
+    <container size="0">squared</container>
+    <container size="1">mean_square</container>
+    <container size="1">block_n</container>
+    <container size="1">rms</container>
+    <container size="1">now</container>
+    <container size="0">audio_t</container>
+    <container size="0">audio_rms</container>
+    <container size="0">audio_n</container>
+    <container size="0">audio_fs</container>
+    <container size="0">audio_duration</container>
+    <container size="0">mag_norm</container>
+    <container size="0">level_candidate</container>
+    <container size="0">level</container>
+    <container size="0">noise_corrected_rms</container>
+    <container size="1" init="0">noise_rms</container>
+    <container size="1" init="0">reference_rms</container>
+    <container size="1" init="0">reference_level</container>
+    <container size="1" init="0">level_enabled</container>
+    <container size="1">conversion_gate</container>
+  </data-containers>
+  <input>
+    <audio rate="48000" append="false">
+      <output>recording</output>
+      <output component="rate">audio_rate</output>
+    </audio>
+    <sensor type="magnetic_field" rate="20">
+      <output component="t">mag_t</output>
+      <output component="x">bx</output>
+      <output component="y">by</output>
+      <output component="z">bz</output>
+      <output component="accuracy">mag_accuracy</output>
+    </sensor>
+  </input>
+  <views>
+    <view label="Observe">
+      <info label="Fix phone beside an enclosed low-voltage DC motor; use several-second on/off plateaus. Keep hands, steel, supply wires and geometry fixed. Compare broad changes, not audio-frequency magnetic waves. App Clear data resets the complete session; no separate clock reset exists."/>
+      <graph label="Audio RMS" labelX="Session time" unitX="s" labelY="Audio RMS" unitY="relative" partialUpdate="false">
+        <input axis="x">audio_t</input>
+        <input axis="y">audio_rms</input>
+      </graph>
+      <graph label="Magnetic magnitude" labelX="Session time" unitX="s" labelY="Magnetic magnitude" unitY="µT" partialUpdate="false">
+        <input axis="x">mag_t</input>
+        <input axis="y">mag_norm</input>
+      </graph>
+    </view>
+    <view label="Calibration">
+      <edit label="Motor-off noise RMS" default="0" unit="relative" min="0">
+        <output>noise_rms</output>
+      </edit>
+      <edit label="Measured reference RMS" default="0" unit="relative" min="0">
+        <output>reference_rms</output>
+      </edit>
+      <edit label="Assigned reference level" default="0" unit="dB">
+        <output>reference_level</output>
+      </edit>
+      <edit label="Enable calibrated relative level (0/1)" default="0" unit="" min="0" max="1" decimal="false">
+        <output>level_enabled</output>
+      </edit>
+      <graph label="Relative level" labelX="Session time" unitX="s" labelY="Relative level" unitY="dB" partialUpdate="false">
+        <input axis="x">audio_t</input>
+        <input axis="y">level</input>
+      </graph>
+      <info label="Enter motor-off RMS and a measured same-setup reference RMS. Enable only after measuring a positive reference. Level is 20 log10(RMS/reference RMS) plus assigned reference level; no frequency weighting or certified SPL. Noise correction assumes independent stable background; values at or below noise become gaps. Changing settings recalculates all level history. Raw RMS remains available."/>
+    </view>
+    <view label="Setup">
+      <info label="Microphone automatic gain and filtering may change between devices or sessions. Audio RMS averages every actual sample in each delivered block; block size and actual rate are exported. Audio time is analysis-start experiment time; magnetic time is sensor experiment time. Latency is unmeasured, so use slow plateaus and retain both clocks. Raw audio is exported as successive blocks with block lengths in a separate set; no precise per-sample epoch is claimed. Long runs use substantial memory. Export short runs before clearing."/>
+    </view>
+  </views>
+  <analysis sleep="0.1" onUserInput="false">
+    <timer>
+      <output as="out">now</output>
+    </timer>
+    <count>
+      <input clear="false">recording</input>
+      <output>block_n</output>
+    </count>
+    <formula formula="[1_]^2">
+      <input clear="false">recording</input>
+      <output>squared</output>
+    </formula>
+    <average>
+      <input clear="false">squared</input>
+      <output>mean_square</output>
+    </average>
+    <formula formula="sqrt([1])">
+      <input clear="false">mean_square</input>
+      <output>rms</output>
+    </formula>
+    <if greater="true">
+      <input clear="false">block_n</input>
+      <output clear="false">audio_t</output>
+      <input type="value">0</input>
+      <input clear="false">now</input>
+    </if>
+    <if greater="true">
+      <input clear="false">block_n</input>
+      <output clear="false">audio_rms</output>
+      <input type="value">0</input>
+      <input clear="false">rms</input>
+    </if>
+    <if greater="true">
+      <input clear="false">block_n</input>
+      <output clear="false">audio_n</output>
+      <input type="value">0</input>
+      <input clear="false">block_n</input>
+    </if>
+    <if greater="true">
+      <input clear="false">block_n</input>
+      <output clear="false">audio_fs</output>
+      <input type="value">0</input>
+      <input clear="false">audio_rate</input>
+    </if>
+    <append>
+      <input clear="true">recording</input>
+      <output clear="false">audio_raw</output>
+    </append>
+    <formula formula="[1_]/[2_]">
+      <input clear="false">audio_n</input>
+      <input clear="false">audio_fs</input>
+      <output>audio_duration</output>
+    </formula>
+    <formula formula="sqrt([1_]^2+[2_]^2+[3_]^2)">
+      <input clear="false">bx</input>
+      <input clear="false">by</input>
+      <input clear="false">bz</input>
+      <output>mag_norm</output>
+    </formula>
+    <formula formula="(20*log([1_]/[2])/log(10)+[3])*sqrt([1_])/sqrt([1_])*sqrt([2])/sqrt([2])">
+      <input clear="false">audio_rms</input>
+      <input clear="false">reference_rms</input>
+      <input clear="false">reference_level</input>
+      <output>level_candidate</output>
+    </formula>
+    <if equal="true">
+      <input clear="false">level_enabled</input>
+      <input type="value">1</input>
+      <input type="value">1</input>
+      <input type="value">NaN</input>
+      <output>conversion_gate</output>
+    </if>
+    <formula formula="[1_]+0*[2]">
+      <input clear="false">level_candidate</input>
+      <input clear="false">conversion_gate</input>
+      <output>level</output>
+    </formula>
+    <formula formula="sqrt([1_]^2-[2]^2)*sqrt([1_]^2-[2]^2)/sqrt([1_]^2-[2]^2)">
+      <input clear="false">audio_rms</input>
+      <input clear="false">noise_rms</input>
+      <output>noise_corrected_rms</output>
+    </formula>
+  </analysis>
+  <export>
+    <set name="Audio blocks">
+      <data name="audio_t">audio_t</data>
+      <data name="audio_rms">audio_rms</data>
+      <data name="audio_n">audio_n</data>
+      <data name="audio_fs">audio_fs</data>
+      <data name="audio_duration">audio_duration</data>
+      <data name="noise_corrected_rms">noise_corrected_rms</data>
+      <data name="level">level</data>
+    </set>
+    <set name="Magnetic samples">
+      <data name="mag_t">mag_t</data>
+      <data name="bx">bx</data>
+      <data name="by">by</data>
+      <data name="bz">bz</data>
+      <data name="mag_norm">mag_norm</data>
+      <data name="mag_accuracy">mag_accuracy</data>
+    </set>
+    <set name="Raw audio samples">
+      <data name="audio_raw">audio_raw</data>
+    </set>
+    <set name="Settings">
+      <data name="noise_rms">noise_rms</data>
+      <data name="reference_rms">reference_rms</data>
+      <data name="reference_level">reference_level</data>
+      <data name="level_enabled">level_enabled</data>
+    </set>
+  </export>
+</phyphox>

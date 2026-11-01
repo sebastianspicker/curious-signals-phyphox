@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 3,vertical sep=1.25cm},
+width=0.98\columnwidth,height=3.4cm,grid=major,enlarge x limits=false,every axis plot/.append style={line width=0.7pt},
+legend style={font=\scriptsize,at={(0.5,1.03)},anchor=south,legend columns=2,draw=none},
+title style={font=\scriptsize,at={(0.02,0.98)},anchor=north west,fill=white},
+ylabel style={font=\footnotesize},xlabel style={font=\footnotesize},tick label style={font=\scriptsize}]
+\nextgroupplot[ylabel={Rate (deg/s)},xlabel={Nano record time (s)},title={(a) Nano: yaw reversal}]
+\addplot[csblue,solid] table[col sep=comma,x=c0,y=c3] {data/gyroscope_plot_v1-2.csv};\addlegendentry{Selected component}
+\addplot[csred,dashed] table[col sep=comma,x=c0,y=c4] {data/gyroscope_plot_v1-2.csv};\addlegendentry{Norm}
+\nextgroupplot[ylabel={Rate (deg/s)},xlabel={CC2541 receive time (s)},title={(b) CC2541: $y$ component}]
+\addplot[csblue,solid] table[col sep=comma,x=c0,y expr={\thisrow{c5}*180/pi}] {data/drafts/cc2541-gyroscope.csv};
+\addplot[csred,dashed] table[col sep=comma,x=c0,y expr={\thisrow{c7}*180/pi}] {data/drafts/cc2541-gyroscope.csv};
+\nextgroupplot[ylabel={Rate (deg/s)},xlabel={Voyager receive time (s)},title={(c) Voyager: $x$ component}]
+\addplot[csblue,solid] table[col sep=comma,x=c0,y expr={\thisrow{c4}*180/pi}] {data/drafts/pocketlab-gyroscope.csv};
+\addplot[csred,dashed] table[col sep=comma,x=c0,y expr={\thisrow{c7}*180/pi}] {data/drafts/pocketlab-gyroscope.csv};
+\end{groupplot}
+\end{tikzpicture}

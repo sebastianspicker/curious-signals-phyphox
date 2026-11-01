@@ -1,0 +1,1013 @@
+{
+  "schema_version": 1,
+  "source": "example-data/generate_draft_example_data.py",
+  "seed": 20261026,
+  "example": true,
+  "note": "Example exports for the 28 draft experiments.",
+  "datasets": [
+    {
+      "file": "drafts/audio-magnetic_audio.example.csv",
+      "experiment": "audio-magnetic.phyphox",
+      "sensor": "Phone microphone",
+      "acquisition_path": "phyphox audio input, 48 kHz, 0.1 s analysis blocks",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 60.0,
+      "rows": 601,
+      "columns": [
+        "audio_t",
+        "audio_rms",
+        "audio_n",
+        "audio_fs",
+        "audio_duration",
+        "noise_corrected_rms",
+        "level"
+      ],
+      "scenario": "Motor-off and motor-on plateaus, with 0.1 s block RMS values.",
+      "realism": [
+        "48 kHz sample rate and 4800 samples per 0.1 s block.",
+        "Relative digital amplitude, not calibrated or A-weighted sound pressure.",
+        "10 dB motor-on level change with block-to-block variation.",
+        "Raw audio samples are omitted because the full 48 kHz stream is large; the block table is the analysis record."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/audio-magnetic_magnetic.example.csv",
+      "experiment": "audio-magnetic.phyphox",
+      "sensor": "Phone magnetometer",
+      "acquisition_path": "phyphox magnetic_field sensor, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "mag_t",
+        "bx",
+        "by",
+        "bz",
+        "mag_norm",
+        "mag_accuracy"
+      ],
+      "scenario": "Stationary phone beside a small motor switched on for three 10 s intervals.",
+      "realism": [
+        "Earth field near 48 µT plus a motor-dependent vector of a few µT.",
+        "0.15 µT broadband noise and a small 5 Hz motor ripple.",
+        "Accuracy code 3 is reported as a high-confidence phone magnetometer sample."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/cc2541-accelerometer.example.csv",
+      "experiment": "cc2541-accelerometer.phyphox",
+      "sensor": "TI CC2541 SensorTag KXTJ9 accelerometer",
+      "acquisition_path": "SensorTag AA11 notification, AA13=0x0A (100 ms)",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 60.0,
+      "rows": 601,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (m/s²)",
+        "Bias corrected y (m/s²)",
+        "Bias corrected z (m/s²)",
+        "Vector magnitude (m/s²)"
+      ],
+      "scenario": "Flat, ±20° tilts, a short shake, a 60° roll, and a return to flat.",
+      "realism": [
+        "±2 g, 8-bit KXTJ9 setting with 64 counts per g.",
+        "Signed int8 counts, including the -128 minimum byte.",
+        "Bias of 0.20, -0.25, 0.35 m/s² and 0.02 m/s² noise.",
+        "10 Hz receive-time stream; the 100 ms request is not a guaranteed conversion clock."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/cc2541-gyroscope.example.csv",
+      "experiment": "cc2541-gyroscope.phyphox",
+      "sensor": "TI CC2541 SensorTag IMU-3000 gyroscope",
+      "acquisition_path": "SensorTag AA51 notification, 100 ms assumed period",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 60.0,
+      "rows": 601,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (rad/s)",
+        "Bias corrected y (rad/s)",
+        "Bias corrected z (rad/s)",
+        "Vector magnitude (rad/s)"
+      ],
+      "scenario": "Stationary, ±125 °/s yaw, ±200 °/s roll/pitch, then stationary again.",
+      "realism": [
+        "500 °/s total span and 500/65536 °/s per signed count.",
+        "Small zero-rate bias in rad/s and 0.8 °/s rate noise.",
+        "Signed little-endian 16-bit packet components.",
+        "Receive time is a phone clock, not a device conversion time."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/cc2541-humidity.example.csv",
+      "experiment": "cc2541-humidity.phyphox",
+      "sensor": "TI CC2541 SensorTag SHT21",
+      "acquisition_path": "SensorTag AA21 notification, 1 s assumed period",
+      "nominal_rate_hz": 1.0,
+      "duration_s": 60.0,
+      "rows": 61,
+      "columns": [
+        "Receive time (s)",
+        "Unsigned temperature packet word",
+        "Unsigned humidity packet word",
+        "Unbounded RH equation (%)",
+        "Domain checked RH (%)",
+        "SHT21 temperature (°C)"
+      ],
+      "scenario": "Slow warming with a short humidity breath event near 30 s.",
+      "realism": [
+        "SHT21 equations RH = 125 SRH/65536 - 6 and T = 175.72 ST/65536 - 46.85.",
+        "Low two status bits set and masked before conversion.",
+        "0.05 °C and 0.4 %RH noise; outside-domain RH becomes nan.",
+        "One receive clock shared by the paired temperature and humidity words."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/cc2541-ir-temperature.example.csv",
+      "experiment": "cc2541-ir-temperature.phyphox",
+      "sensor": "TI CC2541 SensorTag TMP006 infrared thermopile",
+      "acquisition_path": "SensorTag AA01 notification, 1 s assumed period",
+      "nominal_rate_hz": 1.0,
+      "duration_s": 60.0,
+      "rows": 61,
+      "columns": [
+        "Receive time (s)",
+        "Signed thermopile packet word",
+        "Signed die packet word",
+        "Thermopile voltage (V)",
+        "Die temperature (°C)",
+        "Temperature dependent sensitivity (V/K^4)",
+        "Voltage offset (V)",
+        "Compensated flux voltage (V)",
+        "Application model object temperature (°C)"
+      ],
+      "scenario": "A warm target is held near 35 °C and 45 °C, then cools, while the die warms slightly.",
+      "realism": [
+        "156.25 nV per thermopile count and 1/128 °C per die count.",
+        "Signed voltage and die words, including negative voltage counts.",
+        "Application model coefficients are example calibration values, not a certificate.",
+        "Object output is the TMP006 compensated fourth-root result."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/cc2541-magnetometer.example.csv",
+      "experiment": "cc2541-magnetometer.phyphox",
+      "sensor": "TI CC2541 SensorTag MAG3110",
+      "acquisition_path": "SensorTag AA31 notification, AA33=0x0A (100 ms)",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 60.0,
+      "rows": 601,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (µT)",
+        "Bias corrected y (µT)",
+        "Bias corrected z (µT)",
+        "Vector magnitude (µT)"
+      ],
+      "scenario": "Earth-field baseline, 80° yaw, 20° tilt, a magnet approach near 43 s, then return.",
+      "realism": [
+        "MAG3110 nominal 0.1 µT per signed count and 10 Hz period request.",
+        "Bias of 5, -3, 8 µT and 0.12 µT noise.",
+        "Hard-iron offset and a magnet disturbance are retained as sensor-frame components.",
+        "The scale-verified gate is assumed enabled for this example."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/cc2541-pressure.example.csv",
+      "experiment": "cc2541-pressure.phyphox",
+      "sensor": "TI CC2541 SensorTag EPCOS T5400",
+      "acquisition_path": "SensorTag AA41 poll, 1 Hz",
+      "nominal_rate_hz": 1.0,
+      "duration_s": 60.0,
+      "rows": 61,
+      "columns": [
+        "Data read receive time (s)",
+        "Unsigned pressure word",
+        "Signed temperature word",
+        "Pressure (hPa)",
+        "T5400 temperature (°C)"
+      ],
+      "scenario": "A near-ambient baseline, a +20 hPa chamber excursion, a small leak, and release.",
+      "realism": [
+        "T5400 compensation polynomial with the fixture calibration coefficients.",
+        "Signed UT and unsigned UP 16-bit words.",
+        "1 Hz polling timestamps receipt of the data read, not the conversion instant.",
+        "Calibration is assumed loaded and verified for this example."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/colour-temperature.example.csv",
+      "experiment": "colour-temperature.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960 RGBC",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)",
+        "Dark-corrected clear (counts)",
+        "Red / clear corrected (1)",
+        "Green / clear corrected (1)",
+        "Blue / clear corrected (1)",
+        "Provisional X (relative)",
+        "Provisional Y (relative)",
+        "Provisional Z (relative)",
+        "Provisional XYZ sum (relative)",
+        "Chromaticity x (1)",
+        "Chromaticity y (1)",
+        "McCamy n (1)",
+        "Unvalidated polynomial candidate (K)",
+        "Accepted indicative CCT (K)"
+      ],
+      "scenario": "Warm 2700 K, neutral 4000 K, cool 6500 K, and warm again, each held for 10–15 s.",
+      "realism": [
+        "Raw RGBC counts with APDS channel gains and 4100-count clamping.",
+        "The documented donor XYZ matrix and McCamy polynomial are applied.",
+        "The accepted CCT is gated to the 2000–10000 K screening interval.",
+        "Broad-band RGBC cannot establish a full spectrum or a stellar temperature."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/coronagraph-contrast.example.csv",
+      "experiment": "coronagraph-contrast.phyphox",
+      "sensor": "Fixed-exposure camera and external ROI analysis",
+      "acquisition_path": "Manual image-region statistics, two repeats per mask/separation",
+      "nominal_rate_hz": null,
+      "duration_s": null,
+      "rows": 24,
+      "columns": [
+        "Observation ID",
+        "Mask code (0 absent, 1 present)",
+        "Image separation (pixel)",
+        "Exposure duration (ms)",
+        "Target ROI mean (a.u.)",
+        "Local background ROI mean (a.u.)",
+        "Uncertainty of target-minus-background mean (a.u.)",
+        "Unsaturated ceiling (a.u.)",
+        "Fixed linear image settings checked (1=yes)",
+        "Target minus background (a.u.)",
+        "Local relative contrast",
+        "Net signal rate (a.u./s)",
+        "Noise-normalized signal",
+        "Unmasked local contrast",
+        "Masked local contrast"
+      ],
+      "scenario": "Six image separations from 30 to 180 px, each with mask absent and present.",
+      "realism": [
+        "Target and background ROI means in arbitrary linear image units.",
+        "A 10 ms fixed exposure and a 255-unit unsaturated ceiling.",
+        "Masked images reduce both target and background, as a real occulting disk would.",
+        "Contrast is local (target minus background)/background, not a planet/star flux ratio."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/detector-characterization.example.csv",
+      "experiment": "detector-characterization.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)"
+      ],
+      "scenario": "Dark, stable 1000-count baseline, then 1%, 2%, 4%, and 8% light features.",
+      "realism": [
+        "APDS counts with channel gains and 4100-count clamping.",
+        "The feature depths are relative to the illuminated baseline.",
+        "Device and phone receive clocks are both present and not identical.",
+        "The summary row reports delivered rates and baseline noise, not chip bandwidth."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/detector-characterization_summary.example.csv",
+      "experiment": "detector-characterization.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Derived summary from the 20 Hz example record",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1,
+      "columns": [
+        "Mean device interval (s)",
+        "Mean receive interval (s)",
+        "Device interval sample SD (s)",
+        "Receive interval sample SD (s)",
+        "Mean delivered device rate (Hz)",
+        "Mean delivered receive rate (Hz)",
+        "Selected baseline count (1)",
+        "Baseline mean (counts)",
+        "Baseline sample SD (counts)",
+        "Proposed signal drop (counts)",
+        "Expected single-sample SNR (1)",
+        "Mean samples per feature (1)"
+      ],
+      "scenario": "Summary of the measured intervals and 12–28 s baseline.",
+      "realism": [
+        "Intervals are computed from the actual example timestamps.",
+        "Baseline mean and sample standard deviation use the selected window.",
+        "The SNR is a planning quantity for a 2% drop, not a detection claim."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/eclipsing-binary.example.csv",
+      "experiment": "eclipsing-binary.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 120.0,
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized",
+        "phase"
+      ],
+      "scenario": "Alternating 30% primary and 10% secondary minima with a 30 s primary-to-primary period.",
+      "realism": [
+        "Raw clear/RGB counts with APDS gains and noise.",
+        "Normalized light uses dark 10 counts and baseline 210 counts.",
+        "Phase uses epoch 20 s and period 30 s.",
+        "Primary and secondary labels are observationally defined, not an orbital fit."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/exomoon-photometry.example.csv",
+      "experiment": "exomoon-photometry.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 120.0,
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized"
+      ],
+      "scenario": "Baseline, planet-only, separated moon, overlapping moon, separated moon, planet-only, baseline.",
+      "realism": [
+        "Counts follow the intended ordering baseline ≥ planet-only ≥ overlap ≥ separated ≥ dark.",
+        "Normalized light uses dark 10 and baseline 110 counts.",
+        "The overlap interval is a local brightening relative to the separated interval.",
+        "The example does not assign a moon radius or a barycentric orbit."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/greenhouse-single.example.csv",
+      "experiment": "greenhouse-single.phyphox",
+      "sensor": "TI SensorTag CC2650/CC1350 BMP280 die temperature",
+      "acquisition_path": "SensorTag AA41 notification, AA44=0x64 (1 s)",
+      "nominal_rate_hz": 1.0,
+      "duration_s": 300.0,
+      "rows": 301,
+      "columns": [
+        "Receive time (s)",
+        "Receive time (min)",
+        "Signed BMP280 packet count",
+        "Die temperature (°C)",
+        "Baseline corrected rise (K)"
+      ],
+      "scenario": "Lamp off for 60 s, on for 180 s, then off again; the die warms by about 8 K.",
+      "realism": [
+        "BMP280 signed 24-bit temperature word with 0.01 °C scaling.",
+        "Baseline 22 °C, +0.7 °C self-heating, and 0.02 °C noise.",
+        "Receive time is used directly, not reconstructed from sample count.",
+        "Die temperature is a device proxy, not isolated gas temperature."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/illuminance-distance-manual.example.csv",
+      "experiment": "illuminance-distance-manual.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)"
+      ],
+      "scenario": "Six ruler positions from 0.20 to 0.70 m, with settles between moves.",
+      "realism": [
+        "Raw APDS counts and both device and receive clocks.",
+        "Clear signal follows 1/r² with a 10-count background.",
+        "RGB counts track the same lamp spectrum.",
+        "The paired observation table is a separate example file."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/illuminance-distance-manual_observations.example.csv",
+      "experiment": "illuminance-distance-manual.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960 and manual ruler",
+      "acquisition_path": "Recorded snapshots from the 20 Hz light stream",
+      "nominal_rate_hz": null,
+      "duration_s": 60.0,
+      "rows": 12,
+      "columns": [
+        "Entered ruler distance (m)",
+        "Captured device time (s)",
+        "Captured receive time (s)",
+        "Captured clear signal (counts)",
+        "Background-corrected signal (counts)",
+        "Positive ruler distance (m)",
+        "Inverse square distance (1/m²)",
+        "Corrected signal times distance squared (count m²)",
+        "ln(distance / m)",
+        "ln(corrected signal / count)"
+      ],
+      "scenario": "Twelve settled ruler observations, forward and back.",
+      "realism": [
+        "Each row captures the latest light sample and its two timestamps.",
+        "Background 10 counts and positive-distance gates are applied.",
+        "The corrected signal times distance squared is nearly constant.",
+        "No interpolation between manual positions is implied."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/illuminance-distance_light.example.csv",
+      "experiment": "illuminance-distance.phyphox",
+      "sensor": "TI SensorTag CC2650 OPT3001",
+      "acquisition_path": "SensorTag AA71 notification, AA73=0x50 (0.8 s)",
+      "nominal_rate_hz": 1.25,
+      "duration_s": 60.0,
+      "rows": 76,
+      "columns": [
+        "Light receive time (s)",
+        "OPT3001 raw word (uint16)",
+        "Decoded illuminance (lx)",
+        "Background-corrected illuminance (lx)",
+        "Previous mouse displacement at light time (counts)",
+        "Calibrated source distance (m)",
+        "Inverse square distance (1/m²)",
+        "Corrected illuminance times distance squared (lx m²)",
+        "ln(distance / m)",
+        "ln(corrected illuminance / lx)"
+      ],
+      "scenario": "Lamp-off background 2 lx and a 1/r² illuminance sweep from 0.20 to 0.80 m.",
+      "realism": [
+        "Exact OPT3001 exponent/mantissa encoding and 3% gain error.",
+        "1% optical noise and a 2 lx background.",
+        "At each light time the most recent previous mouse sample supplies the distance.",
+        "Mouse and light receive clocks are separate."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/illuminance-distance_mouse.example.csv",
+      "experiment": "illuminance-distance.phyphox",
+      "sensor": "BLE HID boot mouse",
+      "acquisition_path": "HID report characteristic 2A33, event-driven",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "Mouse receive time (s)",
+        "Mouse delta x (counts)",
+        "Mouse delta y (counts)",
+        "Integrated mouse x (counts)",
+        "Integrated mouse y (counts)",
+        "Radial mouse displacement (counts)"
+      ],
+      "scenario": "Carriage moves outward from 0.20 to 0.80 m and back in 0.05–0.10 m steps.",
+      "realism": [
+        "0.0002 m per count and a 0.15 m reset-origin distance.",
+        "Signed dx/dy reports integrated into x and y.",
+        "Small tracking noise and a straight rail; no arbitrary 2-D path.",
+        "Mouse and light clocks are independent."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/magnetic-current.example.csv",
+      "experiment": "magnetic-current.phyphox",
+      "sensor": "Phone magnetometer",
+      "acquisition_path": "phyphox magnetic_field sensor, 10 Hz",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 60.0,
+      "rows": 601,
+      "columns": [
+        "mag_t",
+        "bx",
+        "by",
+        "bz",
+        "mag_accuracy",
+        "current"
+      ],
+      "scenario": "DC current steps 0, 0.1, 0.2, 0.3, 0.4, 0.2, and 0 A, each held for 8 s.",
+      "realism": [
+        "Bz = 30 µT + 50 µT/A × current with 0.35 µT noise.",
+        "Two-point calibration B1=30 µT at 0 A and B2=50 µT at 0.4 A.",
+        "Accuracy code 3 is reported; DC plateaus only.",
+        "Geometry and nearby magnetic background are assumed fixed."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/malus-law.example.csv",
+      "experiment": "malus-law.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)"
+      ],
+      "scenario": "Analyzer angle stepped from 0° to 90° in 10° increments, with settles.",
+      "realism": [
+        "Clear counts follow 10 + 1000 cos²(theta).",
+        "APDS channel gains, noise, and 4100-count clipping.",
+        "The angle is a manual protractor observation, not a gyro measurement.",
+        "The paired observation table is a separate example file."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/malus-law_observations.example.csv",
+      "experiment": "malus-law.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960 and manual protractor",
+      "acquisition_path": "Recorded settled angle snapshots from the 20 Hz light stream",
+      "nominal_rate_hz": null,
+      "duration_s": 60.0,
+      "rows": 10,
+      "columns": [
+        "Observed protractor angle (deg)",
+        "Captured device time (s)",
+        "Captured receive time (s)",
+        "Captured clear signal (counts)",
+        "Angle from parallel (deg)",
+        "Cos-squared prediction (1)",
+        "Normalized transmission (1)",
+        "Measured minus cos-squared (1)"
+      ],
+      "scenario": "Ten angle observations with an aligned parallel axis and a 10-count floor.",
+      "realism": [
+        "Cos-squared prediction with an angle zero of 0°.",
+        "Normalized transmission uses background 10 and parallel signal 1010 counts.",
+        "Small residuals reflect count noise and angle settling.",
+        "The table does not acquire the Nano gyroscope simultaneously."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/nano-transit.example.csv",
+      "experiment": "nano-transit.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 120.0,
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized"
+      ],
+      "scenario": "Three 4% transits of 4 s duration at 20, 50, and 80 s.",
+      "realism": [
+        "Clear/RGB counts with APDS gains, noise, and 4100-count clipping.",
+        "Normalized light uses dark 10 and baseline 110 counts.",
+        "A 4 s event spans about 80 samples at 20 Hz.",
+        "Threshold timing and projected radius remain analysis results, not columns here."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/pocketlab-gyroscope.example.csv",
+      "experiment": "pocketlab-gyroscope.phyphox",
+      "sensor": "PocketLab Voyager gyroscope",
+      "acquisition_path": "Voyager AA15 notification, 50 Hz assumed",
+      "nominal_rate_hz": 50.0,
+      "duration_s": 60.0,
+      "rows": 3001,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (rad/s)",
+        "Bias corrected y (rad/s)",
+        "Bias corrected z (rad/s)",
+        "Vector magnitude (rad/s)"
+      ],
+      "scenario": "Stationary, ±500 °/s yaw, +250/−250 °/s roll, then stationary.",
+      "realism": [
+        "2000/32768 °/s per signed big-endian count.",
+        "Gyro x at byte 8, y at byte 6, z at byte 10.",
+        "Bias of 0.01, -0.02, 0.015 rad/s and 1.5 °/s rate noise.",
+        "Receive time is a phone clock; no device timestamp is present."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/pressure-boiling.example.csv",
+      "experiment": "pressure-boiling.phyphox",
+      "sensor": "Calibrated absolute-pressure instrument and liquid-temperature probe",
+      "acquisition_path": "Manual paired observations",
+      "nominal_rate_hz": null,
+      "duration_s": null,
+      "rows": 15,
+      "columns": [
+        "Observation ID",
+        "Absolute pressure (kPa)",
+        "Liquid temperature (degC)",
+        "Observation code (0 liquid, 1 sustained boiling, 2 uncertain)",
+        "Pair checked (1=yes)",
+        "Pressure uncertainty (kPa)",
+        "Temperature uncertainty (K)",
+        "Checked liquid temperature (K)",
+        "Checked absolute pressure (kPa)",
+        "Observed sustained-boiling pressure (kPa)"
+      ],
+      "scenario": "Fifteen settled pressure/temperature pairs from 101.3 kPa down to 5 kPa, with liquid, boiling, and uncertain codes.",
+      "realism": [
+        "Saturation temperatures follow the Antoine water curve.",
+        "Pressure uncertainty 0.1 kPa and temperature uncertainty 0.2 K.",
+        "Boiling code 1 is an operator judgement, not an automatic phase-boundary detection.",
+        "The table is a classroom observation map, not a complete phase diagram."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/puck-light.example.csv",
+      "experiment": "puck-light.phyphox",
+      "sensor": "Espruino Puck.js light sensor",
+      "acquisition_path": "Puck.js Nordic UART notification, 4 Hz timer",
+      "nominal_rate_hz": 4.0,
+      "duration_s": 60.0,
+      "rows": 241,
+      "columns": [
+        "Receive time (s)",
+        "Puck getTime clock (s)",
+        "Raw relative light",
+        "Domain checked relative light",
+        "Dark corrected reference ratio"
+      ],
+      "scenario": "Dark, open reference, sample, open reference, dark intervals.",
+      "realism": [
+        "Puck.light() is a relative 0..1 response, not lux.",
+        "4 Hz sampling with independent device and receive clocks.",
+        "0.02 noise and a 0.02 dark / 0.90 reference calibration.",
+        "The ratio is gated by the reference validity in the experiment."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/rgb-filter-transmission.example.csv",
+      "experiment": "rgb-filter-transmission.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)",
+        "clear transmission (1)",
+        "red transmission (1)",
+        "green transmission (1)",
+        "blue transmission (1)"
+      ],
+      "scenario": "Dark, unfiltered reference, red, green, blue filters, reference, dark.",
+      "realism": [
+        "Raw APDS counts with channel gains, noise, and 4100-count clipping.",
+        "Transmission = (S−D)/(R−D) per channel with same-geometry references.",
+        "Filter plateaus are not spectra and are not calibrated lux.",
+        "The count ceiling is a screening bound, not a measured linearity limit."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/seasons-obliquity.example.csv",
+      "experiment": "seasons-obliquity.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue"
+      ],
+      "scenario": "Twelve 5 s plateaus: upright or tilted axis, two orbital positions, three latitudes.",
+      "realism": [
+        "Clear counts follow a cosine-like illumination proxy.",
+        "Raw RGBC counts include APDS gains, noise, and clipping.",
+        "Labels are manual operator entries, not electronic geometry.",
+        "The observation table is a separate example file."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/seasons-obliquity_observations.example.csv",
+      "experiment": "seasons-obliquity.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960 and manual labels",
+      "acquisition_path": "Recorded observation rows from the 20 Hz light stream",
+      "nominal_rate_hz": null,
+      "duration_s": 60.0,
+      "rows": 12,
+      "columns": [
+        "row_device_time",
+        "row_receive_time",
+        "row_clear",
+        "row_red",
+        "row_green",
+        "row_blue",
+        "row_trial",
+        "row_latitude",
+        "row_orbit_position",
+        "row_obliquity",
+        "row_source_distance",
+        "row_enabled",
+        "row_dark",
+        "row_baseline",
+        "row_relative"
+      ],
+      "scenario": "Twelve labeled observations covering trial, latitude, orbit position, and obliquity.",
+      "realism": [
+        "Source distance is fixed at 100 cm for all rows.",
+        "Dark 10 counts and baseline 1100 counts are stored per row.",
+        "Relative response is a detector comparison, not a temperature ratio.",
+        "Labels and positions are manual, not electronic measurements."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/sensortag-environmental_barometer.example.csv",
+      "experiment": "sensortag-environmental.phyphox",
+      "sensor": "TI SensorTag CC2650 BMP280",
+      "acquisition_path": "SensorTag AA41 notification, AA44=0xFF (2.55 s)",
+      "nominal_rate_hz": 0.392,
+      "duration_s": 120.0,
+      "rows": 48,
+      "columns": [
+        "Receive time (s)",
+        "Pressure (hPa)",
+        "BMP280 die temperature (°C)",
+        "pressure_raw (packet count)",
+        "bmp_temperature_raw (packet count)"
+      ],
+      "scenario": "Near-ambient pressure and a slowly warming barometer die.",
+      "realism": [
+        "Pressure and die temperature words are scaled by 0.01.",
+        "0.02 hPa and 0.02 °C noise.",
+        "Barometer receive times are offset from the humidity stream.",
+        "No interpolation or common clock is implied."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/sensortag-environmental_humidity.example.csv",
+      "experiment": "sensortag-environmental.phyphox",
+      "sensor": "TI SensorTag CC2650 HDC1000",
+      "acquisition_path": "SensorTag AA21 notification, AA23=0xFF (2.55 s)",
+      "nominal_rate_hz": 0.392,
+      "duration_s": 120.0,
+      "rows": 48,
+      "columns": [
+        "Receive time (s)",
+        "Relative humidity (%)",
+        "HDC1000 temperature (°C)",
+        "humidity_raw (packet count)",
+        "hdc_temperature_raw (packet count)"
+      ],
+      "scenario": "Slow warming and a humidity pulse from 30 to 80 s.",
+      "realism": [
+        "HDC1000 conversions T = 165 raw/65536 − 40 and RH = 100 raw/65536.",
+        "Low two humidity status bits set and masked.",
+        "0.05 °C and 0.4 %RH noise; no condensation correction.",
+        "Humidity and barometer notifications keep separate receive clocks."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/spectral-fingerprints.example.csv",
+      "experiment": "spectral-fingerprints.phyphox",
+      "sensor": "Calibrated spectrometer or calibrated spectrum files",
+      "acquisition_path": "Manual paired wavelength bins",
+      "nominal_rate_hz": null,
+      "duration_s": null,
+      "rows": 21,
+      "columns": [
+        "Observation ID",
+        "Calibrated wavelength (nm)",
+        "Comparison line wavelength (nm)",
+        "Sample intensity (a.u.)",
+        "Star-only intensity (a.u.)",
+        "Continuum reference intensity (a.u.)",
+        "Dark intensity (a.u.)",
+        "Unsaturated ceiling (a.u.)",
+        "Same wavelength and intensity scale (1=yes)",
+        "Wavelength uncertainty (nm)",
+        "Sample over continuum reference",
+        "Star over continuum reference",
+        "Sample line depth",
+        "Extra sample depth",
+        "Offset from selected comparison line (nm)"
+      ],
+      "scenario": "Twenty-one 15 nm bins from 400 to 700 nm with stellar and sample absorption features.",
+      "realism": [
+        "All four intensities are in the same linear arbitrary units.",
+        "Reference exceeds dark; sample and star remain below the 200-unit ceiling.",
+        "A 589 nm comparison line is used below 622 nm and 656 nm above.",
+        "Line depths are relative to the entered continuum, not a molecular retrieval."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/starspot-crossing.example.csv",
+      "experiment": "starspot-crossing.phyphox",
+      "sensor": "Arduino Nano 33 BLE Sense APDS-9960",
+      "acquisition_path": "Nano mode 6 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 120.0,
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized"
+      ],
+      "scenario": "Normal transits at 20 and 80 s; an adjacent plateau at 45–49/55–59 s; a spot crossing at 50–54 s.",
+      "realism": [
+        "Raw APDS counts with channel gains and noise.",
+        "Normalized light uses dark 10 and patched baseline 110 counts.",
+        "The spot crossing is an upward anomaly relative to the adjacent plateau.",
+        "No spot radius, temperature, or unique stellar map is inferred."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/static-friction_gravity.example.csv",
+      "experiment": "static-friction.phyphox",
+      "sensor": "Phone accelerometer (gravity-sensitive)",
+      "acquisition_path": "phyphox accelerometer sensor, 50 Hz",
+      "nominal_rate_hz": 50.0,
+      "duration_s": 30.0,
+      "rows": 1501,
+      "columns": [
+        "gx",
+        "gy",
+        "gz",
+        "gravity_t",
+        "angle",
+        "gnorm"
+      ],
+      "scenario": "Ramp held at 0° for 5 s, raised to 25° by 20 s, then held while slip begins.",
+      "realism": [
+        "Gravity vector in phone coordinates with 0.02 m/s² noise.",
+        "Inclination from atan2(hypot(gx,gy), abs(gz)).",
+        "The mount is assumed parallel to the contact plane.",
+        "The capture summary is analysis output, not a per-sample column here."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/static-friction_linear.example.csv",
+      "experiment": "static-friction.phyphox",
+      "sensor": "Phone linear acceleration",
+      "acquisition_path": "phyphox linear_acceleration sensor, 50 Hz",
+      "nominal_rate_hz": 50.0,
+      "duration_s": 30.0,
+      "rows": 1501,
+      "columns": [
+        "lin_a",
+        "lin_t"
+      ],
+      "scenario": "Stationary noise, a 0.5 s 2 m/s² slip excursion at 20 s, then 0.8 m/s² motion.",
+      "realism": [
+        "Absolute linear acceleration in m/s².",
+        "Baseline noise about 0.1 m/s².",
+        "The slip threshold is a detection setting, not a calibrated material constant.",
+        "Gravity and linear acceleration retain separate clocks."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/uv-transmission_observations.example.csv",
+      "experiment": "uv-transmission.phyphox",
+      "sensor": "External UV detector on Nano A0",
+      "acquisition_path": "Recorded observations from the 20 Hz analog stream",
+      "nominal_rate_hz": null,
+      "duration_s": 60.0,
+      "rows": 6,
+      "columns": [
+        "Observation ID",
+        "Unfiltered reference (count)",
+        "Covered detector dark (count)",
+        "Paired linear readings checked (1=yes)",
+        "Measured ADC voltage gain (V/count)",
+        "Measured ADC voltage offset (V)",
+        "ADC calibration checked (1=yes)",
+        "Measured detector irradiance gain (W/m2/V)",
+        "Irradiance calibration checked (1=yes)",
+        "Captured A0 (count)",
+        "Captured device time (s)",
+        "Captured receive time (s)",
+        "UV detector weighted transmission",
+        "Calibrated sample voltage (V)",
+        "Calibrated dark voltage (V)",
+        "Calibrated detector-band irradiance (W/m2)"
+      ],
+      "scenario": "Six observations with sample counts 310, 250, 180, 310, 250, 310.",
+      "realism": [
+        "ADC gain 3.3 V / 1023 counts and zero offset.",
+        "Detector irradiance gain 0.01 W/m²/V as an example calibration.",
+        "Transmission is a detector-weighted band ratio, not a resolved UV spectrum.",
+        "All voltage values stay inside the 0–3.3 V input range."
+      ],
+      "example": true
+    },
+    {
+      "file": "drafts/uv-transmission_raw.example.csv",
+      "experiment": "uv-transmission.phyphox",
+      "sensor": "External UV detector on Nano A0",
+      "acquisition_path": "Nano mode 9 BLE notification, 20 Hz",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "Device time (s)",
+        "Receive time (s)",
+        "A0 (count)",
+        "A1 (count)",
+        "A2 (count)"
+      ],
+      "scenario": "Dark, unfiltered reference, UV sample, reference, dark.",
+      "realism": [
+        "10-bit ADC counts 0–1023 with the default firmware resolution.",
+        "A0 dark 10 counts, reference 610 counts, sample 310 counts.",
+        "A1 and A2 carry only noise in this example.",
+        "The APDS RGB sensor is not used as a UV detector."
+      ],
+      "example": true
+    }
+  ]
+}

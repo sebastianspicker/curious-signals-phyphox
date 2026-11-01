@@ -1,0 +1,235 @@
+<!-- Original Curious Signals development draft; source context: docs/drafts/eclipsing-binary.md. -->
+<phyphox version="1.17" locale="en">
+  <title>Draft: Eclipsing binary minima</title>
+  <category>Curious Signals drafts</category>
+  <description>Development draft: Nano mode 6 photometry of TWO luminous bodies. Compare manual primary and secondary minimum means against the combined unobscured baseline. Optional phase uses an explicitly entered primary epoch and full primary-to-primary period.</description>
+  <data-containers>
+    <container size="0">device_time</container>
+    <container size="0">receive_time</container>
+    <container size="0">clear</container>
+    <container size="0">red</container>
+    <container size="0">green</container>
+    <container size="0">blue</container>
+    <container size="1" init="0">enabled</container>
+    <container size="1" init="0">dark</container>
+    <container size="1" init="0">baseline</container>
+    <container size="1">den</container>
+    <container size="0">normalized</container>
+    <container size="1" init="0">primary_mean</container>
+    <container size="1" init="0">secondary_mean</container>
+    <container size="1">primary_depth_candidate</container>
+    <container size="1">primary_depth_gated</container>
+    <container size="1">primary_depth</container>
+    <container size="1">secondary_depth_candidate</container>
+    <container size="1">secondary_depth_gated</container>
+    <container size="1">secondary_depth</container>
+    <container size="1">depth_contrast_candidate</container>
+    <container size="1">depth_contrast_gated</container>
+    <container size="1">depth_contrast</container>
+    <container size="1" init="0">phase_enabled</container>
+    <container size="1" init="0">epoch</container>
+    <container size="1" init="0">period</container>
+    <container size="0">cycles</container>
+    <container size="0">phase</container>
+  </data-containers>
+  <input>
+    <bluetooth id="Sense" name="phyphox-sense" mode="notification" subscribeOnStart="true">
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="0">device_time</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="4">clear</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="8">red</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="12">green</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="16">blue</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" extra="time">receive_time</output>
+    </bluetooth>
+  </input>
+  <output>
+    <bluetooth id="Sense" name="phyphox-sense">
+      <config char="cddf1003-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian">6</config>
+    </bluetooth>
+  </output>
+  <analysis sleep="0.1">
+    <formula formula="[1]-[2]">
+      <input type="buffer" clear="false">baseline</input>
+      <input type="buffer" clear="false">dark</input>
+      <output clear="true">den</output>
+    </formula>
+    <formula formula="([1_]-[2])/([3]-[2])*((heaviside([3]-[2])*sign([3]-[2]))/(heaviside([3]-[2])*sign([3]-[2])))*((1-sign(abs([4]-1)))/(1-sign(abs([4]-1))))">
+      <input type="buffer" clear="false">clear</input>
+      <input type="buffer" clear="false">dark</input>
+      <input type="buffer" clear="false">baseline</input>
+      <input type="buffer" clear="false">enabled</input>
+      <output clear="true">normalized</output>
+    </formula>
+    <formula formula="([1]-[2])/[3]">
+      <input type="buffer" clear="false">baseline</input>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">den</input>
+      <output clear="true">primary_depth_candidate</output>
+    </formula>
+    <formula formula="[1]*((heaviside([2])*sign([2]))/(heaviside([2])*sign([2])))*((1-sign(abs([3]-1)))/(1-sign(abs([3]-1))))">
+      <input type="buffer" clear="false">primary_depth_candidate</input>
+      <input type="buffer" clear="false">den</input>
+      <input type="buffer" clear="false">enabled</input>
+      <output clear="true">primary_depth_gated</output>
+    </formula>
+    <formula formula="[1]*((heaviside([2]-(0)))/(heaviside([2]-(0))))*((heaviside((1)-[3]))/(heaviside((1)-[3])))*((heaviside([5]-[4]))/(heaviside([5]-[4])))*((heaviside([6]-[8]))/(heaviside([6]-[8])))*((heaviside([9]-[7]))/(heaviside([9]-[7])))">
+      <input type="buffer" clear="false">primary_depth_gated</input>
+      <input type="buffer" clear="false">primary_depth_candidate</input>
+      <input type="buffer" clear="false">primary_depth_candidate</input>
+      <output clear="true">primary_depth</output>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">dark</input>
+      <input type="buffer" clear="false">baseline</input>
+    </formula>
+    <formula formula="([1]-[2])/[3]">
+      <input type="buffer" clear="false">baseline</input>
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">den</input>
+      <output clear="true">secondary_depth_candidate</output>
+    </formula>
+    <formula formula="[1]*((heaviside([2])*sign([2]))/(heaviside([2])*sign([2])))*((1-sign(abs([3]-1)))/(1-sign(abs([3]-1))))">
+      <input type="buffer" clear="false">secondary_depth_candidate</input>
+      <input type="buffer" clear="false">den</input>
+      <input type="buffer" clear="false">enabled</input>
+      <output clear="true">secondary_depth_gated</output>
+    </formula>
+    <formula formula="[1]*((heaviside([2]-(0)))/(heaviside([2]-(0))))*((heaviside((1)-[3]))/(heaviside((1)-[3])))*((heaviside([5]-[4]))/(heaviside([5]-[4])))*((heaviside([6]-[8]))/(heaviside([6]-[8])))*((heaviside([9]-[7]))/(heaviside([9]-[7])))">
+      <input type="buffer" clear="false">secondary_depth_gated</input>
+      <input type="buffer" clear="false">secondary_depth_candidate</input>
+      <input type="buffer" clear="false">secondary_depth_candidate</input>
+      <output clear="true">secondary_depth</output>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">dark</input>
+      <input type="buffer" clear="false">baseline</input>
+    </formula>
+    <formula formula="([1]-[2])/[3]">
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">den</input>
+      <output clear="true">depth_contrast_candidate</output>
+    </formula>
+    <formula formula="[1]*((heaviside([2])*sign([2]))/(heaviside([2])*sign([2])))*((1-sign(abs([3]-1)))/(1-sign(abs([3]-1))))">
+      <input type="buffer" clear="false">depth_contrast_candidate</input>
+      <input type="buffer" clear="false">den</input>
+      <input type="buffer" clear="false">enabled</input>
+      <output clear="true">depth_contrast_gated</output>
+    </formula>
+    <formula formula="[1]*((heaviside([2]-(0)))/(heaviside([2]-(0))))*((heaviside((1)-[3]))/(heaviside((1)-[3])))*((heaviside([5]-[4]))/(heaviside([5]-[4])))*((heaviside([6]-[8]))/(heaviside([6]-[8])))*((heaviside([9]-[7]))/(heaviside([9]-[7])))">
+      <input type="buffer" clear="false">depth_contrast_gated</input>
+      <input type="buffer" clear="false">depth_contrast_candidate</input>
+      <input type="buffer" clear="false">depth_contrast_candidate</input>
+      <output clear="true">depth_contrast</output>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">primary_mean</input>
+      <input type="buffer" clear="false">secondary_mean</input>
+      <input type="buffer" clear="false">dark</input>
+      <input type="buffer" clear="false">baseline</input>
+    </formula>
+    <formula formula="([1_]-[2])/[3]*((heaviside([3])*sign([3]))/(heaviside([3])*sign([3])))*((1-sign(abs([4]-1)))/(1-sign(abs([4]-1))))">
+      <input type="buffer" clear="false">receive_time</input>
+      <input type="buffer" clear="false">epoch</input>
+      <input type="buffer" clear="false">period</input>
+      <input type="buffer" clear="false">phase_enabled</input>
+      <output clear="true">cycles</output>
+    </formula>
+    <formula formula="[1_]-floor([1_])">
+      <input type="buffer" clear="false">cycles</input>
+      <output clear="true">phase</output>
+    </formula>
+  </analysis>
+  <views>
+    <view label="Acquisition">
+      <graph label="Raw clear counts" labelX="Receive time" labelY="Clear counts" unitX="s" unitY="counts" partialUpdate="false" style="lines">
+        <input axis="x">receive_time</input>
+        <input axis="y">clear</input>
+      </graph>
+      <value label="Device time (separate clock)" unit="s" precision="4">
+        <input>device_time</input>
+      </value>
+      <graph label="Normalized light curve" labelX="Receive time" labelY="Relative signal" unitX="s" unitY="1" partialUpdate="false" style="lines">
+        <input axis="x">receive_time</input>
+        <input axis="y">normalized</input>
+      </graph>
+      <graph label="Entered-period phase curve" labelX="Orbital phase" labelY="Relative signal" unitX="1" unitY="1" partialUpdate="false" style="dots">
+        <input axis="x">phase</input>
+        <input axis="y">normalized</input>
+      </graph>
+    </view>
+    <view label="Calibration">
+      <edit label="Enable reduction (0 or 1)" default="0" signed="true" decimal="true" min="0" max="1">
+        <output>enabled</output>
+      </edit>
+      <edit label="Dark/background mean" default="0" signed="true" decimal="true">
+        <output>dark</output>
+      </edit>
+      <edit label="Unocculted baseline mean" default="0" signed="true" decimal="true">
+        <output>baseline</output>
+      </edit>
+      <edit label="Enable phase (0 or 1)" default="0" signed="true" decimal="true" min="0" max="1">
+        <output>phase_enabled</output>
+      </edit>
+      <edit label="Primary epoch in receive seconds" default="0" signed="true" decimal="true" unit="s">
+        <output>epoch</output>
+      </edit>
+      <edit label="Full primary-to-primary period" default="0" signed="true" decimal="true" min="0" unit="s">
+        <output>period</output>
+      </edit>
+    </view>
+    <view label="Characteristic means">
+      <edit label="Primary (deeper) minimum mean" default="0" signed="true" decimal="true">
+        <output>primary_mean</output>
+      </edit>
+      <edit label="Secondary (shallower) minimum mean" default="0" signed="true" decimal="true">
+        <output>secondary_mean</output>
+      </edit>
+      <info>Enter the combined unobscured baseline and dark means under Calibration. Enter measured minima means from reproducible windows. Primary is the deeper eclipse: primary_mean &lt;= secondary_mean. Each depth=(baseline-minimum)/(baseline-dark), contrast=(secondary-primary)/(baseline-dark). Label which luminous body is hidden from geometry/video. Equal depths do not identify which star is hotter.</info>
+      <value label="Primary eclipse depth" unit="1" precision="4">
+        <input>primary_depth</input>
+      </value>
+      <value label="Secondary eclipse depth" unit="1" precision="4">
+        <input>secondary_depth</input>
+      </value>
+      <value label="Primary minus secondary depth" unit="1" precision="4">
+        <input>depth_contrast</input>
+      </value>
+    </view>
+    <view label="Setup">
+      <info>This is a development proposal based on AG2024 PDF p.46, not a recovered tested binary setup. Use two extended luminous disks with reproducible mutual eclipses, stable brightness and rigid viewing geometry. Record single-body and support-only controls. Primary means the deeper minimum; identify the hidden body separately. No single-planet radius or masses are inferred. The source centre-fixed turntable is not barycentric dynamics. To fold data, measure a full primary-to-primary period in receive seconds and primary epoch, then enable phase. Phase is (t-epoch)/period modulo 1; no fit or period discovery is performed. Secondary eclipse need not be at phase 0.5 in a general binary.</info>
+      <info>Draft software only. Import, BLE delivery, Android/iOS button behavior and physical apparatus remain to be validated. Counts are not lux. Keep source geometry and spectral output fixed; test linearity and avoid clipping. Changing current settings recalculates the live curve; export before changing runs. Device seconds and receive seconds are independent clocks. Do not infer timing precision from nominal firmware rate.</info>
+    </view>
+  </views>
+  <export>
+    <set name="Raw Nano mode 6">
+      <data name="receive_time">receive_time</data>
+      <data name="device_time">device_time</data>
+      <data name="clear">clear</data>
+      <data name="red">red</data>
+      <data name="green">green</data>
+      <data name="blue">blue</data>
+    </set>
+    <set name="Current controls">
+      <data name="enabled">enabled</data>
+      <data name="dark">dark</data>
+      <data name="baseline">baseline</data>
+      <data name="primary_mean">primary_mean</data>
+      <data name="secondary_mean">secondary_mean</data>
+      <data name="phase_enabled">phase_enabled</data>
+      <data name="epoch">epoch</data>
+      <data name="period">period</data>
+    </set>
+    <set name="Reduction">
+      <data name="normalized">normalized</data>
+      <data name="primary_depth">primary_depth</data>
+      <data name="secondary_depth">secondary_depth</data>
+      <data name="depth_contrast">depth_contrast</data>
+      <data name="phase">phase</data>
+    </set>
+  </export>
+</phyphox>

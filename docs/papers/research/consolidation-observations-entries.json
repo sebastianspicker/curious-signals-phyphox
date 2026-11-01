@@ -1,0 +1,6 @@
+[
+  {"slug":"pressure","title":"Barometric Height Changes with Bracketed Pressure References","short_title":"Barometric Height Changes","group":"observations","analysis_ids":["pressure"],"figures":["figures/pressure.tex"],"markdown":"companions/pressure.md"},
+  {"slug":"pressure-boiling","title":"Pressure-Dependent Boiling: Equilibrium Curves and Observational Thresholds","short_title":"Pressure-Dependent Boiling","group":"observations","analysis_ids":["pressure-boiling"],"figures":["figures/pressure-boiling.tex"],"markdown":"companions/pressure-boiling.md"},
+  {"slug":"spectral-fingerprints","title":"Paired Spectral Ratios: Separating Shared Features from Additional Attenuation","short_title":"Paired Spectral Ratios","group":"observations","analysis_ids":["spectral-fingerprints"],"figures":["figures/spectral-fingerprints.tex"],"markdown":"companions/spectral-fingerprints.md"},
+  {"slug":"coronagraph-contrast","title":"Occulting Masks: Background Suppression and Target Detectability","short_title":"Occulting-Mask Detectability","group":"observations","analysis_ids":["coronagraph-contrast"],"figures":["figures/coronagraph-contrast.tex"],"markdown":"companions/coronagraph-contrast.md"}
+]

@@ -1,0 +1,6081 @@
+{
+  "inputs": {
+    "drafts/audio-magnetic_audio.example.csv": {
+      "sha256": "474946110c3400810dc2cf53ebc82294ab9b91db3350594a8917b69d223d8f92",
+      "rows": 601,
+      "columns": [
+        "audio_t",
+        "audio_rms",
+        "audio_n",
+        "audio_fs",
+        "audio_duration",
+        "noise_corrected_rms",
+        "level"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/audio-magnetic_magnetic.example.csv": {
+      "sha256": "82436f2f5d67e63773fa5ec2e6d1e0e84aec6ea800bff94f969372de55b15f1f",
+      "rows": 1201,
+      "columns": [
+        "mag_t",
+        "bx",
+        "by",
+        "bz",
+        "mag_norm",
+        "mag_accuracy"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/cc2541-accelerometer.example.csv": {
+      "sha256": "43cff6176549a62a5471cee1bcd449e926ae797e5ec45fc01091dd32cbc6a109",
+      "rows": 601,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (m/s²)",
+        "Bias corrected y (m/s²)",
+        "Bias corrected z (m/s²)",
+        "Vector magnitude (m/s²)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/cc2541-gyroscope.example.csv": {
+      "sha256": "3b826ee4328391f51087e93dff1bb126091fcfbf96218e9479049f455766392b",
+      "rows": 601,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (rad/s)",
+        "Bias corrected y (rad/s)",
+        "Bias corrected z (rad/s)",
+        "Vector magnitude (rad/s)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/cc2541-humidity.example.csv": {
+      "sha256": "55bda0dca772a44e5d6969f2e7e80b84552de0d53739ed5491fd6688baee351b",
+      "rows": 61,
+      "columns": [
+        "Receive time (s)",
+        "Unsigned temperature packet word",
+        "Unsigned humidity packet word",
+        "Unbounded RH equation (%)",
+        "Domain checked RH (%)",
+        "SHT21 temperature (°C)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/cc2541-ir-temperature.example.csv": {
+      "sha256": "f8002f82551a57ac770f6f223d343748037fa22e5922346d606f3d7aef28ce3a",
+      "rows": 61,
+      "columns": [
+        "Receive time (s)",
+        "Signed thermopile packet word",
+        "Signed die packet word",
+        "Thermopile voltage (V)",
+        "Die temperature (°C)",
+        "Temperature dependent sensitivity (V/K^4)",
+        "Voltage offset (V)",
+        "Compensated flux voltage (V)",
+        "Application model object temperature (°C)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/cc2541-magnetometer.example.csv": {
+      "sha256": "5a3f491f28c7c0e58b62f5b255119207c7cb9534d581ecb3bcb05a2f10788ede",
+      "rows": 601,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (µT)",
+        "Bias corrected y (µT)",
+        "Bias corrected z (µT)",
+        "Vector magnitude (µT)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/cc2541-pressure.example.csv": {
+      "sha256": "fd6c76842620cbefa0f5c0c89827f51a2596c540cb45fcfb8d38cd35eb807efc",
+      "rows": 61,
+      "columns": [
+        "Data read receive time (s)",
+        "Unsigned pressure word",
+        "Signed temperature word",
+        "Pressure (hPa)",
+        "T5400 temperature (°C)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/colour-temperature.example.csv": {
+      "sha256": "af03395e454d0f1fe95251dade1047152eac62338a2a14535e41956ca94c79b3",
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)",
+        "Dark-corrected clear (counts)",
+        "Red / clear corrected (1)",
+        "Green / clear corrected (1)",
+        "Blue / clear corrected (1)",
+        "Provisional X (relative)",
+        "Provisional Y (relative)",
+        "Provisional Z (relative)",
+        "Provisional XYZ sum (relative)",
+        "Chromaticity x (1)",
+        "Chromaticity y (1)",
+        "McCamy n (1)",
+        "Unvalidated polynomial candidate (K)",
+        "Accepted indicative CCT (K)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/coronagraph-contrast.example.csv": {
+      "sha256": "8695d587b176507ef553aa760a1d5d70d68d7997f27fae439a8f6e5b3cfeff85",
+      "rows": 24,
+      "columns": [
+        "Observation ID",
+        "Mask code (0 absent, 1 present)",
+        "Image separation (pixel)",
+        "Exposure duration (ms)",
+        "Target ROI mean (a.u.)",
+        "Local background ROI mean (a.u.)",
+        "Uncertainty of target-minus-background mean (a.u.)",
+        "Unsaturated ceiling (a.u.)",
+        "Fixed linear image settings checked (1=yes)",
+        "Target minus background (a.u.)",
+        "Local relative contrast",
+        "Net signal rate (a.u./s)",
+        "Noise-normalized signal",
+        "Unmasked local contrast",
+        "Masked local contrast"
+      ],
+      "missing_cells": 24
+    },
+    "drafts/detector-characterization.example.csv": {
+      "sha256": "c81d5cfd760749f0886f11d1aa89af1910408b106e0a4e83becc20167804d374",
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/detector-characterization_summary.example.csv": {
+      "sha256": "f65620ff1e37e6d31d325c0ea64d198452fa4416923307ea4b5ed878a0ab85b4",
+      "rows": 1,
+      "columns": [
+        "Mean device interval (s)",
+        "Mean receive interval (s)",
+        "Device interval sample SD (s)",
+        "Receive interval sample SD (s)",
+        "Mean delivered device rate (Hz)",
+        "Mean delivered receive rate (Hz)",
+        "Selected baseline count (1)",
+        "Baseline mean (counts)",
+        "Baseline sample SD (counts)",
+        "Proposed signal drop (counts)",
+        "Expected single-sample SNR (1)",
+        "Mean samples per feature (1)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/eclipsing-binary.example.csv": {
+      "sha256": "b19a37f2d21abbfb250c5b1640731410e08503317afcd177902886d881dd09e4",
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized",
+        "phase"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/exomoon-photometry.example.csv": {
+      "sha256": "cd879411089ba6ae212466cf485c286463caaaedfd32f4ca5e5d899da6b41636",
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/greenhouse-single.example.csv": {
+      "sha256": "7ca658a88b15b949ffa1895176f6167c1735a8652fee96134acc2bf4040e3dc3",
+      "rows": 301,
+      "columns": [
+        "Receive time (s)",
+        "Receive time (min)",
+        "Signed BMP280 packet count",
+        "Die temperature (°C)",
+        "Baseline corrected rise (K)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/illuminance-distance-manual.example.csv": {
+      "sha256": "bd52d19f1b6b06e8561c35652218d4aa6528981c6a33625057f50b5c0d52d60c",
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/illuminance-distance-manual_observations.example.csv": {
+      "sha256": "783e248a446fac582df7f0c7873937b5ff7b4de67bbd89507a8ef2cdcdbd557f",
+      "rows": 12,
+      "columns": [
+        "Entered ruler distance (m)",
+        "Captured device time (s)",
+        "Captured receive time (s)",
+        "Captured clear signal (counts)",
+        "Background-corrected signal (counts)",
+        "Positive ruler distance (m)",
+        "Inverse square distance (1/m²)",
+        "Corrected signal times distance squared (count m²)",
+        "ln(distance / m)",
+        "ln(corrected signal / count)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/illuminance-distance_light.example.csv": {
+      "sha256": "cab254526967274b85dfb47298eecb231a0e4064ffd34013a03eb46d0746d6c9",
+      "rows": 76,
+      "columns": [
+        "Light receive time (s)",
+        "OPT3001 raw word (uint16)",
+        "Decoded illuminance (lx)",
+        "Background-corrected illuminance (lx)",
+        "Previous mouse displacement at light time (counts)",
+        "Calibrated source distance (m)",
+        "Inverse square distance (1/m²)",
+        "Corrected illuminance times distance squared (lx m²)",
+        "ln(distance / m)",
+        "ln(corrected illuminance / lx)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/illuminance-distance_mouse.example.csv": {
+      "sha256": "b7ded40135f65e8d8aaa809700d852bc4cc45ab2dc49d0648982abcc499ffbd7",
+      "rows": 1201,
+      "columns": [
+        "Mouse receive time (s)",
+        "Mouse delta x (counts)",
+        "Mouse delta y (counts)",
+        "Integrated mouse x (counts)",
+        "Integrated mouse y (counts)",
+        "Radial mouse displacement (counts)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/magnetic-current.example.csv": {
+      "sha256": "204095e9c087ab14b92ce9694ad441d115c34802d8d704c61cf2735427de56e6",
+      "rows": 601,
+      "columns": [
+        "mag_t",
+        "bx",
+        "by",
+        "bz",
+        "mag_accuracy",
+        "current"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/malus-law.example.csv": {
+      "sha256": "f38614e26548f13c047be8b3d80a4c2d3be88715b128a604fffe318235dacebd",
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/malus-law_observations.example.csv": {
+      "sha256": "851ac55246cc0ca13bc63a0c2d06cf9160a29fedab3264743d31753fef221fa0",
+      "rows": 10,
+      "columns": [
+        "Observed protractor angle (deg)",
+        "Captured device time (s)",
+        "Captured receive time (s)",
+        "Captured clear signal (counts)",
+        "Angle from parallel (deg)",
+        "Cos-squared prediction (1)",
+        "Normalized transmission (1)",
+        "Measured minus cos-squared (1)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/nano-transit.example.csv": {
+      "sha256": "7680ae787ddbe2c68c88b30543e825f1f20e753ef375b1e453a91e5ace0f34b0",
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/pocketlab-gyroscope.example.csv": {
+      "sha256": "daffd5d1c810b2bbdadb7a544ee591dda57f0cf20f26130d73d52084e3ccdd62",
+      "rows": 3001,
+      "columns": [
+        "Receive time (s)",
+        "Signed packet x (count)",
+        "Signed packet y (count)",
+        "Signed packet z (count)",
+        "Bias corrected x (rad/s)",
+        "Bias corrected y (rad/s)",
+        "Bias corrected z (rad/s)",
+        "Vector magnitude (rad/s)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/pressure-boiling.example.csv": {
+      "sha256": "f21f15d6b97a47fe1b31644b7c42d1381bd573be1f9fb3a8869b2f3f289f4cb1",
+      "rows": 15,
+      "columns": [
+        "Observation ID",
+        "Absolute pressure (kPa)",
+        "Liquid temperature (degC)",
+        "Observation code (0 liquid, 1 sustained boiling, 2 uncertain)",
+        "Pair checked (1=yes)",
+        "Pressure uncertainty (kPa)",
+        "Temperature uncertainty (K)",
+        "Checked liquid temperature (K)",
+        "Checked absolute pressure (kPa)",
+        "Observed sustained-boiling pressure (kPa)"
+      ],
+      "missing_cells": 10
+    },
+    "drafts/puck-light.example.csv": {
+      "sha256": "95321b00c72a4426a89b1122bf154bfafa2a625a362f62801de15e37510063a4",
+      "rows": 241,
+      "columns": [
+        "Receive time (s)",
+        "Puck getTime clock (s)",
+        "Raw relative light",
+        "Domain checked relative light",
+        "Dark corrected reference ratio"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/rgb-filter-transmission.example.csv": {
+      "sha256": "9788ab9b8b4380dee7b3890253538cf103a35eca95fe218da85c4e71e92cb5e5",
+      "rows": 1201,
+      "columns": [
+        "device_t (s)",
+        "receive_t (s)",
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)",
+        "clear transmission (1)",
+        "red transmission (1)",
+        "green transmission (1)",
+        "blue transmission (1)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/seasons-obliquity.example.csv": {
+      "sha256": "f16e0431d09c3691b0a27bfc06e48c59a4975dcaf60f6c56b18b54184b90178c",
+      "rows": 1201,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/seasons-obliquity_observations.example.csv": {
+      "sha256": "2bb981bdbfc45dc11c76d8019bd3c9cdbcdd93c3a597fc7d638ac69111843ec3",
+      "rows": 12,
+      "columns": [
+        "row_device_time",
+        "row_receive_time",
+        "row_clear",
+        "row_red",
+        "row_green",
+        "row_blue",
+        "row_trial",
+        "row_latitude",
+        "row_orbit_position",
+        "row_obliquity",
+        "row_source_distance",
+        "row_enabled",
+        "row_dark",
+        "row_baseline",
+        "row_relative"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/sensortag-environmental_barometer.example.csv": {
+      "sha256": "64610a41e2912448d93c9e8730d6823484a61b89f5180ce552f2d3621aff2038",
+      "rows": 48,
+      "columns": [
+        "Receive time (s)",
+        "Pressure (hPa)",
+        "BMP280 die temperature (°C)",
+        "pressure_raw (packet count)",
+        "bmp_temperature_raw (packet count)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/sensortag-environmental_humidity.example.csv": {
+      "sha256": "d82ef016174f7e3918d27231c1600a0a2c4187f93a402255524a5536a1a2d747",
+      "rows": 48,
+      "columns": [
+        "Receive time (s)",
+        "Relative humidity (%)",
+        "HDC1000 temperature (°C)",
+        "humidity_raw (packet count)",
+        "hdc_temperature_raw (packet count)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/spectral-fingerprints.example.csv": {
+      "sha256": "6a9f33769a866958630f19b06f58c1c07ca301c7c1c4aa2b52eca03844aaceb8",
+      "rows": 21,
+      "columns": [
+        "Observation ID",
+        "Calibrated wavelength (nm)",
+        "Comparison line wavelength (nm)",
+        "Sample intensity (a.u.)",
+        "Star-only intensity (a.u.)",
+        "Continuum reference intensity (a.u.)",
+        "Dark intensity (a.u.)",
+        "Unsaturated ceiling (a.u.)",
+        "Same wavelength and intensity scale (1=yes)",
+        "Wavelength uncertainty (nm)",
+        "Sample over continuum reference",
+        "Star over continuum reference",
+        "Sample line depth",
+        "Extra sample depth",
+        "Offset from selected comparison line (nm)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/starspot-crossing.example.csv": {
+      "sha256": "5d7c62fb5974d7b0b49c53a99bb21bb06bd1c94a2e3d91a5eda4e3677728dcb7",
+      "rows": 2401,
+      "columns": [
+        "receive_time",
+        "device_time",
+        "clear",
+        "red",
+        "green",
+        "blue",
+        "normalized"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/static-friction_gravity.example.csv": {
+      "sha256": "b481bd84ae161bab7bc794ada38653cfa5f2e5c7dfeb47b534ebef44e0802d08",
+      "rows": 1501,
+      "columns": [
+        "gx",
+        "gy",
+        "gz",
+        "gravity_t",
+        "angle",
+        "gnorm"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/static-friction_linear.example.csv": {
+      "sha256": "a4aa76971c8cf7af361c7629fad2fd0921a747abc954767d78cce9449c75d151",
+      "rows": 1501,
+      "columns": [
+        "lin_a",
+        "lin_t"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/uv-transmission_observations.example.csv": {
+      "sha256": "c2f43c473dead59195c3dd7025efbe6742583425352a66caea12ae681a404797",
+      "rows": 6,
+      "columns": [
+        "Observation ID",
+        "Unfiltered reference (count)",
+        "Covered detector dark (count)",
+        "Paired linear readings checked (1=yes)",
+        "Measured ADC voltage gain (V/count)",
+        "Measured ADC voltage offset (V)",
+        "ADC calibration checked (1=yes)",
+        "Measured detector irradiance gain (W/m2/V)",
+        "Irradiance calibration checked (1=yes)",
+        "Captured A0 (count)",
+        "Captured device time (s)",
+        "Captured receive time (s)",
+        "UV detector weighted transmission",
+        "Calibrated sample voltage (V)",
+        "Calibrated dark voltage (V)",
+        "Calibrated detector-band irradiance (W/m2)"
+      ],
+      "missing_cells": 0
+    },
+    "drafts/uv-transmission_raw.example.csv": {
+      "sha256": "7f06748065c75b3a554ba5020e862bbde962042abb092ff147192456a359b7dc",
+      "rows": 1201,
+      "columns": [
+        "Device time (s)",
+        "Receive time (s)",
+        "A0 (count)",
+        "A1 (count)",
+        "A2 (count)"
+      ],
+      "missing_cells": 0
+    }
+  },
+  "papers": {
+    "greenhouse-single": {
+      "inputs": {
+        "drafts/greenhouse-single.example.csv": {
+          "sha256": "7ca658a88b15b949ffa1895176f6167c1735a8652fee96134acc2bf4040e3dc3",
+          "rows": 301,
+          "columns": [
+            "Receive time (s)",
+            "Receive time (min)",
+            "Signed BMP280 packet count",
+            "Die temperature (°C)",
+            "Baseline corrected rise (K)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "puck-light": {
+      "inputs": {
+        "drafts/puck-light.example.csv": {
+          "sha256": "95321b00c72a4426a89b1122bf154bfafa2a625a362f62801de15e37510063a4",
+          "rows": 241,
+          "columns": [
+            "Receive time (s)",
+            "Puck getTime clock (s)",
+            "Raw relative light",
+            "Domain checked relative light",
+            "Dark corrected reference ratio"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "cc2541-accelerometer": {
+      "inputs": {
+        "drafts/cc2541-accelerometer.example.csv": {
+          "sha256": "43cff6176549a62a5471cee1bcd449e926ae797e5ec45fc01091dd32cbc6a109",
+          "rows": 601,
+          "columns": [
+            "Receive time (s)",
+            "Signed packet x (count)",
+            "Signed packet y (count)",
+            "Signed packet z (count)",
+            "Bias corrected x (m/s²)",
+            "Bias corrected y (m/s²)",
+            "Bias corrected z (m/s²)",
+            "Vector magnitude (m/s²)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "cc2541-gyroscope": {
+      "inputs": {
+        "drafts/cc2541-gyroscope.example.csv": {
+          "sha256": "3b826ee4328391f51087e93dff1bb126091fcfbf96218e9479049f455766392b",
+          "rows": 601,
+          "columns": [
+            "Receive time (s)",
+            "Signed packet x (count)",
+            "Signed packet y (count)",
+            "Signed packet z (count)",
+            "Bias corrected x (rad/s)",
+            "Bias corrected y (rad/s)",
+            "Bias corrected z (rad/s)",
+            "Vector magnitude (rad/s)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "cc2541-magnetometer": {
+      "inputs": {
+        "drafts/cc2541-magnetometer.example.csv": {
+          "sha256": "5a3f491f28c7c0e58b62f5b255119207c7cb9534d581ecb3bcb05a2f10788ede",
+          "rows": 601,
+          "columns": [
+            "Receive time (s)",
+            "Signed packet x (count)",
+            "Signed packet y (count)",
+            "Signed packet z (count)",
+            "Bias corrected x (µT)",
+            "Bias corrected y (µT)",
+            "Bias corrected z (µT)",
+            "Vector magnitude (µT)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "cc2541-humidity": {
+      "inputs": {
+        "drafts/cc2541-humidity.example.csv": {
+          "sha256": "55bda0dca772a44e5d6969f2e7e80b84552de0d53739ed5491fd6688baee351b",
+          "rows": 61,
+          "columns": [
+            "Receive time (s)",
+            "Unsigned temperature packet word",
+            "Unsigned humidity packet word",
+            "Unbounded RH equation (%)",
+            "Domain checked RH (%)",
+            "SHT21 temperature (°C)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "cc2541-pressure": {
+      "inputs": {
+        "drafts/cc2541-pressure.example.csv": {
+          "sha256": "fd6c76842620cbefa0f5c0c89827f51a2596c540cb45fcfb8d38cd35eb807efc",
+          "rows": 61,
+          "columns": [
+            "Data read receive time (s)",
+            "Unsigned pressure word",
+            "Signed temperature word",
+            "Pressure (hPa)",
+            "T5400 temperature (°C)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "cc2541-ir-temperature": {
+      "inputs": {
+        "drafts/cc2541-ir-temperature.example.csv": {
+          "sha256": "f8002f82551a57ac770f6f223d343748037fa22e5922346d606f3d7aef28ce3a",
+          "rows": 61,
+          "columns": [
+            "Receive time (s)",
+            "Signed thermopile packet word",
+            "Signed die packet word",
+            "Thermopile voltage (V)",
+            "Die temperature (°C)",
+            "Temperature dependent sensitivity (V/K^4)",
+            "Voltage offset (V)",
+            "Compensated flux voltage (V)",
+            "Application model object temperature (°C)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "pocketlab-gyroscope": {
+      "inputs": {
+        "drafts/pocketlab-gyroscope.example.csv": {
+          "sha256": "daffd5d1c810b2bbdadb7a544ee591dda57f0cf20f26130d73d52084e3ccdd62",
+          "rows": 3001,
+          "columns": [
+            "Receive time (s)",
+            "Signed packet x (count)",
+            "Signed packet y (count)",
+            "Signed packet z (count)",
+            "Bias corrected x (rad/s)",
+            "Bias corrected y (rad/s)",
+            "Bias corrected z (rad/s)",
+            "Vector magnitude (rad/s)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "sensortag-environmental": {
+      "inputs": {
+        "drafts/sensortag-environmental_humidity.example.csv": {
+          "sha256": "d82ef016174f7e3918d27231c1600a0a2c4187f93a402255524a5536a1a2d747",
+          "rows": 48,
+          "columns": [
+            "Receive time (s)",
+            "Relative humidity (%)",
+            "HDC1000 temperature (°C)",
+            "humidity_raw (packet count)",
+            "hdc_temperature_raw (packet count)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/sensortag-environmental_barometer.example.csv": {
+          "sha256": "64610a41e2912448d93c9e8730d6823484a61b89f5180ce552f2d3621aff2038",
+          "rows": 48,
+          "columns": [
+            "Receive time (s)",
+            "Pressure (hPa)",
+            "BMP280 die temperature (°C)",
+            "pressure_raw (packet count)",
+            "bmp_temperature_raw (packet count)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_adapters.py",
+        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+      }
+    },
+    "static-friction": {
+      "inputs": {
+        "drafts/static-friction_gravity.example.csv": {
+          "sha256": "b481bd84ae161bab7bc794ada38653cfa5f2e5c7dfeb47b534ebef44e0802d08",
+          "rows": 1501,
+          "columns": [
+            "gx",
+            "gy",
+            "gz",
+            "gravity_t",
+            "angle",
+            "gnorm"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/static-friction_linear.example.csv": {
+          "sha256": "a4aa76971c8cf7af361c7629fad2fd0921a747abc954767d78cce9449c75d151",
+          "rows": 1501,
+          "columns": [
+            "lin_a",
+            "lin_t"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_mechanics.py",
+        "sha256": "bd7f20f853d4a0db9a9eb68f3caac764e459bd734a6fccb8c727d54a453b45c4"
+      }
+    },
+    "audio-magnetic": {
+      "inputs": {
+        "drafts/audio-magnetic_audio.example.csv": {
+          "sha256": "474946110c3400810dc2cf53ebc82294ab9b91db3350594a8917b69d223d8f92",
+          "rows": 601,
+          "columns": [
+            "audio_t",
+            "audio_rms",
+            "audio_n",
+            "audio_fs",
+            "audio_duration",
+            "noise_corrected_rms",
+            "level"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/audio-magnetic_magnetic.example.csv": {
+          "sha256": "82436f2f5d67e63773fa5ec2e6d1e0e84aec6ea800bff94f969372de55b15f1f",
+          "rows": 1201,
+          "columns": [
+            "mag_t",
+            "bx",
+            "by",
+            "bz",
+            "mag_norm",
+            "mag_accuracy"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_mechanics.py",
+        "sha256": "bd7f20f853d4a0db9a9eb68f3caac764e459bd734a6fccb8c727d54a453b45c4"
+      }
+    },
+    "magnetic-current": {
+      "inputs": {
+        "drafts/magnetic-current.example.csv": {
+          "sha256": "204095e9c087ab14b92ce9694ad441d115c34802d8d704c61cf2735427de56e6",
+          "rows": 601,
+          "columns": [
+            "mag_t",
+            "bx",
+            "by",
+            "bz",
+            "mag_accuracy",
+            "current"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_mechanics.py",
+        "sha256": "bd7f20f853d4a0db9a9eb68f3caac764e459bd734a6fccb8c727d54a453b45c4"
+      }
+    },
+    "pressure-boiling": {
+      "inputs": {
+        "drafts/pressure-boiling.example.csv": {
+          "sha256": "f21f15d6b97a47fe1b31644b7c42d1381bd573be1f9fb3a8869b2f3f289f4cb1",
+          "rows": 15,
+          "columns": [
+            "Observation ID",
+            "Absolute pressure (kPa)",
+            "Liquid temperature (degC)",
+            "Observation code (0 liquid, 1 sustained boiling, 2 uncertain)",
+            "Pair checked (1=yes)",
+            "Pressure uncertainty (kPa)",
+            "Temperature uncertainty (K)",
+            "Checked liquid temperature (K)",
+            "Checked absolute pressure (kPa)",
+            "Observed sustained-boiling pressure (kPa)"
+          ],
+          "missing_cells": 10
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_observations.py",
+        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+      }
+    },
+    "spectral-fingerprints": {
+      "inputs": {
+        "drafts/spectral-fingerprints.example.csv": {
+          "sha256": "6a9f33769a866958630f19b06f58c1c07ca301c7c1c4aa2b52eca03844aaceb8",
+          "rows": 21,
+          "columns": [
+            "Observation ID",
+            "Calibrated wavelength (nm)",
+            "Comparison line wavelength (nm)",
+            "Sample intensity (a.u.)",
+            "Star-only intensity (a.u.)",
+            "Continuum reference intensity (a.u.)",
+            "Dark intensity (a.u.)",
+            "Unsaturated ceiling (a.u.)",
+            "Same wavelength and intensity scale (1=yes)",
+            "Wavelength uncertainty (nm)",
+            "Sample over continuum reference",
+            "Star over continuum reference",
+            "Sample line depth",
+            "Extra sample depth",
+            "Offset from selected comparison line (nm)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_observations.py",
+        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+      }
+    },
+    "coronagraph-contrast": {
+      "inputs": {
+        "drafts/coronagraph-contrast.example.csv": {
+          "sha256": "8695d587b176507ef553aa760a1d5d70d68d7997f27fae439a8f6e5b3cfeff85",
+          "rows": 24,
+          "columns": [
+            "Observation ID",
+            "Mask code (0 absent, 1 present)",
+            "Image separation (pixel)",
+            "Exposure duration (ms)",
+            "Target ROI mean (a.u.)",
+            "Local background ROI mean (a.u.)",
+            "Uncertainty of target-minus-background mean (a.u.)",
+            "Unsaturated ceiling (a.u.)",
+            "Fixed linear image settings checked (1=yes)",
+            "Target minus background (a.u.)",
+            "Local relative contrast",
+            "Net signal rate (a.u./s)",
+            "Noise-normalized signal",
+            "Unmasked local contrast",
+            "Masked local contrast"
+          ],
+          "missing_cells": 24
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_observations.py",
+        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+      }
+    },
+    "uv-transmission": {
+      "inputs": {
+        "drafts/uv-transmission_raw.example.csv": {
+          "sha256": "7f06748065c75b3a554ba5020e862bbde962042abb092ff147192456a359b7dc",
+          "rows": 1201,
+          "columns": [
+            "Device time (s)",
+            "Receive time (s)",
+            "A0 (count)",
+            "A1 (count)",
+            "A2 (count)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/uv-transmission_observations.example.csv": {
+          "sha256": "c2f43c473dead59195c3dd7025efbe6742583425352a66caea12ae681a404797",
+          "rows": 6,
+          "columns": [
+            "Observation ID",
+            "Unfiltered reference (count)",
+            "Covered detector dark (count)",
+            "Paired linear readings checked (1=yes)",
+            "Measured ADC voltage gain (V/count)",
+            "Measured ADC voltage offset (V)",
+            "ADC calibration checked (1=yes)",
+            "Measured detector irradiance gain (W/m2/V)",
+            "Irradiance calibration checked (1=yes)",
+            "Captured A0 (count)",
+            "Captured device time (s)",
+            "Captured receive time (s)",
+            "UV detector weighted transmission",
+            "Calibrated sample voltage (V)",
+            "Calibrated dark voltage (V)",
+            "Calibrated detector-band irradiance (W/m2)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_observations.py",
+        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+      }
+    },
+    "rgb-filter-transmission": {
+      "inputs": {
+        "drafts/rgb-filter-transmission.example.csv": {
+          "sha256": "9788ab9b8b4380dee7b3890253538cf103a35eca95fe218da85c4e71e92cb5e5",
+          "rows": 1201,
+          "columns": [
+            "device_t (s)",
+            "receive_t (s)",
+            "clear (counts)",
+            "red (counts)",
+            "green (counts)",
+            "blue (counts)",
+            "clear transmission (1)",
+            "red transmission (1)",
+            "green transmission (1)",
+            "blue transmission (1)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_optics.py",
+        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+      }
+    },
+    "illuminance-distance": {
+      "inputs": {
+        "drafts/illuminance-distance_light.example.csv": {
+          "sha256": "cab254526967274b85dfb47298eecb231a0e4064ffd34013a03eb46d0746d6c9",
+          "rows": 76,
+          "columns": [
+            "Light receive time (s)",
+            "OPT3001 raw word (uint16)",
+            "Decoded illuminance (lx)",
+            "Background-corrected illuminance (lx)",
+            "Previous mouse displacement at light time (counts)",
+            "Calibrated source distance (m)",
+            "Inverse square distance (1/m²)",
+            "Corrected illuminance times distance squared (lx m²)",
+            "ln(distance / m)",
+            "ln(corrected illuminance / lx)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/illuminance-distance_mouse.example.csv": {
+          "sha256": "b7ded40135f65e8d8aaa809700d852bc4cc45ab2dc49d0648982abcc499ffbd7",
+          "rows": 1201,
+          "columns": [
+            "Mouse receive time (s)",
+            "Mouse delta x (counts)",
+            "Mouse delta y (counts)",
+            "Integrated mouse x (counts)",
+            "Integrated mouse y (counts)",
+            "Radial mouse displacement (counts)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_optics.py",
+        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+      }
+    },
+    "illuminance-distance-manual": {
+      "inputs": {
+        "drafts/illuminance-distance-manual.example.csv": {
+          "sha256": "bd52d19f1b6b06e8561c35652218d4aa6528981c6a33625057f50b5c0d52d60c",
+          "rows": 1201,
+          "columns": [
+            "device_t (s)",
+            "receive_t (s)",
+            "clear (counts)",
+            "red (counts)",
+            "green (counts)",
+            "blue (counts)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/illuminance-distance-manual_observations.example.csv": {
+          "sha256": "783e248a446fac582df7f0c7873937b5ff7b4de67bbd89507a8ef2cdcdbd557f",
+          "rows": 12,
+          "columns": [
+            "Entered ruler distance (m)",
+            "Captured device time (s)",
+            "Captured receive time (s)",
+            "Captured clear signal (counts)",
+            "Background-corrected signal (counts)",
+            "Positive ruler distance (m)",
+            "Inverse square distance (1/m²)",
+            "Corrected signal times distance squared (count m²)",
+            "ln(distance / m)",
+            "ln(corrected signal / count)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_optics.py",
+        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+      }
+    },
+    "malus-law": {
+      "inputs": {
+        "drafts/malus-law.example.csv": {
+          "sha256": "f38614e26548f13c047be8b3d80a4c2d3be88715b128a604fffe318235dacebd",
+          "rows": 1201,
+          "columns": [
+            "device_t (s)",
+            "receive_t (s)",
+            "clear (counts)",
+            "red (counts)",
+            "green (counts)",
+            "blue (counts)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/malus-law_observations.example.csv": {
+          "sha256": "851ac55246cc0ca13bc63a0c2d06cf9160a29fedab3264743d31753fef221fa0",
+          "rows": 10,
+          "columns": [
+            "Observed protractor angle (deg)",
+            "Captured device time (s)",
+            "Captured receive time (s)",
+            "Captured clear signal (counts)",
+            "Angle from parallel (deg)",
+            "Cos-squared prediction (1)",
+            "Normalized transmission (1)",
+            "Measured minus cos-squared (1)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_optics.py",
+        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+      }
+    },
+    "colour-temperature": {
+      "inputs": {
+        "drafts/colour-temperature.example.csv": {
+          "sha256": "af03395e454d0f1fe95251dade1047152eac62338a2a14535e41956ca94c79b3",
+          "rows": 1201,
+          "columns": [
+            "device_t (s)",
+            "receive_t (s)",
+            "clear (counts)",
+            "red (counts)",
+            "green (counts)",
+            "blue (counts)",
+            "Dark-corrected clear (counts)",
+            "Red / clear corrected (1)",
+            "Green / clear corrected (1)",
+            "Blue / clear corrected (1)",
+            "Provisional X (relative)",
+            "Provisional Y (relative)",
+            "Provisional Z (relative)",
+            "Provisional XYZ sum (relative)",
+            "Chromaticity x (1)",
+            "Chromaticity y (1)",
+            "McCamy n (1)",
+            "Unvalidated polynomial candidate (K)",
+            "Accepted indicative CCT (K)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_optics.py",
+        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+      }
+    },
+    "detector-characterization": {
+      "inputs": {
+        "drafts/detector-characterization.example.csv": {
+          "sha256": "c81d5cfd760749f0886f11d1aa89af1910408b106e0a4e83becc20167804d374",
+          "rows": 1201,
+          "columns": [
+            "device_t (s)",
+            "receive_t (s)",
+            "clear (counts)",
+            "red (counts)",
+            "green (counts)",
+            "blue (counts)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/detector-characterization_summary.example.csv": {
+          "sha256": "f65620ff1e37e6d31d325c0ea64d198452fa4416923307ea4b5ed878a0ab85b4",
+          "rows": 1,
+          "columns": [
+            "Mean device interval (s)",
+            "Mean receive interval (s)",
+            "Device interval sample SD (s)",
+            "Receive interval sample SD (s)",
+            "Mean delivered device rate (Hz)",
+            "Mean delivered receive rate (Hz)",
+            "Selected baseline count (1)",
+            "Baseline mean (counts)",
+            "Baseline sample SD (counts)",
+            "Proposed signal drop (counts)",
+            "Expected single-sample SNR (1)",
+            "Mean samples per feature (1)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_optics.py",
+        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+      }
+    },
+    "nano-transit": {
+      "inputs": {
+        "drafts/nano-transit.example.csv": {
+          "sha256": "7680ae787ddbe2c68c88b30543e825f1f20e753ef375b1e453a91e5ace0f34b0",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_photometry.py",
+        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+      }
+    },
+    "exomoon-photometry": {
+      "inputs": {
+        "drafts/exomoon-photometry.example.csv": {
+          "sha256": "cd879411089ba6ae212466cf485c286463caaaedfd32f4ca5e5d899da6b41636",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_photometry.py",
+        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+      }
+    },
+    "starspot-crossing": {
+      "inputs": {
+        "drafts/starspot-crossing.example.csv": {
+          "sha256": "5d7c62fb5974d7b0b49c53a99bb21bb06bd1c94a2e3d91a5eda4e3677728dcb7",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_photometry.py",
+        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+      }
+    },
+    "eclipsing-binary": {
+      "inputs": {
+        "drafts/eclipsing-binary.example.csv": {
+          "sha256": "b19a37f2d21abbfb250c5b1640731410e08503317afcd177902886d881dd09e4",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized",
+            "phase"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_photometry.py",
+        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+      }
+    },
+    "seasons-obliquity": {
+      "inputs": {
+        "drafts/seasons-obliquity.example.csv": {
+          "sha256": "f16e0431d09c3691b0a27bfc06e48c59a4975dcaf60f6c56b18b54184b90178c",
+          "rows": 1201,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/seasons-obliquity_observations.example.csv": {
+          "sha256": "2bb981bdbfc45dc11c76d8019bd3c9cdbcdd93c3a597fc7d638ac69111843ec3",
+          "rows": 12,
+          "columns": [
+            "row_device_time",
+            "row_receive_time",
+            "row_clear",
+            "row_red",
+            "row_green",
+            "row_blue",
+            "row_trial",
+            "row_latitude",
+            "row_orbit_position",
+            "row_obliquity",
+            "row_source_distance",
+            "row_enabled",
+            "row_dark",
+            "row_baseline",
+            "row_relative"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/draft_photometry.py",
+        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+      }
+    }
+  },
+  "metrics": {
+    "greenhouse-single": {
+      "datasets": [
+        "drafts/greenhouse-single.example.csv"
+      ],
+      "rows": 301,
+      "time_unit": "s",
+      "median_receive_interval_s": 0.9998764999999992,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "baseline": {
+        "window_s": [
+          0,
+          55
+        ],
+        "closed": "left",
+        "n": 56,
+        "mean": 22.700892857142858,
+        "sd": 0.020205920438802143,
+        "min": 22.66,
+        "max": 22.75
+      },
+      "early": {
+        "window_s": [
+          90,
+          120
+        ],
+        "closed": "left",
+        "n": 30,
+        "mean": 24.783666666666665,
+        "sd": 0.34966469981805476,
+        "min": 24.17,
+        "max": 25.34
+      },
+      "late": {
+        "window_s": [
+          210,
+          235
+        ],
+        "closed": "left",
+        "n": 24,
+        "mean": 27.9925,
+        "sd": 0.12868059547645078,
+        "min": 27.8,
+        "max": 28.2
+      },
+      "end": {
+        "window_s": [
+          280,
+          300
+        ],
+        "closed": "left",
+        "n": 20,
+        "mean": 28.953500000000002,
+        "sd": 0.20053284282788048,
+        "min": 28.64,
+        "max": 29.27
+      },
+      "heating_fit": {
+        "window_s": [
+          65,
+          235
+        ],
+        "onset_s": 60,
+        "baseline_C": 22.700892857142858,
+        "amplitude_K": 7.995735041047079,
+        "tau_s": 149.66183445316392,
+        "rms_K": 0.019197705548141767,
+        "method": "Fixed measured baseline; least-squares amplitude for each positive tau; ternary search."
+      },
+      "exported_minus_measured_baseline_K": 0.7008928571428571,
+      "rise_late_K": 5.291607142857142,
+      "largest_upward_step": {
+        "times_s": [
+          239.003618,
+          240.003464
+        ],
+        "delta_K": 2.6099999999999994
+      }
+    },
+    "puck-light": {
+      "datasets": [
+        "drafts/puck-light.example.csv"
+      ],
+      "rows": 241,
+      "time_unit": "s",
+      "median_receive_interval_s": 0.24992222000000108,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "dark_before": {
+        "window_s": [
+          1,
+          9
+        ],
+        "closed": "left",
+        "n": 32,
+        "mean": 0.01935166693571875,
+        "sd": 0.017658298266694364,
+        "min": 0.0,
+        "max": 0.0604710977
+      },
+      "reference_before": {
+        "window_s": [
+          12,
+          18
+        ],
+        "closed": "left",
+        "n": 24,
+        "mean": 0.89762420525,
+        "sd": 0.020437161233315054,
+        "min": 0.841455891,
+        "max": 0.926573355
+      },
+      "sample": {
+        "window_s": [
+          24,
+          36
+        ],
+        "closed": "left",
+        "n": 48,
+        "mean": 0.50592239725,
+        "sd": 0.0231460823941938,
+        "min": 0.458129927,
+        "max": 0.556638831
+      },
+      "reference_after": {
+        "window_s": [
+          42,
+          48
+        ],
+        "closed": "left",
+        "n": 24,
+        "mean": 0.896132311625,
+        "sd": 0.014406780397412666,
+        "min": 0.866311368,
+        "max": 0.918176406
+      },
+      "dark_after": {
+        "window_s": [
+          52,
+          59
+        ],
+        "closed": "left",
+        "n": 28,
+        "mean": 0.024668979255392857,
+        "sd": 0.018019719000632886,
+        "min": 0.0,
+        "max": 0.0626556518
+      },
+      "dark_estimate": 0.022010323095555805,
+      "reference_estimate": 0.8968782584374999,
+      "ratio_reestimated": 0.5531258543214367,
+      "ratio_exported": {
+        "window_s": [
+          24,
+          36
+        ],
+        "closed": "left",
+        "n": 48,
+        "mean": 0.5521845422291667,
+        "sd": 0.026302366325575227,
+        "min": 0.497874917,
+        "max": 0.609816853
+      },
+      "dark_shift": 0.005317312319674108,
+      "reference_shift": -0.001491893625000018,
+      "negative_ratio_count": 41,
+      "receive_vs_device_fit": {
+        "slope": 0.9998177712609341,
+        "intercept": -4.3340603955499546e-05,
+        "rms_residual": 0.0022363592136100613
+      }
+    },
+    "cc2541-accelerometer": {
+      "datasets": [
+        "drafts/cc2541-accelerometer.example.csv"
+      ],
+      "rows": 601,
+      "time_unit": "s",
+      "median_receive_interval_s": 0.10001235499999961,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "flat": {
+        "x": {
+          "window_s": [
+            0,
+            8
+          ],
+          "closed": "left",
+          "n": 81,
+          "mean": -0.0467710938,
+          "sd": 0.0,
+          "min": -0.0467710938,
+          "max": -0.0467710938
+        },
+        "y": {
+          "window_s": [
+            0,
+            8
+          ],
+          "closed": "left",
+          "n": 81,
+          "mean": -0.0564578125,
+          "sd": 0.0,
+          "min": -0.0564578125,
+          "max": -0.0564578125
+        },
+        "z": {
+          "window_s": [
+            0,
+            8
+          ],
+          "closed": "left",
+          "n": 81,
+          "mean": 9.76310781,
+          "sd": 0.0,
+          "min": 9.76310781,
+          "max": 9.76310781
+        },
+        "norm": {
+          "window_s": [
+            0,
+            8
+          ],
+          "closed": "left",
+          "n": 81,
+          "mean": 9.76338308,
+          "sd": 0.0,
+          "min": 9.76338308,
+          "max": 9.76338308
+        }
+      },
+      "positive": {
+        "x": {
+          "window_s": [
+            16,
+            19
+          ],
+          "closed": "left",
+          "n": 29,
+          "mean": 3.32426484,
+          "sd": 0.0,
+          "min": 3.32426484,
+          "max": 3.32426484
+        },
+        "y": {
+          "window_s": [
+            16,
+            19
+          ],
+          "closed": "left",
+          "n": 29,
+          "mean": -0.0564578125,
+          "sd": 0.0,
+          "min": -0.0564578125,
+          "max": -0.0564578125
+        },
+        "z": {
+          "window_s": [
+            16,
+            19
+          ],
+          "closed": "left",
+          "n": 29,
+          "mean": 9.15019219,
+          "sd": 0.0,
+          "min": 9.15019219,
+          "max": 9.15019219
+        },
+        "norm": {
+          "window_s": [
+            16,
+            19
+          ],
+          "closed": "left",
+          "n": 29,
+          "mean": 9.73549903,
+          "sd": 0.0,
+          "min": 9.73549903,
+          "max": 9.73549903
+        }
+      },
+      "negative": {
+        "x": {
+          "window_s": [
+            26,
+            29
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": -3.41780703,
+          "sd": 0.0,
+          "min": -3.41780703,
+          "max": -3.41780703
+        },
+        "y": {
+          "window_s": [
+            26,
+            29
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": -0.0564578125,
+          "sd": 0.0,
+          "min": -0.0564578125,
+          "max": -0.0564578125
+        },
+        "z": {
+          "window_s": [
+            26,
+            29
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": 9.15019219,
+          "sd": 0.0,
+          "min": 9.15019219,
+          "max": 9.15019219
+        },
+        "norm": {
+          "window_s": [
+            26,
+            29
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": 9.76783545,
+          "sd": 0.0,
+          "min": 9.76783545,
+          "max": 9.76783545
+        }
+      },
+      "roll": {
+        "x": {
+          "window_s": [
+            46,
+            49
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": -0.0467710938,
+          "sd": 0.0,
+          "min": -0.0467710938,
+          "max": -0.0467710938
+        },
+        "y": {
+          "window_s": [
+            46,
+            49
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": -8.48404766,
+          "sd": 0.0,
+          "min": -8.48404766,
+          "max": -8.48404766
+        },
+        "z": {
+          "window_s": [
+            46,
+            49
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": 4.85978281,
+          "sd": 0.0,
+          "min": 4.85978281,
+          "max": 4.85978281
+        },
+        "norm": {
+          "window_s": [
+            46,
+            49
+          ],
+          "closed": "left",
+          "n": 30,
+          "mean": 9.77746087,
+          "sd": 0.0,
+          "min": 9.77746087,
+          "max": 9.77746087
+        }
+      },
+      "returned": {
+        "x": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": -0.0467710938,
+          "sd": 0.0,
+          "min": -0.0467710938,
+          "max": -0.0467710938
+        },
+        "y": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": -0.0564578125,
+          "sd": 0.0,
+          "min": -0.0564578125,
+          "max": -0.0564578125
+        },
+        "z": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": 9.76310781,
+          "sd": 0.0,
+          "min": 9.76310781,
+          "max": 9.76310781
+        },
+        "norm": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": 9.76338308,
+          "sd": 0.0,
+          "min": 9.76338308,
+          "max": 9.76338308
+        }
+      },
+      "tilt_deg": {
+        "positive": 19.966083332583082,
+        "negative": -20.48181553658057
+      },
+      "roll_deg": 60.19530690503869,
+      "step_m_s2": 0.15322890625,
+      "angular_step_deg": 0.8952465548919113,
+      "flat_unique_raw_xyz": 1
+    },
+    "cc2541-gyroscope": {
+      "datasets": [
+        "drafts/cc2541-gyroscope.example.csv"
+      ],
+      "rows": 601,
+      "time_unit": "s",
+      "median_receive_interval_s": 0.10000867499999933,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "stationary": {
+        "x": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": 0.0008573258915250002,
+          "sd": 0.01458702662219533,
+          "min": -0.0257642982,
+          "max": 0.0305615589
+        },
+        "y": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": -0.001519268414975,
+          "sd": 0.014987411921025765,
+          "min": -0.0363500865,
+          "max": 0.0257015669
+        },
+        "z": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": 0.005701179143625,
+          "sd": 0.013221533427535065,
+          "min": -0.0223119466,
+          "max": 0.0298860108
+        },
+        "norm": {
+          "window_s": [
+            56,
+            60
+          ],
+          "closed": "left",
+          "n": 40,
+          "mean": 0.02368834350375,
+          "sd": 0.008552492374949058,
+          "min": 0.00904757113,
+          "max": 0.0420761163
+        }
+      },
+      "mean_dps": {
+        "x": 0.04912115525167315,
+        "y": -0.08704766812559765,
+        "z": 0.32665350317772146
+      },
+      "motion_windows": {
+        "negative_y": {
+          "window_s": [
+            42,
+            48
+          ],
+          "closed": "left",
+          "n": 59,
+          "mean": -3.4924877030508474,
+          "sd": 0.013585831136355635,
+          "min": -3.52775428,
+          "max": -3.45997683,
+          "mean_dps": -200.1048053861527
+        },
+        "positive_z": {
+          "window_s": [
+            9,
+            11
+          ],
+          "closed": "left",
+          "n": 21,
+          "mean": 2.1502314623809524,
+          "sd": 0.03480736373643171,
+          "min": 2.07013372,
+          "max": 2.19903072,
+          "mean_dps": 123.19918777067161
+        },
+        "negative_z": {
+          "window_s": [
+            19,
+            21
+          ],
+          "closed": "left",
+          "n": 19,
+          "mean": -2.1548101557894737,
+          "sd": 0.033579234560845515,
+          "min": -2.20903352,
+          "max": -2.08359863,
+          "mean_dps": -123.46152757866426
+        }
+      },
+      "integrals": {
+        "window_s": [
+          40,
+          50
+        ],
+        "sample_extent_s": [
+          40.0976117,
+          49.9019546
+        ],
+        "bias_rad_s": -0.001519268414975,
+        "signed_deg": -1960.7632330761423,
+        "absolute_component_deg": 1960.7632330761423,
+        "norm_deg": 1961.6464482919284
+      },
+      "raw_max_abs": 26523.0
+    },
+    "cc2541-magnetometer": {
+      "datasets": [
+        "drafts/cc2541-magnetometer.example.csv"
+      ],
+      "rows": 601,
+      "time_unit": "s",
+      "median_receive_interval_s": 0.09999969999999969,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "initial": {
+        "x": {
+          "window_s": [
+            0,
+            15
+          ],
+          "closed": "left",
+          "n": 151,
+          "mean": 18.911258278145695,
+          "sd": 0.11862717302968787,
+          "min": 18.6,
+          "max": 19.2
+        },
+        "y": {
+          "window_s": [
+            0,
+            15
+          ],
+          "closed": "left",
+          "n": 151,
+          "mean": -0.010596026490066225,
+          "sd": 0.11555796114550465,
+          "min": -0.3,
+          "max": 0.3
+        },
+        "z": {
+          "window_s": [
+            0,
+            15
+          ],
+          "closed": "left",
+          "n": 151,
+          "mean": 44.48344370860927,
+          "sd": 0.14115261885687674,
+          "min": 44.1,
+          "max": 44.8
+        },
+        "norm": {
+          "window_s": [
+            0,
+            15
+          ],
+          "closed": "left",
+          "n": 151,
+          "mean": 48.336755274172184,
+          "sd": 0.13345477577977166,
+          "min": 47.9797874,
+          "max": 48.6236568
+        }
+      },
+      "rotated": {
+        "x": {
+          "window_s": [
+            27,
+            35
+          ],
+          "closed": "left",
+          "n": 80,
+          "mean": 2.28875,
+          "sd": 3.223332411564628,
+          "min": -4.3,
+          "max": 8.8
+        },
+        "y": {
+          "window_s": [
+            27,
+            35
+          ],
+          "closed": "left",
+          "n": 80,
+          "mean": -18.365,
+          "sd": 0.44010930748127286,
+          "min": -18.8,
+          "max": -16.8
+        },
+        "z": {
+          "window_s": [
+            27,
+            35
+          ],
+          "closed": "left",
+          "n": 80,
+          "mean": 44.565,
+          "sd": 0.13226364158783857,
+          "min": 44.3,
+          "max": 45.0
+        },
+        "norm": {
+          "window_s": [
+            27,
+            35
+          ],
+          "closed": "left",
+          "n": 80,
+          "mean": 48.36327049875,
+          "sd": 0.11667183892175219,
+          "min": 48.0793095,
+          "max": 48.6914777
+        }
+      },
+      "near_magnet": {
+        "x": {
+          "window_s": [
+            42,
+            44
+          ],
+          "closed": "left",
+          "n": 20,
+          "mean": 64.54,
+          "sd": 3.377541927746303,
+          "min": 57.1,
+          "max": 67.7
+        },
+        "y": {
+          "window_s": [
+            42,
+            44
+          ],
+          "closed": "left",
+          "n": 20,
+          "mean": -51.08,
+          "sd": 1.0680035481904395,
+          "min": -52.2,
+          "max": -48.4
+        },
+        "z": {
+          "window_s": [
+            42,
+            44
+          ],
+          "closed": "left",
+          "n": 20,
+          "mean": 122.92,
+          "sd": 2.2065929918267564,
+          "min": 117.6,
+          "max": 125.3
+        },
+        "norm": {
+          "window_s": [
+            42,
+            44
+          ],
+          "closed": "left",
+          "n": 20,
+          "mean": 147.9574529,
+          "sd": 3.0852993829918822,
+          "min": 140.361604,
+          "max": 151.139439
+        }
+      },
+      "returned": {
+        "x": {
+          "window_s": [
+            53,
+            60
+          ],
+          "closed": "left",
+          "n": 70,
+          "mean": 18.90714285714286,
+          "sd": 0.11075685416867735,
+          "min": 18.6,
+          "max": 19.1
+        },
+        "y": {
+          "window_s": [
+            53,
+            60
+          ],
+          "closed": "left",
+          "n": 70,
+          "mean": -0.017142857142857144,
+          "sd": 0.12273623016296768,
+          "min": -0.3,
+          "max": 0.3
+        },
+        "z": {
+          "window_s": [
+            53,
+            60
+          ],
+          "closed": "left",
+          "n": 70,
+          "mean": 44.51571428571429,
+          "sd": 0.11750512080819855,
+          "min": 44.2,
+          "max": 44.8
+        },
+        "norm": {
+          "window_s": [
+            53,
+            60
+          ],
+          "closed": "left",
+          "n": 70,
+          "mean": 48.36481874142857,
+          "sd": 0.11927469719295469,
+          "min": 48.1108096,
+          "max": 48.6244794
+        }
+      },
+      "rotated_norm_change_pct": 0.05485520165227076,
+      "field_peak_uT": 151.139439,
+      "peak_to_baseline": 3.126801502142997,
+      "inferred_offsets_uT": [
+        5.000000000000001,
+        -3.0000000000000004,
+        8.000000000000004
+      ]
+    },
+    "cc2541-humidity": {
+      "datasets": [
+        "drafts/cc2541-humidity.example.csv"
+      ],
+      "rows": 61,
+      "time_unit": "s",
+      "median_receive_interval_s": 1.0000540500000001,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "initial": {
+        "RH": {
+          "window_s": [
+            0,
+            10
+          ],
+          "closed": "left",
+          "n": 11,
+          "mean": 45.046891663636366,
+          "sd": 0.1460314090787955,
+          "min": 44.9414673,
+          "max": 45.4068604
+        },
+        "T_C": {
+          "window_s": [
+            0,
+            10
+          ],
+          "closed": "left",
+          "n": 11,
+          "mean": 22.483856318181818,
+          "sd": 0.051047988835855596,
+          "min": 22.4126807,
+          "max": 22.562832
+        },
+        "vapor_hPa": {
+          "window_s": [
+            0,
+            10
+          ],
+          "closed": "left",
+          "n": 11,
+          "mean": 12.241241323525768,
+          "sd": 0.07125999312744287,
+          "min": 12.161822201239051,
+          "max": 12.39826823260885
+        }
+      },
+      "pulse": {
+        "RH": {
+          "window_s": [
+            26,
+            35
+          ],
+          "closed": "left",
+          "n": 9,
+          "mean": 62.99261475555556,
+          "sd": 1.2862942123576457,
+          "min": 60.3528442,
+          "max": 64.2133179
+        },
+        "T_C": {
+          "window_s": [
+            26,
+            35
+          ],
+          "closed": "left",
+          "n": 9,
+          "mean": 22.598582333333333,
+          "sd": 0.04855995557251914,
+          "min": 22.5306567,
+          "max": 22.670083
+        },
+        "vapor_hPa": {
+          "window_s": [
+            26,
+            35
+          ],
+          "closed": "left",
+          "n": 9,
+          "mean": 17.237268676587394,
+          "sd": 0.3445648125935171,
+          "min": 16.50072064467789,
+          "max": 17.503071091268463
+        }
+      },
+      "recovered": {
+        "RH": {
+          "window_s": [
+            50,
+            60
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 43.94812011,
+          "sd": 0.2037618195649113,
+          "min": 43.7436523,
+          "max": 44.3616333
+        },
+        "T_C": {
+          "window_s": [
+            50,
+            60
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 22.67759057,
+          "sd": 0.055855248096646506,
+          "min": 22.5950073,
+          "max": 22.7880591
+        },
+        "vapor_hPa": {
+          "window_s": [
+            50,
+            60
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 12.08377333223548,
+          "sd": 0.040507001486813556,
+          "min": 12.020605050604926,
+          "max": 12.140140735314407
+        }
+      },
+      "peak_RH": {
+        "time_s": 29.996393,
+        "value_pct": 64.2133179
+      },
+      "rh_step_pct": 0.00762939453125,
+      "temperature_step_C": 0.01072509765625,
+      "wrong_intercept_initial_pct": 27.046891663636366
+    },
+    "cc2541-pressure": {
+      "datasets": [
+        "drafts/cc2541-pressure.example.csv"
+      ],
+      "rows": 61,
+      "time_unit": "s",
+      "median_receive_interval_s": 1.0000048099999992,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "baseline": {
+        "window_s": [
+          0,
+          18
+        ],
+        "closed": "left",
+        "n": 18,
+        "mean": 1007.9998211111111,
+        "sd": 0.03243325179847154,
+        "min": 1007.91837,
+        "max": 1008.06485
+      },
+      "peak": {
+        "window_s": [
+          26,
+          30
+        ],
+        "closed": "left",
+        "n": 4,
+        "mean": 1028.0048649999999,
+        "sd": 0.07012486268558159,
+        "min": 1027.91331,
+        "max": 1028.08421
+      },
+      "released": {
+        "window_s": [
+          52,
+          60
+        ],
+        "closed": "left",
+        "n": 8,
+        "mean": 1007.99794375,
+        "sd": 0.0407198870113149,
+        "min": 1007.91871,
+        "max": 1008.04077
+      },
+      "excursion_hPa": 20.005043888888736,
+      "decay_fit": {
+        "slope": -0.09091232601856875,
+        "intercept": 1030.574157805839,
+        "rms_residual": 0.03430971607621556,
+        "window_s": [
+          28,
+          44
+        ]
+      },
+      "temperature_C": {
+        "window_s": [
+          0,
+          61
+        ],
+        "closed": "left",
+        "n": 61,
+        "mean": 23.142197062295082,
+        "sd": 0.0977618712146087,
+        "min": 22.9692459,
+        "max": 23.3268738
+      },
+      "word_slope_hPa": 0.024413703290045805,
+      "word_temperature_C": 0.17881394606946996,
+      "isothermal_fractional_rate_s_inv": -8.849243780890017e-05
+    },
+    "cc2541-ir-temperature": {
+      "datasets": [
+        "drafts/cc2541-ir-temperature.example.csv"
+      ],
+      "rows": 61,
+      "time_unit": "s",
+      "median_receive_interval_s": 1.0002987749999965,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "ambient": {
+        "object_C": {
+          "window_s": [
+            0,
+            9
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 23.02442345,
+          "sd": 0.1368240657879649,
+          "min": 22.8060692,
+          "max": 23.2197627
+        },
+        "die_C": {
+          "window_s": [
+            0,
+            9
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 23.04921875,
+          "sd": 0.03898429671835828,
+          "min": 22.984375,
+          "max": 23.09375
+        },
+        "voltage_V": {
+          "window_s": [
+            0,
+            9
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": -2.834375e-05,
+          "sd": 7.767229950961355e-07,
+          "min": -2.96875e-05,
+          "max": -2.734375e-05
+        }
+      },
+      "warm": {
+        "object_C": {
+          "window_s": [
+            12,
+            19
+          ],
+          "closed": "left",
+          "n": 7,
+          "mean": 34.971250157142855,
+          "sd": 0.06264983411406273,
+          "min": 34.8453501,
+          "max": 35.0331597
+        },
+        "die_C": {
+          "window_s": [
+            12,
+            19
+          ],
+          "closed": "left",
+          "n": 7,
+          "mean": 23.136160714285715,
+          "sd": 0.02918194221583093,
+          "min": 23.078125,
+          "max": 23.171875
+        },
+        "voltage_V": {
+          "window_s": [
+            12,
+            19
+          ],
+          "closed": "left",
+          "n": 7,
+          "mean": 3.680803571428571e-05,
+          "sd": 2.972467910035451e-07,
+          "min": 3.640625e-05,
+          "max": 3.71875e-05
+        }
+      },
+      "hot": {
+        "object_C": {
+          "window_s": [
+            28,
+            38
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 44.90900738,
+          "sd": 0.09969392859460509,
+          "min": 44.7232891,
+          "max": 45.0461498
+        },
+        "die_C": {
+          "window_s": [
+            28,
+            38
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 23.253125,
+          "sd": 0.03969966458366563,
+          "min": 23.203125,
+          "max": 23.3359375
+        },
+        "voltage_V": {
+          "window_s": [
+            28,
+            38
+          ],
+          "closed": "left",
+          "n": 10,
+          "mean": 9.68125e-05,
+          "sd": 7.446277500275655e-07,
+          "min": 9.546875e-05,
+          "max": 9.796875e-05
+        }
+      },
+      "cool": {
+        "object_C": {
+          "window_s": [
+            42,
+            48
+          ],
+          "closed": "left",
+          "n": 6,
+          "mean": 30.028010016666666,
+          "sd": 0.18137899275657407,
+          "min": 29.7844787,
+          "max": 30.2544041
+        },
+        "die_C": {
+          "window_s": [
+            42,
+            48
+          ],
+          "closed": "left",
+          "n": 6,
+          "mean": 23.319010416666668,
+          "sd": 0.033663324271997655,
+          "min": 23.2890625,
+          "max": 23.3828125
+        },
+        "voltage_V": {
+          "window_s": [
+            42,
+            48
+          ],
+          "closed": "left",
+          "n": 6,
+          "mean": 7.65625e-06,
+          "sd": 1.1136581050753412e-06,
+          "min": 5.9375e-06,
+          "max": 8.90625e-06
+        }
+      },
+      "returned": {
+        "object_C": {
+          "window_s": [
+            53,
+            60
+          ],
+          "closed": "left",
+          "n": 6,
+          "mean": 23.096809516666667,
+          "sd": 0.1362763144524305,
+          "min": 22.950708,
+          "max": 23.3072004
+        },
+        "die_C": {
+          "window_s": [
+            53,
+            60
+          ],
+          "closed": "left",
+          "n": 6,
+          "mean": 23.361979166666668,
+          "sd": 0.040343576522993925,
+          "min": 23.3046875,
+          "max": 23.421875
+        },
+        "voltage_V": {
+          "window_s": [
+            53,
+            60
+          ],
+          "closed": "left",
+          "n": 6,
+          "mean": -2.9791666666666668e-05,
+          "sd": 7.171631032524377e-07,
+          "min": -3.0625e-05,
+          "max": -2.859375e-05
+        }
+      },
+      "hot_model_at_original_sensitivity_C": 44.90900737748467,
+      "flux_header_residual_max_error_V": 4.999999980020986e-13,
+      "hot_sensitivity_plus10pct_C": 43.11730837646535,
+      "hot_sensitivity_minus10pct_C": 47.05853737185652,
+      "negative_voltage_count": 21,
+      "inferred_S0_V_K4": 5.000000000327862e-14,
+      "object_rise_K": 21.884583929999998,
+      "die_rise_K": 0.2039062499999993
+    },
+    "pocketlab-gyroscope": {
+      "datasets": [
+        "drafts/pocketlab-gyroscope.example.csv"
+      ],
+      "rows": 3001,
+      "time_unit": "s",
+      "median_receive_interval_s": 0.02000120000000294,
+      "method": "Finite per-channel values; left-closed/right-open receive-time windows; sample SD.",
+      "stationary": {
+        "x": {
+          "window_s": [
+            0,
+            9
+          ],
+          "closed": "left",
+          "n": 450,
+          "mean": -0.009786947111844444,
+          "sd": 0.025576625344899996,
+          "min": -0.0877643038,
+          "max": 0.0666990394
+        },
+        "y": {
+          "window_s": [
+            0,
+            9
+          ],
+          "closed": "left",
+          "n": 450,
+          "mean": 0.019872168267151113,
+          "sd": 0.02638239815448812,
+          "min": -0.0716127415,
+          "max": 0.103090626
+        },
+        "z": {
+          "window_s": [
+            0,
+            9
+          ],
+          "closed": "left",
+          "n": 450,
+          "mean": -0.01576699039404,
+          "sd": 0.026767151024090195,
+          "min": -0.0895685105,
+          "max": 0.0616990394
+        },
+        "norm": {
+          "window_s": [
+            0,
+            9
+          ],
+          "closed": "left",
+          "n": 450,
+          "mean": 0.04910910885368889,
+          "sd": 0.01976186037025029,
+          "min": 0.00817242176,
+          "max": 0.104596607
+        }
+      },
+      "mean_dps": {
+        "x": -0.5607507638264371,
+        "y": 1.1385913714815614,
+        "z": -0.9033820052018028
+      },
+      "motion_windows": {
+        "positive_x": {
+          "window_s": [
+            19,
+            21
+          ],
+          "closed": "left",
+          "n": 100,
+          "mean": 8.5897519606,
+          "sd": 0.13066202319263118,
+          "min": 8.2212983,
+          "max": 8.77310528,
+          "mean_dps": 492.1565344066042
+        },
+        "negative_x": {
+          "window_s": [
+            29,
+            31
+          ],
+          "closed": "left",
+          "n": 100,
+          "mean": -8.6113711621,
+          "sd": 0.12455769566215812,
+          "min": -8.75901681,
+          "max": -8.21360142,
+          "mean_dps": -493.3952234089971
+        },
+        "negative_y": {
+          "window_s": [
+            49,
+            51
+          ],
+          "closed": "left",
+          "n": 100,
+          "mean": -4.2242904817,
+          "sd": 0.11776412177919435,
+          "min": -4.3891295,
+          "max": -3.89591207,
+          "mean_dps": -242.0340160386955
+        }
+      },
+      "integrals": {
+        "window_s": [
+          10,
+          40
+        ],
+        "sample_extent_s": [
+          10.0198044,
+          39.9804036
+        ],
+        "bias_rad_s": -0.009786947111844444,
+        "signed_deg": -0.09963860894642908,
+        "absolute_component_deg": 8125.010141690993,
+        "norm_deg": 8882.491514607143
+      },
+      "raw_max_abs": 8245.0
+    },
+    "sensortag-environmental": {
+      "datasets": [
+        "drafts/sensortag-environmental_humidity.example.csv",
+        "drafts/sensortag-environmental_barometer.example.csv"
+      ],
+      "rows_humidity": 48,
+      "rows_barometer": 48,
+      "pairing_tolerance_s": 0.5,
+      "median_pair_offset_s": 0.39999999999999997,
+      "paired_rows": 48,
+      "method": "Native windows on each clock. Nearest-neighbour temperature diagnostic only within 0.5s. Magnus vapor pressure from simultaneous HDC T/RH.",
+      "baseline_RH": {
+        "window_s": [
+          0,
+          25
+        ],
+        "closed": "left",
+        "n": 10,
+        "mean": 44.16137696,
+        "sd": 0.6255645493322548,
+        "min": 42.9077148,
+        "max": 44.8120117
+      },
+      "humid_RH": {
+        "window_s": [
+          40,
+          60
+        ],
+        "closed": "left",
+        "n": 8,
+        "mean": 67.0433044375,
+        "sd": 0.40085790560825146,
+        "min": 66.3391113,
+        "max": 67.6757812
+      },
+      "recovered_RH": {
+        "window_s": [
+          85,
+          115
+        ],
+        "closed": "left",
+        "n": 12,
+        "mean": 40.994771308333334,
+        "sd": 0.3747167998621618,
+        "min": 40.5090332,
+        "max": 41.6442871
+      },
+      "baseline_hdc_C": {
+        "window_s": [
+          0,
+          25
+        ],
+        "closed": "left",
+        "n": 10,
+        "mean": 23.0029297,
+        "sd": 0.04165844711801475,
+        "min": 22.9223633,
+        "max": 23.050766
+      },
+      "humid_hdc_C": {
+        "window_s": [
+          40,
+          60
+        ],
+        "closed": "left",
+        "n": 8,
+        "mean": 24.487743375,
+        "sd": 0.03529273029229913,
+        "min": 24.427948,
+        "max": 24.5462799
+      },
+      "recovered_hdc_C": {
+        "window_s": [
+          85,
+          115
+        ],
+        "closed": "left",
+        "n": 12,
+        "mean": 22.986984266666667,
+        "sd": 0.04974762684407123,
+        "min": 22.899704,
+        "max": 23.0683899
+      },
+      "baseline_bmp_C": {
+        "window_s": [
+          0,
+          25
+        ],
+        "closed": "left",
+        "n": 10,
+        "mean": 24.106,
+        "sd": 0.0658618081878856,
+        "min": 24.0,
+        "max": 24.19
+      },
+      "humid_bmp_C": {
+        "window_s": [
+          40,
+          60
+        ],
+        "closed": "left",
+        "n": 8,
+        "mean": 24.335,
+        "sd": 0.026186146828319788,
+        "min": 24.29,
+        "max": 24.37
+      },
+      "baseline_vapor_hPa": {
+        "window_s": [
+          0,
+          25
+        ],
+        "closed": "left",
+        "n": 10,
+        "mean": 12.384408607038315,
+        "sd": 0.1894932019651023,
+        "min": 12.02349275964127,
+        "max": 12.585841975734375
+      },
+      "humid_vapor_hPa": {
+        "window_s": [
+          40,
+          60
+        ],
+        "closed": "left",
+        "n": 8,
+        "mean": 20.558333928029654,
+        "sd": 0.08629644615818495,
+        "min": 20.41394326142145,
+        "max": 20.678295456053924
+      },
+      "recovered_vapor_hPa": {
+        "window_s": [
+          85,
+          115
+        ],
+        "closed": "left",
+        "n": 12,
+        "mean": 11.485120446612225,
+        "sd": 0.10589292844856939,
+        "min": 11.315065271329688,
+        "max": 11.674794099234965
+      },
+      "pressure_hPa": {
+        "window_s": [
+          0,
+          121
+        ],
+        "closed": "left",
+        "n": 48,
+        "mean": 1007.9985416666667,
+        "sd": 0.35431678086943147,
+        "min": 1007.46,
+        "max": 1008.49
+      },
+      "baseline_T_difference_K": 1.1030703000000006
+    },
+    "static-friction": {
+      "capture": {
+        "trigger_s": 20.1420557,
+        "last_low_s": 19.9820467,
+        "first_high_s": 20.0019916,
+        "pre_query_s": 19.8820467,
+        "pre_sample_s": 19.8819076,
+        "pre_age_s": 0.0001390999999983933,
+        "angle_deg": 25.104306402450188,
+        "mu": 0.4685258863667283,
+        "gravity_norm_m_s2": 9.807834402024417,
+        "confirmation_delay_s": 0.14006410000000002
+      },
+      "ramp_line_diagnostic_deg_s": {
+        "n": 740,
+        "intercept": -12.58625427828175,
+        "slope": 2.010208713944191,
+        "residual_rms": 0.9343092710158881,
+        "residual_sd": 0.9355744161736517
+      },
+      "local_fit_deg_s": {
+        "n": 40,
+        "intercept": 15.641936769733592,
+        "slope": 0.475084005912927,
+        "residual_rms": 0.10708176244466401,
+        "residual_sd": 0.10986357017135033
+      },
+      "baseline_linear_m_s2": {
+        "n": 250,
+        "mean": 0.125739430966308,
+        "sd": 0.07927328564557087
+      },
+      "baseline_gravity_m_s2": {
+        "n": 250,
+        "mean": 9.8115886902,
+        "sd": 0.019677574908141666
+      },
+      "local_angle_residual_deg": 0.10986357017135033,
+      "noise_only_mu_scale": 0.002338399763336193,
+      "one_degree_mu_scale": 0.02128457831553329,
+      "prelag_angle_bias_deg": 0.05704998776604722,
+      "post_angle_deg": {
+        "n": 200,
+        "mean": 25.011511191,
+        "sd": 0.13304522337447608
+      },
+      "max_angle_export_error_deg": 8.023074116181306e-08,
+      "settings": {
+        "arm_s": 5,
+        "threshold_m_s2": 1,
+        "debounce_s": 0.15,
+        "prelag_s": 0.1,
+        "maxage_s": 0.2,
+        "maxgap_s": 0.15
+      },
+      "windows": {
+        "baseline_s": [
+          0,
+          5
+        ],
+        "ramp_s": [
+          5,
+          19.8
+        ],
+        "local_noise_s": [
+          19,
+          19.8
+        ],
+        "post_s": [
+          25,
+          29
+        ]
+      },
+      "method": "Left-closed/right-open windows; raw-component angle; previous gravity timestamp; no SEM from adjacent rows."
+    },
+    "audio-magnetic": {
+      "plateaus": [
+        {
+          "window_s": [
+            1,
+            9
+          ],
+          "state": "off",
+          "audio": {
+            "blocks": 80,
+            "samples": 384000,
+            "duration_s": 8.0,
+            "aggregate_rms": 0.011898869937767072,
+            "aggregate_level_db": -4.510485564582717,
+            "mean_block_level_db": -4.6398896059176895,
+            "sd_block_level_db": 1.0992479992862279,
+            "noise_corrected_aggregate_rms": 0.006448496398068076,
+            "sub_noise_blocks": 9
+          },
+          "magnetic_n": 159,
+          "magnetic_components_uT": [
+            18.90393020062893,
+            -0.0075890922198679255,
+            44.478531467924526
+          ],
+          "magnetic_norm_uT": {
+            "n": 159,
+            "mean": 48.329534618238995,
+            "sd": 0.13453769206507682
+          }
+        },
+        {
+          "window_s": [
+            11,
+            19
+          ],
+          "state": "on",
+          "audio": {
+            "blocks": 80,
+            "samples": 384000,
+            "duration_s": 8.0,
+            "aggregate_rms": 0.04506360895165904,
+            "aggregate_level_db": 7.0559194780754675,
+            "mean_block_level_db": 7.035698097889728,
+            "sd_block_level_db": 0.4223209189183152,
+            "noise_corrected_aggregate_rms": 0.043940059760405936,
+            "sub_noise_blocks": 0
+          },
+          "magnetic_n": 159,
+          "magnetic_components_uT": [
+            20.91329924591195,
+            -1.1907279456226416,
+            47.997655454716984
+          ],
+          "magnetic_norm_uT": {
+            "n": 159,
+            "mean": 52.36986347106918,
+            "sd": 0.24957277885516557
+          }
+        },
+        {
+          "window_s": [
+            21,
+            29
+          ],
+          "state": "off",
+          "audio": {
+            "blocks": 80,
+            "samples": 384000,
+            "duration_s": 8.0,
+            "aggregate_rms": 0.011924765415842128,
+            "aggregate_level_db": -4.491603026302635,
+            "mean_block_level_db": -4.642034233300993,
+            "sd_block_level_db": 1.1537286991046498,
+            "noise_corrected_aggregate_rms": 0.006496155033776863,
+            "sub_noise_blocks": 10
+          },
+          "magnetic_n": 159,
+          "magnetic_components_uT": [
+            18.888575037735848,
+            0.00797431937171698,
+            44.468422876100625
+          ],
+          "magnetic_norm_uT": {
+            "n": 159,
+            "mean": 48.31418375345912,
+            "sd": 0.12898685015412412
+          }
+        },
+        {
+          "window_s": [
+            31,
+            39
+          ],
+          "state": "on",
+          "audio": {
+            "blocks": 80,
+            "samples": 384000,
+            "duration_s": 8.0,
+            "aggregate_rms": 0.04492287845047836,
+            "aggregate_level_db": 7.028751608013753,
+            "mean_block_level_db": 7.009006716121728,
+            "sd_block_level_db": 0.4161857415940544,
+            "noise_corrected_aggregate_rms": 0.04379571906335656,
+            "sub_noise_blocks": 0
+          },
+          "magnetic_n": 159,
+          "magnetic_components_uT": [
+            20.890177195597484,
+            -1.193022725163522,
+            48.00850930943396
+          ],
+          "magnetic_norm_uT": {
+            "n": 159,
+            "mean": 52.37067003647799,
+            "sd": 0.24419203517870153
+          }
+        },
+        {
+          "window_s": [
+            41,
+            49
+          ],
+          "state": "off",
+          "audio": {
+            "blocks": 80,
+            "samples": 384000,
+            "duration_s": 8.0,
+            "aggregate_rms": 0.011818319841565379,
+            "aggregate_level_db": -4.56948512924861,
+            "mean_block_level_db": -4.722542351054461,
+            "sd_block_level_db": 1.1766645478882258,
+            "noise_corrected_aggregate_rms": 0.006298625554637926,
+            "sub_noise_blocks": 12
+          },
+          "magnetic_n": 159,
+          "magnetic_components_uT": [
+            18.902789777987422,
+            0.01050008069191195,
+            44.52309693018868
+          ],
+          "magnetic_norm_uT": {
+            "n": 159,
+            "mean": 48.370095044025156,
+            "sd": 0.14086601757429792
+          }
+        },
+        {
+          "window_s": [
+            51,
+            59
+          ],
+          "state": "on",
+          "audio": {
+            "blocks": 80,
+            "samples": 384000,
+            "duration_s": 8.0,
+            "aggregate_rms": 0.04483898048249569,
+            "aggregate_level_db": 7.012514673716109,
+            "mean_block_level_db": 6.993269838923231,
+            "sd_block_level_db": 0.4116987177991259,
+            "noise_corrected_aggregate_rms": 0.04370965763660967,
+            "sub_noise_blocks": 0
+          },
+          "magnetic_n": 159,
+          "magnetic_components_uT": [
+            20.90859218553459,
+            -1.2022783849433962,
+            47.980721740880504
+          ],
+          "magnetic_norm_uT": {
+            "n": 159,
+            "mean": 52.352748927044026,
+            "sd": 0.22830528312720294
+          }
+        }
+      ],
+      "contrasts": [
+        {
+          "audio_difference_db": 11.566405042658184,
+          "magnetic_norm_difference_uT": 4.040328852830186,
+          "magnetic_vector_difference_uT": [
+            2.0093690452830195,
+            -1.1831388534027736,
+            3.519123986792458
+          ],
+          "vector_change_magnitude_uT": 4.221565484626629
+        },
+        {
+          "audio_difference_db": 11.520354634316387,
+          "magnetic_norm_difference_uT": 4.05648628301887,
+          "magnetic_vector_difference_uT": [
+            2.0016021578616368,
+            -1.200997044535239,
+            3.540086433333336
+          ],
+          "vector_change_magnitude_uT": 4.240402935430721
+        },
+        {
+          "audio_difference_db": 11.58199980296472,
+          "magnetic_norm_difference_uT": 3.9826538830188696,
+          "magnetic_vector_difference_uT": [
+            2.0058024075471685,
+            -1.2127784656353082,
+            3.4576248106918257
+          ],
+          "vector_change_magnitude_uT": 4.177229253505538
+        }
+      ],
+      "contrast_audio_db": {
+        "n": 3,
+        "mean": 11.556253159979764,
+        "sd": 0.03205194605414253
+      },
+      "contrast_magnetic_norm_uT": {
+        "n": 3,
+        "mean": 4.026489672955975,
+        "sd": 0.03881298748013463
+      },
+      "full_record_sub_noise_blocks": 40,
+      "stored_sub_noise_zeros": 40,
+      "max_level_recalculation_error_db": 4.6657122609872204e-08,
+      "max_duration_recalculation_error_s": 0.0,
+      "audio_count": 601,
+      "magnetic_count": 1201,
+      "audio_time_range_s": [
+        0.1,
+        60.1
+      ],
+      "magnetic_time_range_s": [
+        0.0383312069,
+        60.4582813
+      ],
+      "settings": {
+        "reference_rms": 0.02,
+        "assigned_reference_db": 0,
+        "noise_rms": 0.01
+      },
+      "method": "Each stream windowed on own session timestamps; 1 s transition exclusion. N-weighted mean square then dB. Three cycle contrasts, not adjacent samples, describe cycle spread. No lag/coherence inference."
+    },
+    "magnetic-current": {
+      "plateaus": [
+        {
+          "window_s": [
+            1,
+            7
+          ],
+          "assigned_current_A": 0,
+          "field_uT": {
+            "n": 60,
+            "mean": 30.07436396,
+            "sd": 0.3777055254852302
+          },
+          "exported_current_A": {
+            "n": 60,
+            "mean": 0.0014872792971333333,
+            "sd": 0.007554110500228488
+          },
+          "endpoint_calibrated_current_A": 0.0,
+          "endpoint_residual_mA": 0.0
+        },
+        {
+          "window_s": [
+            9,
+            15
+          ],
+          "assigned_current_A": 0.1,
+          "field_uT": {
+            "n": 61,
+            "mean": 34.992200119672134,
+            "sd": 0.2857125667428743
+          },
+          "exported_current_A": {
+            "n": 61,
+            "mean": 0.09984400246065574,
+            "sd": 0.00571425126622278
+          },
+          "endpoint_calibrated_current_A": 0.09894029287007408,
+          "endpoint_residual_mA": -1.0597071299259242
+        },
+        {
+          "window_s": [
+            17,
+            23
+          ],
+          "assigned_current_A": 0.2,
+          "field_uT": {
+            "n": 60,
+            "mean": 39.977053921666666,
+            "sd": 0.41579861727717443
+          },
+          "exported_current_A": {
+            "n": 60,
+            "mean": 0.19954107851666666,
+            "sd": 0.008315972308028557
+          },
+          "endpoint_calibrated_current_A": 0.19922889116219825,
+          "endpoint_residual_mA": -0.771108837801765
+        },
+        {
+          "window_s": [
+            25,
+            31
+          ],
+          "assigned_current_A": 0.3,
+          "field_uT": {
+            "n": 60,
+            "mean": 44.99412256666667,
+            "sd": 0.33136221087560985
+          },
+          "exported_current_A": {
+            "n": 60,
+            "mean": 0.2998824512666667,
+            "sd": 0.006627244145300646
+          },
+          "endpoint_calibrated_current_A": 0.300165609053723,
+          "endpoint_residual_mA": 0.16560905372303703
+        },
+        {
+          "window_s": [
+            33,
+            39
+          ],
+          "assigned_current_A": 0.4,
+          "field_uT": {
+            "n": 60,
+            "mean": 49.95639995166667,
+            "sd": 0.3256352721615922
+          },
+          "exported_current_A": {
+            "n": 60,
+            "mean": 0.3991279991,
+            "sd": 0.006512705467289351
+          },
+          "endpoint_calibrated_current_A": 0.4,
+          "endpoint_residual_mA": 0.0
+        },
+        {
+          "window_s": [
+            41,
+            47
+          ],
+          "assigned_current_A": 0.2,
+          "field_uT": {
+            "n": 60,
+            "mean": 39.969011458333334,
+            "sd": 0.39527948086662745
+          },
+          "exported_current_A": {
+            "n": 60,
+            "mean": 0.19938022926666665,
+            "sd": 0.007905589741607641
+          },
+          "endpoint_calibrated_current_A": 0.1990670875453714,
+          "endpoint_residual_mA": -0.9329124546286205
+        },
+        {
+          "window_s": [
+            49,
+            55
+          ],
+          "assigned_current_A": 0,
+          "field_uT": {
+            "n": 60,
+            "mean": 29.957471268333332,
+            "sd": 0.3567961655123592
+          },
+          "exported_current_A": {
+            "n": 60,
+            "mean": -0.0008505746823933332,
+            "sd": 0.007135923186800158
+          },
+          "endpoint_calibrated_current_A": -0.0023517247773952588,
+          "endpoint_residual_mA": -2.3517247773952588
+        }
+      ],
+      "ascending_plateau_fit_B_vs_I": {
+        "n": 5,
+        "intercept": 30.045629217868854,
+        "slope": 49.76599443032787,
+        "residual_rms": 0.02267218676019798,
+        "residual_sd": 0.029269667248117023
+      },
+      "endpoint_calibration": {
+        "b1_uT": 30.07436396,
+        "i1_A": 0,
+        "b2_uT": 49.95639995166667,
+        "i2_A": 0.4,
+        "field_span_uT": 19.88203599166667,
+        "gain_A_per_uT": 0.020118663911867753
+      },
+      "pooled_within_plateau_sd_uT": 0.3577279211385912,
+      "single_reading_noise_mA": 7.197007817278448,
+      "zero_return_shift_uT": -0.11689269166666705,
+      "zero_return_shift_mA": -2.3517247773952588,
+      "max_withheld_residual_mA": 2.3517247773952588,
+      "max_affine_export_error_A": 1.000000082740371e-09,
+      "one_uT_background_bias_mA": 20.118663911867753,
+      "method": "Assigned protocol current levels, not an independent measured current channel. Windows omit 1 s after and before each 8 s step; final zero uses49--55 s. Ascending fit uses five plateau means. Endpoint calibration uses1--7 and33--39 s. Row scatter not replicate uncertainty."
+    },
+    "pressure-boiling": {
+      "n": 15,
+      "n_boiling": 5,
+      "n_checked": 15,
+      "pressure_range_kpa": [
+        5.03909921,
+        101.182685
+      ],
+      "temperature_range_c": [
+        32.0646354,
+        96.600776
+      ],
+      "method": "All paired rows; code 1 only for ln(p) vs 1/T OLS",
+      "units": {
+        "pressure": "kPa absolute",
+        "temperature": "K",
+        "molar_enthalpy": "kJ/mol"
+      },
+      "saturation_reference": "IAPWS SR1-86(1992), page3 Eq1; bisection inversion",
+      "residuals": [
+        {
+          "id": 1,
+          "code": 0,
+          "pressure_kpa": 101.182685,
+          "temperature_c": 94.7747399,
+          "saturation_temperature_c": 99.93492101570757,
+          "residual_k": -5.160181115707587,
+          "u_residual_k": 0.2019068444142536
+        },
+        {
+          "id": 2,
+          "code": 1,
+          "pressure_kpa": 90.0428352,
+          "temperature_c": 96.600776,
+          "saturation_temperature_c": 96.70010344593902,
+          "residual_k": -0.09932744593902498,
+          "u_residual_k": 0.20231135131115877
+        },
+        {
+          "id": 3,
+          "code": 2,
+          "pressure_kpa": 80.0245259,
+          "temperature_c": 92.4819073,
+          "saturation_temperature_c": 93.49356706937738,
+          "residual_k": -1.0116597693773883,
+          "u_residual_k": 0.2028083406936466
+        },
+        {
+          "id": 4,
+          "code": 0,
+          "pressure_kpa": 69.9330541,
+          "temperature_c": 85.2331227,
+          "saturation_temperature_c": 89.90620796526252,
+          "residual_k": -4.673085265262557,
+          "u_residual_k": 0.20350912136583624
+        },
+        {
+          "id": 5,
+          "code": 1,
+          "pressure_kpa": 59.9971377,
+          "temperature_c": 85.6195599,
+          "saturation_temperature_c": 85.9242889551906,
+          "residual_k": -0.3047290551905917,
+          "u_residual_k": 0.20452115546759728
+        },
+        {
+          "id": 6,
+          "code": 2,
+          "pressure_kpa": 49.9630765,
+          "temperature_c": 80.1420746,
+          "saturation_temperature_c": 81.29785217989672,
+          "residual_k": -1.1557775798967214,
+          "u_residual_k": 0.20611881076614433
+        },
+        {
+          "id": 7,
+          "code": 0,
+          "pressure_kpa": 45.0168019,
+          "temperature_c": 73.8198954,
+          "saturation_temperature_c": 78.72303099215799,
+          "residual_k": -4.90313559215798,
+          "u_residual_k": 0.20726880889023297
+        },
+        {
+          "id": 8,
+          "code": 1,
+          "pressure_kpa": 39.9220823,
+          "temperature_c": 75.3506476,
+          "saturation_temperature_c": 75.80916307896678,
+          "residual_k": -0.458515478966774,
+          "u_residual_k": 0.20886185860166795
+        },
+        {
+          "id": 9,
+          "code": 2,
+          "pressure_kpa": 34.9808914,
+          "temperature_c": 71.659544,
+          "saturation_temperature_c": 72.66683312270936,
+          "residual_k": -1.0072891227093805,
+          "u_residual_k": 0.2110151185853803
+        },
+        {
+          "id": 10,
+          "code": 0,
+          "pressure_kpa": 30.0962656,
+          "temperature_c": 63.8155782,
+          "saturation_temperature_c": 69.1678681411911,
+          "residual_k": -5.3522899411910885,
+          "u_residual_k": 0.21409700568909132
+        },
+        {
+          "id": 11,
+          "code": 1,
+          "pressure_kpa": 25.1380293,
+          "temperature_c": 65.0945137,
+          "saturation_temperature_c": 65.0849456914865,
+          "residual_k": 0.009568008513497261,
+          "u_residual_k": 0.2189053293892948
+        },
+        {
+          "id": 12,
+          "code": 2,
+          "pressure_kpa": 20.0010247,
+          "temperature_c": 59.2193187,
+          "saturation_temperature_c": 60.05804055085662,
+          "residual_k": -0.8387218508565866,
+          "u_residual_k": 0.2273332206972633
+        },
+        {
+          "id": 13,
+          "code": 0,
+          "pressure_kpa": 15.0056984,
+          "temperature_c": 49.0743349,
+          "saturation_temperature_c": 53.97621918141522,
+          "residual_k": -4.901884281415221,
+          "u_residual_k": 0.24304915276522138
+        },
+        {
+          "id": 14,
+          "code": 1,
+          "pressure_kpa": 10.1251024,
+          "temperature_c": 46.0000825,
+          "saturation_temperature_c": 46.048989633035376,
+          "residual_k": -0.048907133035356765,
+          "u_residual_k": 0.27829161517984263
+        },
+        {
+          "id": 15,
+          "code": 2,
+          "pressure_kpa": 5.03909921,
+          "temperature_c": 32.0646354,
+          "saturation_temperature_c": 33.01296691976677,
+          "residual_k": -0.9483315197667821,
+          "u_residual_k": 0.40619764915412565
+        }
+      ],
+      "by_code": {
+        "0": {
+          "n": 5,
+          "mean_residual_k": -4.998115239146887
+        },
+        "1": {
+          "n": 5,
+          "mean_residual_k": -0.18038222092365003
+        },
+        "2": {
+          "n": 5,
+          "mean_residual_k": -0.9923559685213718
+        }
+      },
+      "intercept": 18.337758123887905,
+      "inverse_temperature_slope_k": -5111.600570116044,
+      "apparent_enthalpy_kj_mol": 42.500211859160636,
+      "boiling_rms_residual_k": 0.251175491437721,
+      "maximum_boiling_abs_z": 2.195304983095235
+    },
+    "spectral-fingerprints": {
+      "n": 21,
+      "wavelength_range_nm": [
+        400.0,
+        700.0
+      ],
+      "grid_step_nm": 15,
+      "method": "Dark-subtracted ratios at each common wavelength; 595nm local baseline=(580+610)/2",
+      "uncertainties": "Only wavelength standard uncertainty is present (0.2nm); no intensity uncertainty supplied",
+      "values": [
+        {
+          "wavelength_nm": 400.0,
+          "sample_transmission": 0.5757375245720752,
+          "star_transmission": 0.6932356242389821,
+          "extra_depth": 0.1694922989508706,
+          "reference_offset_nm": -189.0
+        },
+        {
+          "wavelength_nm": 415.0,
+          "sample_transmission": 0.5649050323570102,
+          "star_transmission": 0.7158328488451081,
+          "extra_depth": 0.21084226119491156,
+          "reference_offset_nm": -174.0
+        },
+        {
+          "wavelength_nm": 430.0,
+          "sample_transmission": 0.574221147052593,
+          "star_transmission": 0.738475278245131,
+          "extra_depth": 0.22242333092430921,
+          "reference_offset_nm": -159.0
+        },
+        {
+          "wavelength_nm": 445.0,
+          "sample_transmission": 0.5821273654322394,
+          "star_transmission": 0.7875932364968546,
+          "extra_depth": 0.2608781558085863,
+          "reference_offset_nm": -144.0
+        },
+        {
+          "wavelength_nm": 460.0,
+          "sample_transmission": 0.6050914572860492,
+          "star_transmission": 0.8446780529008449,
+          "extra_depth": 0.2836425011778071,
+          "reference_offset_nm": -129.0
+        },
+        {
+          "wavelength_nm": 475.0,
+          "sample_transmission": 0.6444769546563772,
+          "star_transmission": 0.8936887698700421,
+          "extra_depth": 0.27885749895895484,
+          "reference_offset_nm": -114.0
+        },
+        {
+          "wavelength_nm": 490.0,
+          "sample_transmission": 0.6705792002468318,
+          "star_transmission": 0.9252752026142541,
+          "extra_depth": 0.2752651337113642,
+          "reference_offset_nm": -99.0
+        },
+        {
+          "wavelength_nm": 505.0,
+          "sample_transmission": 0.6655687973306852,
+          "star_transmission": 0.9176613248224318,
+          "extra_depth": 0.27471194510733765,
+          "reference_offset_nm": -84.0
+        },
+        {
+          "wavelength_nm": 520.0,
+          "sample_transmission": 0.6649452844877746,
+          "star_transmission": 0.8845679297214253,
+          "extra_depth": 0.24828239624605875,
+          "reference_offset_nm": -69.0
+        },
+        {
+          "wavelength_nm": 535.0,
+          "sample_transmission": 0.6613743071434337,
+          "star_transmission": 0.8374441631349328,
+          "extra_depth": 0.21024668120246948,
+          "reference_offset_nm": -54.0
+        },
+        {
+          "wavelength_nm": 550.0,
+          "sample_transmission": 0.6379255201336764,
+          "star_transmission": 0.7657266233083913,
+          "extra_depth": 0.16690173657870033,
+          "reference_offset_nm": -39.0
+        },
+        {
+          "wavelength_nm": 565.0,
+          "sample_transmission": 0.6320467918516988,
+          "star_transmission": 0.7274907464794714,
+          "extra_depth": 0.13119610811498605,
+          "reference_offset_nm": -24.0
+        },
+        {
+          "wavelength_nm": 580.0,
+          "sample_transmission": 0.6259533064461977,
+          "star_transmission": 0.7031172335968484,
+          "extra_depth": 0.1097454641467297,
+          "reference_offset_nm": -9.0
+        },
+        {
+          "wavelength_nm": 595.0,
+          "sample_transmission": 0.44793194435602596,
+          "star_transmission": 0.5162029869381397,
+          "extra_depth": 0.13225619438404213,
+          "reference_offset_nm": 6.0
+        },
+        {
+          "wavelength_nm": 610.0,
+          "sample_transmission": 0.6348421442957162,
+          "star_transmission": 0.713088074659244,
+          "extra_depth": 0.10972828342546381,
+          "reference_offset_nm": 21.0
+        },
+        {
+          "wavelength_nm": 625.0,
+          "sample_transmission": 0.6517024265069877,
+          "star_transmission": 0.7444665441855418,
+          "extra_depth": 0.124604817238684,
+          "reference_offset_nm": -31.0
+        },
+        {
+          "wavelength_nm": 640.0,
+          "sample_transmission": 0.6646449642450246,
+          "star_transmission": 0.8024722411493961,
+          "extra_depth": 0.17175332657857278,
+          "reference_offset_nm": -16.0
+        },
+        {
+          "wavelength_nm": 655.0,
+          "sample_transmission": 0.6019051091650048,
+          "star_transmission": 0.7102570307184677,
+          "extra_depth": 0.15255311368598257,
+          "reference_offset_nm": -1.0
+        },
+        {
+          "wavelength_nm": 670.0,
+          "sample_transmission": 0.6669917107598538,
+          "star_transmission": 0.8747807881432222,
+          "extra_depth": 0.23753273985864964,
+          "reference_offset_nm": 14.0
+        },
+        {
+          "wavelength_nm": 685.0,
+          "sample_transmission": 0.6530198502489932,
+          "star_transmission": 0.9026364439015673,
+          "extra_depth": 0.2765416744903719,
+          "reference_offset_nm": 29.0
+        },
+        {
+          "wavelength_nm": 700.0,
+          "sample_transmission": 0.6189807560027756,
+          "star_transmission": 0.8809106143140314,
+          "extra_depth": 0.2973398822254193,
+          "reference_offset_nm": 44.0
+        }
+      ],
+      "sample_depth_at_595": 0.5520680556439741,
+      "star_local_dip_at_595": 0.271005434129054,
+      "sample_local_dip_at_595": 0.28944549396582797,
+      "differential_excess_at_595": 0.02251932059794537,
+      "min_extra_depth": 0.10972828342546381,
+      "max_extra_depth": 0.2973398822254193,
+      "sodium_doublet_separation_nm": 0.5974,
+      "grid_to_sodium_spacing": 25.108804820890523
+    },
+    "coronagraph-contrast": {
+      "n": 24,
+      "n_repeats": 2,
+      "exposure_ms": 10,
+      "method": "Two observations per mask/separation; ratios of group means for contrast",
+      "uncertainty_note": "ROI difference uncertainties retained; combining two rows presumes independent errors",
+      "groups": [
+        {
+          "separation_pixel": 30.0,
+          "unmasked": {
+            "n": 2,
+            "net": 151.26652660000002,
+            "background": 50.4019079,
+            "contrast": 3.001206361079042,
+            "mean_individual_snr": 25.14123385338213,
+            "u_mean_net_if_independent": 4.254439495303934
+          },
+          "masked": {
+            "n": 2,
+            "net": 52.09548169999999,
+            "background": 18.3804051,
+            "contrast": 2.834294533584572,
+            "mean_individual_snr": 19.260403087820848,
+            "u_mean_net_if_independent": 1.9125652944058624
+          },
+          "net_retention": 0.34439530589446343,
+          "background_retention": 0.36467677248384484,
+          "snr_retention": 0.7660882198599747
+        },
+        {
+          "separation_pixel": 60.0,
+          "unmasked": {
+            "n": 2,
+            "net": 107.09991670000001,
+            "background": 51.4211393,
+            "contrast": 2.08279937313641,
+            "mean_individual_snr": 19.175455023956467,
+            "u_mean_net_if_independent": 3.9493547721213966
+          },
+          "masked": {
+            "n": 2,
+            "net": 39.12524285,
+            "background": 18.876651850000002,
+            "contrast": 2.072679157347493,
+            "mean_individual_snr": 15.162108111950236,
+            "u_mean_net_if_independent": 1.824361987332207
+          },
+          "net_retention": 0.3653153434245388,
+          "background_retention": 0.3670990590050968,
+          "snr_retention": 0.7907039542481659
+        },
+        {
+          "separation_pixel": 90.0,
+          "unmasked": {
+            "n": 2,
+            "net": 95.07830994999999,
+            "background": 50.76928205,
+            "contrast": 1.8727526983021416,
+            "mean_individual_snr": 17.418323649594925,
+            "u_mean_net_if_independent": 3.8597257556147677
+          },
+          "masked": {
+            "n": 2,
+            "net": 34.948125000000005,
+            "background": 17.90282705,
+            "contrast": 1.9521009113474068,
+            "mean_individual_snr": 13.82147152168662,
+            "u_mean_net_if_independent": 1.7879269554510047
+          },
+          "net_retention": 0.3675720047861453,
+          "background_retention": 0.3526310857098283,
+          "snr_retention": 0.7935018202516892
+        },
+        {
+          "separation_pixel": 120.0,
+          "unmasked": {
+            "n": 2,
+            "net": 89.60354099999999,
+            "background": 49.6063185,
+            "contrast": 1.806292901981831,
+            "mean_individual_snr": 16.617599938157014,
+            "u_mean_net_if_independent": 3.81279016373241
+          },
+          "masked": {
+            "n": 2,
+            "net": 33.688084599999996,
+            "background": 17.964656499999997,
+            "contrast": 1.875242345991976,
+            "mean_individual_snr": 13.383524565854735,
+            "u_mean_net_if_independent": 1.7794733734218584
+          },
+          "net_retention": 0.37596822875560243,
+          "background_retention": 0.36214452197253855,
+          "snr_retention": 0.8053825230876899
+        },
+        {
+          "separation_pixel": 150.0,
+          "unmasked": {
+            "n": 2,
+            "net": 81.25986130000001,
+            "background": 51.5981687,
+            "contrast": 1.5748594058145324,
+            "mean_individual_snr": 15.24961569616392,
+            "u_mean_net_if_independent": 3.7678778241396382
+          },
+          "masked": {
+            "n": 2,
+            "net": 30.378405700000002,
+            "background": 18.52152875,
+            "contrast": 1.6401672945058599,
+            "mean_individual_snr": 12.205067596946428,
+            "u_mean_net_if_independent": 1.7599883152188962
+          },
+          "net_retention": 0.3738426969232348,
+          "background_retention": 0.35895709511876533,
+          "snr_retention": 0.8003524705226929
+        },
+        {
+          "separation_pixel": 180.0,
+          "unmasked": {
+            "n": 2,
+            "net": 84.62917530000001,
+            "background": 50.327120699999995,
+            "contrast": 1.6815819010285646,
+            "mean_individual_snr": 15.819754119143749,
+            "u_mean_net_if_independent": 3.782712438189229
+          },
+          "masked": {
+            "n": 2,
+            "net": 30.4397326,
+            "background": 18.00379105,
+            "contrast": 1.690740162194895,
+            "mean_individual_snr": 12.250566166694984,
+            "u_mean_net_if_independent": 1.7567644730608893
+          },
+          "net_retention": 0.35968367282435276,
+          "background_retention": 0.35773536811932105,
+          "snr_retention": 0.7743841070115224
+        }
+      ],
+      "mean_net_retention": 0.36446287543472294,
+      "mean_background_retention": 0.3605406504015658,
+      "mean_snr_retention": 0.7884021824969558
+    },
+    "uv-transmission": {
+      "n_raw": 1201,
+      "device_time_range_s": [
+        0.0,
+        60.3779984
+      ],
+      "n_observations": 6,
+      "windows": [
+        {
+          "label": "dark",
+          "start_s": 1,
+          "stop_s": 4,
+          "n": 60,
+          "mean_count": 9.85,
+          "sd_count": 1.2996088068520688
+        },
+        {
+          "label": "reference",
+          "start_s": 6,
+          "stop_s": 9,
+          "n": 59,
+          "mean_count": 609.8983050847457,
+          "sd_count": 1.5390874507904337
+        },
+        {
+          "label": "sample310a",
+          "start_s": 11,
+          "stop_s": 14,
+          "n": 60,
+          "mean_count": 310.05,
+          "sd_count": 1.4892268498014303
+        },
+        {
+          "label": "sample250a",
+          "start_s": 16,
+          "stop_s": 19,
+          "n": 59,
+          "mean_count": 250.1864406779661,
+          "sd_count": 1.502579119165196
+        },
+        {
+          "label": "sample180",
+          "start_s": 21,
+          "stop_s": 24,
+          "n": 60,
+          "mean_count": 180.2,
+          "sd_count": 1.493488692483566
+        },
+        {
+          "label": "sample310b",
+          "start_s": 26,
+          "stop_s": 29,
+          "n": 59,
+          "mean_count": 310.10169491525426,
+          "sd_count": 1.3090522401292826
+        },
+        {
+          "label": "sample250b",
+          "start_s": 31,
+          "stop_s": 34,
+          "n": 60,
+          "mean_count": 250.13333333333333,
+          "sd_count": 1.3957158016122253
+        },
+        {
+          "label": "sample310c",
+          "start_s": 36,
+          "stop_s": 39,
+          "n": 60,
+          "mean_count": 310.1333333333333,
+          "sd_count": 1.5010354241765143
+        }
+      ],
+      "method": "Interior half-open windows in device time; separate receive clock; single-reading SD uncertainty illustration",
+      "median_device_dt_s": 0.050000199999999495,
+      "mean_device_dt_s": 0.050314998666666666,
+      "delivered_rate_hz": 19.874789357045,
+      "mean_clock_offset_s": 0.03507345800124899,
+      "min_clock_offset_s": 0.02315540000000027,
+      "max_clock_offset_s": 0.04551290000000563,
+      "clock_note": "receive-device offset is not measured network latency without synchronized clock origins",
+      "maximum_observation_raw_difference_count": 3.0,
+      "maximum_observation_raw_transmission_difference": 0.0050000000000000044,
+      "observations": [
+        {
+          "id": 1,
+          "sample_count": 310.0,
+          "raw_at_time_count": 309.0,
+          "observation_minus_raw_count": 1.0,
+          "transmission_from_raw": 0.49833333333333335,
+          "transmission": 0.5,
+          "u_transmission_type_a": 0.0029964052157805624,
+          "voltage_v": 0.9999999995,
+          "irradiance_w_m2": 0.00967741935,
+          "device_time_s": 12.4770002,
+          "receive_time_s": 12.5145424,
+          "nominal_quantization_u_transmission": 0.0005892556509887896
+        },
+        {
+          "id": 2,
+          "sample_count": 250.0,
+          "raw_at_time_count": 249.0,
+          "observation_minus_raw_count": 1.0,
+          "transmission_from_raw": 0.3983333333333333,
+          "transmission": 0.4,
+          "u_transmission_type_a": 0.003002214153589738,
+          "voltage_v": 0.8064516125,
+          "irradiance_w_m2": 0.00774193548,
+          "device_time_s": 17.5020008,
+          "receive_time_s": 17.5369022,
+          "nominal_quantization_u_transmission": 0.0005931710140017395
+        },
+        {
+          "id": 3,
+          "sample_count": 180.0,
+          "raw_at_time_count": 181.0,
+          "observation_minus_raw_count": -1.0,
+          "transmission_from_raw": 0.285,
+          "transmission": 0.2833333333333333,
+          "u_transmission_type_a": 0.003022209524566453,
+          "voltage_v": 0.580645161,
+          "irradiance_w_m2": 0.005483870965,
+          "device_time_s": 22.4820004,
+          "receive_time_s": 22.5144602,
+          "nominal_quantization_u_transmission": 0.0006074172876341867
+        },
+        {
+          "id": 4,
+          "sample_count": 310.0,
+          "raw_at_time_count": 313.0,
+          "observation_minus_raw_count": -3.0,
+          "transmission_from_raw": 0.505,
+          "transmission": 0.5,
+          "u_transmission_type_a": 0.002752807191150772,
+          "voltage_v": 0.9999999995,
+          "irradiance_w_m2": 0.00967741935,
+          "device_time_s": 27.5049992,
+          "receive_time_s": 27.5431019,
+          "nominal_quantization_u_transmission": 0.0005892556509887896
+        },
+        {
+          "id": 5,
+          "sample_count": 250.0,
+          "raw_at_time_count": 251.0,
+          "observation_minus_raw_count": -1.0,
+          "transmission_from_raw": 0.40166666666666667,
+          "transmission": 0.4,
+          "u_transmission_type_a": 0.0028553375584469656,
+          "voltage_v": 0.8064516125,
+          "irradiance_w_m2": 0.00774193548,
+          "device_time_s": 32.4850006,
+          "receive_time_s": 32.5169982,
+          "nominal_quantization_u_transmission": 0.0005931710140017395
+        },
+        {
+          "id": 6,
+          "sample_count": 310.0,
+          "raw_at_time_count": 309.0,
+          "observation_minus_raw_count": 1.0,
+          "transmission_from_raw": 0.49833333333333335,
+          "transmission": 0.5,
+          "u_transmission_type_a": 0.0030127279317366277,
+          "voltage_v": 0.9999999995,
+          "irradiance_w_m2": 0.00967741935,
+          "device_time_s": 37.5200005,
+          "receive_time_s": 37.5587717,
+          "nominal_quantization_u_transmission": 0.0005892556509887896
+        }
+      ],
+      "adc_gain_v_count": 0.00322580645,
+      "detector_gain_w_m2_v": 0.01,
+      "calibration_note": "Absolute scale conditional on entered coefficients; no coefficient uncertainty available"
+    },
+    "rgb-filter-transmission": {
+      "windows": "Half-open device-time intervals; local extrema are transitions, not plateaux",
+      "dark_counts": [
+        3,
+        2,
+        2,
+        1
+      ],
+      "entered_reference_counts": [
+        1800,
+        900,
+        1050,
+        620
+      ],
+      "local_reference_mean_counts": [
+        1824.55,
+        940.4,
+        1017.4,
+        567.5
+      ],
+      "turning_windows": [
+        {
+          "window_s": [
+            4.5,
+            5.5
+          ],
+          "n": 20,
+          "counts": [
+            1824.55,
+            940.4,
+            1017.4,
+            567.5
+          ],
+          "reference_normalized": [
+            1.01366165805,
+            1.04498886485,
+            0.96889312965,
+            0.9151857836
+          ],
+          "locally_rereferenced": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+          ]
+        },
+        {
+          "window_s": [
+            14.5,
+            15.5
+          ],
+          "n": 19,
+          "counts": [
+            1224.8947368421052,
+            820.4736842105264,
+            243.94736842105263,
+            92.94736842105263
+          ],
+          "reference_normalized": [
+            0.6799636820526316,
+            0.9114406283157894,
+            0.2308658095263158,
+            0.14854179063157893
+          ],
+          "locally_rereferenced": [
+            0.6707994492833604,
+            0.8722012832592992,
+            0.23827788893150742,
+            0.1623077995075951
+          ]
+        },
+        {
+          "window_s": [
+            24.5,
+            25.5
+          ],
+          "n": 20,
+          "counts": [
+            1125.1,
+            211.95,
+            794.8,
+            140.0
+          ],
+          "reference_normalized": [
+            0.62442960485,
+            0.23379732735,
+            0.75648854955,
+            0.224555735
+          ],
+          "locally_rereferenced": [
+            0.6160138343718261,
+            0.223731884057971,
+            0.7807760488477447,
+            0.24536628420123566
+          ]
+        },
+        {
+          "window_s": [
+            34.5,
+            35.5
+          ],
+          "n": 20,
+          "counts": [
+            924.65,
+            160.85,
+            217.35,
+            480.6
+          ],
+          "reference_normalized": [
+            0.512882582,
+            0.17689309575,
+            0.20548664115,
+            0.7747980614
+          ],
+          "locally_rereferenced": [
+            0.5059701902226126,
+            0.1692774936061381,
+            0.21208390781957848,
+            0.8466019417475729
+          ]
+        },
+        {
+          "window_s": [
+            44.5,
+            45.5
+          ],
+          "n": 20,
+          "counts": [
+            1832.1,
+            946.65,
+            1018.65,
+            571.4
+          ],
+          "reference_normalized": [
+            1.0178631042,
+            1.0519487755,
+            0.9700858778,
+            0.92148626815
+          ],
+          "locally_rereferenced": [
+            1.0041448217177678,
+            1.006660272804774,
+            1.0012310419539099,
+            1.0068843777581642
+          ]
+        }
+      ],
+      "max_counts": 1864.0,
+      "n": 1201,
+      "units": {
+        "transmission": "1",
+        "signal": "counts",
+        "time": "s"
+      }
+    },
+    "illuminance-distance": {
+      "plateau_windows_s": [
+        [
+          1,
+          3.5
+        ],
+        [
+          5,
+          7.5
+        ],
+        [
+          9,
+          11.5
+        ],
+        [
+          13,
+          15.5
+        ],
+        [
+          17,
+          19.5
+        ],
+        [
+          21,
+          23.5
+        ],
+        [
+          25,
+          27.5
+        ],
+        [
+          29,
+          31.5
+        ],
+        [
+          33,
+          35.5
+        ],
+        [
+          37,
+          39.5
+        ],
+        [
+          41,
+          43.5
+        ],
+        [
+          45,
+          47.5
+        ],
+        [
+          49,
+          51.5
+        ],
+        [
+          53,
+          55.5
+        ],
+        [
+          57,
+          59.5
+        ]
+      ],
+      "method": "Most recent actual mouse receive time, then unweighted log-log fit of plateau means",
+      "fit": {
+        "exponent": 2.0012213463782276,
+        "amplitude": 103.17844704714109,
+        "log_residual_sd": 0.0076648709875276905
+      },
+      "leave_one_plateau_out_exponent_range": [
+        1.9966038436052964,
+        2.003198418908193
+      ],
+      "origin_shift_minus_plus_1mm_exponents": [
+        1.9961992004354236,
+        2.0062395898667433
+      ],
+      "plateaux_r_m_lux_product": [
+        [
+          0.20060013226666668,
+          2594.9066666666668,
+          104.4201161328377
+        ],
+        [
+          0.25026666666666664,
+          1646.8533333333332,
+          103.14803088734813
+        ],
+        [
+          0.29913333333333336,
+          1142.4266666666667,
+          102.22519622269633
+        ],
+        [
+          0.3500666666666667,
+          838.1066666666667,
+          102.70718203602965
+        ],
+        [
+          0.40066674666666663,
+          643.3333333333334,
+          103.27677161233002
+        ],
+        [
+          0.5017333893333333,
+          412.29333333333335,
+          103.78923699199377
+        ],
+        [
+          0.600600178,
+          289.2266666666667,
+          104.33000916220398
+        ],
+        [
+          0.7007334793333334,
+          209.65333333333334,
+          102.94553306716551
+        ],
+        [
+          0.8008667886666667,
+          158.64,
+          101.7497309563441
+        ],
+        [
+          0.7513333673333333,
+          182.4,
+          102.96513358560449
+        ],
+        [
+          0.7018667026666667,
+          210.93333333333334,
+          103.90931808931566
+        ],
+        [
+          0.6021333773333333,
+          286.74666666666667,
+          103.96419167666386
+        ],
+        [
+          0.5022000560000001,
+          411.6533333333333,
+          103.82098622281936
+        ],
+        [
+          0.4016,
+          640.2933333333333,
+          103.26814795093333
+        ],
+        [
+          0.3002,
+          1139.5466666666666,
+          102.69599118186667
+        ]
+      ],
+      "product_mean_lx_m2": 103.28103838507684,
+      "product_sd_lx_m2": 0.7639471083542392,
+      "max_repaired_pairing_distance_difference_m": 1.000000082740371e-09,
+      "pairing_rows_differing": 0,
+      "hid_signed_byte_overflow_rows": 1,
+      "units": {
+        "distance": "m",
+        "illuminance": "lx",
+        "product": "lx m^2"
+      }
+    },
+    "illuminance-distance-manual": {
+      "snapshot_fit": {
+        "exponent": 1.9860526273556387,
+        "amplitude": 103.73477074195755,
+        "log_residual_sd": 0.017425786829467688
+      },
+      "plateau_fit": {
+        "exponent": 1.9880052031480693,
+        "amplitude": 103.90122393595512,
+        "log_residual_sd": 0.001951169671847849
+      },
+      "plateau_windows_s": [
+        [
+          1.5,
+          3.5
+        ],
+        [
+          6.5,
+          8.5
+        ],
+        [
+          11.5,
+          13.5
+        ],
+        [
+          16.5,
+          18.5
+        ],
+        [
+          21.5,
+          23.5
+        ],
+        [
+          26.5,
+          28.5
+        ],
+        [
+          31.5,
+          33.5
+        ],
+        [
+          36.5,
+          38.5
+        ],
+        [
+          41.5,
+          43.5
+        ],
+        [
+          46.5,
+          48.5
+        ],
+        [
+          51.5,
+          53.5
+        ],
+        [
+          56.5,
+          58.5
+        ]
+      ],
+      "snapshot_product_mean": 102.48166666666667,
+      "snapshot_product_sd": 1.8211875912228936,
+      "plateau_product_mean": 102.8096420940171,
+      "plateau_product_sd": 0.5797812425582056,
+      "origin_shift_minus_plus_1mm_exponents": [
+        1.982400675619467,
+        1.9936051631615979
+      ],
+      "return_pairs_r_snapshot_out_in_plateau_out_in": [
+        [
+          0.2,
+          102.64,
+          103.36,
+          102.24100000000003,
+          101.89900000000002
+        ],
+        [
+          0.3,
+          101.16,
+          100.35,
+          102.3,
+          102.26475
+        ],
+        [
+          0.4,
+          101.28,
+          100.8,
+          102.48800000000001,
+          102.64205128205131
+        ],
+        [
+          0.5,
+          104.25,
+          101.25,
+          103.10625,
+          103.03125
+        ],
+        [
+          0.6,
+          100.44,
+          104.04,
+          103.60615384615383,
+          103.14899999999999
+        ],
+        [
+          0.7,
+          105.35,
+          104.86,
+          103.62274999999998,
+          103.36549999999998
+        ]
+      ],
+      "units": {
+        "distance": "m",
+        "signal": "counts",
+        "product": "count m^2"
+      },
+      "method": "Two-second interior means versus one paired snapshot per ruler position; log OLS"
+    },
+    "malus-law": {
+      "snapshot_fit": {
+        "floor_counts": 13.202577613010362,
+        "amplitude_counts": 1024.5586115414721,
+        "angle_zero_deg": -0.09682005674378286,
+        "residual_rms_counts": 7.125021206717591
+      },
+      "plateau_fit": {
+        "floor_counts": 13.041904889288617,
+        "amplitude_counts": 1020.4375897909492,
+        "angle_zero_deg": 0.012085653578159862,
+        "residual_rms_counts": 0.5136970451345614
+      },
+      "plateau_windows_s": [
+        [
+          1,
+          5.5
+        ],
+        [
+          7,
+          11.5
+        ],
+        [
+          13,
+          17.5
+        ],
+        [
+          19,
+          23.5
+        ],
+        [
+          25,
+          29.5
+        ],
+        [
+          31,
+          35.5
+        ],
+        [
+          37,
+          41.5
+        ],
+        [
+          43,
+          47.5
+        ],
+        [
+          49,
+          53.5
+        ],
+        [
+          55,
+          59.5
+        ]
+      ],
+      "snapshot_residual_rms_normalized": 0.018555078320175618,
+      "angle_deg_shot_plateau_counts": [
+        [
+          0.0,
+          1029.0,
+          1034.4333333333334
+        ],
+        [
+          10.0,
+          1020.0,
+          1002.1
+        ],
+        [
+          20.0,
+          922.0,
+          913.5666666666667
+        ],
+        [
+          30.0,
+          769.0,
+          778.6629213483146
+        ],
+        [
+          40.0,
+          606.0,
+          611.876404494382
+        ],
+        [
+          50.0,
+          440.0,
+          435.6333333333333
+        ],
+        [
+          60.0,
+          272.0,
+          268.6
+        ],
+        [
+          70.0,
+          132.0,
+          132.2921348314607
+        ],
+        [
+          80.0,
+          42.0,
+          43.7752808988764
+        ],
+        [
+          90.0,
+          13.0,
+          12.887640449438202
+        ]
+      ],
+      "method": "Linear least squares in 1,cos(2 theta),sin(2 theta); phase and amplitude recovered algebraically",
+      "units": {
+        "angle": "degree",
+        "signal": "counts",
+        "normalized_signal": "1"
+      }
+    },
+    "colour-temperature": {
+      "windows": [
+        {
+          "name": "warm",
+          "window_s": [
+            2,
+            13
+          ],
+          "n": 219,
+          "mean_cct_K": 2547.878703124103,
+          "sample_sd_cct_K": 25.128804688128668,
+          "mean_chromaticity": [
+            0.4896495152427839,
+            0.4414130758005706
+          ],
+          "cct_of_mean_counts_K": 2547.971150807848
+        },
+        {
+          "name": "intermediate",
+          "window_s": [
+            21,
+            29
+          ],
+          "n": 158,
+          "mean_cct_K": 3934.657248087115,
+          "sample_sd_cct_K": 18.294411303349193,
+          "mean_chromaticity": [
+            0.38906517600932544,
+            0.39846994624916915
+          ],
+          "cct_of_mean_counts_K": 3934.5708181437376
+        },
+        {
+          "name": "cool",
+          "window_s": [
+            36,
+            44
+          ],
+          "n": 160,
+          "mean_cct_K": 6113.834626208785,
+          "sample_sd_cct_K": 90.76449021989724,
+          "mean_chromaticity": [
+            0.31759367275782385,
+            0.3589468791826337
+          ],
+          "cct_of_mean_counts_K": 6111.609915805843
+        },
+        {
+          "name": "warm return",
+          "window_s": [
+            52,
+            59
+          ],
+          "n": 140,
+          "mean_cct_K": 2549.5363509088284,
+          "sample_sd_cct_K": 25.566500144964028,
+          "mean_chromaticity": [
+            0.48945479246704915,
+            0.4413257693105194
+          ],
+          "cct_of_mean_counts_K": 2549.5776856674897
+        }
+      ],
+      "dark_counts": [
+        3,
+        2,
+        2,
+        1
+      ],
+      "max_reduction_difference_K": 4.979925961379195e-06,
+      "method": "Dark-correct raw counts; normalize by corrected clear; donor matrix; guarded McCamy cubic",
+      "units": {
+        "cct": "K",
+        "chromaticity": "1"
+      },
+      "calibration_scope": "Donor matrix comes from TCS3414CS application note, not an APDS calibration"
+    },
+    "detector-characterization": {
+      "summary_values": [
+        0.0503400008,
+        0.0503437329,
+        0.000473955661,
+        0.00424460286,
+        19.8649182,
+        19.8634456,
+        318.0,
+        1022.73585,
+        10.6356064,
+        20.294717,
+        1.90818616,
+        19.8649182
+      ],
+      "recomputed_summary_max_abs_difference": 9.433962304683519e-07,
+      "baseline_window_s": [
+        12,
+        28
+      ],
+      "dark_window_s": [
+        0,
+        9
+      ],
+      "dark_mean_counts": 11.156424581005586,
+      "baseline_mean_counts": 1022.7358490566038,
+      "baseline_sample_sd_counts": 10.635606425598668,
+      "baseline_n": 318,
+      "device_mean_interval_s": 0.050340000749999995,
+      "receive_mean_interval_s": 0.05034373287391666,
+      "device_interval_sd_s": 0.00047395532997248545,
+      "receive_interval_sd_s": 0.004244604572474267,
+      "delivered_device_rate_Hz": 19.864918257872695,
+      "lag_one_baseline_correlation": 0.05516826516408227,
+      "one_second_block_mean_sd_counts": 2.6419789015355053,
+      "feature_results": [
+        {
+          "window_s": [
+            30,
+            30.5
+          ],
+          "n": 10,
+          "mean_counts": 1016.6,
+          "sample_sd_counts": 9.191783770786218,
+          "depth_from_global_baseline": 0.0060656127518455534,
+          "single_sample_snr": 0.5769157686989526,
+          "stride_16_count_range": [
+            0,
+            1
+          ],
+          "stride_16_phases_missing": 6
+        },
+        {
+          "window_s": [
+            34,
+            35
+          ],
+          "n": 20,
+          "mean_counts": 999.6,
+          "sample_sd_counts": 10.845323998460302,
+          "depth_from_global_baseline": 0.022871015855821086,
+          "single_sample_snr": 2.1753201586059516,
+          "stride_16_count_range": [
+            1,
+            2
+          ],
+          "stride_16_phases_missing": 0
+        },
+        {
+          "window_s": [
+            38,
+            40
+          ],
+          "n": 40,
+          "mean_counts": 982.5,
+          "sample_sd_counts": 9.816260711644448,
+          "depth_from_global_baseline": 0.039775274272172964,
+          "single_sample_snr": 3.7831269272771118,
+          "stride_16_count_range": [
+            2,
+            3
+          ],
+          "stride_16_phases_missing": 0
+        },
+        {
+          "window_s": [
+            44,
+            48
+          ],
+          "n": 79,
+          "mean_counts": 943.2405063291139,
+          "sample_sd_counts": 8.871179480845244,
+          "depth_from_global_baseline": 0.07858536937789157,
+          "single_sample_snr": 7.474453223104778,
+          "stride_16_count_range": [
+            4,
+            5
+          ],
+          "stride_16_phases_missing": 0
+        }
+      ],
+      "method": "Actual timestamp differences; summary cross-check; interior event windows; all 16 stride phases",
+      "units": {
+        "time": "s",
+        "signal": "counts",
+        "rate": "Hz",
+        "snr": "1"
+      }
+    },
+    "nano-transit": {
+      "clocks": {
+        "median_receive_interval_s": 0.050426219999997635,
+        "median_device_interval_s": 0.050003000000003794,
+        "receive_span_s": 120.7838322808,
+        "device_span_s": 120.778,
+        "method": "Adjacent differences within each clock; no clock alignment."
+      },
+      "dark_adopted_count": 10,
+      "stored_reference_count": 110,
+      "events": [
+        {
+          "center_s": 20,
+          "baseline": {
+            "mean": 115.14285714285714,
+            "sample_sd": 2.805218243679647,
+            "n": 119,
+            "block_sd": 1.000504028102493,
+            "block_means": [
+              116.2,
+              115.36842105263158,
+              114.05,
+              114.55,
+              116.4,
+              114.3
+            ],
+            "block_count": 6,
+            "windows": [
+              [
+                14,
+                17
+              ],
+              [
+                23,
+                26
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau": {
+            "mean": 111.325,
+            "sample_sd": 2.4743556529803667,
+            "n": 40,
+            "block_sd": 0.38890872965259915,
+            "block_means": [
+              111.05,
+              111.6
+            ],
+            "block_count": 2,
+            "windows": [
+              [
+                19,
+                21
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "depth": 0.03631114130434776,
+          "apparent_projected_radius_ratio": 0.19055482493064235
+        },
+        {
+          "center_s": 50,
+          "baseline": {
+            "mean": 115.27966101694915,
+            "sample_sd": 2.766977409859441,
+            "n": 118,
+            "block_sd": 0.7499979993817583,
+            "block_means": [
+              115.47368421052632,
+              115.8,
+              115.95,
+              114.75,
+              114.0,
+              115.65
+            ],
+            "block_count": 6,
+            "windows": [
+              [
+                44,
+                47
+              ],
+              [
+                53,
+                56
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau": {
+            "mean": 110.225,
+            "sample_sd": 2.586825596492092,
+            "n": 40,
+            "block_sd": 0.035355339059325364,
+            "block_means": [
+              110.25,
+              110.2
+            ],
+            "block_count": 2,
+            "windows": [
+              [
+                49,
+                51
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "depth": 0.04801175239475169,
+          "apparent_projected_radius_ratio": 0.21911584240933307
+        },
+        {
+          "center_s": 80,
+          "baseline": {
+            "mean": 115.25,
+            "sample_sd": 2.723227200685727,
+            "n": 120,
+            "block_sd": 0.43703546766824397,
+            "block_means": [
+              115.7,
+              114.9,
+              115.1,
+              115.9,
+              115.0,
+              114.9
+            ],
+            "block_count": 6,
+            "windows": [
+              [
+                74,
+                77
+              ],
+              [
+                83,
+                86
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau": {
+            "mean": 110.675,
+            "sample_sd": 3.0999379646398384,
+            "n": 40,
+            "block_sd": 1.2374368670764582,
+            "block_means": [
+              111.55,
+              109.8
+            ],
+            "block_count": 2,
+            "windows": [
+              [
+                79,
+                81
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "depth": 0.04346793349168649,
+          "apparent_projected_radius_ratio": 0.20848964840415096
+        }
+      ],
+      "mean_depth": 0.04259694239692865,
+      "event_depth_sd": 0.005898732413627647,
+      "mean_baseline_count": 115.22417271993542,
+      "stored_out_of_event_normalized": 1.0522417271993543,
+      "raw_extrema_depth": 0.19298245614035087,
+      "projected_ratio": 0.20639026720494513,
+      "interpretation": "Depth scatter across three events, not a sample-count standard error."
+    },
+    "exomoon-photometry": {
+      "clocks": {
+        "median_receive_interval_s": 0.050347950000002584,
+        "median_device_interval_s": 0.050003000000003794,
+        "receive_span_s": 120.782689455,
+        "device_span_s": 120.788002,
+        "method": "Adjacent differences within each clock; no clock alignment."
+      },
+      "states": {
+        "baseline": {
+          "mean": 115.32553956834532,
+          "sample_sd": 3.0662584936340376,
+          "n": 556,
+          "block_sd": 0.6294258863332791,
+          "block_means": [
+            115.55,
+            115.5,
+            114.55,
+            115.10526315789474,
+            115.35,
+            115.9,
+            115.4,
+            115.8,
+            114.15,
+            116.25,
+            114.47368421052632,
+            114.5,
+            116.55,
+            115.7,
+            115.35,
+            114.1,
+            115.15,
+            115.2,
+            115.0,
+            115.65,
+            115.35,
+            115.15,
+            116.75,
+            115.4,
+            115.2,
+            115.75,
+            115.1,
+            115.10526315789474
+          ],
+          "block_count": 28,
+          "windows": [
+            [
+              3,
+              17
+            ],
+            [
+              93,
+              107
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        },
+        "planet": {
+          "mean": 104.99086757990868,
+          "sample_sd": 2.836491318238626,
+          "n": 438,
+          "block_sd": 0.5409756029755088,
+          "block_means": [
+            104.7,
+            105.15,
+            105.2,
+            104.35,
+            106.5,
+            104.9,
+            105.15789473684211,
+            105.45,
+            105.1,
+            105.2,
+            105.3,
+            105.15,
+            105.0,
+            104.1,
+            104.65,
+            105.45,
+            104.45,
+            104.3157894736842,
+            105.65,
+            104.9,
+            104.85,
+            104.25
+          ],
+          "block_count": 22,
+          "windows": [
+            [
+              22,
+              33
+            ],
+            [
+              77,
+              88
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        },
+        "separated": {
+          "mean": 102.01826484018265,
+          "sample_sd": 2.8931600395358994,
+          "n": 438,
+          "block_sd": 0.6634664611571586,
+          "block_means": [
+            101.9,
+            101.85,
+            102.55,
+            101.7,
+            101.25,
+            101.6,
+            102.7,
+            101.26315789473684,
+            102.5,
+            103.1,
+            102.9,
+            101.65,
+            102.05,
+            101.8,
+            102.4,
+            101.21052631578948,
+            102.35,
+            101.15,
+            103.5,
+            101.9,
+            101.15,
+            101.85
+          ],
+          "block_count": 22,
+          "windows": [
+            [
+              37,
+              48
+            ],
+            [
+              62,
+              73
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        },
+        "overlap": {
+          "mean": 103.5798319327731,
+          "sample_sd": 2.7907103716247033,
+          "n": 119,
+          "block_sd": 0.7574688130676281,
+          "block_means": [
+            104.10526315789474,
+            102.4,
+            104.2,
+            102.9,
+            104.15,
+            103.75
+          ],
+          "block_count": 6,
+          "windows": [
+            [
+              52,
+              58
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        }
+      },
+      "dark_adopted_count": 10,
+      "extra_depth": 0.028223000346436565,
+      "overlap_brightening": 0.014826101048142805,
+      "recovered_fraction": 0.525319805341488,
+      "planet_depth": 0.09812123470519239,
+      "separated_depth": 0.12634423505162895,
+      "overlap_depth": 0.11151813400348615,
+      "extra_block_scale": 0.00812777338211628,
+      "brightening_block_scale": 0.009560351954206327,
+      "uncertainty_note": "Quadrature of state one-second block SDs / (baseline-10); fluctuation scale, not confidence interval for a mean."
+    },
+    "starspot-crossing": {
+      "clocks": {
+        "median_receive_interval_s": 0.05024744999999342,
+        "median_device_interval_s": 0.050003000000003794,
+        "receive_span_s": 120.7988466872,
+        "device_span_s": 120.803001,
+        "method": "Adjacent differences within each clock; no clock alignment."
+      },
+      "states": {
+        "baseline": {
+          "mean": 115.11390284757118,
+          "sample_sd": 2.842703661066262,
+          "n": 597,
+          "block_sd": 0.508441931487541,
+          "block_means": [
+            115.45,
+            115.65,
+            115.35,
+            114.84210526315789,
+            115.3,
+            114.05,
+            114.45,
+            115.7,
+            115.65,
+            114.75,
+            115.4,
+            113.95,
+            114.3157894736842,
+            114.9,
+            115.25,
+            115.45,
+            115.25,
+            115.35,
+            115.0,
+            114.6,
+            115.25,
+            115.35,
+            115.8,
+            115.84210526315789,
+            115.2,
+            114.7,
+            115.6,
+            114.45,
+            115.2,
+            115.35
+          ],
+          "block_count": 30,
+          "windows": [
+            [
+              5,
+              15
+            ],
+            [
+              65,
+              75
+            ],
+            [
+              95,
+              105
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        },
+        "control": {
+          "mean": 94.975,
+          "sample_sd": 2.597550559192838,
+          "n": 120,
+          "block_sd": 0.6969576744681122,
+          "block_means": [
+            95.75,
+            94.85,
+            94.15,
+            94.2,
+            95.25,
+            95.65
+          ],
+          "block_count": 6,
+          "windows": [
+            [
+              20.5,
+              23.5
+            ],
+            [
+              80.5,
+              83.5
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        },
+        "adjacent": {
+          "mean": 100.05042016806723,
+          "sample_sd": 2.4489663661717875,
+          "n": 119,
+          "block_sd": 0.49985224040163434,
+          "block_means": [
+            100.52631578947368,
+            99.85,
+            100.65,
+            99.4,
+            99.65,
+            100.25
+          ],
+          "block_count": 6,
+          "windows": [
+            [
+              45.5,
+              48.5
+            ],
+            [
+              55.5,
+              58.5
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        },
+        "crossing": {
+          "mean": 103.11864406779661,
+          "sample_sd": 2.84716886459897,
+          "n": 59,
+          "block_sd": 0.4291894699407616,
+          "block_means": [
+            102.95,
+            102.78947368421052,
+            103.6
+          ],
+          "block_count": 3,
+          "windows": [
+            [
+              50.5,
+              53.5
+            ]
+          ],
+          "clock": "device seconds",
+          "unit": "count"
+        }
+      },
+      "dark_adopted_count": 10,
+      "anomaly_contrast": 0.029189515531344114,
+      "adjacent_depth": 0.14330628272216242,
+      "crossing_depth": 0.1141167671908183,
+      "control_depth": 0.19159123866588051,
+      "deficit_recovered": 0.20368622349890828,
+      "inappropriate_radius_factor": 0.8923641501657783,
+      "anomaly_block_scale": 0.0062677642359447875,
+      "note": "One-second blocks describe fluctuation; control is a separate depth comparison, not evidence for equal occulted area."
+    },
+    "eclipsing-binary": {
+      "clocks": {
+        "median_receive_interval_s": 0.05036580000000157,
+        "median_device_interval_s": 0.050003000000003794,
+        "receive_span_s": 120.7886582723,
+        "device_span_s": 120.790001,
+        "method": "Adjacent differences within each clock; no clock alignment."
+      },
+      "groups": {
+        "primary": {
+          "events": [
+            {
+              "center_s": 20,
+              "baseline": {
+                "mean": 217.1344537815126,
+                "sample_sd": 3.684425235740441,
+                "n": 119,
+                "block_sd": 0.7345611625791966,
+                "block_means": [
+                  217.15,
+                  217.05263157894737,
+                  216.4,
+                  218.2,
+                  217.7,
+                  216.3
+                ],
+                "block_count": 6,
+                "windows": [
+                  [
+                    14,
+                    17
+                  ],
+                  [
+                    23,
+                    26
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "plateau": {
+                "mean": 152.93333333333334,
+                "sample_sd": 3.666562171969751,
+                "n": 30,
+                "block_sd": null,
+                "block_means": [
+                  153.35
+                ],
+                "block_count": 1,
+                "windows": [
+                  [
+                    19.25,
+                    20.75
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "depth": 0.30994901753958914,
+              "half_depth_onset_receive_s": 18.0545968,
+              "half_depth_onset_device_s": 18.0189991
+            },
+            {
+              "center_s": 50,
+              "baseline": {
+                "mean": 216.85593220338984,
+                "sample_sd": 3.5113379818403643,
+                "n": 118,
+                "block_sd": 0.675639466599844,
+                "block_means": [
+                  216.8,
+                  216.42105263157896,
+                  217.5,
+                  217.05,
+                  217.57894736842104,
+                  215.8
+                ],
+                "block_count": 6,
+                "windows": [
+                  [
+                    44,
+                    47
+                  ],
+                  [
+                    53,
+                    56
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "plateau": {
+                "mean": 152.46666666666667,
+                "sample_sd": 3.481313003722167,
+                "n": 30,
+                "block_sd": null,
+                "block_means": [
+                  152.85
+                ],
+                "block_count": 1,
+                "windows": [
+                  [
+                    49.25,
+                    50.75
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "depth": 0.31127589550302487,
+              "half_depth_onset_receive_s": 48.0438182,
+              "half_depth_onset_device_s": 48.012001
+            },
+            {
+              "center_s": 80,
+              "baseline": {
+                "mean": 217.53781512605042,
+                "sample_sd": 3.5170044938270655,
+                "n": 119,
+                "block_sd": 0.7565822273002922,
+                "block_means": [
+                  217.1,
+                  216.5,
+                  218.5,
+                  217.1,
+                  218.0,
+                  218.05
+                ],
+                "block_count": 6,
+                "windows": [
+                  [
+                    74,
+                    77
+                  ],
+                  [
+                    83,
+                    86
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "plateau": {
+                "mean": 152.63333333333333,
+                "sample_sd": 4.0639995022173645,
+                "n": 30,
+                "block_sd": null,
+                "block_means": [
+                  152.15
+                ],
+                "block_count": 1,
+                "windows": [
+                  [
+                    79.25,
+                    80.75
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "depth": 0.31273568989485906,
+              "half_depth_onset_receive_s": 78.0343936,
+              "half_depth_onset_device_s": 78.0029984
+            },
+            {
+              "center_s": 110,
+              "baseline": {
+                "mean": 217.45378151260505,
+                "sample_sd": 3.8062123598309507,
+                "n": 119,
+                "block_sd": 0.5573524342090379,
+                "block_means": [
+                  218.35,
+                  216.95,
+                  216.8,
+                  217.4,
+                  217.7,
+                  217.52631578947367
+                ],
+                "block_count": 6,
+                "windows": [
+                  [
+                    104,
+                    107
+                  ],
+                  [
+                    113,
+                    116
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "plateau": {
+                "mean": 153.56666666666666,
+                "sample_sd": 3.28720962617792,
+                "n": 30,
+                "block_sd": null,
+                "block_means": [
+                  153.3
+                ],
+                "block_count": 1,
+                "windows": [
+                  [
+                    109.25,
+                    110.75
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "depth": 0.3079583046407691,
+              "half_depth_onset_receive_s": 108.038915,
+              "half_depth_onset_device_s": 108.000999
+            }
+          ],
+          "mean_depth": 0.31047972689456055,
+          "event_depth_sd": 0.002029981618405175
+        },
+        "secondary": {
+          "events": [
+            {
+              "center_s": 35,
+              "baseline": {
+                "mean": 217.5593220338983,
+                "sample_sd": 3.565126369732205,
+                "n": 118,
+                "block_sd": 1.0331438407852709,
+                "block_means": [
+                  217.0,
+                  217.55,
+                  218.4,
+                  216.10526315789474,
+                  219.0,
+                  217.2
+                ],
+                "block_count": 6,
+                "windows": [
+                  [
+                    29,
+                    32
+                  ],
+                  [
+                    38,
+                    41
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "plateau": {
+                "mean": 195.56666666666666,
+                "sample_sd": 3.829858495030074,
+                "n": 30,
+                "block_sd": null,
+                "block_means": [
+                  194.75
+                ],
+                "block_count": 1,
+                "windows": [
+                  [
+                    34.25,
+                    35.75
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "depth": 0.10595840818770753,
+              "half_depth_onset_receive_s": 33.5551078,
+              "half_depth_onset_device_s": 33.5200005
+            },
+            {
+              "center_s": 65,
+              "baseline": {
+                "mean": 217.57983193277312,
+                "sample_sd": 4.005284217933764,
+                "n": 119,
+                "block_sd": 1.1891382852704069,
+                "block_means": [
+                  216.5,
+                  218.9,
+                  216.6,
+                  219.2,
+                  216.8421052631579,
+                  217.4
+                ],
+                "block_count": 6,
+                "windows": [
+                  [
+                    59,
+                    62
+                  ],
+                  [
+                    68,
+                    71
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "plateau": {
+                "mean": 195.76666666666668,
+                "sample_sd": 3.0589984086899777,
+                "n": 30,
+                "block_sd": null,
+                "block_means": [
+                  195.15
+                ],
+                "block_count": 1,
+                "windows": [
+                  [
+                    64.25,
+                    65.75
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "depth": 0.10508325911532126,
+              "half_depth_onset_receive_s": 63.5448611,
+              "half_depth_onset_device_s": 63.5079994
+            },
+            {
+              "center_s": 95,
+              "baseline": {
+                "mean": 216.88235294117646,
+                "sample_sd": 3.8908333615381454,
+                "n": 119,
+                "block_sd": 0.8931048067010631,
+                "block_means": [
+                  216.05,
+                  215.85,
+                  218.15,
+                  216.7,
+                  216.89473684210526,
+                  217.65
+                ],
+                "block_count": 6,
+                "windows": [
+                  [
+                    89,
+                    92
+                  ],
+                  [
+                    98,
+                    101
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "plateau": {
+                "mean": 195.43333333333334,
+                "sample_sd": 3.5202207349807635,
+                "n": 30,
+                "block_sd": null,
+                "block_means": [
+                  195.05
+                ],
+                "block_count": 1,
+                "windows": [
+                  [
+                    94.25,
+                    95.75
+                  ]
+                ],
+                "clock": "device seconds",
+                "unit": "count"
+              },
+              "depth": 0.10367737655198554,
+              "half_depth_onset_receive_s": 93.5400704,
+              "half_depth_onset_device_s": 93.5049973
+            }
+          ],
+          "mean_depth": 0.10490634795167145,
+          "event_depth_sd": 0.0011507604010649157
+        }
+      },
+      "primary_minus_secondary": 0.2055733789428891,
+      "depth_ratio": 2.959589509660495,
+      "primary_onset_intervals_s": [
+        29.989221399999998,
+        29.990575400000004,
+        30.0045214
+      ],
+      "mean_onset_period_s": 29.994772733333335,
+      "interval_sd_s": 0.008469693343524326,
+      "endpoint_period_s": 29.994772733333335,
+      "phase_epoch_receive_s": 20,
+      "phase_period_s": 30,
+      "max_stored_phase_residual": 1.700000012982983e-08,
+      "note": "Intervals share endpoints; SD is descriptive, not uncertainty of independent replicated periods. Adopted background 10 counts."
+    },
+    "seasons-obliquity": {
+      "clocks": {
+        "median_receive_interval_s": 0.05047426769999942,
+        "median_device_interval_s": 0.050000199999999495,
+        "receive_span_s": 60.388412726199995,
+        "device_span_s": 60.3909988,
+        "method": "Adjacent differences within each clock; no clock alignment."
+      },
+      "observations": [
+        {
+          "trial": 1,
+          "latitude_deg": -60.0,
+          "orbit_label_deg": 0.0,
+          "obliquity_deg": 0.0,
+          "distance_cm": 100.0,
+          "snapshot_count": 579.0,
+          "relative": 0.5220183486238532,
+          "plateau": {
+            "mean": 583.5,
+            "sample_sd": 6.38191300154758,
+            "n": 60,
+            "block_sd": 1.6347782724271984,
+            "block_means": [
+              582.25,
+              585.35,
+              582.9
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                1,
+                4
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.5261467889908257,
+          "snapshot_minus_plateau_count": -4.5
+        },
+        {
+          "trial": 1,
+          "latitude_deg": 0.0,
+          "orbit_label_deg": 180.0,
+          "obliquity_deg": 0.0,
+          "distance_cm": 100.0,
+          "snapshot_count": 1082.0,
+          "relative": 0.9834862385321101,
+          "plateau": {
+            "mean": 1076.8813559322034,
+            "sample_sd": 11.237383340290801,
+            "n": 59,
+            "block_sd": 1.9026249059599594,
+            "block_means": [
+              1076.2,
+              1079.0,
+              1075.3684210526317
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                6,
+                9
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.9787902348001866,
+          "snapshot_minus_plateau_count": 5.118644067796595
+        },
+        {
+          "trial": 1,
+          "latitude_deg": 60.0,
+          "orbit_label_deg": 0.0,
+          "obliquity_deg": 0.0,
+          "distance_cm": 100.0,
+          "snapshot_count": 570.0,
+          "relative": 0.5137614678899083,
+          "plateau": {
+            "mean": 584.1333333333333,
+            "sample_sd": 6.703064481737266,
+            "n": 60,
+            "block_sd": 0.3785938897199742,
+            "block_means": [
+              584.3,
+              584.4,
+              583.7
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                11,
+                14
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.5267278287461774,
+          "snapshot_minus_plateau_count": -14.133333333333326
+        },
+        {
+          "trial": 1,
+          "latitude_deg": -60.0,
+          "orbit_label_deg": 180.0,
+          "obliquity_deg": 0.0,
+          "distance_cm": 100.0,
+          "snapshot_count": 215.0,
+          "relative": 0.18807339449541285,
+          "plateau": {
+            "mean": 218.5084745762712,
+            "sample_sd": 3.1093456532820323,
+            "n": 59,
+            "block_sd": 0.4444097208657782,
+            "block_means": [
+              218.0,
+              218.65,
+              218.85
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                16,
+                19
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.19129217851034055,
+          "snapshot_minus_plateau_count": -3.5084745762711975
+        },
+        {
+          "trial": 1,
+          "latitude_deg": 0.0,
+          "orbit_label_deg": 0.0,
+          "obliquity_deg": 0.0,
+          "distance_cm": 100.0,
+          "snapshot_count": 1157.0,
+          "relative": 1.0522935779816514,
+          "plateau": {
+            "mean": 1145.457627118644,
+            "sample_sd": 10.94236000816174,
+            "n": 59,
+            "block_sd": 0.681304557651747,
+            "block_means": [
+              1144.75,
+              1145.55,
+              1146.1052631578948
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                21,
+                24
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 1.041704245062976,
+          "snapshot_minus_plateau_count": 11.54237288135596
+        },
+        {
+          "trial": 1,
+          "latitude_deg": 60.0,
+          "orbit_label_deg": 180.0,
+          "obliquity_deg": 0.0,
+          "distance_cm": 100.0,
+          "snapshot_count": 216.0,
+          "relative": 0.1889908256880734,
+          "plateau": {
+            "mean": 218.43333333333334,
+            "sample_sd": 4.031093835936382,
+            "n": 60,
+            "block_sd": 0.7522189397597911,
+            "block_means": [
+              218.05,
+              217.95,
+              219.3
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                26,
+                29
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.19122324159021406,
+          "snapshot_minus_plateau_count": -2.433333333333337
+        },
+        {
+          "trial": 2,
+          "latitude_deg": -60.0,
+          "orbit_label_deg": 0.0,
+          "obliquity_deg": 23.5,
+          "distance_cm": 100.0,
+          "snapshot_count": 500.0,
+          "relative": 0.44954128440366975,
+          "plateau": {
+            "mean": 502.6666666666667,
+            "sample_sd": 6.163497429623197,
+            "n": 60,
+            "block_sd": 1.2086493839543815,
+            "block_means": [
+              502.5,
+              501.55,
+              503.95
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                31,
+                34
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.45198776758409787,
+          "snapshot_minus_plateau_count": -2.6666666666666856
+        },
+        {
+          "trial": 2,
+          "latitude_deg": 0.0,
+          "orbit_label_deg": 180.0,
+          "obliquity_deg": 23.5,
+          "distance_cm": 100.0,
+          "snapshot_count": 1033.0,
+          "relative": 0.9385321100917431,
+          "plateau": {
+            "mean": 1043.5833333333333,
+            "sample_sd": 12.104476923102498,
+            "n": 60,
+            "block_sd": 4.73532821812102,
+            "block_means": [
+              1039.45,
+              1042.55,
+              1048.75
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                36,
+                39
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.9482415902140672,
+          "snapshot_minus_plateau_count": -10.583333333333258
+        },
+        {
+          "trial": 2,
+          "latitude_deg": 60.0,
+          "orbit_label_deg": 0.0,
+          "obliquity_deg": 23.5,
+          "distance_cm": 100.0,
+          "snapshot_count": 504.0,
+          "relative": 0.45321100917431195,
+          "plateau": {
+            "mean": 502.55,
+            "sample_sd": 6.484466445648845,
+            "n": 60,
+            "block_sd": 1.8186533479473057,
+            "block_means": [
+              500.6,
+              502.85,
+              504.2
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                41,
+                44
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.45188073394495415,
+          "snapshot_minus_plateau_count": 1.4499999999999886
+        },
+        {
+          "trial": 2,
+          "latitude_deg": -60.0,
+          "orbit_label_deg": 180.0,
+          "obliquity_deg": 23.5,
+          "distance_cm": 100.0,
+          "snapshot_count": 124.0,
+          "relative": 0.10458715596330276,
+          "plateau": {
+            "mean": 127.59322033898304,
+            "sample_sd": 3.0178700188400556,
+            "n": 59,
+            "block_sd": 0.9663928035663607,
+            "block_means": [
+              128.52631578947367,
+              126.6,
+              127.7
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                46,
+                49
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.10788368838438811,
+          "snapshot_minus_plateau_count": -3.593220338983045
+        },
+        {
+          "trial": 2,
+          "latitude_deg": 0.0,
+          "orbit_label_deg": 0.0,
+          "obliquity_deg": 23.5,
+          "distance_cm": 100.0,
+          "snapshot_count": 1135.0,
+          "relative": 1.0321100917431192,
+          "plateau": {
+            "mean": 1141.8833333333334,
+            "sample_sd": 11.850898080345408,
+            "n": 60,
+            "block_sd": 1.109429282709522,
+            "block_means": [
+              1140.7,
+              1142.05,
+              1142.9
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                51,
+                54
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 1.0384250764525995,
+          "snapshot_minus_plateau_count": -6.883333333333439
+        },
+        {
+          "trial": 2,
+          "latitude_deg": 60.0,
+          "orbit_label_deg": 180.0,
+          "obliquity_deg": 23.5,
+          "distance_cm": 100.0,
+          "snapshot_count": 132.0,
+          "relative": 0.11192660550458716,
+          "plateau": {
+            "mean": 127.13333333333334,
+            "sample_sd": 2.764586380113189,
+            "n": 60,
+            "block_sd": 0.718215380880513,
+            "block_means": [
+              127.95,
+              126.85,
+              126.6
+            ],
+            "block_count": 3,
+            "windows": [
+              [
+                56,
+                59
+              ]
+            ],
+            "clock": "device seconds",
+            "unit": "count"
+          },
+          "plateau_relative": 0.10746177370030581,
+          "snapshot_minus_plateau_count": 4.86666666666666
+        }
+      ],
+      "orbital_contrasts": [
+        {
+          "obliquity_deg": 0,
+          "latitude_deg": -60,
+          "orbit180_minus_orbit0": -0.3339449541284404,
+          "orbit180_over_orbit0": 0.3602811950790861
+        },
+        {
+          "obliquity_deg": 0,
+          "latitude_deg": 0,
+          "orbit180_minus_orbit0": -0.0688073394495412,
+          "orbit180_over_orbit0": 0.9346120313862251
+        },
+        {
+          "obliquity_deg": 0,
+          "latitude_deg": 60,
+          "orbit180_minus_orbit0": -0.3247706422018349,
+          "orbit180_over_orbit0": 0.3678571428571429
+        },
+        {
+          "obliquity_deg": 23.5,
+          "latitude_deg": -60,
+          "orbit180_minus_orbit0": -0.344954128440367,
+          "orbit180_over_orbit0": 0.23265306122448978
+        },
+        {
+          "obliquity_deg": 23.5,
+          "latitude_deg": 0,
+          "orbit180_minus_orbit0": -0.0935779816513761,
+          "orbit180_over_orbit0": 0.9093333333333333
+        },
+        {
+          "obliquity_deg": 23.5,
+          "latitude_deg": 60,
+          "orbit180_minus_orbit0": -0.3412844036697248,
+          "orbit180_over_orbit0": 0.24696356275303644
+        }
+      ],
+      "hemisphere_contrasts": [
+        {
+          "obliquity_deg": 0,
+          "orbit_label_deg": 0,
+          "north_minus_south": -0.008256880733944927
+        },
+        {
+          "obliquity_deg": 0,
+          "orbit_label_deg": 180,
+          "north_minus_south": 0.0009174311926605505
+        },
+        {
+          "obliquity_deg": 23.5,
+          "orbit_label_deg": 0,
+          "north_minus_south": 0.003669724770642202
+        },
+        {
+          "obliquity_deg": 23.5,
+          "orbit_label_deg": 180,
+          "north_minus_south": 0.007339449541284404
+        }
+      ],
+      "distances_cm": [
+        100.0
+      ],
+      "max_snapshot_plateau_difference_count": 14.133333333333326,
+      "note": "Twelve distinct labelled settings, one snapshot each; no independent replicate uncertainty. Each snapshot checked against raw acquisition."
+    }
+  },
+  "generated_figures_sha256": {
+    "figures/cc2541-accelerometer.tex": "f270e20f14551f5109a2a8b5be35986d838a114d360cc0e469779eeaeb6f6283",
+    "figures/cc2541-gyroscope.tex": "9196dd4512ab2f4b90ccddc76f683af17d6ac8a0ca1e4f7975eb1521231f6526",
+    "figures/cc2541-magnetometer.tex": "fe2486bfea0c0fa8f3559bc95df44eea5d522f3f3f578c565fa03334039f4eac",
+    "figures/pocketlab-gyroscope.tex": "d9baa8325bac26ba86ef8e370979cac39d47f76edc474d68af5b5839b5ad8072",
+    "figures/greenhouse-single.tex": "53b3c82dc369a2480c507ff500f1e1e70494e7c63a8ce522263798bab5f99766",
+    "figures/sensortag-environmental.tex": "81d2208f6253b14f3efa342b6f40f00627e391a5a4e22928f852d52a6cd2bec5",
+    "figures/puck-light.tex": "2c9ed06d15906f0ce287f269ef33bde05430d7a1c4aa3447f5b9842d95f14d35",
+    "figures/cc2541-humidity.tex": "105708dfdad98ee67aeb622a63d699d84179406246db1a3bbcb9ec08cc1d334a",
+    "figures/cc2541-pressure.tex": "f9e90bed841043556688314ad3c2d421afa4eebbb80d04ea0ddfdd6bfb4f14e4",
+    "figures/cc2541-ir-temperature.tex": "2a1182edc93fcd0f5c10f2a179d38c112ab730f6efaf9ec177684b752e6bbb5c",
+    "figures/static-friction.tex": "826db3bccf24413fa2bc49f36e915b49fd27f4a1d142aea77e6892416403371b",
+    "figures/audio-magnetic.tex": "b7750b257626244acbbd4d88d3108c1c1c278cd1a271f0d69b566f8981fef796",
+    "figures/magnetic-current.tex": "e63937a96275f899c6364cb5dc26ba93b3720b41487ae535478c6b958b7d0163",
+    "figures/pressure-boiling.tex": "05ff4ef02acf7bcdf096c6ac03c258c221e9225e59700a3c30c46ae0f1d4c669",
+    "figures/spectral-fingerprints.tex": "8725609faf95249665fc6525e483d7a57655c32fe617fe3986c38a2e20dc9dff",
+    "figures/coronagraph-contrast.tex": "05dcc1469eb2528ac0d30abc31271799912ccb9a4cfd89b717207aaa91851dc5",
+    "figures/uv-transmission.tex": "c1108c9527e8536fac68e638ee5c58d6a6d3d77d1e27fd2d90499a3798d4df38",
+    "figures/rgb-filter-transmission.tex": "35f964d5e806c7078508e238da9c1a77e7e483d99f29ae05a0d4089a85cfde8e",
+    "figures/illuminance-distance.tex": "405b899dabcbc8a49ebda38bbf5dca0fd4c67e8754c9de5c334f53494555a02f",
+    "figures/illuminance-distance-manual.tex": "ac024ac0a05fc356045273b45ce979af2229a2b0eb020fe057489ae9378ce15a",
+    "figures/malus-law.tex": "a6666596cb12f8b2f82cb31e1961b9d2aae7d1dee899b0ce517a7a5f6369223c",
+    "figures/colour-temperature.tex": "a3b301da669fad88dcce6a418bcc6fd72511fe7ee1a5940e26436b2c36a7db3c",
+    "figures/detector-characterization.tex": "ca8088ec11188b940c55a76a971b5e27dfd1cd4ce410d7e08cdefd819acf6a35",
+    "figures/nano-transit.tex": "d3d9ace91cabbc04de32ef4382d778031f9102db4f6977066e215ced4ffded65",
+    "figures/exomoon-photometry.tex": "fa553e3fec1b174b94466fac5792639aa58a40a696733ea1370a8c93568ac090",
+    "figures/starspot-crossing.tex": "c9d96fa9404cf8a12737b2fd01e8795d9b7044a08109b02aca7022940a7007d4",
+    "figures/eclipsing-binary.tex": "fc9d524a62830af201dd7ca8c7073c7afb38ff4220b6d3a835933e17fb2e13bc",
+    "figures/seasons-obliquity.tex": "9fb43e720723320987aeeaa0d881c95abc32b07ef991b7a5870c39403b3b76bb"
+  },
+  "derived_tables_sha256": {
+    "data/drafts/greenhouse-single_fit.csv": "83f9cc6888885909f4a5ae566a6e707783b41c12695d5109f6eabe371cdd15d8",
+    "data/drafts/pressure-boiling-saturation.csv": "7f60831f6bfc42e4a91f6f9a9358f314094d435fc642f45e81e7ac8f029be74e",
+    "data/drafts/coronagraph-contrast-summary.csv": "0a08bb0b13e262d120145e234f7c6a15ea305ea086696a01be74832909b26ffe",
+    "data/drafts/optics-rgb-local.csv": "b295f5019ba96c1d6924b83a41c5f4b2b6add44a474ca2f3dd794f725253c1b4",
+    "data/drafts/optics-distance-observations.csv": "7dbca187c886a3caafa981b3e3d5efe3de12917d3ec53dfc3af9acf7de857edb",
+    "data/drafts/optics-distance-fit.csv": "a1291b9a9a117bec0201ed06f0b8fa0b776379c8f212674f75d410143ef4d0bd",
+    "data/drafts/optics-manual-observations.csv": "759e925117d8b1c888475b2994a7a8d746096f03e8a386ab64e57d8d623c8d69",
+    "data/drafts/optics-manual-fit.csv": "f47452fbd553be2a699c79ba0a73f934b29fce58730762b1665697a09d304b54",
+    "data/drafts/optics-malus-observations.csv": "063bf2ebf165f3908c6c7c70e2d9e952e6b1165943a250230d50c59301856231",
+    "data/drafts/optics-malus-fit.csv": "ca9081aea2f3b4b250fb1cc3a1bf2edbef63a95eefb63d05397851c2102f838c",
+    "data/drafts/optics-detector-intervals.csv": "931169aae97a6067582620a747e49ddd6b8af6820908808a609817f04736ba82",
+    "data/drafts/nano-transit-blocks.csv": "cb39e18732914f5623eb6a06386755e56c53989a4fdbe10200e88de7624d68fc",
+    "data/drafts/exomoon-photometry-blocks.csv": "775bf04be6cd0dd502a813c0baade4a977bb6300e8d2f6f68f6fceb6935d4081",
+    "data/drafts/starspot-crossing-blocks.csv": "38efe9e83861de513200f3727ad97221e8378a3c539ba8cb9ceea559ac08d272",
+    "data/drafts/eclipsing-binary-blocks.csv": "da57ecf6eeb730ab82eaa8c29a082c7540fc8a03b3ba3c639578562f64a3f469",
+    "data/drafts/seasons-obliquity-latitude.csv": "e66b8845dbe86fa560be5c373fda5228d11e0bd961784e40332cae46d58f4fdb"
+  }
+}

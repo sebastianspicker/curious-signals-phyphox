@@ -21,6 +21,8 @@ test = [
     "ruff>=0.12,<1.0",
 ]
 browser = ["playwright>=1.58,<2"]
+# Vector-preserving PDF assembly and continuous collection pagination.
+papers = ["PyMuPDF>=1.28.2,<2"]
 
 [tool.setuptools.packages.find]
 where = ["src"]

@@ -17,6 +17,15 @@
             <string original="time">temps</string>
             <string original="Simple">Valeur</string>
             <string original="Raw Data">Raw Data</string>
+        <string original="Calibration">&#xC9;talonnage</string>
+<string original="Pressure bias">Biais de pression</string>
+<string original="Reference pressure">Pression de r&#xE9;f&#xE9;rence</string>
+<string original="Pressure change">Variation de pression</string>
+<string original="Enter a positive reference pressure in Calibration to show p minus reference.">Saisir une pression de r&#xE9;f&#xE9;rence positive dans &#xC9;talonnage pour afficher p moins la r&#xE9;f&#xE9;rence.</string>
+<string original="Setup">Montage</string>
+<string original="Keep the pressure vent open and let the powered board reach thermal equilibrium. Compare with an absolute-pressure reference in the same equilibrated volume and at the same height. Enter bias as indicated pressure minus reference pressure. For pressure changes enter a settled reference mean, then bracket each event with baseline observations to assess drift. Height or leakage cannot be inferred from pressure alone without a temperature and physical model.">Laisser l&#x2019;orifice de pression libre et attendre l&#x2019;&#xE9;quilibre thermique de la carte sous tension. Comparer &#xE0; une r&#xE9;f&#xE9;rence de pression absolue dans le m&#xEA;me volume &#xE9;quilibr&#xE9; et &#xE0; la m&#xEA;me hauteur. Saisir le biais comme pression indiqu&#xE9;e moins pression de r&#xE9;f&#xE9;rence. Pour les variations, saisir une moyenne de r&#xE9;f&#xE9;rence stable et encadrer chaque &#xE9;v&#xE9;nement par des observations de r&#xE9;f&#xE9;rence afin d&#x2019;&#xE9;valuer la d&#xE9;rive. Hauteur et fuite n&#xE9;cessitent aussi temp&#xE9;rature et mod&#xE8;le physique.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Enregistrer une r&#xE9;f&#xE9;rence stable avant et apr&#xE8;s chaque essai. L&#x2019;intervalle BLE est d&#x2019;au moins 50 ms ; les mesures indisponibles restent NaN. Les signaux rapides n&#xE9;cessitent une bande passante v&#xE9;rifi&#xE9;e et un filtre anti-repliement.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Saisir les coefficients mesur&#xE9;s sur ce montage. Les valeurs initiales sont nominales, sans &#xE9;talonnage. Un changement recalcule toute la courbe ; mesures originales et r&#xE9;glages sont export&#xE9;s s&#xE9;par&#xE9;ment. Effacer les donn&#xE9;es r&#xE9;tablit les valeurs initiales.</string>
         </translation>
         <translation locale="de">
             <title>Druck</title>
@@ -27,6 +36,15 @@
             <string original="time">Zeit</string>
             <string original="Simple">Einfach</string>
             <string original="Raw Data">Rohdaten</string>
+        <string original="Calibration">Kalibrierung</string>
+<string original="Pressure bias">Druckoffset</string>
+<string original="Reference pressure">Referenzdruck</string>
+<string original="Pressure change">Druck&#xE4;nderung</string>
+<string original="Enter a positive reference pressure in Calibration to show p minus reference.">Einen positiven Referenzdruck unter Kalibrierung eingeben, um p minus Referenz anzuzeigen.</string>
+<string original="Setup">Aufbau</string>
+<string original="Keep the pressure vent open and let the powered board reach thermal equilibrium. Compare with an absolute-pressure reference in the same equilibrated volume and at the same height. Enter bias as indicated pressure minus reference pressure. For pressure changes enter a settled reference mean, then bracket each event with baseline observations to assess drift. Height or leakage cannot be inferred from pressure alone without a temperature and physical model.">Den Druckanschluss freihalten und die eingeschaltete Platine thermisch ausgleichen lassen. Mit einer Absolutdruckreferenz im selben ausgeglichenen Volumen und auf gleicher H&#xF6;he vergleichen. Als Offset Anzeigedruck minus Referenzdruck eingeben. F&#xFC;r Druck&#xE4;nderungen einen stabilen Referenzmittelwert eintragen; vor und nach jedem Ereignis Referenzwerte zur Driftkontrolle aufnehmen. H&#xF6;he oder Leckage erfordern zus&#xE4;tzlich Temperatur und ein physikalisches Modell.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Vor und nach jedem Versuch eine stabile Referenz aufzeichnen. Das BLE-Intervall betr&#xE4;gt mindestens 50 ms; nicht verf&#xFC;gbare Sensormesswerte bleiben NaN. Schnelle Signale ben&#xF6;tigen eine unabh&#xE4;ngig gepr&#xFC;fte Bandbreite und einen Anti-Aliasing-Filter.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Am eigenen Aufbau gemessene Koeffizienten eingeben. Vorgaben sind Nennwerte, keine Kalibrierung. &#xC4;nderungen berechnen die gesamte Kurve neu; urspr&#xFC;ngliche Messwerte und Einstellungen werden getrennt exportiert. Daten l&#xF6;schen setzt die Vorgaben zur&#xFC;ck.</string>
         </translation>
     </translations>
     <data-containers>
@@ -40,6 +58,10 @@
 
 	    <!-- container for normalization to hPa -->
 	    <container size="0" static="false" init="">CH2_norm</container>
+    <container size="1" init="0">pressure_bias</container>
+<container size="1" init="0">pressure_reference</container>
+<container size="0">pressure_change_candidate</container>
+<container size="0">pressure_change</container>
     </data-containers>
     <input>
         <bluetooth mode="notification" rate="1" subscribeOnStart="false" id="Sense">
@@ -60,7 +82,7 @@
     </output>
     <views>
         <view label="Graph">
-            <graph label="Pressure" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="p" labelZ="" unitX="s" unitY="hPa" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Pressure" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="p" labelZ="" unitX="s" unitY="hPa" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2_norm</input>
             </graph>
@@ -74,22 +96,55 @@
         
         <!-- original view of raw sensor data: kPa -->
         <view label="Raw Data">
-            <graph label="Pressure" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="p" labelZ="" unitX="s" unitY="kPa" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Pressure" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="p" labelZ="" unitX="s" unitY="kPa" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2</input>
             </graph>
         </view>
+    <view label="Pressure change">
+    <info label="Enter a positive reference pressure in Calibration to show p minus reference."/>
+    <graph label="Pressure change" labelX="t" unitX="s" labelY="Pressure change" unitY="hPa" partialUpdate="false">
+        <input axis="x">CH1</input>
+        <input axis="y">pressure_change</input>
+    </graph>
+</view>
+    <view label="Setup">
+    <info label="Keep the pressure vent open and let the powered board reach thermal equilibrium. Compare with an absolute-pressure reference in the same equilibrated volume and at the same height. Enter bias as indicated pressure minus reference pressure. For pressure changes enter a settled reference mean, then bracket each event with baseline observations to assess drift. Height or leakage cannot be inferred from pressure alone without a temperature and physical model."/>
+    <info label="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering."/>
+</view>
+    <view label="Calibration">
+    <info label="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults."/>
+    <edit label="Pressure bias" unit="hPa" default="0" decimal="true" signed="true">
+        <output>pressure_bias</output>
+    </edit>
+    <edit label="Reference pressure" unit="hPa" default="0" decimal="true" signed="true">
+        <output>pressure_reference</output>
+    </edit>
+</view>
     </views>
     
     <!-- kPa to hPa -->
-    <analysis sleep="0" onUserInput="false">
-        <formula formula="[1_]*10">
-            <input clear="false">CH2</input>
-            <output>CH2_norm</output>
-        </formula>
-    </analysis>
+    <analysis sleep="0.05">
+    <formula formula="[1_]*10-[2]">
+        <input clear="false">CH2</input>
+        <input clear="false">pressure_bias</input>
+        <output clear="true">CH2_norm</output>
+    </formula>
+    <formula formula="[1_]-[2]">
+        <input clear="false">CH2_norm</input>
+        <input clear="false">pressure_reference</input>
+        <output clear="true">pressure_change_candidate</output>
+    </formula>
+    <if greater="true">
+        <input clear="false" as="a">pressure_reference</input>
+        <input type="value" as="b">0</input>
+        <input clear="false" as="true">pressure_change_candidate</input>
+        <input type="empty" as="false"/>
+        <output clear="true">pressure_change</output>
+    </if>
+</analysis>
     <export>
-         <set name="Raw data (hPa)">
+         <set name="Calibrated data (hPa)">
             <data name="Time t (s)">CH1</data>
             <data name="Pressure (hPa)">CH2_norm</data>
         </set>
@@ -97,5 +152,17 @@
             <data name="Time t (s)">CH1</data>
             <data name="Pressure (kPa)">CH2</data>
         </set>
+    <set name="Pressure change">
+    <data name="Time t (s)">CH1</data>
+    <data name="Pressure change (hPa)">pressure_change</data>
+</set>
+    <set name="Calibration settings">
+    <data name="Pressure bias (hPa)">pressure_bias</data>
+    <data name="Reference pressure (hPa)">pressure_reference</data>
+</set>
+    <set name="Timing">
+    <data name="Device time (s)">CH1</data>
+    <data name="BLE receive time (s)">CH0</data>
+</set>
     </export>
 </phyphox>

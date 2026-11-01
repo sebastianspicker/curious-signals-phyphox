@@ -1,0 +1,95 @@
+\begin{abstract}
+Fifteen paired pressure--temperature observations in the data distinguish a visible boiling threshold from an equilibrium coexistence curve. The five sustained-boiling observations have an RMS deviation of 0.25~K from IAPWS saturation, while liquid-labelled observations lie about 5.0~K below it. A Clausius--Clapeyron fit gives an interval-dependent apparent enthalpy of 42.5~kJ/mol. Conditional uncertainty, instrument range and comparison with Martian pressure delimit the inference: the lowest example pressure remains 7.92 times the planetary reference.
+\end{abstract}
+\begin{IEEEkeywords}
+Boiling, saturation pressure, phase equilibrium, nucleation, thermometry.
+\end{IEEEkeywords}
+
+\section{Equilibrium and the appearance of bubbles}
+The familiar boiling temperature near 100~$^\circ$C belongs to a particular absolute pressure. Equality of liquid and vapour chemical potentials defines a coexistence curve whose slope follows the Clapeyron equation,
+\begin{equation}
+ \frac{dp_\sigma}{dT}=\frac{\Delta h_{\rm vap}}{T(v_g-v_l)},
+ \label{eq:pressure-boiling-clapeyron}
+\end{equation}
+with specific enthalpy change $\Delta h_{\rm vap}$ and specific volumes $v_g$ and $v_l$. Taking the vapour as ideal, neglecting liquid volume and treating the molar enthalpy as constant gives
+\begin{equation}
+ \ln(p_\sigma/p_*)=a-\frac{\Delta H_{\rm vap}}{RT}.
+ \label{eq:pressure-boiling-log}
+\end{equation}
+The arbitrary reference pressure $p_*$ makes the logarithm dimensionless. This approximation describes a restricted interval; the numerical comparison below instead uses the temperature-dependent IAPWS saturation relation\cite{iapws1992}.
+
+Surface tension, dissolved gas, nucleation sites and pressure history influence visible bubble formation. Homogeneous and heterogeneous nucleation need not follow a simple equilibrium threshold\cite{blander1975}; isolated bubbles after evacuation are therefore insufficient evidence of coexistence. Observation labels retain this distinction: zero denotes liquid without sustained boiling, one sustained boiling, and two an uncertain judgement. Only label one enters the enthalpy fit.
+
+\section{Paired pressure and liquid temperature}
+Figure~\ref{fig:pressure-boiling-apparatus} combines a pressure-rated vessel, a calibrated absolute-pressure instrument and an independent immersed temperature probe. Wet isolation protects dry pressure electronics from water and condensation. The paired readings are transferred manually. Liquid temperature must be measured directly; the barometer chip's temperature cannot substitute for it.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+ \draw[thick,rounded corners] (0.3,0.2) rectangle (3.0,1.8);
+ \fill[csblue!12] (0.35,0.25) rectangle (2.95,0.85);
+ \draw[csblue] (0.35,0.85)--(2.95,0.85);
+ \node at (1.65,0.5) {water};
+ \draw[thick] (1.1,2.2)--(1.1,0.6);
+ \node[above,align=center] at (1.2,2.2) {liquid\\temperature probe};
+ \node[draw,align=center] (pressure) at (6.0,1.4) {absolute-pressure\\instrument};
+ \draw[thick] (3,1.4)--(3.6,1.4)--(3.6,0.9)--(4.3,0.9)--(4.3,1.4)--(pressure.west);
+ \node[below,align=center] at (3.95,0.8) {wet\\isolation};
+ \draw[->,thick] (2.7,1.8)--(2.7,3.0)--(4.9,3.0);
+ \node[above] at (4.7,3.0) {controlled evacuation};
+\end{tikzpicture}
+\caption{Apparatus schematic. Independent instruments measure liquid temperature and chamber absolute pressure while wet isolation protects the pressure connection.}
+\label{fig:pressure-boiling-apparatus}
+\end{figure}
+
+Expansion and evaporation can cool the liquid while the probe continues to relax. Pairing an immediate pressure with a delayed temperature would combine different states. Settled readings, known probe response and a reversible pressure sequence help distinguish equilibrium from lag and leakage. Gauge pressure requires an atmospheric reference before conversion to absolute pressure; the vessel's operating limits constrain the sequence.
+
+A submerged nucleation site experiences an additional pressure approximately $\rho gh$. Probe depth and bubble location therefore affect comparison with a free-surface saturation curve. Noncondensable gas also separates total pressure from water-vapour partial pressure. Neither contribution should be absorbed into an unexplained thermometer correction.
+
+The fifteen paired observations span 5.04--101.18~kPa and 32.06--96.60~$^\circ$C. Conversion uses $T=T_C+273.15$; temperature is not inferred from pressure. Bounded numerical inversion of the IAPWS saturation relation\cite{iapws1992} supplies $T_\sigma(p)$ for comparison, independently of the observation label.
+
+\begin{figure}[t]
+\centering
+\input{figures/pressure-boiling.tex}
+\caption{Absolute pressure versus liquid temperature. The solid curve gives IAPWS saturation; open markers show all paired observations, and filled markers identify sustained boiling.}
+\label{fig:pressure-boiling-data}
+\end{figure}
+
+\section{Saturation-temperature residuals and apparent enthalpy}
+With $r=T-T_\sigma(p)$, the five sustained-boiling observations have mean residual $-0.18$~K and RMS residual 0.25~K (Table~\ref{tab:pressure-boiling-results}). The liquid-labelled and uncertain groups have mean residuals $-5.00$ and $-0.99$~K. Joining all fifteen pairs into one phase boundary would erase this distinction between states and judgement confidence.
+
+\begin{table}[t]
+\caption{Sustained-boiling observations, residuals $r=T-T_\sigma(p)$ and propagated standard uncertainties $u_r$, treating the entered pressure and temperature uncertainties as independent standard uncertainties.}
+\label{tab:pressure-boiling-results}
+\centering\footnotesize
+\begin{tabular}{@{}rrrr@{}}
+\toprule
+$p$ (kPa)&$T_C$ ($^\circ$C)&$r$ (K)&$u_r$ (K)\\
+\midrule
+90.04&96.60&$-0.10$&0.20\\
+60.00&85.62&$-0.30$&0.20\\
+39.92&75.35&$-0.46$&0.21\\
+25.14&65.09&0.01&0.22\\
+10.13&46.00&$-0.05$&0.28\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Unweighted least squares of $\ln(p/1\unit{kPa})$ against $1/T$ for these five observations gives $\Delta H_{\rm app}=42.5\unit{kJ\,mol^{-1}}$ through Eq.~\eqref{eq:pressure-boiling-log}. This interval-dependent value summarizes the thermal dependence of vapour pressure; it does not resolve latent-heat variation or vapour nonideality. Regression scatter alone cannot establish its thermodynamic uncertainty.
+
+At 39.92~kPa, the liquid temperature is 75.35~$^\circ$C rather than the reference 75.81~$^\circ$C. The discrepancy is small on the graph but material relative to the entered uncertainties. Its interpretation depends on probe response, pressure referencing and the boiling judgement.
+
+\section{Uncertainty and the accessible inference}
+Interpreting the entered 0.1~kPa and 0.2~K as independent standard uncertainties gives
+\begin{equation}
+ u_r^2=u_T^2+\left(\frac{u_p}{dp_\sigma/dT}\right)^2.
+ \label{eq:pressure-boiling-uncertainty}
+\end{equation}
+This conditional propagation excludes lag, common calibration bias and judgement uncertainty. The largest normalized residual is 2.20. At lower pressure, the smaller saturation-curve slope gives pressure uncertainty a larger temperature-equivalent contribution, explaining the rise of $u_r$ towards 10~kPa. A common thermometer offset would not diminish through averaging five observations.
+
+\section{Instrument range and the planetary comparison}
+The lowest example pressure, 5.039~kPa, remains 7.92 times NASA's 0.636-kPa Martian reference at mean radius; the reported seasonal interval is about 0.40--0.87~kPa\cite{nasamarsfacts}. Water's triple point is approximately 0.611657~kPa at 273.16~K. IAPWS inversion at 0.636~kPa gives a conditional saturation temperature of about 0.55~$^\circ$C. The stable-liquid relation must not be extrapolated below the triple-point pressure.
+
+The LPS22HB and BMP280 lower limits, 26 and 30~kPa\cite{lps22hb,bmp280}, are about 41 and 47 times the Martian reference. Five example states, including two sustained-boiling observations, lie below both limits. Covering even the full example interval therefore requires an appropriate lower-range instrument and wet-compatible connection.
+
+Thermodynamically favourable coordinates alone do not establish persistent Martian liquid water: ice and heat availability, atmospheric undersaturation and evaporation matter, while salts change the phase relations\cite{haberle2001}. The observations establish the pressure dependence of the visible boiling threshold over the measured interval.

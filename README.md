@@ -20,13 +20,15 @@ hardware.
 | --- | --- |
 | **Arduino + phyphox kit** | Firmware for the original Nano 33 BLE Sense, plus seven importable experiments (`experiments/*.phyphox`) |
 | **Astronomy collection** | Eight self-contained experiments for phone sensors, TI SensorTags, a Bluetooth HID mouse, or Owon multimeters (`experiments/astronomy/`) |
+| **Additional drafts** | Twenty-eight experiment drafts with editable companions, covering optics, photometry, mechanics, external observations and hardware adapters ([draft index](docs/drafts/README.md)) |
 | **Static preview** | A deterministic, offline demo of the kit's data shapes (`demo/`) |
 
 ## Screenshot tour
 
-The preview renders fixed fixtures, so what you see here is reproducible and not
-recorded hardware data. Pick a mode on the left, hit **Start simulated stream**,
-and the traces and readouts fill in.
+The preview renders fixed example traces, so what you see here is reproducible and
+not recorded hardware data.
+Pick a mode on the left, hit **Start example stream**, and the traces and
+readouts fill in.
 
 ![The static preview at desktop width, showing the mode rail and a temperature and humidity chart](docs/images/preview-1440.png)
 
@@ -49,6 +51,8 @@ carries:
 
 - `phyphox-experiments.zip`: the seven Arduino experiments;
 - `astronomy-experiments.zip`: the eight astronomy experiments;
+- `curious-signals-draft-experiments.zip`: the twenty-eight draft experiments
+  (not yet tested in the phyphox app or on hardware);
 - every `.phyphox` file on its own.
 
 Open a downloaded `.phyphox` file with phyphox on the phone, or turn a file's
@@ -107,6 +111,12 @@ Modes 7 and 8 are reserved. Channels a mode cannot produce are sent as `NaN`.
 The importable files in `experiments/` are generated. Edit the sources in
 `src/phyphox/` and rebuild, rather than changing the root files by hand.
 
+All seven include translated setup instructions and editable calibration
+controls. Original readings, corrected values, settings, and both device and
+Bluetooth receive timestamps can be exported. See the
+[calibration guide](src/phyphox/README.md#calibration-and-physical-setup) for the
+measurement models and physical preparation each sensor needs.
+
 ## The astronomy collection
 
 `experiments/astronomy/` is a separate, hand-maintained set of eight activities
@@ -122,6 +132,72 @@ Every astronomy file keeps English as the root locale and ships German and
 French translations. The [astronomy companion](docs/ASTRONOMY_EXPERIMENTS_COMPANION.md)
 explains what each activity measures and where its interpretation stops.
 
+The revised activities use separate sensor time axes, baseline-based thermal
+comparisons, dark/reference optical ratios and signed infrared temperatures.
+Transit analysis selects one input explicitly and reports threshold-based
+timing from the available complete events. Setup guidance describes the
+mounting, illumination, equilibration and reference measurements needed before
+interpreting those results physically.
+
+## Additional experiment drafts
+
+The [draft collection](docs/drafts/README.md) adds twenty-eight phyphox experiments
+from the article/workshop archive review. Their research companions are organized
+by physical topic, combining complementary sensors in one article.
+Start with detector characterization, RGB transmission, Nano transit, exomoons
+and starspot crossings. The index also covers Malus' law, seasons, mechanics,
+external observation tables and legacy hardware adapters.
+
+Drafts have their own phyphox category and are hand-maintained under
+`experiments/drafts/`. Each companion explains the physical setup, acquisition,
+calibration and interpretation limits. Software checks are included; native app,
+BLE and apparatus validation remain outstanding. Run `make check-drafts` or
+`make bundle-drafts` to create the import and manuscript archives locally.
+
+## Example data for development
+
+`example-data/` contains deterministic, sensor-specific CSV examples for the
+fifteen main experiments and the 28 draft experiments. Each file mirrors the
+experiment's export columns, acquisition rate, units, and dominant error
+sources. See [example-data/README.md](example-data/README.md) for the main index
+and [example-data/drafts/README.md](example-data/drafts/README.md) for the draft
+index.
+
+```sh
+python3 example-data/generate_example_data.py          # main examples
+python3 example-data/generate_draft_example_data.py    # draft examples
+python3 example-data/validate_example_data.py          # main checks
+python3 example-data/validate_draft_example_data.py    # draft checks
+```
+
+## Research papers
+
+The [research companion collection](docs/papers/README.md) comprises twenty-one
+topic papers covering all forty-three experiments. Shared physical models and
+measurement methods are developed once, then examined through complementary
+devices. Longer comparative papers replace separate hardware variants. The
+October 2026 edition uses consistent two-column typography, apparatus
+illustrations and focused references.
+
+**Data provenance.** The papers analyse the 58 deterministic example datasets in
+`example-data/`, generated for the October 2026 edition from fixed seeds. They are modelled on
+each sensor's units, sampling, resolution, noise and limits, so the methods can
+be followed and rerun. They are not recordings from the original 2018–2024 work
+at the Institute of Physics Education, University of Cologne; each paper's month
+and year are the author's approximate dating of that work, not of the data.
+
+Run `make papers` to produce twenty-one final PDFs, the retrospective, and editable
+source archives in `output/pdf/`. The retrospective (built locally at `output/pdf/2026-10_curious-signals-retrospective.pdf`)
+opens with a synthesis of the papers, followed by the final arXiv versions with
+continuous page numbers, a linked contents list and PDF bookmarks. See the
+collection guide for dependencies, individual papers and build instructions.
+
+`make arxiv` writes a self-contained submission folder for each paper under
+`arxiv/` (generated locally, not tracked here), and `make check-arxiv` checks
+those folders against the current sources.
+Once those proofs are current, `make retrospective` rebuilds just the collection;
+`make check-retrospective` verifies its sources, pagination, links and archives.
+
 ## Build and verify
 
 The internals are a Python package you never have to import. `make` is the
@@ -129,7 +205,8 @@ interface:
 
 ```sh
 make lint             # Ruff lint and format checks, ShellCheck
-make validate         # protocol, XML, core, and astronomy validation
+make validate         # protocol, XML, and scientific analysis regression fixtures
+make check-experiment-math  # run the numerical/cycle fixtures separately
 make check-generated  # non-mutating byte parity check
 make build            # rewrite the seven tracked generated files
 make provision        # install pinned Arduino packages (network)
@@ -189,9 +266,12 @@ Know the limits before you build a lesson around it:
 | `src/phyphox/` | Editable core experiment sources |
 | `experiments/*.phyphox` | Generated importable core artifacts |
 | `experiments/astronomy/` | Hand-edited astronomy collection |
+| `experiments/drafts/` | Additional experiment and adapter drafts |
+| `docs/drafts/` | Editable draft companions, source review and manifest |
+| `example-data/` | Example sensor datasets for the main and draft experiments |
 | `demo/` | Deterministic static preview |
 | `src/curious_signals/` | Internal build and validation package |
-| `scripts/` | Shell credential scan behind `make security` |
+| `scripts/` | Scientific XML checks, draft bundling and credential scan |
 
 Start with [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the dependency rules
 and the reasoning behind them, [CONTRIBUTING.md](CONTRIBUTING.md) for the
@@ -206,6 +286,7 @@ Terms differ by component:
 | Core experiments: `src/phyphox/` and the generated `experiments/*.phyphox` | LGPL-3.0-or-later (each source and generated file's header says "LGPL-3.0+"; the include fragments follow the files they expand into) | [COPYING.LESSER](COPYING.LESSER) together with [LICENSE](LICENSE) |
 | Preview fonts in `demo/fonts/` | SIL Open Font License 1.1 | `demo/fonts/OFL-*.txt` |
 | Astronomy collection: `experiments/astronomy/` | GPL-3.0, matching phyphox; stated in each file's header | [LICENSE](LICENSE) |
+| Additional drafts: `experiments/drafts/` | GPL-3.0; colour-temperature adaptation retains LGPL-3.0-or-later attribution | [Draft attribution](docs/drafts/source-review.md#attribution-and-reuse) |
 | Everything else: firmware, tooling, scripts, preview code, and documentation | GPL-3.0 | [LICENSE](LICENSE) |
 
 The LGPL is a set of additional permissions on top of the GPL, which is why the

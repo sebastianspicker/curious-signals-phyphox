@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Original draft adaptation; source context and validation limits are in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+  <title>Draft: Paired spectral fingerprints</title>
+  <category>Curious Signals drafts</category>
+  <description>Manual calibrated wavelength and paired dark, continuum-reference, star-only and sample spectral intensities from a separate spectrometer. No RGB spectroscopy or automatic molecular identification.</description>
+  <data-containers>
+    <container size="1" init="0">id_in</container>
+    <container size="0">id_row</container>
+    <container size="1" init="0">wavelength_in</container>
+    <container size="0">wavelength_row</container>
+    <container size="1" init="0">reference_line_in</container>
+    <container size="0">reference_line_row</container>
+    <container size="1" init="0">sample_in</container>
+    <container size="0">sample_row</container>
+    <container size="1" init="0">star_in</container>
+    <container size="0">star_row</container>
+    <container size="1" init="0">reference_in</container>
+    <container size="0">reference_row</container>
+    <container size="1" init="0">dark_in</container>
+    <container size="0">dark_row</container>
+    <container size="1" init="0">ceiling_in</container>
+    <container size="0">ceiling_row</container>
+    <container size="1" init="0">paired_in</container>
+    <container size="0">paired_row</container>
+    <container size="1" init="0">uw_in</container>
+    <container size="0">uw_row</container>
+    <container size="1" init="0">record_request</container>
+    <container size="0">sample_transmission</container>
+    <container size="0">sample_transmission_calculation</container>
+    <container size="0">star_transmission</container>
+    <container size="0">star_transmission_calculation</container>
+    <container size="0">sample_line_depth</container>
+    <container size="0">sample_line_depth_calculation</container>
+    <container size="0">extra_sample_depth</container>
+    <container size="0">extra_sample_depth_calculation</container>
+    <container size="0">delta_wavelength</container>
+    <container size="0">delta_wavelength_calculation</container>
+    <container size="1">id_pending</container>
+    <container size="1">wavelength_pending</container>
+    <container size="1">reference_line_pending</container>
+    <container size="1">sample_pending</container>
+    <container size="1">star_pending</container>
+    <container size="1">reference_pending</container>
+    <container size="1">dark_pending</container>
+    <container size="1">ceiling_pending</container>
+    <container size="1">paired_pending</container>
+    <container size="1">uw_pending</container>
+    <container size="1">row_count</container>
+  </data-containers>
+  <views>
+    <view label="Observe">
+      <info label="Manual observation rows. Edit all paired values, then press Record row once. Wait for Recorded rows to increment before the next press. Saved inputs and settings are immutable until Clear rows. The app Clear data command also resets settings. No automatic physical validation." />
+      <edit label="Observation ID" unit="" default="0" decimal="true" signed="true">
+        <output>id_in</output>
+      </edit>
+      <edit label="Calibrated wavelength" unit="nm" default="0" decimal="true" signed="true">
+        <output>wavelength_in</output>
+      </edit>
+      <edit label="Comparison line wavelength" unit="nm" default="0" decimal="true" signed="true">
+        <output>reference_line_in</output>
+      </edit>
+      <edit label="Sample intensity" unit="a.u." default="0" decimal="true" signed="true">
+        <output>sample_in</output>
+      </edit>
+      <edit label="Star-only intensity" unit="a.u." default="0" decimal="true" signed="true">
+        <output>star_in</output>
+      </edit>
+      <edit label="Continuum reference intensity" unit="a.u." default="0" decimal="true" signed="true">
+        <output>reference_in</output>
+      </edit>
+      <edit label="Dark intensity" unit="a.u." default="0" decimal="true" signed="true">
+        <output>dark_in</output>
+      </edit>
+      <edit label="Unsaturated ceiling" unit="a.u." default="0" decimal="true" signed="true">
+        <output>ceiling_in</output>
+      </edit>
+      <edit label="Same wavelength and intensity scale (1=yes)" unit="" default="0" decimal="true" signed="true">
+        <output>paired_in</output>
+      </edit>
+      <edit label="Wavelength uncertainty" unit="nm" default="0" decimal="true" signed="true">
+        <output>uw_in</output>
+      </edit>
+      <button label="Record row">
+        <input>id_in</input>
+        <output>id_pending</output>
+        <input>wavelength_in</input>
+        <output>wavelength_pending</output>
+        <input>reference_line_in</input>
+        <output>reference_line_pending</output>
+        <input>sample_in</input>
+        <output>sample_pending</output>
+        <input>star_in</input>
+        <output>star_pending</output>
+        <input>reference_in</input>
+        <output>reference_pending</output>
+        <input>dark_in</input>
+        <output>dark_pending</output>
+        <input>ceiling_in</input>
+        <output>ceiling_pending</output>
+        <input>paired_in</input>
+        <output>paired_pending</output>
+        <input>uw_in</input>
+        <output>uw_pending</output>
+        <input type="value">1</input>
+        <output>record_request</output>
+      </button>
+      <button label="Clear rows">
+        <input type="empty" />
+        <output>id_row</output>
+        <input type="empty" />
+        <output>wavelength_row</output>
+        <input type="empty" />
+        <output>reference_line_row</output>
+        <input type="empty" />
+        <output>sample_row</output>
+        <input type="empty" />
+        <output>star_row</output>
+        <input type="empty" />
+        <output>reference_row</output>
+        <input type="empty" />
+        <output>dark_row</output>
+        <input type="empty" />
+        <output>ceiling_row</output>
+        <input type="empty" />
+        <output>paired_row</output>
+        <input type="empty" />
+        <output>uw_row</output>
+        <input type="empty" />
+        <output>id_pending</output>
+        <input type="empty" />
+        <output>wavelength_pending</output>
+        <input type="empty" />
+        <output>reference_line_pending</output>
+        <input type="empty" />
+        <output>sample_pending</output>
+        <input type="empty" />
+        <output>star_pending</output>
+        <input type="empty" />
+        <output>reference_pending</output>
+        <input type="empty" />
+        <output>dark_pending</output>
+        <input type="empty" />
+        <output>ceiling_pending</output>
+        <input type="empty" />
+        <output>paired_pending</output>
+        <input type="empty" />
+        <output>uw_pending</output>
+        <input type="empty" />
+        <output>sample_transmission</output>
+        <input type="empty" />
+        <output>star_transmission</output>
+        <input type="empty" />
+        <output>sample_line_depth</output>
+        <input type="empty" />
+        <output>extra_sample_depth</output>
+        <input type="empty" />
+        <output>delta_wavelength</output>
+        <input type="empty" />
+        <output>sample_transmission_calculation</output>
+        <input type="empty" />
+        <output>star_transmission_calculation</output>
+        <input type="empty" />
+        <output>sample_line_depth_calculation</output>
+        <input type="empty" />
+        <output>extra_sample_depth_calculation</output>
+        <input type="empty" />
+        <output>delta_wavelength_calculation</output>
+        <input type="empty" />
+        <output>row_count</output>
+        <input type="value">0</input>
+        <output>record_request</output>
+      </button>
+      <value label="Recorded rows" unit="" precision="4">
+        <input>row_count</input>
+      </value>
+    </view>
+    <view label="Results">
+      <graph label="Sample normalized spectrum" labelX="Calibrated wavelength" labelY="Sample / reference" unitX="nm" unitY="" style="dots" partialUpdate="false">
+        <input axis="x">wavelength_row</input>
+        <input axis="y">sample_transmission</input>
+      </graph>
+      <graph label="Star-only normalized spectrum" labelX="Calibrated wavelength" labelY="Star / reference" unitX="nm" unitY="" style="dots" partialUpdate="false">
+        <input axis="x">wavelength_row</input>
+        <input axis="y">star_transmission</input>
+      </graph>
+      <graph label="Additional absorption comparison" labelX="Calibrated wavelength" labelY="Additional absorption depth" unitX="nm" unitY="" style="dots" partialUpdate="false">
+        <input axis="x">wavelength_row</input>
+        <input axis="y">extra_sample_depth</input>
+      </graph>
+    </view>
+    <view label="Setup">
+      <info label="Use a separate wavelength-calibrated spectrometer or calibrated exported spectrum. The Nano RGB sensor cannot resolve absorption lines. Measure sample, star-only, continuum reference and dark at the SAME wavelength bin and consistent exposure, gain, response correction and normalization." />
+      <info label="Enter one wavelength bin per Record row, with a positive wavelength, positive unsaturated ceiling and Same wavelength and intensity scale = 1 only after those checks. Reference must exceed dark; sample and star-only must be at least dark and strictly below ceiling. A missing spectrum is not zero intensity." />
+      <info label="Sample/reference and star/reference transmissions and their difference are computed for checked bins. Extra sample depth = 1 - (sample-dark)/(star-dark) requires positive star-only signal. It is a relative model comparison, not automatically an exoplanet atmospheric spectrum." />
+      <info label="Comparison line wavelength is a manually selected candidate; delta wavelength does not identify an element. Compare multiple resolved lines and instrumental resolution, telluric contamination and continuum choice. Graphs are dots; enter wavelengths in order for convenient comparison." />
+      <info label="Record row captures all raw entries and settings. Clear rows clears the table; app Clear data also resets entries. Preserve spectrum filenames and bin widths against Observation ID in a notebook. Validate wavelength registration and app import before teaching." />
+    </view>
+  </views>
+  <analysis sleep="0.1" onUserInput="true">
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">id_pending</input>
+      <output append="true">id_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">wavelength_pending</input>
+      <output append="true">wavelength_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">reference_line_pending</input>
+      <output append="true">reference_line_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">sample_pending</input>
+      <output append="true">sample_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">star_pending</input>
+      <output append="true">star_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">reference_pending</input>
+      <output append="true">reference_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">dark_pending</input>
+      <output append="true">dark_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">ceiling_pending</input>
+      <output append="true">ceiling_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">paired_pending</input>
+      <output append="true">paired_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">uw_pending</input>
+      <output append="true">uw_row</output>
+    </if>
+    <append>
+      <input type="value">0</input>
+      <output append="false">record_request</output>
+    </append>
+    <!--Each derived calculation is filtered by x+0*x: finite values are unchanged; native IEEE infinities become NaN gaps.-->
+    <formula formula="([3_]-[6_])/(([5_]-[6_])*(1+0*[1_])*(1+0*[7_])*max(0,sign([1_]))*max(0,sign([5_]-[6_]))*heaviside([3_]-[6_])*heaviside([4_]-[6_])*heaviside([6_])*max(0,sign([7_]-[3_]))*max(0,sign([7_]-[4_]))*max(0,sign([7_]-[5_]))*max(0,1-abs(sign([8_]-1))))">
+      <input keep="true">wavelength_row</input>
+      <input keep="true">reference_line_row</input>
+      <input keep="true">sample_row</input>
+      <input keep="true">star_row</input>
+      <input keep="true">reference_row</input>
+      <input keep="true">dark_row</input>
+      <input keep="true">ceiling_row</input>
+      <input keep="true">paired_row</input>
+      <output append="false">sample_transmission_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">sample_transmission_calculation</input>
+      <output append="false">sample_transmission</output>
+    </formula>
+    <formula formula="([4_]-[6_])/(([5_]-[6_])*(1+0*[1_])*(1+0*[7_])*max(0,sign([1_]))*max(0,sign([5_]-[6_]))*heaviside([3_]-[6_])*heaviside([4_]-[6_])*heaviside([6_])*max(0,sign([7_]-[3_]))*max(0,sign([7_]-[4_]))*max(0,sign([7_]-[5_]))*max(0,1-abs(sign([8_]-1))))">
+      <input keep="true">wavelength_row</input>
+      <input keep="true">reference_line_row</input>
+      <input keep="true">sample_row</input>
+      <input keep="true">star_row</input>
+      <input keep="true">reference_row</input>
+      <input keep="true">dark_row</input>
+      <input keep="true">ceiling_row</input>
+      <input keep="true">paired_row</input>
+      <output append="false">star_transmission_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">star_transmission_calculation</input>
+      <output append="false">star_transmission</output>
+    </formula>
+    <formula formula="1-[1_]">
+      <input keep="true">sample_transmission</input>
+      <output append="false">sample_line_depth_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">sample_line_depth_calculation</input>
+      <output append="false">sample_line_depth</output>
+    </formula>
+    <formula formula="1-[1_]/[2_]">
+      <input keep="true">sample_transmission</input>
+      <input keep="true">star_transmission</input>
+      <output append="false">extra_sample_depth_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">extra_sample_depth_calculation</input>
+      <output append="false">extra_sample_depth</output>
+    </formula>
+    <formula formula="([1_]-[2_])/(max(0,sign([1_]))*max(0,sign([2_]))*(1+0*[1_])*(1+0*[2_]))">
+      <input keep="true">wavelength_row</input>
+      <input keep="true">reference_line_row</input>
+      <output append="false">delta_wavelength_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">delta_wavelength_calculation</input>
+      <output append="false">delta_wavelength</output>
+    </formula>
+    <count>
+      <input keep="true">id_row</input>
+      <output append="false">row_count</output>
+    </count>
+  </analysis>
+  <export>
+    <set name="Captured observation rows">
+      <data name="Observation ID">id_row</data>
+      <data name="Calibrated wavelength (nm)">wavelength_row</data>
+      <data name="Comparison line wavelength (nm)">reference_line_row</data>
+      <data name="Sample intensity (a.u.)">sample_row</data>
+      <data name="Star-only intensity (a.u.)">star_row</data>
+      <data name="Continuum reference intensity (a.u.)">reference_row</data>
+      <data name="Dark intensity (a.u.)">dark_row</data>
+      <data name="Unsaturated ceiling (a.u.)">ceiling_row</data>
+      <data name="Same wavelength and intensity scale (1=yes)">paired_row</data>
+      <data name="Wavelength uncertainty (nm)">uw_row</data>
+      <data name="Sample over continuum reference">sample_transmission</data>
+      <data name="Star over continuum reference">star_transmission</data>
+      <data name="Sample line depth">sample_line_depth</data>
+      <data name="Extra sample depth">extra_sample_depth</data>
+      <data name="Offset from selected comparison line (nm)">delta_wavelength</data>
+    </set>
+    <set name="Current entry settings">
+      <data name="Observation ID">id_in</data>
+      <data name="Calibrated wavelength (nm)">wavelength_in</data>
+      <data name="Comparison line wavelength (nm)">reference_line_in</data>
+      <data name="Sample intensity (a.u.)">sample_in</data>
+      <data name="Star-only intensity (a.u.)">star_in</data>
+      <data name="Continuum reference intensity (a.u.)">reference_in</data>
+      <data name="Dark intensity (a.u.)">dark_in</data>
+      <data name="Unsaturated ceiling (a.u.)">ceiling_in</data>
+      <data name="Same wavelength and intensity scale (1=yes)">paired_in</data>
+      <data name="Wavelength uncertainty (nm)">uw_in</data>
+    </set>
+  </export>
+</phyphox>

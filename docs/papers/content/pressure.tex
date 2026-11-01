@@ -1,0 +1,94 @@
+\begin{abstract}
+Metre-scale elevation changes produce small pressure differences that can be obscured by ambient drift. An LPS22HB example record is reduced using reference intervals before and after each event. Interpolation at the event's mean time gives pressure changes of $-0.132$ and $-0.351$~hPa, corresponding to height differences of 1.12 and 2.99~m for an isothermal air column at 293.15~K. A separate $+7.96$-hPa sealed-bag excursion demonstrates why a pressure change cannot be assigned a height without identifying its physical cause. The analysis makes the bracketed-reference estimator explicit and separates within-window scatter, calibration covariance and atmospheric-model uncertainty.
+\end{abstract}
+\begin{IEEEkeywords}
+Barometry, relative height, bracketed references, ambient drift, differential pressure.
+\end{IEEEkeywords}
+
+\section{From pressure to relative height}
+A barometer measures absolute pressure at its vent; height follows only after specifying a reference and an atmospheric model. Raising the sensor, changing room ventilation and compressing a sealed enclosure can all move the pressure trace. The hydrostatic interpretation applies when the sensor remains in communication with a sufficiently settled air column. Smartphone altitude estimation likewise separates pressure bias from the atmospheric reference needed for absolute height\cite{li2023altitude}. The present question is narrower: what relative displacement is consistent with a short, locally referenced traverse?
+
+Combining $dp/dz=-\rho g$ with $\rho=p/(R_aT)$ gives, for an isothermal column,
+\begin{equation}
+ \Delta h=\frac{R_aT}{g}\ln\frac{p_b}{p_e},
+ \label{eq:pressure-height}
+\end{equation}
+where $p_e$ is the event pressure and $p_b$ the pressure at the reference height at the same time. The model assumes a representative air temperature and negligible changes in composition and gravity over the displacement. For small changes, $\Delta h\simeq-(R_aT/gp_b)\Delta p$. A simultaneous pressure reference is useful, but a return to the original height before and after the event can also constrain slow drift.
+
+The LPS22HB on the original Nano 33 BLE Sense supplies a temperature-compensated digital pressure reading. Its specified interval is 260--1260~hPa and its output scale is 4096 codes per hectopascal\cite{lps22hb}. The resulting code spacing, about 0.000244~hPa, describes digitization rather than measurement uncertainty. Typical absolute-accuracy limits and one-point calibration specifications must not be treated as the standard uncertainty of a particular traverse. A small pressure difference can remain informative when a stable offset is common to both levels.
+
+\section{A traverse with a bracketed reference}
+The moving barometer returns to the same reference height around each elevated interval, as in Fig.~\ref{fig:pressure-apparatus}. Its vent remains open to the room, shielded from handling-induced airflow and free of obstruction. Hold the board in a repeatable orientation and allow the pressure port and powered assembly to settle after motion. A stationary second barometer would test the assumed ambient evolution, but it is not required to calculate the single-instrument estimator used here.
+
+\begin{figure}[!b]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+ \draw[dashed] (0.4,0)--(7.7,0);
+ \node[draw,fill=white,align=center] (before) at (1.3,0) {reference $z_0$\\$\overline p_-$};
+ \node[draw,align=center] (event) at (4.0,1.55) {raised $z_1$\\$\overline p_e$};
+ \node[draw,fill=white,align=center] (after) at (6.7,0) {reference $z_0$\\$\overline p_+$};
+ \draw[->,thick,csblue] (before.north east)--(event.south west);
+ \draw[->,thick,csblue] (event.south east)--(after.north west);
+ \draw[<->] (0.45,0.15)--(0.45,1.55);
+ \node[left] at (0.45,0.85) {$\Delta h$};
+ \node[below] at (1.3,-0.45) {before};
+ \node[below] at (6.7,-0.45) {after};
+ \node[above,align=center] at (4.0,2.1) {one barometer, open vent};
+\end{tikzpicture}
+\caption{Apparatus schematic. A single barometer is raised and returned to its reference height. Settled intervals before and after the event bracket the evolving room-pressure reference.}
+\label{fig:pressure-apparatus}
+\end{figure}
+
+Let $\overline p_-,\overline p_e,\overline p_+$ denote the means of the before, event and after intervals, and let $\overline t_-,\overline t_e,\overline t_+$ be their actual mean timestamps. Define
+\begin{align}
+ \lambda&=\frac{\overline t_e-\overline t_-}{\overline t_+-\overline t_-},\\
+ p_b&=(1-\lambda)\overline p_-+\lambda\overline p_+,\qquad
+ \Delta p=\overline p_e-p_b.
+ \label{eq:pressure-bracket}
+\end{align}
+Using actual mean timestamps accommodates unequal sample counts without assuming that every observation lies exactly at the nominal cadence. The interpolation removes a linear ambient trend between references. It cannot reconstruct a curved pressure change or a ventilation disturbance that occurs only during the raised interval.
+
+The example's device-time increments are approximately 0.05~s. Cadence alone does not establish pressure-port bandwidth or the time of the physical conversion. The event windows below exclude the movement transitions, so the reported quantities are settled interval means rather than estimates of transient peak pressure.
+
+\section{Reduction of the example traverse}
+Figure~\ref{fig:pressure-example} retains the full pressure range and a separate expanded view of the two elevation intervals. The lower panel uses the 0--20~s mean only as a visual reference; the numerical height estimates use their own surrounding intervals through Eq.~\eqref{eq:pressure-bracket}. A single early baseline would leave subsequent ambient evolution mixed into the inferred displacement.
+
+\begin{figure}[t]
+\centering
+\input{figures/pressure.tex}
+\caption{(a) Full pressure record, including sealed-bag compression. (b) Expanded elevation intervals relative to the 0--20~s mean. Height estimates use the local bracketing references defined in the text.}
+\label{fig:pressure-example}
+\end{figure}
+
+All windows are half-open. The first elevation uses before, event and after windows $[20,28)$, $[36,42)$ and $[52,60)$~s. The second uses $[60,68)$, $[78,84)$ and $[98,106)$~s. For the bag excursion, the corresponding windows are $[110,118)$, $[124,128)$ and $[145,153)$~s. Table~\ref{tab:pressure-example} reports the resulting differences. Heights use $T=293.15\unit{K}$, $R_a=287.05\unit{J\,kg^{-1}K^{-1}}$ and $g=9.80665\unit{m\,s^{-2}}$.
+
+\begin{table}[t]
+\caption{Pressure changes relative to interpolated local references, with isothermal height estimates for the two open-air elevation intervals.}
+\label{tab:pressure-example}
+\centering\footnotesize
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Interval & Samples & $\Delta p$ (hPa) & $\Delta h$ (m)\\
+\midrule
+First elevation & 119 & $-0.132$ & 1.12\\
+Second elevation & 120 & $-0.351$ & 2.99\\
+Bag compression & 79 & $+7.96$ & ---\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the first elevation, the interpolated reference is 1009.8119~hPa and the event mean is 1009.6803~hPa. The second gives 1009.7764 and 1009.4250~hPa. These changes have the sign expected for increased height. Their within-event standard deviations are 0.019 and 0.021~hPa, respectively. Those dispersions describe pressure variability within each selected interval, including any drift. The height-uncertainty model combines interval statistics with reference, calibration and atmospheric-model contributions.
+
+The positive bag excursion answers a different causal question. Its reference and event means are 1009.7100 and 1017.6744~hPa. Applying a hydrostatic height conversion to this sealed volume would describe a fictitious descent.
+
+\section{Calibration and uncertainty of the difference}
+Calibration against a reference should span the working pressures and include return points after changes in pressure or board temperature. Both instruments must share equilibrated gas pressure; flow or a port-height difference introduces a physical mismatch. A first response model may include offset, gain and board-temperature dependence, but a monotonic pressure sweep during warm-up cannot identify those terms separately.
+
+For fixed interpolation weights, write $\mathbf p=(\overline p_-,\overline p_e,\overline p_+)^{\mathsf T}$ and $\mathbf w=(-(1-\lambda),1,-\lambda)^{\mathsf T}$. The pressure-difference variance is
+\begin{equation}
+ u^2(\Delta p)=\mathbf w^{\mathsf T}\boldsymbol\Sigma\mathbf w,
+ \label{eq:pressure-covariance}
+\end{equation}
+where $\boldsymbol\Sigma$ contains the covariance of the three interval means\cite{gum}. Shared offset uncertainty can cancel from the difference; time-varying calibration and common ambient disturbances require their actual covariance. Timing uncertainty and departures from linear ambient drift add separate contributions. Correlated samples cannot be treated as independent simply because a window contains many observations.
+
+The height model additionally depends on the absolute pressure ratio and representative temperature. A common multiplicative scale cancels from the ratio, whereas a common additive offset cancels exactly from $\Delta p$ but only approximately from the logarithmic height conversion. Near 1010~hPa and 293~K, the local sensitivity is about 8.5~m/hPa. The metre-scale results are therefore sensitive to small baseline errors even when digitization is fine. A measured temperature profile and humidity correction would refine the atmospheric model; an unobstructed vent and repeated returns to the reference height test whether that refinement is warranted by the pressure observations themselves.

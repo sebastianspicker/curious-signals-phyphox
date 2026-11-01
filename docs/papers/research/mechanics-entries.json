@@ -1,0 +1,5 @@
+[
+  {"slug":"static-friction","title":"First Slip, Inclination, and the Meaning of Static Friction","short_title":"First Slip and Static Friction","period":"October 2026","date_basis":"astmg2192024","experiment":"experiments/drafts/static-friction.phyphox","datasets":["drafts/static-friction_gravity.example.csv","drafts/static-friction_linear.example.csv"],"group":"drafts"},
+  {"slug":"audio-magnetic","title":"Motor-State Comparisons from Sound Envelopes and Magnetic Fields","short_title":"Sound Envelopes and Magnetic Fields","period":"October 2026","date_basis":"liu2017stray","experiment":"experiments/drafts/audio-magnetic.phyphox","datasets":["drafts/audio-magnetic_audio.example.csv","drafts/audio-magnetic_magnetic.example.csv"],"group":"drafts"},
+  {"slug":"magnetic-current","title":"DC Current from a Fixed Magnetic Geometry: Calibration and Identifiability","short_title":"Magnetic DC Current Calibration","period":"October 2026","date_basis":"phyphoxammeters2018","experiment":"experiments/drafts/magnetic-current.phyphox","datasets":["drafts/magnetic-current.example.csv"],"group":"drafts"}
+]

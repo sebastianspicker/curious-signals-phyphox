@@ -1,0 +1,17 @@
+% Consolidated phase plots use only existing prepared primary observations.
+\begin{tikzpicture}
+\begin{groupplot}[
+ group style={group size=3 by 1,horizontal sep=1.05cm},
+ width=0.29\textwidth,height=4.8cm,
+ grid=major,enlarge x limits=0.06,
+ xlabel={Local temperature ($^\circ$C)},ylabel={Relative humidity (\%)},
+ title style={font=\footnotesize},
+ label style={font=\footnotesize},tick label style={font=\scriptsize}]
+\nextgroupplot[title={(a) HTS221}]
+\addplot[csblue,line width=0.55pt] table[col sep=comma,x=c1,y=c2] {data/temperature_plot_v1-2.csv};
+\nextgroupplot[title={(b) SHT21}]
+\addplot[csteal,line width=0.55pt] table[col sep=comma,x=c5,y=c4] {data/drafts/cc2541-humidity.csv};
+\nextgroupplot[title={(c) HDC1000}]
+\addplot[csred,line width=0.55pt] table[col sep=comma,x=c2,y=c1] {data/drafts/sensortag-environmental_humidity.csv};
+\end{groupplot}
+\end{tikzpicture}

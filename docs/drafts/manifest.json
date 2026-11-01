@@ -1,0 +1,798 @@
+{
+  "schema_version": 1,
+  "date": "2026-10-26",
+  "source_collection": "artikel-proofread-lectorate",
+  "validation_scope": "XML structural and numerical fixtures; native imports, BLE and physical measurements remain unverified.",
+  "fixture_scripts": [
+    "scripts/check_draft_optics.py",
+    "scripts/check_draft_photometry.py",
+    "scripts/check_draft_mechanics.py",
+    "scripts/check_draft_observations.py",
+    "scripts/check_draft_adapters.py"
+  ],
+  "experiments": [
+    {
+      "id": "rgb-filter-transmission",
+      "title": "RGB filter transmission",
+      "experiment": "experiments/drafts/rgb-filter-transmission.phyphox",
+      "manuscript": "docs/drafts/rgb-filter-transmission.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense (original APDS-9960)",
+        "Stable lamp",
+        "Transmission filters"
+      ],
+      "sources": [
+        "beitraege-forschung/arduino-filter/arduino-filter.phyphox",
+        "beitraege-forschung/ag2024/VortragAGLehrerfortbildungKoeln24_2.pptx"
+      ],
+      "limitations": [
+        "Explicit covered dark and same-geometry references required",
+        "Broad overlapping channels; no resolved spectra, UV or molecular identification",
+        "Count ceiling is screening only",
+        "Native Android/iOS, BLE and physical validation outstanding"
+      ],
+      "group": "optics",
+      "status": "draft",
+      "paper": "docs/papers/light-rgb.tex",
+      "paper_pdf": "output/pdf/light-rgb.pdf",
+      "paper_id": "light-rgb",
+      "research_companion": "docs/papers/companions/light-rgb.md"
+    },
+    {
+      "id": "illuminance-distance",
+      "title": "Illuminance versus calibrated distance",
+      "experiment": "experiments/drafts/illuminance-distance.phyphox",
+      "manuscript": "docs/drafts/illuminance-distance.md",
+      "acquisition": "live",
+      "hardware": [
+        "CC2650 SensorTag with OPT3001",
+        "Supported BLE boot-protocol HID mouse",
+        "Calibrated straight rail",
+        "Compact stable lamp"
+      ],
+      "sources": [
+        "phyphox/luxvsdistance/luxvsdistance_interpolate.phyphox",
+        "https://www.ti.com/lit/ds/symlink/opt3001.pdf"
+      ],
+      "limitations": [
+        "HID mobile-platform compatibility needs testing",
+        "Independent receive clocks paired by previous position; stop and settle",
+        "Straight rail on one side of reset; positive ruler calibration required",
+        "Native Android/iOS, BLE and physical validation outstanding"
+      ],
+      "group": "optics",
+      "status": "draft",
+      "paper": "docs/papers/illuminance-distance.tex",
+      "paper_pdf": "output/pdf/illuminance-distance.pdf",
+      "paper_id": "illuminance-distance",
+      "research_companion": "docs/papers/companions/illuminance-distance.md"
+    },
+    {
+      "id": "illuminance-distance-manual",
+      "title": "Relative light versus ruler distance",
+      "experiment": "experiments/drafts/illuminance-distance-manual.phyphox",
+      "manuscript": "docs/drafts/illuminance-distance-manual.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense (original APDS-9960)",
+        "Ruler rail",
+        "Compact stable lamp"
+      ],
+      "sources": [
+        "phyphox/luxvsdistance/luxvsdistance_interpolate.phyphox"
+      ],
+      "limitations": [
+        "Distance is manually observed; light is really acquired",
+        "Record snapshots latest completed light cycle",
+        "Relative counts, not lux; stationary captures required",
+        "Native Android/iOS, BLE and physical validation outstanding"
+      ],
+      "group": "optics",
+      "status": "draft",
+      "paper": "docs/papers/illuminance-distance.tex",
+      "paper_pdf": "output/pdf/illuminance-distance.pdf",
+      "paper_id": "illuminance-distance",
+      "research_companion": "docs/papers/companions/illuminance-distance.md"
+    },
+    {
+      "id": "malus-law",
+      "title": "Malus law with observed angle",
+      "experiment": "experiments/drafts/malus-law.phyphox",
+      "manuscript": "docs/drafts/malus-law.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense (original APDS-9960)",
+        "Stable lamp with polarizer or verified polarized LCD",
+        "Rotatable analyzer with protractor"
+      ],
+      "sources": [
+        "beitraege-forschung/intensitaet-polarisationswinkel/1607.02659.pdf",
+        "https://arxiv.org/abs/1607.02659"
+      ],
+      "limitations": [
+        "Angle is manually observed after settling",
+        "No simultaneous Nano gyro/light acquisition",
+        "Angle zero, parallel signal and angle-independent floor require calibration",
+        "Native Android/iOS, BLE and physical validation outstanding"
+      ],
+      "group": "optics",
+      "status": "draft",
+      "paper": "docs/papers/malus-law.tex",
+      "paper_pdf": "output/pdf/malus-law.pdf",
+      "paper_id": "malus-law",
+      "research_companion": "docs/papers/companions/malus-law.md"
+    },
+    {
+      "id": "colour-temperature",
+      "title": "Indicative colour temperature",
+      "experiment": "experiments/drafts/colour-temperature.phyphox",
+      "manuscript": "docs/drafts/colour-temperature.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense (original APDS-9960)",
+        "Stable reference lamps",
+        "Independent colour-reference instrument for calibration"
+      ],
+      "sources": [
+        "beitraege-forschung/phyphox_arduino/0beta_color-temperature_illuminance.phyphox",
+        "astro-lab_app/Material_SLab_ENG.pdf"
+      ],
+      "limitations": [
+        "Donor matrix is provisional; final CCT disabled until calibration checked",
+        "Screening bounds do not establish proximity to Planckian locus",
+        "Indicative lamp colour only, not spectra, lux, UV or stellar thermometry",
+        "Native Android/iOS, BLE and physical validation outstanding"
+      ],
+      "group": "optics",
+      "status": "draft",
+      "paper": "docs/papers/colour-temperature.tex",
+      "paper_pdf": "output/pdf/colour-temperature.pdf",
+      "paper_id": "colour-temperature",
+      "research_companion": "docs/papers/companions/colour-temperature.md"
+    },
+    {
+      "id": "detector-characterization",
+      "title": "Detector sampling and detectability",
+      "experiment": "experiments/drafts/detector-characterization.phyphox",
+      "manuscript": "docs/drafts/detector-characterization.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense (original APDS-9960)",
+        "Steady lamp",
+        "Repeatable opaque-edge or transit model"
+      ],
+      "sources": [
+        "beitraege-forschung/exomonde/Ph 22-67.pdf",
+        "beitraege-forschung/ag2024/VortragAGLehrerfortbildungKoeln24_2.pptx"
+      ],
+      "limitations": [
+        "Delivered timestamp spacing is not sensor-chip bandwidth",
+        "Baseline must be stable, unsaturated and representative",
+        "SNR and samples per feature are planning metrics, not detections",
+        "Native Android/iOS, BLE and physical validation outstanding"
+      ],
+      "group": "optics",
+      "status": "draft",
+      "paper": "docs/papers/transit-method.tex",
+      "paper_pdf": "output/pdf/transit-method.pdf",
+      "paper_id": "transit-method",
+      "research_companion": "docs/papers/companions/transit-method.md"
+    },
+    {
+      "id": "nano-transit",
+      "title": "Nano transit photometry",
+      "experiment": "experiments/drafts/nano-transit.phyphox",
+      "manuscript": "docs/drafts/nano-transit.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense with current Curious Signals firmware",
+        "Stable luminous source and topic-specific optical mount",
+        "Opaque planet on rigid slow track",
+        "Measured source radius and detector distances"
+      ],
+      "sources": [
+        "phyphox/transit_neu/transitmethode_arduino-basic.phyphox",
+        "beitraege-forschung/ag2024/VortragAGLehrerfortbildungKoeln24_2.pdf"
+      ],
+      "limitations": [
+        "Draft: no native, BLE or physical validation",
+        "Relative detector counts require measured background/reference and linearity checks",
+        "Manual characteristic-window means; validate shadows and time resolution"
+      ],
+      "group": "photometry",
+      "status": "draft",
+      "paper": "docs/papers/transit-method.tex",
+      "paper_pdf": "output/pdf/transit-method.pdf",
+      "paper_id": "transit-method",
+      "research_companion": "docs/papers/companions/transit-method.md"
+    },
+    {
+      "id": "exomoon-photometry",
+      "title": "Exomoon overlap photometry",
+      "experiment": "experiments/drafts/exomoon-photometry.phyphox",
+      "manuscript": "docs/drafts/exomoon-photometry.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense with current Curious Signals firmware",
+        "Stable luminous source and topic-specific optical mount",
+        "Opaque planet plus moon on independently rotating motor",
+        "Camera for detector-view geometry controls"
+      ],
+      "sources": [
+        "beitraege-forschung/exomonde/Ph 22-67.pdf",
+        "beitraege-forschung/ag2024/VortragAGLehrerfortbildungKoeln24_2.pdf"
+      ],
+      "limitations": [
+        "Draft: no native, BLE or physical validation",
+        "Relative detector counts require measured background/reference and linearity checks",
+        "Manual characteristic-window means; validate shadows and time resolution"
+      ],
+      "group": "photometry",
+      "status": "draft",
+      "paper": "docs/papers/transit-method.tex",
+      "paper_pdf": "output/pdf/transit-method.pdf",
+      "paper_id": "transit-method",
+      "research_companion": "docs/papers/companions/transit-method.md"
+    },
+    {
+      "id": "starspot-crossing",
+      "title": "Starspot crossing contrast",
+      "experiment": "experiments/drafts/starspot-crossing.phyphox",
+      "manuscript": "docs/drafts/starspot-crossing.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense with current Curious Signals firmware",
+        "Stable luminous source and topic-specific optical mount",
+        "Dark patch on emitting surface",
+        "Opaque planet crossing aligned track"
+      ],
+      "sources": [
+        "beitraege-forschung/ag2024/VortragAGLehrerfortbildungKoeln24_2.pdf"
+      ],
+      "limitations": [
+        "Draft: no native, BLE or physical validation",
+        "Relative detector counts require measured background/reference and linearity checks",
+        "Manual characteristic-window means; validate shadows and time resolution"
+      ],
+      "group": "photometry",
+      "status": "draft",
+      "paper": "docs/papers/transit-method.tex",
+      "paper_pdf": "output/pdf/transit-method.pdf",
+      "paper_id": "transit-method",
+      "research_companion": "docs/papers/companions/transit-method.md"
+    },
+    {
+      "id": "eclipsing-binary",
+      "title": "Eclipsing binary minima",
+      "experiment": "experiments/drafts/eclipsing-binary.phyphox",
+      "manuscript": "docs/drafts/eclipsing-binary.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense with current Curious Signals firmware",
+        "Stable luminous source and topic-specific optical mount",
+        "Two extended luminous disks and reproducible mutual-eclipse mount"
+      ],
+      "sources": [
+        "beitraege-forschung/ag2024/VortragAGLehrerfortbildungKoeln24_2.pdf"
+      ],
+      "limitations": [
+        "Draft: no native, BLE or physical validation",
+        "Relative detector counts require measured background/reference and linearity checks",
+        "Manual characteristic-window means; validate shadows and time resolution"
+      ],
+      "group": "photometry",
+      "status": "draft",
+      "paper": "docs/papers/transit-method.tex",
+      "paper_pdf": "output/pdf/transit-method.pdf",
+      "paper_id": "transit-method",
+      "research_companion": "docs/papers/companions/transit-method.md"
+    },
+    {
+      "id": "seasons-obliquity",
+      "title": "Seasons and obliquity observations",
+      "experiment": "experiments/drafts/seasons-obliquity.phyphox",
+      "manuscript": "docs/drafts/seasons-obliquity.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense with current Curious Signals firmware",
+        "Stable luminous source and topic-specific optical mount",
+        "Globe or local-normal jig with upright/tilted axis",
+        "Marked constant-radius orbit and latitude positions"
+      ],
+      "sources": [
+        "beitraege-forschung/schuelerlabor/Material_SLab_neu_Astropaenz.pdf",
+        "beitraege-forschung/schuelerlabor/Material_SLab_neu_Astropaenz_SOL.pdf"
+      ],
+      "limitations": [
+        "Draft: no native, BLE or physical validation",
+        "Relative detector counts require measured background/reference and linearity checks",
+        "Manual labels and paused snapshots; no temperature inference"
+      ],
+      "group": "photometry",
+      "status": "draft",
+      "paper": "docs/papers/tidal-locking.tex",
+      "paper_pdf": "output/pdf/tidal-locking.pdf",
+      "paper_id": "tidal-locking",
+      "research_companion": "docs/papers/companions/tidal-locking.md"
+    },
+    {
+      "id": "static-friction",
+      "title": "First slip on an inclined plane",
+      "experiment": "experiments/drafts/static-friction.phyphox",
+      "manuscript": "docs/drafts/static-friction.md",
+      "acquisition": "live",
+      "hardware": [
+        "Phone accelerometer and linear acceleration",
+        "Sliding block",
+        "Slowly adjustable ramp and catch tray"
+      ],
+      "sources": [
+        "phyphox/motion_stopwatch_inclination.phyphox",
+        "https://openstax.org/books/university-physics-volume-1/pages/6-2-friction",
+        "https://phyphox.org/docs/file-format/views/user-input/"
+      ],
+      "limitations": [
+        "Slip proxy requires visual confirmation and quasi-static raising",
+        "Mount must be parallel to contact plane",
+        "Sensor-fusion latency unmeasured",
+        "Export capture before rearming; raw history remains",
+        "Native-app and physical validation outstanding"
+      ],
+      "group": "mechanics",
+      "status": "draft",
+      "paper": "docs/papers/static-friction.tex",
+      "paper_pdf": "output/pdf/static-friction.pdf",
+      "paper_id": "static-friction",
+      "research_companion": "docs/papers/companions/static-friction.md"
+    },
+    {
+      "id": "audio-magnetic",
+      "title": "Motor sound and magnetic field",
+      "experiment": "experiments/drafts/audio-magnetic.phyphox",
+      "manuscript": "docs/drafts/audio-magnetic.md",
+      "acquisition": "live",
+      "hardware": [
+        "Phone microphone and magnetometer",
+        "Enclosed low-voltage DC motor",
+        "Fixed phone holder and current-limited supply"
+      ],
+      "sources": [
+        "phyphox/audio_amplitude-magnetometer.phyphox",
+        "https://phyphox.org/docs/file-format/input/",
+        "https://phyphox.org/docs/file-format/analysis/data-generation/"
+      ],
+      "limitations": [
+        "Slow on/off envelope comparison only; no audio-frequency magnetic claim",
+        "Audio processing timestamps have unmeasured latency",
+        "Relative or offset-calibrated level; no certified or A-weighted SPL",
+        "Microphone gain and magnetic background must remain stable",
+        "Raw audio storage limits useful run duration",
+        "Native-app and physical validation outstanding"
+      ],
+      "group": "mechanics",
+      "status": "draft",
+      "paper": "docs/papers/audio-magnetic.tex",
+      "paper_pdf": "output/pdf/audio-magnetic.pdf",
+      "paper_id": "audio-magnetic",
+      "research_companion": "docs/papers/companions/audio-magnetic.md"
+    },
+    {
+      "id": "magnetic-current",
+      "title": "Calibrated DC current from a fixed coil",
+      "experiment": "experiments/drafts/magnetic-current.phyphox",
+      "manuscript": "docs/drafts/magnetic-current.md",
+      "acquisition": "live",
+      "hardware": [
+        "Phone magnetometer",
+        "Insulated air-core coil and nonmagnetic positioning jig",
+        "Low-voltage current-limited DC circuit",
+        "Series reference ammeter"
+      ],
+      "sources": [
+        "phyphox/extern/Amperemeter-Clip_Phyphox_App.phyphox",
+        "https://openstax.org/books/university-physics-volume-2/pages/12-2-magnetic-field-due-to-a-thin-straight-wire"
+      ],
+      "limitations": [
+        "Explicit reconstructed adaptation; archived clip construction unspecified",
+        "Measured two-point calibration required; geometry factor not assumed",
+        "Move or rotate apparatus, change background or sensor offset: recalibrate",
+        "Settled DC only; no AC waveform or commercial clamp-meter claim",
+        "Native-app and physical validation outstanding"
+      ],
+      "group": "mechanics",
+      "status": "draft",
+      "paper": "docs/papers/magnetometer.tex",
+      "paper_pdf": "output/pdf/magnetometer.pdf",
+      "paper_id": "magnetometer",
+      "research_companion": "docs/papers/companions/magnetometer.md"
+    },
+    {
+      "id": "pressure-boiling",
+      "title": "Pressure-dependent boiling observations",
+      "experiment": "experiments/drafts/pressure-boiling.phyphox",
+      "manuscript": "docs/drafts/pressure-boiling.md",
+      "acquisition": "manual",
+      "hardware": [
+        "Approved pressure demonstration vessel",
+        "Calibrated wet-isolated absolute-pressure instrument",
+        "Calibrated liquid-temperature probe"
+      ],
+      "sources": [
+        "astro-lab_app/Material_SLab_ENG.pdf",
+        "https://webbook.nist.gov/cgi/cbook.cgi?ID=C7732185&Mask=4"
+      ],
+      "limitations": [
+        "Manual instrument transfer only",
+        "No inferred phase boundary or Mars-pressure claim"
+      ],
+      "group": "observations",
+      "status": "draft",
+      "source_locations": [
+        {
+          "source": "astro-lab_app/Material_SLab_ENG.pdf",
+          "location": "pp.15-17 (Station 5)"
+        }
+      ],
+      "paper": "docs/papers/pressure-boiling.tex",
+      "paper_pdf": "output/pdf/pressure-boiling.pdf",
+      "paper_id": "pressure-boiling",
+      "research_companion": "docs/papers/companions/pressure-boiling.md"
+    },
+    {
+      "id": "spectral-fingerprints",
+      "title": "Paired spectral fingerprints",
+      "experiment": "experiments/drafts/spectral-fingerprints.phyphox",
+      "manuscript": "docs/drafts/spectral-fingerprints.md",
+      "acquisition": "manual",
+      "hardware": [
+        "Wavelength-calibrated spectrometer or calibrated spectrum files",
+        "Matched star/sample/reference/dark records"
+      ],
+      "sources": [
+        "astro-lab_app/Material_SLab_ENG.pdf",
+        "https://physics.nist.gov/PhysRefData/ASD/lines_form.html"
+      ],
+      "limitations": [
+        "Manual calibrated spectra required",
+        "No camera processing or line identification",
+        "No temperature inference from RGB"
+      ],
+      "group": "observations",
+      "status": "draft",
+      "source_locations": [
+        {
+          "source": "astro-lab_app/Material_SLab_ENG.pdf",
+          "location": "pp.6-12 (Stations 2-3)"
+        }
+      ],
+      "paper": "docs/papers/spectral-fingerprints.tex",
+      "paper_pdf": "output/pdf/spectral-fingerprints.pdf",
+      "paper_id": "spectral-fingerprints",
+      "research_companion": "docs/papers/companions/spectral-fingerprints.md"
+    },
+    {
+      "id": "coronagraph-contrast",
+      "title": "Coronagraph image observations",
+      "experiment": "experiments/drafts/coronagraph-contrast.phyphox",
+      "manuscript": "docs/drafts/coronagraph-contrast.md",
+      "acquisition": "manual",
+      "hardware": [
+        "Fixed-exposure camera",
+        "Lamp, pinhead model and occulting disk",
+        "External linear image/ROI analysis software"
+      ],
+      "sources": [
+        "beitraege-forschung/unterrichtphysik-exo/BeitragUnterrichtPhysikAstronomie-KuepperSpicker_END-2.docx",
+        "beitraege-forschung/unterrichtphysik-exo/513194-008.pdf",
+        "https://science.nasa.gov/exoplanets/how-we-find-and-characterize/"
+      ],
+      "limitations": [
+        "Manual external image analysis",
+        "Linear unsaturated matched images required",
+        "SNR requires independently estimated difference uncertainty"
+      ],
+      "group": "observations",
+      "status": "draft",
+      "source_locations": [
+        {
+          "source": "beitraege-forschung/unterrichtphysik-exo/BeitragUnterrichtPhysikAstronomie-KuepperSpicker_END-2.docx",
+          "location": "Direct Imaging Experiment"
+        },
+        {
+          "source": "beitraege-forschung/unterrichtphysik-exo/513194-008.pdf",
+          "location": "pp.1-2"
+        }
+      ],
+      "paper": "docs/papers/coronagraph-contrast.tex",
+      "paper_pdf": "output/pdf/coronagraph-contrast.pdf",
+      "paper_id": "coronagraph-contrast",
+      "research_companion": "docs/papers/companions/coronagraph-contrast.md"
+    },
+    {
+      "id": "uv-transmission",
+      "title": "External UV detector transmission",
+      "experiment": "experiments/drafts/uv-transmission.phyphox",
+      "manuscript": "docs/drafts/uv-transmission.md",
+      "acquisition": "live",
+      "hardware": [
+        "Arduino Nano 33 BLE Sense with current Curious Signals firmware",
+        "External UV detector and signal conditioning (0-3.3 V)",
+        "Approved enclosed UV teaching apparatus",
+        "Meter and irradiance calibration reference for absolute results"
+      ],
+      "sources": [
+        "astro-lab_app/Material_SLab_ENG.pdf",
+        "https://docs-content.arduino.cc/resources/datasheets/ABX00031-datasheet.pdf",
+        "repo:protocol/contract.json"
+      ],
+      "limitations": [
+        "External UV detector required; RGB is unsuitable",
+        "No calibrated absolute irradiance without measured coefficients",
+        "Detector response gives source-weighted band transmission"
+      ],
+      "group": "observations",
+      "status": "draft",
+      "source_locations": [
+        {
+          "source": "astro-lab_app/Material_SLab_ENG.pdf",
+          "location": "pp.13-14 (Station 4)"
+        }
+      ],
+      "paper": "docs/papers/light-rgb.tex",
+      "paper_pdf": "output/pdf/light-rgb.pdf",
+      "paper_id": "light-rgb",
+      "research_companion": "docs/papers/companions/light-rgb.md"
+    },
+    {
+      "id": "greenhouse-single",
+      "title": "Single SensorTag warming",
+      "experiment": "experiments/drafts/greenhouse-single.phyphox",
+      "manuscript": "docs/drafts/greenhouse-single.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2650/CC1350 (BMP280)"
+      ],
+      "sources": [
+        "phyphox/greenhouse/greenhouse_single.phyphox",
+        "https://github.com/phyphox/phyphox-experiments/blob/master/bluetooth/TI%20SensorTag%20Pressure.phyphox"
+      ],
+      "limitations": [
+        "Sequential runs do not remove changing lamp or ambient conditions.",
+        "BMP280 die temperature is not isolated gas temperature."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/greenhouse.tex",
+      "paper_pdf": "output/pdf/greenhouse.pdf",
+      "paper_id": "greenhouse",
+      "research_companion": "docs/papers/companions/greenhouse.md"
+    },
+    {
+      "id": "sensortag-environmental",
+      "title": "SensorTag environmental channels",
+      "experiment": "experiments/drafts/sensortag-environmental.phyphox",
+      "manuscript": "docs/drafts/sensortag-environmental.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2650/CC1350 (HDC1000 and BMP280)"
+      ],
+      "sources": [
+        "phyphox/extern/Barometric and Humidity(HTPTmin).phyphox",
+        "https://github.com/phyphox/phyphox-experiments/blob/master/bluetooth/TI%20SensorTag%20Humidity.phyphox",
+        "https://github.com/phyphox/phyphox-experiments/blob/master/bluetooth/TI%20SensorTag%20Pressure.phyphox"
+      ],
+      "limitations": [
+        "Notification families are asynchronous.",
+        "Die temperatures include mounting and board heating."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/temperature-humidity.tex",
+      "paper_pdf": "output/pdf/temperature-humidity.pdf",
+      "paper_id": "temperature-humidity",
+      "research_companion": "docs/papers/companions/temperature-humidity.md"
+    },
+    {
+      "id": "puck-light",
+      "title": "Puck.js relative light",
+      "experiment": "experiments/drafts/puck-light.phyphox",
+      "manuscript": "docs/drafts/puck-light.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "Espruino Puck.js"
+      ],
+      "sources": [
+        "beitraege-forschung/jena2023_bundesweite-lefobi-astronomie/phyphox_lefobi23-jena/puck.js-Light_jena.phyphox",
+        "https://www.espruino.com/Puck.js",
+        "https://www.espruino.com/Reference#l_Puck_light"
+      ],
+      "limitations": [
+        "Relative 0..1 light response is uncalibrated and spectrum dependent.",
+        "Connection installs a RAM timer and writes Nordic UART notifications."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/light-rgb.tex",
+      "paper_pdf": "output/pdf/light-rgb.pdf",
+      "paper_id": "light-rgb",
+      "research_companion": "docs/papers/companions/light-rgb.md"
+    },
+    {
+      "id": "cc2541-accelerometer",
+      "title": "CC2541 accelerometer",
+      "experiment": "experiments/drafts/cc2541-accelerometer.phyphox",
+      "manuscript": "docs/drafts/cc2541-accelerometer.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2541"
+      ],
+      "sources": [
+        "phyphox/cc2541/TI SensorTag CC2541 Accelerometer.phyphox",
+        "https://phyphox.org/wiki/index.php/Texas_Instruments_SensorTag_CC2541",
+        "https://www.ti.com/lit/ug/swru324b/swru324b.pdf"
+      ],
+      "limitations": [
+        "Native BLE import and bench scale/orientation validation pending."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/accelerometer.tex",
+      "paper_pdf": "output/pdf/accelerometer.pdf",
+      "paper_id": "accelerometer",
+      "research_companion": "docs/papers/companions/accelerometer.md"
+    },
+    {
+      "id": "cc2541-gyroscope",
+      "title": "CC2541 gyroscope",
+      "experiment": "experiments/drafts/cc2541-gyroscope.phyphox",
+      "manuscript": "docs/drafts/cc2541-gyroscope.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2541"
+      ],
+      "sources": [
+        "phyphox/cc2541/TI SensorTag CC2541 Gyroscope.phyphox",
+        "https://phyphox.org/wiki/index.php/Texas_Instruments_SensorTag_CC2541",
+        "https://www.ti.com/lit/ug/swru324b/swru324b.pdf"
+      ],
+      "limitations": [
+        "Native BLE import and bench scale/orientation validation pending."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/gyroscope.tex",
+      "paper_pdf": "output/pdf/gyroscope.pdf",
+      "paper_id": "gyroscope",
+      "research_companion": "docs/papers/companions/gyroscope.md"
+    },
+    {
+      "id": "cc2541-magnetometer",
+      "title": "CC2541 magnetometer",
+      "experiment": "experiments/drafts/cc2541-magnetometer.phyphox",
+      "manuscript": "docs/drafts/cc2541-magnetometer.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2541"
+      ],
+      "sources": [
+        "phyphox/cc2541/TI SensorTag CC2541 Magnetometer.phyphox",
+        "https://phyphox.org/wiki/index.php/Texas_Instruments_SensorTag_CC2541",
+        "https://www.ti.com/lit/ug/swru324b/swru324b.pdf",
+        "https://www.nxp.com/docs/en/data-sheet/MAG3110.pdf"
+      ],
+      "limitations": [
+        "Native BLE import and bench scale/orientation validation pending.",
+        "MAG3110 nominal chip sensitivity must be verified against installed firmware before enabling µT."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/magnetometer.tex",
+      "paper_pdf": "output/pdf/magnetometer.pdf",
+      "paper_id": "magnetometer",
+      "research_companion": "docs/papers/companions/magnetometer.md"
+    },
+    {
+      "id": "pocketlab-gyroscope",
+      "title": "PocketLab Voyager gyroscope",
+      "experiment": "experiments/drafts/pocketlab-gyroscope.phyphox",
+      "manuscript": "docs/drafts/pocketlab-gyroscope.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "PocketLab Voyager"
+      ],
+      "sources": [
+        "https://github.com/phyphox/phyphox-experiments/blob/master/bluetooth/PocketLab%20Voyager%20Acc%20Gyro%20Mag.phyphox",
+        "phyphox/extern/PLOneGyro.phyphox"
+      ],
+      "limitations": [
+        "Native BLE import and bench scale/orientation validation pending.",
+        "This adapter supports Voyager; PocketLab One gyro is not established by the archived donor."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/gyroscope.tex",
+      "paper_pdf": "output/pdf/gyroscope.pdf",
+      "paper_id": "gyroscope",
+      "research_companion": "docs/papers/companions/gyroscope.md"
+    },
+    {
+      "id": "cc2541-humidity",
+      "title": "CC2541 humidity and SHT21 temperature",
+      "experiment": "experiments/drafts/cc2541-humidity.phyphox",
+      "manuscript": "docs/drafts/cc2541-humidity.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2541 (SHT21)"
+      ],
+      "sources": [
+        "phyphox/cc2541/TI SensorTag CC2541 Humidtity.phyphox",
+        "https://www.ti.com/lit/ug/swru324b/swru324b.pdf",
+        "https://sensirion.com/media/documents/120BBE4C/63500094/Sensirion_Datasheet_Humidity_Sensor_SHT21.pdf"
+      ],
+      "limitations": [
+        "No condensation or sensor self-heating correction.",
+        "RH outside 0..100% is rejected, not clipped."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/temperature-humidity.tex",
+      "paper_pdf": "output/pdf/temperature-humidity.pdf",
+      "paper_id": "temperature-humidity",
+      "research_companion": "docs/papers/companions/temperature-humidity.md"
+    },
+    {
+      "id": "cc2541-pressure",
+      "title": "CC2541 T5400 pressure calibration",
+      "experiment": "experiments/drafts/cc2541-pressure.phyphox",
+      "manuscript": "docs/drafts/cc2541-pressure.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2541 (EPCOS T5400)"
+      ],
+      "sources": [
+        "phyphox/cc2541/TI SensorTag CC2541 Pressure.phyphox",
+        "https://phyphox.org/wiki/index.php/Texas_Instruments_SensorTag_CC2541",
+        "https://cdn.sparkfun.com/datasheets/Sensors/Weather/T5400.pdf",
+        "https://phyphox.org/wiki/images/f/f5/TI_SensorTag_CC2541_Pressure.phyphox"
+      ],
+      "limitations": [
+        "Calibration state/read ordering requires native BLE verification.",
+        "T5400 polynomial uses floating-point arithmetic rather than firmware integer rounding."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/mission-to-mars.tex",
+      "paper_pdf": "output/pdf/mission-to-mars.pdf",
+      "paper_id": "mission-to-mars",
+      "research_companion": "docs/papers/companions/mission-to-mars.md"
+    },
+    {
+      "id": "cc2541-ir-temperature",
+      "title": "CC2541 TMP006 infrared temperature",
+      "experiment": "experiments/drafts/cc2541-ir-temperature.phyphox",
+      "manuscript": "docs/drafts/cc2541-ir-temperature.md",
+      "acquisition": "adapter",
+      "hardware": [
+        "TI SensorTag CC2541 (TMP006)"
+      ],
+      "sources": [
+        "phyphox/cc2541/TI SensorTag CC2541 IR Temperature.phyphox",
+        "https://www.ti.com/lit/ug/swru324b/swru324b.pdf",
+        "https://www.ti.com/lit/ds/symlink/tmp006.pdf"
+      ],
+      "limitations": [
+        "Object temperature requires application calibration, field of view and emissivity control.",
+        "No transparent-window or thermal-gradient correction."
+      ],
+      "group": "adapters",
+      "status": "draft",
+      "paper": "docs/papers/ir-distance.tex",
+      "paper_pdf": "output/pdf/ir-distance.pdf",
+      "paper_id": "ir-distance",
+      "research_companion": "docs/papers/companions/ir-distance.md"
+    }
+  ],
+  "research_collection": "docs/papers/manifest.json",
+  "research_edition": "2026-10-27"
+}

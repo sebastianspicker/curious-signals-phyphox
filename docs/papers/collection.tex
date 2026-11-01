@@ -1,0 +1,204 @@
+% Front matter for the continuously paginated retrospective.
+% The binder builder supplies the paper counts, page ranges and contents rows.
+\documentclass[11pt,letterpaper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern,microtype,booktabs,array,xcolor,fancyhdr}
+\usepackage[letterpaper,margin=1in,includeheadfoot,headheight=12pt,
+  headsep=12pt,footskip=20pt]{geometry}
+\usepackage[hidelinks]{hyperref}
+\microtypesetup{protrusion=false}
+\hypersetup{pdftitle={Curious Signals: Measurements and Laboratory Models},
+  pdfauthor={Sebastian J. Spicker, Alexander K\"upper},
+  pdfsubject={A retrospective of work from 2018 to 2024; October 2026}}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.62em}
+\setlength{\emergencystretch}{2em}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\textsc{Curious Signals}}
+\fancyhead[R]{\footnotesize\thepage}
+\pagestyle{fancy}
+\newcommand{\paperlink}[2]{\href{cs-paper:#1}{#2}}
+\newcommand{\paperpages}[1]{\paperlink{#1}{\csname paperpages@#1\endcsname}}
+\newcommand{\contentsgroup}[1]{\normalsize\bfseries #1}
+\newcommand{\overviewheading}[1]{%
+  \par\vspace{0.65em}{\large\bfseries #1\par}\vspace{0.12em}}
+\newcommand{\fronttitle}[1]{%
+  {\fontsize{28}{33}\selectfont #1\par}\vspace{0.55em}}
+% PAPER_PAGE_DEFINITIONS
+\begin{document}
+\thispagestyle{empty}
+{\small\sffamily INSTITUTE OF PHYSICS EDUCATION\\UNIVERSITY OF COLOGNE}
+
+\vspace*{1.0in}
+{\fontsize{44}{49}\selectfont Curious Signals\par}
+\vspace{0.23in}
+{\fontsize{25}{31}\selectfont Measurements and\\laboratory models\par}
+
+\vspace{0.5in}
+{\large A retrospective of work from 2018 to 2024\par}
+
+\vspace{0.48in}
+{\large Sebastian J. Spicker\\[0.15em]Alexander K\"upper\par}
+
+\vfill
+{\normalsize
+% PAPER_COUNT
+papers on sensing, measurement and astronomical inference\par}
+\vspace{0.22in}
+{\small October 2026}
+
+\newpage
+\fancyhead[L]{\footnotesize\textsc{Retrospective}}
+\fronttitle{From signals to physical quantities}
+
+Curious Signals connects classroom sensor experiments with the physical models
+used to interpret them. Its twenty-one papers examine how calibration, timing and
+geometry relate recorded signals to physical quantities. Each paper makes that
+relationship explicit through a measurement model, a reference comparison and a
+worked reduction.
+
+The papers cover forty-three experiment definitions and analyse fifty-eight
+records. The reported results connect sensor readings to physical quantities
+through explicit conversion, calibration and timing conventions. Apparatus
+schematics identify the reference geometry, and each record retains its own time
+coordinates. The analyses distinguish observed variation from systematic effects
+and state the assumptions used to infer quantities beyond the recorded signals.
+
+\overviewheading{Motion, fields and electrical measurements}
+The inertial studies use vector information to resolve orientation and motion.
+\paperlink{accelerometer}{Specific-force direction} gives static inclination
+when translational acceleration is negligible, while magnitude and laboratory
+alignment require separate references. \paperlink{gyroscope}{Gyroscope rate
+reversals} identify scale and offset only against independent reference rates;
+signed integrals distinguish net rotation about a fixed axis from accumulated
+motion, and a residual bias grows into an angle error over time. Magnetic
+calibration, heading and \paperlink{magnetometer}{indirect current measurement}
+each require their own reference information and stable geometry.
+
+The electrical studies separate numerical conversion from calibration.
+\paperlink{analog-inputs}{ADC codes, voltage plateaux and RC curves} expose
+different roles for granularity, load and the timebase. A friction estimate
+depends on the \paperlink{static-friction}{inclination before first slip}, while
+contact history and mounting enter the inferred coefficient.
+\paperlink{audio-magnetic}{Sound envelopes and magnetic fields} track changes
+in a motor's operating state through complementary responses.
+
+\overviewheading{Pressure, humidity and thermal response}
+Pressure connects to height, force and gas state through different boundary
+conditions. \paperlink{pressure}{Bracketed ambient references} resolve small
+height-related changes, while \paperlink{mission-to-mars}{enclosure and
+compression examples} require temperature, volume or area information to close
+the model; a slow pressure relaxation, for example, may reflect gas exchange or
+cooling.
+
+\paperlink{temperature-humidity}{Paired temperature and humidity channels}
+distinguish warming from a change in water-vapour content. Enclosure-heating
+curves quantify contrasts and apparent response times, but a fitted response time
+does not identify a \paperlink{greenhouse}{heat-loss coefficient}; separating
+optical from convective effects requires controlled source power and independent
+air thermometry. The \paperlink{pressure-boiling}{boiling study} similarly
+separates a visible observational threshold from equilibrium saturation, while
+accounting for instrument range and the applicable thermodynamic domain.
+
+\newpage
+\fronttitle{Light, geometry and inference}
+
+\overviewheading{Optics and radiometry}
+Optical ratios become interpretable once the reference, detector weighting and
+viewing geometry are specified. The \paperlink{light-rgb}{RGB, LED and UV
+examples} separate detector-weighted transmission from an absolute radiometric
+scale. \paperlink{illuminance-distance}{Distance studies} recover exponents close
+to two and quantify the roles of averaging and the source-origin convention.
+\paperlink{albedo}{Reflected-light ratios} depend on the illumination and viewing
+geometry, whereas Bond albedo integrates reflected power over angle and stellar
+spectrum.
+
+\paperlink{malus-law}{Settled-angle polarimetry} separates scale, floor and
+angular zero in a cosine-squared response, with the angular reference entering
+the interpretation of the fitted phase. The
+\paperlink{colour-temperature}{colour-temperature study} obtains a consistent
+colour ordering through a transferred sensor matrix, but its temperature scale
+inherits that matrix's calibration. \paperlink{ir-distance}{Infrared radiometry}
+relates temperature to emissivity, scene coverage and detector thermal state;
+outward and return branches reveal the role of acquisition history. In
+\paperlink{spectral-fingerprints}{paired spectra}, removal of a shared feature
+separates total attenuation from additional attenuation. Wavelength calibration,
+spectral resolution and detection significance enter as distinct quantities.
+
+\overviewheading{Planetary and astronomical models}
+The astronomical studies retain the same order of inference: constrain the
+forcing and detector response, then interpret the physical model.
+\paperlink{tidal-locking}{Illumination and thermal-contrast examples} separate
+incidence geometry from absorbed power, heat redistribution and sensor
+response.
+
+\paperlink{transit-method}{Laboratory transit photometry} brings together
+detectors, actual timestamps and visible-area models. Local reference windows
+recover shallow deficits near four percent in the worked examples, while
+whole-record extrema answer a different question. Coarse sampling can miss a
+short feature altogether. Planet--moon overlaps, dark source patches and pairs
+of luminous bodies alter the brightness integral in different ways, so no single
+conversion turns a light-curve minimum into an object radius.
+The \paperlink{coronagraph-contrast}{occulting-mask study} completes the theme:
+background suppression, target throughput and noise together determine
+detectability.
+
+\overviewheading{A common experimental discipline}
+The collection treats calibration, geometry, time response and uncertainty as
+parts of the physical argument. Sample variability, shared offsets and correlated
+errors enter the uncertainty of a derived quantity through its measurement model;
+scatter within a record does not bound its systematic error. Across the studies,
+the reported comparisons connect the observed signals to the inferred quantities
+and their uncertainties. Independent references and explicit model assumptions
+establish the scope of each physical interpretation.
+
+\vfill
+{\footnotesize
+Each paper retains its own references and date. Page numbers run continuously
+through this volume; the contents and PDF bookmarks locate every article.
+The core experiment software was developed by Gautier Creutzer and
+Fr\'ed\'eric Bouquet, with revisions by Sebastian J. Spicker and
+Fr\'ed\'eric Bouquet.}
+
+\newpage
+\fancyhead[L]{\footnotesize\textsc{Contents}}
+\fronttitle{Contents}
+{\small
+% PAPER_COUNT
+papers\quad\textperiodcentered\quad
+% BODY_PAGE_COUNT
+article pages\par}
+\vspace{1.0em}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.68\textwidth}@{\hspace{0.03\textwidth}}p{0.18\textwidth}@{\hspace{0.03\textwidth}}>{\raggedleft\arraybackslash}p{0.08\textwidth}@{}}
+\toprule
+Paper & Date & Pages\\[0.35em]
+\midrule
+% CONTENTS_ROWS_1
+\bottomrule
+\end{tabular}
+\endgroup
+\vfill
+{\small Continued on the following page.}
+
+\newpage
+\fronttitle{Contents, continued}
+{\small Optics, radiometry and astronomical models\par}
+\vspace{1.0em}
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{@{}p{0.68\textwidth}@{\hspace{0.03\textwidth}}p{0.18\textwidth}@{\hspace{0.03\textwidth}}>{\raggedleft\arraybackslash}p{0.08\textwidth}@{}}
+\toprule
+Paper & Date & Pages\\[0.35em]
+\midrule
+% CONTENTS_ROWS_2
+\bottomrule
+\end{tabular}
+\endgroup
+\end{document}

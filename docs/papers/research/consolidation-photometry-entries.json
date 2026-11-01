@@ -1,0 +1,11 @@
+[
+  {
+    "slug":"transit-method",
+    "title":"Laboratory Transit Photometry: Calibration, Temporal Resolution and Visible-Area Models",
+    "short_title":"Laboratory Transit Photometry",
+    "group":"photometry",
+    "analysis_ids":["transit-method","nano-transit","detector-characterization","exomoon-photometry","starspot-crossing","eclipsing-binary"],
+    "figures":["topic-figures/transit-method-paths.tex","topic-figures/transit-method-sampling.tex","topic-figures/transit-method-brightenings.tex","topic-figures/transit-method-binary.tex"],
+    "markdown":"companions/transit-method.md"
+  }
+]

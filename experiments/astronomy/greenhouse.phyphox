@@ -2,12 +2,12 @@
 <phyphox version="1.7" locale="en">
     <title>Greenhouse effect</title>
     <category>*Astrolab University of Cologne</category>
-    <description>Use one or two SensorTags to record how enclosed gas setups warm up under the same illumination. The same file supports a single setup or a comparison between two setups. This is a classroom analogue of the greenhouse effect: it supports relative comparison between setups and is not a full climate model.</description>
+    <description>Compare two SensorTags in matched enclosures under the same illumination. The BMP280 channels measure sensor die temperatures influenced by their mounting and radiation. This classroom analogue supports comparative warming measurements; it does not isolate a planetary greenhouse mechanism.</description>
     <translations>
         <translation locale="de">
             <title>Treibhauseffekt</title>
             <category>*Astrolabor Universität zu Köln</category>
-            <description>Nutze ein oder zwei SensorTags, um aufzuzeichnen, wie sich eingeschlossene Gasaufbauten unter derselben Beleuchtung erwärmen. Dieselbe Datei unterstützt einen Einzelaufbau oder den Vergleich zweier Aufbauten. Dies ist eine Klassenzimmer-Analogie des Treibhauseffekts: Sie erlaubt einen relativen Vergleich zwischen Aufbauten und ist kein vollständiges Klimamodell.</description>
+            <description>Vergleiche zwei SensorTags in angepassten Gehäusen unter derselben Beleuchtung. Die BMP280-Kanäle messen Chiptemperaturen, die von Montage und Strahlung beeinflusst werden. Diese Unterrichtsanalogie erlaubt vergleichende Erwärmungsmessungen; sie isoliert keinen planetaren Treibhausmechanismus.</description>
             <string original="Comparison">Vergleich</string>
             <string original="Gas #1 (G1), orange">Gas Nr. 1 (G1), orange</string>
             <string original="Temperature">Temperatur</string>
@@ -16,19 +16,45 @@
             <string original="Gas #2 (G2), blue">Gas Nr. 2 (G2), blau</string>
             <string original="Max. Temp. G2">Max. Temp. G2</string>
             <string original="Min. Temp. G2">Min. Temp. G2</string>
-            <string original="Single setup">Einzelaufbau</string>
-            <string original="Use this tab when only one SensorTag is connected. The second comparison channel can remain empty.">Nutze diesen Tab, wenn nur ein SensorTag verbunden ist. Der zweite Vergleichskanal kann leer bleiben.</string>
             <string original="Max. Temp.">Max. Temp.</string>
             <string original="Min. Temp.">Min. Temp.</string>
             <string original="T1(t), T2(t)">T1(t), T2(t)</string>
             <string original="Time (min)">Zeit (min)</string>
             <string original="Temperature 1 (°C)">Temperatur 1 (°C)</string>
             <string original="Temperature 2 (°C)">Temperatur 2 (°C)</string>
+            <string original="BMP280 die temperature">BMP280-Chiptemperatur</string>
+            <string original="SensorTag 1: BMP280 die">SensorTag 1: BMP280-Chip</string>
+            <string original="SensorTag 2: BMP280 die">SensorTag 2: BMP280-Chip</string>
+            <string original="Maximum BMP280 1">Maximum BMP280 1</string>
+            <string original="Minimum BMP280 1">Minimum BMP280 1</string>
+            <string original="Maximum BMP280 2">Maximum BMP280 2</string>
+            <string original="Minimum BMP280 2">Minimum BMP280 2</string>
+            <string original="Temperature rise">Temperaturanstieg</string>
+            <string original="Enter each sensor's mean during the same equilibrated lamp-off interval. Zero defaults are placeholders; enter the measured baselines before interpreting temperature rises.">Trage für jeden Sensor den Mittelwert desselben eingeschwungenen Zeitintervalls bei ausgeschalteter Lampe ein. Die Vorgaben null sind Platzhalter; setze die gemessenen Ausgangswerte vor der Auswertung der Temperaturanstiege.</string>
+            <string original="Initial BMP280 1">Anfangswert BMP280 1</string>
+            <string original="Initial BMP280 2">Anfangswert BMP280 2</string>
+            <string original="BMP280 temperature rises">BMP280-Temperaturanstiege</string>
+            <string original="SensorTag 1">SensorTag 1</string>
+            <string original="Time 1 (min)">Zeit 1 (min)</string>
+            <string original="BMP280 die temperature 1 (°C)">BMP280-Chiptemperatur 1 (°C)</string>
+            <string original="Temperature rise 1 (K)">Temperaturanstieg 1 (K)</string>
+            <string original="SensorTag 2">SensorTag 2</string>
+            <string original="Time 2 (min)">Zeit 2 (min)</string>
+            <string original="BMP280 die temperature 2 (°C)">BMP280-Chiptemperatur 2 (°C)</string>
+            <string original="Temperature rise 2 (K)">Temperaturanstieg 2 (K)</string>
+            <string original="Baseline settings">Ausgangswerte</string>
+            <string original="Initial BMP280 1 (°C)">Anfangswert BMP280 1 (°C)</string>
+            <string original="Initial BMP280 2 (°C)">Anfangswert BMP280 2 (°C)</string>
+            <string original="Setup">Aufbau</string>
+            <string original="This file connects two SensorTags. Use matched vessels, equal lamp distances and identical sensor supports. Co-locate the tags before the run, then exchange their positions in a repeat run.">Diese Datei verbindet zwei SensorTags. Verwende vergleichbare Gefäße, gleiche Lampenabstände und identische Sensorhalterungen. Lege die Tags vor dem Versuch nebeneinander und vertausche ihre Positionen bei einer Wiederholung.</string>
+            <string original="Keep illumination, exposed area, airflow and mounting fixed. Shield independent air probes from direct radiation if gas temperature is the intended quantity. BMP280 die temperature includes board heating and thermal lag.">Halte Beleuchtung, bestrahlte Fläche, Luftströmung und Montage konstant. Schirme unabhängige Luftfühler gegen direkte Strahlung ab, wenn Gastemperatur die Zielgröße ist. Die BMP280-Chiptemperatur enthält Einflüsse der Platine und thermischer Verzögerung.</string>
+            <string original="Times are Bluetooth receive times. Each sensor keeps its own clock; compare means over the same time interval or align the records before subtracting them.">Die Zeiten sind Bluetooth-Empfangszeiten. Jeder Sensor behält seine eigene Zeitachse; vergleiche Mittelwerte desselben Zeitintervalls oder gleiche die Datensätze vor dem Subtrahieren zeitlich ab.</string>
+            <string original="Compare baseline-corrected late-heating interval means and repeat after swapping tags. Treat lamp-on and lamp-off branches separately when fitting response times.">Vergleiche die um Ausgangswerte korrigierten Mittelwerte später Heizintervalle und wiederhole nach dem Vertauschen der Tags. Passe Reaktionszeiten getrennt an Heiz- und Abkühlzweige an.</string>
         </translation>
         <translation locale="fr">
             <title>Effet de serre</title>
             <category>*Astrolab University of Cologne</category>
-            <description>Utilise un ou deux SensorTags pour enregistrer comment des montages gazeux fermés se réchauffent sous le même éclairage. Le même fichier prend en charge un montage unique ou la comparaison entre deux montages. Il s'agit d'une analogie de salle de classe de l'effet de serre : elle permet une comparaison relative entre montages et ne constitue pas un modèle climatique complet.</description>
+            <description>Compare deux SensorTags dans des enceintes comparables sous le même éclairage. Les canaux BMP280 mesurent la température des puces, influencée par leur montage et le rayonnement. Cette analogie pédagogique permet de comparer les réchauffements ; elle n'isole pas un mécanisme d'effet de serre planétaire.</description>
             <string original="Comparison">Comparaison</string>
             <string original="Gas #1 (G1), orange">Gaz n° 1 (G1), orange</string>
             <string original="Temperature">Température</string>
@@ -37,47 +63,77 @@
             <string original="Gas #2 (G2), blue">Gaz n° 2 (G2), bleu</string>
             <string original="Max. Temp. G2">Temp. max. G2</string>
             <string original="Min. Temp. G2">Temp. min. G2</string>
-            <string original="Single setup">Montage unique</string>
-            <string original="Use this tab when only one SensorTag is connected. The second comparison channel can remain empty.">Utilise cet onglet lorsqu'un seul SensorTag est connecté. Le second canal de comparaison peut rester vide.</string>
             <string original="Max. Temp.">Temp. max.</string>
             <string original="Min. Temp.">Temp. min.</string>
             <string original="T1(t), T2(t)">T1(t), T2(t)</string>
             <string original="Time (min)">Temps (min)</string>
             <string original="Temperature 1 (°C)">Température 1 (°C)</string>
             <string original="Temperature 2 (°C)">Température 2 (°C)</string>
+            <string original="BMP280 die temperature">Température de puce BMP280</string>
+            <string original="SensorTag 1: BMP280 die">SensorTag 1 : puce BMP280</string>
+            <string original="SensorTag 2: BMP280 die">SensorTag 2 : puce BMP280</string>
+            <string original="Maximum BMP280 1">Maximum BMP280 1</string>
+            <string original="Minimum BMP280 1">Minimum BMP280 1</string>
+            <string original="Maximum BMP280 2">Maximum BMP280 2</string>
+            <string original="Minimum BMP280 2">Minimum BMP280 2</string>
+            <string original="Temperature rise">Élévation de température</string>
+            <string original="Enter each sensor's mean during the same equilibrated lamp-off interval. Zero defaults are placeholders; enter the measured baselines before interpreting temperature rises.">Saisis pour chaque capteur sa moyenne pendant le même intervalle stabilisé, lampe éteinte. Les zéros sont des valeurs provisoires ; saisis les niveaux mesurés avant d'interpréter les élévations de température.</string>
+            <string original="Initial BMP280 1">Niveau initial BMP280 1</string>
+            <string original="Initial BMP280 2">Niveau initial BMP280 2</string>
+            <string original="BMP280 temperature rises">Élévations de température BMP280</string>
+            <string original="SensorTag 1">SensorTag 1</string>
+            <string original="Time 1 (min)">Temps 1 (min)</string>
+            <string original="BMP280 die temperature 1 (°C)">Température de puce BMP280 1 (°C)</string>
+            <string original="Temperature rise 1 (K)">Élévation de température 1 (K)</string>
+            <string original="SensorTag 2">SensorTag 2</string>
+            <string original="Time 2 (min)">Temps 2 (min)</string>
+            <string original="BMP280 die temperature 2 (°C)">Température de puce BMP280 2 (°C)</string>
+            <string original="Temperature rise 2 (K)">Élévation de température 2 (K)</string>
+            <string original="Baseline settings">Niveaux initiaux</string>
+            <string original="Initial BMP280 1 (°C)">Niveau initial BMP280 1 (°C)</string>
+            <string original="Initial BMP280 2 (°C)">Niveau initial BMP280 2 (°C)</string>
+            <string original="Setup">Montage</string>
+            <string original="This file connects two SensorTags. Use matched vessels, equal lamp distances and identical sensor supports. Co-locate the tags before the run, then exchange their positions in a repeat run.">Ce fichier connecte deux SensorTags. Utilise des récipients comparables, des distances égales à la lampe et des supports identiques. Place les capteurs côte à côte avant la mesure, puis inverse leurs positions lors d'un second essai.</string>
+            <string original="Keep illumination, exposed area, airflow and mounting fixed. Shield independent air probes from direct radiation if gas temperature is the intended quantity. BMP280 die temperature includes board heating and thermal lag.">Maintiens constants l'éclairage, la surface exposée, le débit d'air et le montage. Protège des sondes d'air indépendantes du rayonnement direct si la température du gaz est recherchée. La température de puce BMP280 inclut l'échauffement de la carte et le retard thermique.</string>
+            <string original="Times are Bluetooth receive times. Each sensor keeps its own clock; compare means over the same time interval or align the records before subtracting them.">Les temps sont ceux de réception Bluetooth. Chaque capteur conserve sa propre série temporelle ; compare les moyennes sur le même intervalle ou aligne les séries avant de les soustraire.</string>
+            <string original="Compare baseline-corrected late-heating interval means and repeat after swapping tags. Treat lamp-on and lamp-off branches separately when fitting response times.">Compare les moyennes corrigées du niveau initial en fin de chauffage et répète après inversion des capteurs. Ajuste séparément les temps de réponse des phases de chauffage et de refroidissement.</string>
         </translation>
     </translations>
     <data-containers>
         <container size="0" static="false">t</container>
-        <container size="1" static="false">count</container>
-        <container size="1" static="false">tmax</container>
-        <!-- 1 -->
         <container size="0" static="false">tempRaw1</container>
         <container size="0" static="false">tempCal1</container>
         <container size="1" static="false">T_max1</container>
         <container size="1" static="false">T_min1</container>
-        <!-- 2 -->
         <container size="0" static="false">tempRaw2</container>
         <container size="0" static="false">tempCal2</container>
         <container size="1" static="false">T_max2</container>
         <container size="1" static="false">T_min2</container>
+        <container size="0" static="false">receive_t1</container>
+        <container size="0" static="false">receive_t2</container>
+        <container size="0" static="false">t2</container>
+        <container size="1" static="false" init="0">baseline1</container>
+        <container size="0" static="false">tempCal1_rise</container>
+        <container size="1" static="false" init="0">baseline2</container>
+        <container size="0" static="false">tempCal2_rise</container>
     </data-containers>
     <input>
         <bluetooth name="SensorTag" mode="notification" rate="1" subscribeOnStart="false">
             <config char="F000AA44-0451-4000-B000-000000000000" conversion="hexadecimal">64</config>
             <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
             <output char="F000AA41-0451-4000-B000-000000000000" conversion="int24LittleEndian" offset="0" length="3">tempRaw1</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">receive_t1</output>
         </bluetooth>
         <bluetooth name="SensorTag" mode="notification" rate="1" subscribeOnStart="false">
             <config char="F000AA44-0451-4000-B000-000000000000" conversion="hexadecimal">64</config>
             <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
             <output char="F000AA41-0451-4000-B000-000000000000" conversion="int24LittleEndian" offset="0" length="3">tempRaw2</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">receive_t2</output>
         </bluetooth>
     </input>
     <output>
     </output>
-    <analysis sleep="0"  onUserInput="false">
-        <!-- 1 -->
+    <analysis sleep="0" onUserInput="false">
         <multiply>
             <input as="factor" clear="false">tempRaw1</input>
             <input as="factor" type="value">0.01</input>
@@ -91,7 +147,6 @@
             <input as="y" clear="false">tempCal1</input>
             <output as="min">T_min1</output>
         </min>
-        <!-- 2 -->
         <multiply>
             <input as="factor" clear="false">tempRaw2</input>
             <input as="factor" type="value">0.01</input>
@@ -105,71 +160,89 @@
             <input as="y" clear="false">tempCal2</input>
             <output as="min">T_min2</output>
         </min>
-
-        <count>
-            <input as="buffer" clear="false">tempRaw1</input>
-            <output as="count">count</output>
-        </count>
-        <formula formula="([1]-1)*0.0166666666">
-            <input as="in" clear="false">count</input>
-            <output as="out">tmax</output>
+        <formula formula="[1_]/60">
+            <input clear="false">receive_t1</input>
+            <output clear="true">t</output>
         </formula>
-        <ramp>
-            <input as="start" type="value">0</input>
-            <input as="stop">tmax</input>
-            <input as="length">count</input>
-            <output as="out">t</output>
-        </ramp>
+        <formula formula="[1_]/60">
+            <input clear="false">receive_t2</input>
+            <output clear="true">t2</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">tempCal1</input>
+            <input clear="false">baseline1</input>
+            <output clear="true">tempCal1_rise</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">tempCal2</input>
+            <input clear="false">baseline2</input>
+            <output clear="true">tempCal2_rise</output>
+        </formula>
     </analysis>
     <views>
         <view label="Comparison">
-            <info label ="Gas #1 (G1), orange" />
-            <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
+            <info label="SensorTag 1: BMP280 die" />
+            <graph label="BMP280 die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
                 <input axis="x">t</input>
                 <input axis="y" color="orange">tempCal1</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Temp. G1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
-           <input>T_max1</input>
+            <separator height="1" />
+            <value label="Maximum BMP280 1" size="2" precision="2" scientific="false" unit="°C" factor="1">
+                <input>T_max1</input>
             </value>
-            <value label="Min. Temp. G1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Minimum BMP280 1" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min1</input>
             </value>
-            <separator height="1"/>
-            <info label ="Gas #2 (G2), blue" />
-            <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t</input>
+            <separator height="1" />
+            <info label="SensorTag 2: BMP280 die" />
+            <graph label="BMP280 die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">t2</input>
                 <input axis="y" color="blue">tempCal2</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Temp. G2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <separator height="1" />
+            <value label="Maximum BMP280 2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_max2</input>
             </value>
-            <value label="Min. Temp. G2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Minimum BMP280 2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min2</input>
             </value>
         </view>
-        <view label="Single setup">
-            <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
+        <view label="Temperature rise">
+            <info label="Enter each sensor's mean during the same equilibrated lamp-off interval. Zero defaults are placeholders; enter the measured baselines before interpreting temperature rises." />
+            <edit label="Initial BMP280 1" unit="°C" signed="true" decimal="true" default="0">
+                <output>baseline1</output>
+            </edit>
+            <edit label="Initial BMP280 2" unit="°C" signed="true" decimal="true" default="0">
+                <output>baseline2</output>
+            </edit>
+            <graph label="BMP280 temperature rises" labelX="t" unitX="min" labelY="ΔT" unitY="K" partialUpdate="false" yPrecision="2">
                 <input axis="x">t</input>
-                <input axis="y" color="orange">tempCal1</input>
+                <input axis="y" color="orange">tempCal1_rise</input>
+                <input axis="x">t2</input>
+                <input axis="y" color="blue">tempCal2_rise</input>
             </graph>
-            <separator height="1"/>
-            <info label ="Use this tab when only one SensorTag is connected. The second comparison channel can remain empty." />
-            <separator height="1"/>
-            <value label="Max. Temp." size="2" precision="2" scientific="false" unit="°C" factor="1" >
-                <input>T_max1</input>
-            </value>
-            <value label="Min. Temp." size="2" precision="2" scientific="false" unit="°C" factor="1" >
-                <input>T_min1</input>
-            </value>
+        </view>
+        <view label="Setup">
+            <info label="This file connects two SensorTags. Use matched vessels, equal lamp distances and identical sensor supports. Co-locate the tags before the run, then exchange their positions in a repeat run." />
+            <info label="Keep illumination, exposed area, airflow and mounting fixed. Shield independent air probes from direct radiation if gas temperature is the intended quantity. BMP280 die temperature includes board heating and thermal lag." />
+            <info label="Times are Bluetooth receive times. Each sensor keeps its own clock; compare means over the same time interval or align the records before subtracting them." />
+            <info label="Compare baseline-corrected late-heating interval means and repeat after swapping tags. Treat lamp-on and lamp-off branches separately when fitting response times." />
         </view>
     </views>
     <export>
-        <set name="T1(t), T2(t)">
-            <data name="Time (min)">t</data>
-            <data name="Temperature 1 (°C)">tempCal1</data>
-            <data name="Temperature 2 (°C)">tempCal2</data>
+        <set name="SensorTag 1">
+            <data name="Time 1 (min)">t</data>
+            <data name="BMP280 die temperature 1 (°C)">tempCal1</data>
+            <data name="Temperature rise 1 (K)">tempCal1_rise</data>
+        </set>
+        <set name="SensorTag 2">
+            <data name="Time 2 (min)">t2</data>
+            <data name="BMP280 die temperature 2 (°C)">tempCal2</data>
+            <data name="Temperature rise 2 (K)">tempCal2_rise</data>
+        </set>
+        <set name="Baseline settings">
+            <data name="Initial BMP280 1 (°C)">baseline1</data>
+            <data name="Initial BMP280 2 (°C)">baseline2</data>
         </set>
     </export>
 </phyphox>

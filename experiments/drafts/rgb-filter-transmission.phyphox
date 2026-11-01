@@ -1,0 +1,166 @@
+<?xml version='1.0' encoding='utf-8'?>
+<phyphox version="1.17" locale="en">
+  <!--Original Curious Signals optics draft; see companion manuscript for source anchors, method and limitations.-->
+  <title>Draft: RGB filter transmission</title>
+  <category>Curious Signals drafts</category>
+  <description>Acquire Nano mode 6 RGBC counts and both real clocks. Compare each current sample with entered same-geometry dark and unfiltered references; channel transmission is relative, not lux or spectroscopy.</description>
+  <icon>Opt</icon>
+  <data-containers>
+    <container size="0">device_t</container>
+    <container size="0">clear</container>
+    <container size="0">red</container>
+    <container size="0">green</container>
+    <container size="0">blue</container>
+    <container size="0">receive_t</container>
+    <container size="1" init="0">enabled</container>
+    <container size="1" init="4100">ceiling</container>
+    <container size="1" init="0">dark_clear</container>
+    <container size="1" init="0">reference_clear</container>
+    <container size="0">transmission_clear</container>
+    <container size="1" init="0">dark_red</container>
+    <container size="1" init="0">reference_red</container>
+    <container size="0">transmission_red</container>
+    <container size="1" init="0">dark_green</container>
+    <container size="1" init="0">reference_green</container>
+    <container size="0">transmission_green</container>
+    <container size="1" init="0">dark_blue</container>
+    <container size="1" init="0">reference_blue</container>
+    <container size="0">transmission_blue</container>
+  </data-containers>
+  <input>
+    <bluetooth name="phyphox-sense" id="Sense" mode="notification" subscribeOnStart="false">
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="0">device_t</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="4">clear</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="8">red</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="12">green</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="16">blue</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" extra="time">receive_t</output>
+    </bluetooth>
+  </input>
+  <output>
+    <bluetooth id="Sense">
+      <config char="cddf1003-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian">6</config>
+    </bluetooth>
+  </output>
+  <analysis sleep="0.1" onUserInput="false">
+    <formula formula="([1_]-[2])/([3]-[2])/((max(0,sign([4]-0.5))/max(0,sign([4]-0.5)))*(max(0,sign([3]-[2]))/max(0,sign([3]-[2])))*(max(0,sign([5]-max([1_],[3])))/max(0,sign([5]-max([1_],[3])))))/(heaviside([1_]-[2])/heaviside([1_]-[2]))">
+      <input clear="false">clear</input>
+      <input clear="false">dark_clear</input>
+      <input clear="false">reference_clear</input>
+      <input clear="false">enabled</input>
+      <input clear="false">ceiling</input>
+      <output clear="true">transmission_clear</output>
+    </formula>
+    <formula formula="([1_]-[2])/([3]-[2])/((max(0,sign([4]-0.5))/max(0,sign([4]-0.5)))*(max(0,sign([3]-[2]))/max(0,sign([3]-[2])))*(max(0,sign([5]-max([1_],[3])))/max(0,sign([5]-max([1_],[3])))))/(heaviside([1_]-[2])/heaviside([1_]-[2]))">
+      <input clear="false">red</input>
+      <input clear="false">dark_red</input>
+      <input clear="false">reference_red</input>
+      <input clear="false">enabled</input>
+      <input clear="false">ceiling</input>
+      <output clear="true">transmission_red</output>
+    </formula>
+    <formula formula="([1_]-[2])/([3]-[2])/((max(0,sign([4]-0.5))/max(0,sign([4]-0.5)))*(max(0,sign([3]-[2]))/max(0,sign([3]-[2])))*(max(0,sign([5]-max([1_],[3])))/max(0,sign([5]-max([1_],[3])))))/(heaviside([1_]-[2])/heaviside([1_]-[2]))">
+      <input clear="false">green</input>
+      <input clear="false">dark_green</input>
+      <input clear="false">reference_green</input>
+      <input clear="false">enabled</input>
+      <input clear="false">ceiling</input>
+      <output clear="true">transmission_green</output>
+    </formula>
+    <formula formula="([1_]-[2])/([3]-[2])/((max(0,sign([4]-0.5))/max(0,sign([4]-0.5)))*(max(0,sign([3]-[2]))/max(0,sign([3]-[2])))*(max(0,sign([5]-max([1_],[3])))/max(0,sign([5]-max([1_],[3])))))/(heaviside([1_]-[2])/heaviside([1_]-[2]))">
+      <input clear="false">blue</input>
+      <input clear="false">dark_blue</input>
+      <input clear="false">reference_blue</input>
+      <input clear="false">enabled</input>
+      <input clear="false">ceiling</input>
+      <output clear="true">transmission_blue</output>
+    </formula>
+  </analysis>
+  <views>
+    <view label="Transmission">
+      <graph label="Clear transmission" labelX="Time" labelY="Transmission" unitX="s" unitY="1" partialUpdate="false" style="lines">
+        <input axis="x">device_t</input>
+        <input axis="y">transmission_clear</input>
+      </graph>
+      <graph label="Red transmission" labelX="Time" labelY="Transmission" unitX="s" unitY="1" partialUpdate="false" style="lines">
+        <input axis="x">device_t</input>
+        <input axis="y">transmission_red</input>
+      </graph>
+      <graph label="Green transmission" labelX="Time" labelY="Transmission" unitX="s" unitY="1" partialUpdate="false" style="lines">
+        <input axis="x">device_t</input>
+        <input axis="y">transmission_green</input>
+      </graph>
+      <graph label="Blue transmission" labelX="Time" labelY="Transmission" unitX="s" unitY="1" partialUpdate="false" style="lines">
+        <input axis="x">device_t</input>
+        <input axis="y">transmission_blue</input>
+      </graph>
+    </view>
+    <view label="Dark and reference">
+      <edit label="References checked (0 or 1)" default="0" unit="" signed="true" decimal="true" min="0" max="1">
+        <output>enabled</output>
+      </edit>
+      <edit label="Count ceiling (screening only)" default="4100" unit="counts" signed="true" decimal="true" min="1">
+        <output>ceiling</output>
+      </edit>
+      <edit label="Dark clear" default="0" unit="counts" signed="true" decimal="true">
+        <output>dark_clear</output>
+      </edit>
+      <edit label="Reference clear" default="0" unit="counts" signed="true" decimal="true">
+        <output>reference_clear</output>
+      </edit>
+      <edit label="Dark red" default="0" unit="counts" signed="true" decimal="true">
+        <output>dark_red</output>
+      </edit>
+      <edit label="Reference red" default="0" unit="counts" signed="true" decimal="true">
+        <output>reference_red</output>
+      </edit>
+      <edit label="Dark green" default="0" unit="counts" signed="true" decimal="true">
+        <output>dark_green</output>
+      </edit>
+      <edit label="Reference green" default="0" unit="counts" signed="true" decimal="true">
+        <output>reference_green</output>
+      </edit>
+      <edit label="Dark blue" default="0" unit="counts" signed="true" decimal="true">
+        <output>dark_blue</output>
+      </edit>
+      <edit label="Reference blue" default="0" unit="counts" signed="true" decimal="true">
+        <output>reference_blue</output>
+      </edit>
+      <info label="Measure covered-detector dark and unfiltered lamp references separately for all four channels. Enter stable means, then set References checked to 1. Reference must exceed dark; raw or reference counts at/above the ceiling and sample below dark give gaps. Values above 1 are retained to reveal drift. Changing settings recomputes all histories." />
+    </view>
+    <view label="Setup">
+      <info label="Fix lamp, sensor, aperture and filter angle. Use the original Nano 33 BLE Sense with APDS-9960 and current Curious Signals firmware; compatible replacement boards need separately verified colour hardware. Keep gain, spectrum and geometry fixed; baffle ambient light." />
+      <info label="Acquire dark, then unfiltered reference, then each filter, then reference again. Three broad overlapping RGB bands show selective attenuation; they cannot resolve spectral lines, identify a molecule uniquely, measure UV or model an atmospheric annulus by themselves." />
+      <info label="Draft: numerical and schema checks are software evidence only. Native Android/iOS import, BLE acquisition and physical calibration still require validation. Export before using the app menu Clear data; it resets raw histories and edit defaults." />
+    </view>
+  </views>
+  <export>
+    <set name="Raw Nano mode 6">
+      <data name="device_t (s)">device_t</data>
+      <data name="receive_t (s)">receive_t</data>
+      <data name="clear (counts)">clear</data>
+      <data name="red (counts)">red</data>
+      <data name="green (counts)">green</data>
+      <data name="blue (counts)">blue</data>
+    </set>
+    <set name="Current normalized histories">
+      <data name="Device time (s)">device_t</data>
+      <data name="clear transmission (1)">transmission_clear</data>
+      <data name="red transmission (1)">transmission_red</data>
+      <data name="green transmission (1)">transmission_green</data>
+      <data name="blue transmission (1)">transmission_blue</data>
+    </set>
+    <set name="Current settings (applied to whole derived record)">
+      <data name="References checked (0 or 1)">enabled</data>
+      <data name="Count ceiling (screening only)">ceiling</data>
+      <data name="Dark clear">dark_clear</data>
+      <data name="Reference clear">reference_clear</data>
+      <data name="Dark red">dark_red</data>
+      <data name="Reference red">reference_red</data>
+      <data name="Dark green">dark_green</data>
+      <data name="Reference green">reference_green</data>
+      <data name="Dark blue">dark_blue</data>
+      <data name="Reference blue">reference_blue</data>
+    </set>
+  </export>
+</phyphox>

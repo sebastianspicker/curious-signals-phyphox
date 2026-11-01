@@ -1,0 +1,46 @@
+[
+  {
+    "slug": "accelerometer",
+    "title": "Specific Force, Inclination and the Limits of Resolution",
+    "short_title": "Specific Force and Inclination",
+    "group": "Sensors and measurement",
+    "analysis_ids": [
+      "accelerometer",
+      "cc2541-accelerometer"
+    ],
+    "figures": [
+      "topic-figures/accelerometer-comparison.tex"
+    ],
+    "markdown": "companions/accelerometer.md"
+  },
+  {
+    "slug": "gyroscope",
+    "title": "Angular Rate, Reversal and Integrated Rotation",
+    "short_title": "Angular Rate and Integrated Rotation",
+    "group": "Sensors and measurement",
+    "analysis_ids": [
+      "gyroscope",
+      "cc2541-gyroscope",
+      "pocketlab-gyroscope"
+    ],
+    "figures": [
+      "topic-figures/gyroscope-comparison.tex"
+    ],
+    "markdown": "companions/gyroscope.md"
+  },
+  {
+    "slug": "magnetometer",
+    "title": "Magnetic Vector Calibration and Indirect DC Current Measurement",
+    "short_title": "Magnetic Calibration and DC Current",
+    "group": "Sensors and measurement",
+    "analysis_ids": [
+      "magnetometer",
+      "cc2541-magnetometer",
+      "magnetic-current"
+    ],
+    "figures": [
+      "topic-figures/magnetometer-comparison.tex"
+    ],
+    "markdown": "companions/magnetometer.md"
+  }
+]

@@ -1,0 +1,78 @@
+[
+  {
+    "slug": "rgb-filter-transmission",
+    "title": "Broad-Band Filter Transmission and the Choice of Optical Reference",
+    "short_title": "Broad-Band Filter Transmission",
+    "period": "October 2026",
+    "date_basis": "ErolDemir2024",
+    "experiment": "experiments/drafts/rgb-filter-transmission.phyphox",
+    "datasets": [
+      "drafts/rgb-filter-transmission.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "illuminance-distance",
+    "title": "Inverse-Square Photometry with Independently Timed Position Observations",
+    "short_title": "Inverse-Square Photometry",
+    "period": "October 2026",
+    "date_basis": "vera2014",
+    "experiment": "experiments/drafts/illuminance-distance.phyphox",
+    "datasets": [
+      "drafts/illuminance-distance_light.example.csv",
+      "drafts/illuminance-distance_mouse.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "illuminance-distance-manual",
+    "title": "Relative-Light Distance Laws from Paired Ruler Observations",
+    "short_title": "Paired Ruler Photometry",
+    "period": "October 2026",
+    "date_basis": "campione2024",
+    "experiment": "experiments/drafts/illuminance-distance-manual.phyphox",
+    "datasets": [
+      "drafts/illuminance-distance-manual.example.csv",
+      "drafts/illuminance-distance-manual_observations.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "malus-law",
+    "title": "Settled-Angle Polarimetry: Scale, Floor and Angular Zero in Malus' Law",
+    "short_title": "Settled-Angle Polarimetry",
+    "period": "October 2026",
+    "date_basis": "monteiro2017malus",
+    "experiment": "experiments/drafts/malus-law.phyphox",
+    "datasets": [
+      "drafts/malus-law.example.csv",
+      "drafts/malus-law_observations.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "colour-temperature",
+    "title": "Indicative Colour Temperature and the Limits of a Transferred Sensor Matrix",
+    "short_title": "Indicative Colour Temperature",
+    "period": "October 2026",
+    "date_basis": "McCamy1992",
+    "experiment": "experiments/drafts/colour-temperature.phyphox",
+    "datasets": [
+      "drafts/colour-temperature.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "detector-characterization",
+    "title": "Delivered Sampling and the Detectability of Short Optical Features",
+    "short_title": "Sampling and Detectability",
+    "period": "October 2026",
+    "date_basis": "kipping2010",
+    "experiment": "experiments/drafts/detector-characterization.phyphox",
+    "datasets": [
+      "drafts/detector-characterization.example.csv",
+      "drafts/detector-characterization_summary.example.csv"
+    ],
+    "group": "drafts"
+  }
+]

@@ -1,0 +1,351 @@
+<!-- Original Curious Signals draft; source context: docs/drafts/seasons-obliquity.md. Record uses BLE-filled singleton snapshots and one-shot analysis append. -->
+<phyphox version="1.17" locale="en">
+  <title>Draft: Seasons and obliquity observations</title>
+  <category>Curious Signals drafts</category>
+  <description>Nano mode 6 light counts with a manually labeled observation table: latitude, orbital position, tilt, trial ID and fixed source distance. Record snapshots preserve device/receive times, RGBC and calibration for each row. Illumination is not temperature.</description>
+  <data-containers>
+    <container size="0">device_time</container>
+    <container size="0">receive_time</container>
+    <container size="0">clear</container>
+    <container size="0">red</container>
+    <container size="0">green</container>
+    <container size="0">blue</container>
+    <container size="1" init="0">enabled</container>
+    <container size="1" init="0">dark</container>
+    <container size="1" init="0">baseline</container>
+    <container size="1">den</container>
+    <container size="0">normalized</container>
+    <container size="1" init="0">trial</container>
+    <container size="1" init="0">latitude</container>
+    <container size="1" init="0">orbit_position</container>
+    <container size="1" init="0">obliquity</container>
+    <container size="1" init="0">source_distance</container>
+    <container size="1" init="NaN">latest_device_time</container>
+    <container size="1" init="NaN">latest_receive_time</container>
+    <container size="1" init="NaN">latest_clear</container>
+    <container size="1" init="NaN">latest_red</container>
+    <container size="1" init="NaN">latest_green</container>
+    <container size="1" init="NaN">latest_blue</container>
+    <container size="0">row_device_time</container>
+    <container size="0">row_receive_time</container>
+    <container size="0">row_clear</container>
+    <container size="0">row_red</container>
+    <container size="0">row_green</container>
+    <container size="0">row_blue</container>
+    <container size="0">row_trial</container>
+    <container size="0">row_latitude</container>
+    <container size="0">row_orbit_position</container>
+    <container size="0">row_obliquity</container>
+    <container size="0">row_source_distance</container>
+    <container size="0">row_enabled</container>
+    <container size="0">row_dark</container>
+    <container size="0">row_baseline</container>
+    <container size="0">row_relative</container>
+    <container size="1" init="NaN">pending_device_time</container>
+    <container size="1" init="NaN">pending_receive_time</container>
+    <container size="1" init="NaN">pending_clear</container>
+    <container size="1" init="NaN">pending_red</container>
+    <container size="1" init="NaN">pending_green</container>
+    <container size="1" init="NaN">pending_blue</container>
+    <container size="1" init="NaN">pending_trial</container>
+    <container size="1" init="NaN">pending_latitude</container>
+    <container size="1" init="NaN">pending_orbit_position</container>
+    <container size="1" init="NaN">pending_obliquity</container>
+    <container size="1" init="NaN">pending_source_distance</container>
+    <container size="1" init="NaN">pending_enabled</container>
+    <container size="1" init="NaN">pending_dark</container>
+    <container size="1" init="NaN">pending_baseline</container>
+    <container size="1" init="0">record_request</container>
+  </data-containers>
+  <input>
+    <bluetooth id="Sense" name="phyphox-sense" mode="notification" subscribeOnStart="true">
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="0">device_time</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="4">clear</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="8">red</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="12">green</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="16">blue</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" extra="time">receive_time</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="0">latest_device_time</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="4">latest_clear</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="8">latest_red</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="12">latest_green</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="16">latest_blue</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" extra="time">latest_receive_time</output>
+    </bluetooth>
+  </input>
+  <output>
+    <bluetooth id="Sense" name="phyphox-sense">
+      <config char="cddf1003-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian">6</config>
+    </bluetooth>
+  </output>
+  <analysis sleep="0.1" onUserInput="false">
+    <formula formula="[1]-[2]">
+      <input type="buffer" clear="false">baseline</input>
+      <input type="buffer" clear="false">dark</input>
+      <output clear="true">den</output>
+    </formula>
+    <formula formula="([1_]-[2])/([3]-[2])*((heaviside([3]-[2])*sign([3]-[2]))/(heaviside([3]-[2])*sign([3]-[2])))*((1-sign(abs([4]-1)))/(1-sign(abs([4]-1))))">
+      <input type="buffer" clear="false">clear</input>
+      <input type="buffer" clear="false">dark</input>
+      <input type="buffer" clear="false">baseline</input>
+      <input type="buffer" clear="false">enabled</input>
+      <output clear="true">normalized</output>
+    </formula>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_device_time</input>
+      <output clear="false">row_device_time</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_receive_time</input>
+      <output clear="false">row_receive_time</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_clear</input>
+      <output clear="false">row_clear</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_red</input>
+      <output clear="false">row_red</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_green</input>
+      <output clear="false">row_green</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_blue</input>
+      <output clear="false">row_blue</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_trial</input>
+      <output clear="false">row_trial</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_latitude</input>
+      <output clear="false">row_latitude</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_orbit_position</input>
+      <output clear="false">row_orbit_position</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_obliquity</input>
+      <output clear="false">row_obliquity</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_source_distance</input>
+      <output clear="false">row_source_distance</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_enabled</input>
+      <output clear="false">row_enabled</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_dark</input>
+      <output clear="false">row_dark</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">record_request</input>
+      <input type="value" clear="false" as="b">1</input>
+      <input type="buffer" clear="false" as="true">pending_baseline</input>
+      <output clear="false">row_baseline</output>
+    </if>
+    <append>
+      <input type="value">0</input>
+      <output clear="true">record_request</output>
+    </append>
+    <formula formula="([1_]-[2_])/([3_]-[2_])*((heaviside([3_]-[2_])*sign([3_]-[2_]))/(heaviside([3_]-[2_])*sign([3_]-[2_])))*((1-sign(abs([4_]-1)))/(1-sign(abs([4_]-1))))*((heaviside([5_])*sign([5_]))/(heaviside([5_])*sign([5_])))">
+      <input type="buffer" clear="false">row_clear</input>
+      <input type="buffer" clear="false">row_dark</input>
+      <input type="buffer" clear="false">row_baseline</input>
+      <input type="buffer" clear="false">row_enabled</input>
+      <input type="buffer" clear="false">row_source_distance</input>
+      <output clear="true">row_relative</output>
+    </formula>
+  </analysis>
+  <views>
+    <view label="Acquisition">
+      <graph label="Raw clear counts" labelX="Receive time" labelY="Clear counts" unitX="s" unitY="counts" partialUpdate="false" style="lines">
+        <input axis="x">receive_time</input>
+        <input axis="y">clear</input>
+      </graph>
+      <value label="Device time (separate clock)" unit="s" precision="4">
+        <input>device_time</input>
+      </value>
+      <graph label="Normalized light curve" labelX="Receive time" labelY="Relative signal" unitX="s" unitY="1" partialUpdate="false" style="lines">
+        <input axis="x">receive_time</input>
+        <input axis="y">normalized</input>
+      </graph>
+    </view>
+    <view label="Calibration">
+      <edit label="Enable reduction (0 or 1)" default="0" signed="true" decimal="true" min="0" max="1">
+        <output>enabled</output>
+      </edit>
+      <edit label="Dark/background mean" default="0" signed="true" decimal="true">
+        <output>dark</output>
+      </edit>
+      <edit label="Unocculted baseline mean" default="0" signed="true" decimal="true">
+        <output>baseline</output>
+      </edit>
+    </view>
+    <view label="Observation table">
+      <edit label="Trial ID" default="0" signed="true" decimal="true" min="0" unit="1">
+        <output>trial</output>
+      </edit>
+      <edit label="Latitude (north positive)" default="0" signed="true" decimal="true" min="-90" max="90" unit="deg">
+        <output>latitude</output>
+      </edit>
+      <edit label="Orbital position label" default="0" signed="true" decimal="true" min="0" max="360" unit="deg">
+        <output>orbit_position</output>
+      </edit>
+      <edit label="Axis obliquity label" default="0" signed="true" decimal="true" min="0" max="180" unit="deg">
+        <output>obliquity</output>
+      </edit>
+      <edit label="Fixed source distance" default="0" signed="true" decimal="true" min="0" unit="cm">
+        <output>source_distance</output>
+      </edit>
+      <info>These are manually entered labels, not measured angles. Keep radius fixed and axis direction parallel in the room at every position. Aim the detector normal to the local surface, sample the same local rotation phase, wait for stability, PAUSE acquisition, then verify labels and press Record observation once. Paused edits label the frozen sample. After each press wait for the analysis update before recording another row; repeated presses intentionally make repeated rows; Clear observation rows leaves raw acquisition intact. Missing acquisition records NaN counts/time. Relative rows require enabled calibration and positive measured distance.</info>
+      <button label="Record observation">
+        <input type="buffer">latest_device_time</input>
+        <output>pending_device_time</output>
+        <input type="buffer">latest_receive_time</input>
+        <output>pending_receive_time</output>
+        <input type="buffer">latest_clear</input>
+        <output>pending_clear</output>
+        <input type="buffer">latest_red</input>
+        <output>pending_red</output>
+        <input type="buffer">latest_green</input>
+        <output>pending_green</output>
+        <input type="buffer">latest_blue</input>
+        <output>pending_blue</output>
+        <input type="buffer">trial</input>
+        <output>pending_trial</output>
+        <input type="buffer">latitude</input>
+        <output>pending_latitude</output>
+        <input type="buffer">orbit_position</input>
+        <output>pending_orbit_position</output>
+        <input type="buffer">obliquity</input>
+        <output>pending_obliquity</output>
+        <input type="buffer">source_distance</input>
+        <output>pending_source_distance</output>
+        <input type="buffer">enabled</input>
+        <output>pending_enabled</output>
+        <input type="buffer">dark</input>
+        <output>pending_dark</output>
+        <input type="buffer">baseline</input>
+        <output>pending_baseline</output>
+        <input type="value">1</input>
+        <output>record_request</output>
+      </button>
+      <button label="Clear observation rows">
+        <input type="empty" />
+        <output>row_device_time</output>
+        <input type="empty" />
+        <output>row_receive_time</output>
+        <input type="empty" />
+        <output>row_clear</output>
+        <input type="empty" />
+        <output>row_red</output>
+        <input type="empty" />
+        <output>row_green</output>
+        <input type="empty" />
+        <output>row_blue</output>
+        <input type="empty" />
+        <output>row_trial</output>
+        <input type="empty" />
+        <output>row_latitude</output>
+        <input type="empty" />
+        <output>row_orbit_position</output>
+        <input type="empty" />
+        <output>row_obliquity</output>
+        <input type="empty" />
+        <output>row_source_distance</output>
+        <input type="empty" />
+        <output>row_enabled</output>
+        <input type="empty" />
+        <output>row_dark</output>
+        <input type="empty" />
+        <output>row_baseline</output>
+        <input type="value">0</input>
+        <output>record_request</output>
+      </button>
+      <graph label="Recorded relative illumination" labelX="Manual orbital-position label" labelY="Relative illumination" unitX="deg" unitY="1" partialUpdate="false" style="dots">
+        <input axis="x">row_orbit_position</input>
+        <input axis="y">row_relative</input>
+      </graph>
+      <value label="Latest recorded clear counts" unit="counts" precision="4">
+        <input>row_clear</input>
+      </value>
+    </view>
+    <view label="Setup">
+      <info>Adaptation of Astropaenz seasons worksheet physical pp.11-14: compare upright and tilted axes at two opposite orbital positions and northern/equatorial/southern detector locations. This draft replaces the worksheet solar-cell voltage by Nano clear counts at a marked latitude. Keep lamp distance fixed, detector aperture/orientation controlled and spin phase matched. A room-fixed tilt direction must remain parallel as the globe moves. A changing count is a relative illumination observation, not temperature, daily mean insolation or a measured planetary climate. Record repeated settled observations and dark/reference controls; detector angular response needs separate characterization.</info>
+      <info>Draft software only. Import, BLE delivery, Android/iOS button behavior and physical apparatus remain to be validated. Counts are not lux. Keep source geometry and spectral output fixed; test linearity and avoid clipping. Changing current settings recalculates the live curve; export before changing runs. Device seconds and receive seconds are independent clocks. Do not infer timing precision from nominal firmware rate.</info>
+    </view>
+  </views>
+  <export>
+    <set name="Raw Nano mode 6">
+      <data name="receive_time">receive_time</data>
+      <data name="device_time">device_time</data>
+      <data name="clear">clear</data>
+      <data name="red">red</data>
+      <data name="green">green</data>
+      <data name="blue">blue</data>
+    </set>
+    <set name="Current controls">
+      <data name="enabled">enabled</data>
+      <data name="dark">dark</data>
+      <data name="baseline">baseline</data>
+      <data name="trial">trial</data>
+      <data name="latitude">latitude</data>
+      <data name="orbit_position">orbit_position</data>
+      <data name="obliquity">obliquity</data>
+      <data name="source_distance">source_distance</data>
+    </set>
+    <set name="Reduction">
+      <data name="normalized">normalized</data>
+      <data name="row_relative">row_relative</data>
+    </set>
+    <set name="Observation rows">
+      <data name="row_device_time">row_device_time</data>
+      <data name="row_receive_time">row_receive_time</data>
+      <data name="row_clear">row_clear</data>
+      <data name="row_red">row_red</data>
+      <data name="row_green">row_green</data>
+      <data name="row_blue">row_blue</data>
+      <data name="row_trial">row_trial</data>
+      <data name="row_latitude">row_latitude</data>
+      <data name="row_orbit_position">row_orbit_position</data>
+      <data name="row_obliquity">row_obliquity</data>
+      <data name="row_source_distance">row_source_distance</data>
+      <data name="row_enabled">row_enabled</data>
+      <data name="row_dark">row_dark</data>
+      <data name="row_baseline">row_baseline</data>
+      <data name="row_relative">row_relative</data>
+    </set>
+  </export>
+</phyphox>

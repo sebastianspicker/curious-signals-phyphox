@@ -1,0 +1,18 @@
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2,vertical sep=1.2cm},
+width=0.98\columnwidth,height=3.7cm,grid=major,enlarge x limits=0.03,
+legend style={font=\scriptsize,at={(0.5,1.03)},anchor=south,legend columns=2,draw=none,fill=none},
+title style={font=\scriptsize,at={(0.02,0.98)},anchor=north west,fill=white,inner sep=2pt},
+label style={font=\footnotesize},tick label style={font=\scriptsize}]
+\nextgroupplot[ylabel={$Q$ (lx)},xmin=0.18,xmax=0.83,ymin=0,ymax=3000,title={(a) Electronically paired states}]
+\addplot[csblue,only marks,mark=*,mark size=1.4pt] table[col sep=comma,x=c0,y=c1] {data/drafts/optics-distance-observations.csv};
+\addlegendentry{Station means}
+\addplot[csred,dashed,thick] table[col sep=comma,x=c0,y=c1] {data/drafts/optics-distance-fit.csv};
+\addlegendentry{Power-law fit}
+\nextgroupplot[ylabel={$Qr^2$ (count m$^2$)},xlabel={Source-to-aperture distance (m)},xmin=0.18,xmax=0.83,ymin=99,ymax=107,title={(b) Ruler: snapshot versus mean}]
+\addplot[csblue,only marks,mark=*,mark size=1.4pt] table[col sep=comma,x=c0,y=c2] {data/drafts/optics-manual-observations.csv};
+\addlegendentry{Snapshot}
+\addplot[csteal,only marks,mark=triangle*,mark size=1.7pt] table[col sep=comma,x=c0,y=c4] {data/drafts/optics-manual-observations.csv};
+\addlegendentry{Two-second mean}
+\end{groupplot}
+\end{tikzpicture}

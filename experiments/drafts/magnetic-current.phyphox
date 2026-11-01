@@ -1,0 +1,117 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<phyphox version="1.17" locale="en">
+  <!--Original implementation; lesson context: phyphox/extern/Amperemeter-Clip_Phyphox_App.phyphox, calibration and affine conversion sections. No donor XML copied; donor license is unspecified.-->
+  <title>Draft: Calibrated DC current from a fixed coil</title>
+  <category>Curious Signals drafts</category>
+  <description>Phone z-axis magnetic field at a fixed air-core coil or nonmagnetic positioning clip, converted by a measured two-point affine calibration. This is a DC teaching adaptation, not a commercial current clamp.</description>
+  <data-containers>
+    <container size="0">mag_t</container>
+    <container size="0">bx</container>
+    <container size="0">by</container>
+    <container size="0">bz</container>
+    <container size="0">mag_accuracy</container>
+    <container size="0">current_candidate</container>
+    <container size="0">current</container>
+    <container size="1" init="0">b1</container>
+    <container size="1" init="0">i1</container>
+    <container size="1" init="0">b2</container>
+    <container size="1" init="0">i2</container>
+    <container size="1" init="1">min_span</container>
+    <container size="1" init="0">cal_enabled</container>
+    <container size="1">conversion_gate</container>
+  </data-containers>
+  <input>
+    <sensor type="magnetic_field" rate="10">
+      <output component="t">mag_t</output>
+      <output component="x">bx</output>
+      <output component="y">by</output>
+      <output component="z">bz</output>
+      <output component="accuracy">mag_accuracy</output>
+    </sensor>
+  </input>
+  <views>
+    <view label="Observe">
+      <graph label="Raw z field" labelX="Session time" unitX="s" labelY="Raw z field" unitY="µT" partialUpdate="false">
+        <input axis="x">mag_t</input>
+        <input axis="y">bz</input>
+      </graph>
+      <graph label="Calibrated DC current" labelX="Session time" unitX="s" labelY="Calibrated DC current" unitY="A" partialUpdate="false">
+        <input axis="x">mag_t</input>
+        <input axis="y">current</input>
+      </graph>
+    </view>
+    <view label="Calibration">
+      <edit label="Reference field B1" default="0" unit="µT">
+        <output>b1</output>
+      </edit>
+      <edit label="Reference current I1" default="0" unit="A">
+        <output>i1</output>
+      </edit>
+      <edit label="Reference field B2" default="0" unit="µT">
+        <output>b2</output>
+      </edit>
+      <edit label="Reference current I2" default="0" unit="A">
+        <output>i2</output>
+      </edit>
+      <edit label="Minimum field span" default="1" unit="µT" min="0.001">
+        <output>min_span</output>
+      </edit>
+      <edit label="Enable measured calibration (0/1)" default="0" unit="" min="0" max="1" decimal="false">
+        <output>cal_enabled</output>
+      </edit>
+      <info label="Record stable mean z fields B1 and B2 at two distinct known DC currents I1 and I2, with a series reference ammeter. Minimum field span must exceed observed noise. Enable measured calibration only after entering both pairs. All current history is recalculated with displayed coefficients. Disable and recalibrate after moving phone/coil, reversing mount, changing background or sensor recalibration. Export each geometry separately."/>
+    </view>
+    <view label="Setup">
+      <info label="Use an insulated air-core coil, a nonmagnetic jig fixing the phone near its field, a current-limited low-voltage DC supply, switch, resistor/load and series reference ammeter. Route return wire in a fixed position away from sensor. Record the actual coil dimensions and phone sensor location externally; no geometry factor is assumed here. Never connect phone electrically to the circuit. A clip is only a positioning aid. No mains, AC waveform, or certified clamp-meter claims. Phone magnetic sensor offset and Earth/background field are absorbed only while stable."/>
+    </view>
+  </views>
+  <analysis sleep="0.1" onUserInput="false">
+    <formula formula="([1_]-[2])*([5]-[4])/([3]-[2])+[4]">
+      <input clear="false">bz</input>
+      <input clear="false">b1</input>
+      <input clear="false">b2</input>
+      <input clear="false">i1</input>
+      <input clear="false">i2</input>
+      <output>current_candidate</output>
+    </formula>
+    <formula formula="[1_]*sqrt(abs([2]-[3])-[4])/sqrt(abs([2]-[3])-[4])*([5]-[6])/([5]-[6])">
+      <input clear="false">current_candidate</input>
+      <input clear="false">b2</input>
+      <input clear="false">b1</input>
+      <input clear="false">min_span</input>
+      <input clear="false">i2</input>
+      <input clear="false">i1</input>
+      <output>current_candidate</output>
+    </formula>
+    <if equal="true">
+      <input clear="false">cal_enabled</input>
+      <input type="value">1</input>
+      <input type="value">1</input>
+      <input type="value">NaN</input>
+      <output>conversion_gate</output>
+    </if>
+    <formula formula="[1_]+0*[2]">
+      <input clear="false">current_candidate</input>
+      <input clear="false">conversion_gate</input>
+      <output>current</output>
+    </formula>
+  </analysis>
+  <export>
+    <set name="Raw field and current">
+      <data name="mag_t">mag_t</data>
+      <data name="bx">bx</data>
+      <data name="by">by</data>
+      <data name="bz">bz</data>
+      <data name="mag_accuracy">mag_accuracy</data>
+      <data name="current">current</data>
+    </set>
+    <set name="Calibration settings">
+      <data name="b1">b1</data>
+      <data name="i1">i1</data>
+      <data name="b2">b2</data>
+      <data name="i2">i2</data>
+      <data name="min_span">min_span</data>
+      <data name="cal_enabled">cal_enabled</data>
+    </set>
+  </export>
+</phyphox>

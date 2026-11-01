@@ -1,0 +1,2296 @@
+{
+  "inputs": {
+    "astronomy/albedo_phone.example.csv": {
+      "sha256": "2e9f0a96379381a636001bf6866c9d46947fb0845a7580a6655837403b938c13",
+      "rows": 601,
+      "columns": [
+        "t (s)",
+        "Relative light level (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/albedo_sensortag.example.csv": {
+      "sha256": "6b3a8d309c8901d0b25c20b241b686a8ffed9e9217a930383aab6269f3a19a6f",
+      "rows": 76,
+      "columns": [
+        "t (s)",
+        "Relative light level (a.u.)",
+        "Raw OPT3001 word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/greenhouse.example.csv": {
+      "sha256": "41bb88fff5836f474fc57152ddc0cdb88b102b9f3b03e126efe56d9b5e6f4b1a",
+      "rows": 601,
+      "columns": [
+        "Time (min)",
+        "Temperature 1 (°C)",
+        "Temperature 2 (°C)",
+        "Raw temperature 1 word (a.u.)",
+        "Raw temperature 2 word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/ir-dist_habitable.example.csv": {
+      "sha256": "190b5a2e9c01500e7834032fa8adb469969b4d66396643bb076b4a9d16f4c989",
+      "rows": 101,
+      "columns": [
+        "Time (s)",
+        "d (a.u.)",
+        "T_IR (°C)",
+        "T_amb (°C)",
+        "Raw object word (a.u.)",
+        "Raw die word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/missiontomars_phone.example.csv": {
+      "sha256": "92c59bbe440467ba8d574a14397e9ad42fb4a86ec58fd25dc605008bd84affb2",
+      "rows": 1201,
+      "columns": [
+        "Time (s)",
+        "Pressure (hPa)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/missiontomars_sensortag.example.csv": {
+      "sha256": "bce5a2f1138d9540354865880e773483db21d9c583828e41b125e0946d96d701",
+      "rows": 1201,
+      "columns": [
+        "Time (s)",
+        "Pressure (hPa)",
+        "Raw pressure word (a.u.)",
+        "Raw temperature word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/owon_digital_multimeter-debug.example.csv": {
+      "sha256": "43094d8e347f0edba1928225eab64f1c665c0d1ba3a64b394ddbef5f3bc2b4ce",
+      "rows": 121,
+      "columns": [
+        "Time (s)",
+        "y",
+        "Raw numeric field (a.u.)",
+        "Raw decimal code (a.u.)",
+        "Raw unit code (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/pt-star.example.csv": {
+      "sha256": "4b55566a4b87bfb1f8285874cdef04591a101c421417224229fa0141c5bef864",
+      "rows": 181,
+      "columns": [
+        "Time (min)",
+        "Pressure (hPa)",
+        "Temperature (°C)",
+        "Raw pressure word (a.u.)",
+        "Raw temperature word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/tidal-locking_bmp280.example.csv": {
+      "sha256": "76d830aab94355b13867a93a3eefa83aeb10449e82bab9851d6886000898848e",
+      "rows": 301,
+      "columns": [
+        "Time (s)",
+        "Temperature 1 (°C)",
+        "Temperature 2 (°C)",
+        "Raw temperature 1 word (a.u.)",
+        "Raw temperature 2 word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/tidal-locking_opt3001.example.csv": {
+      "sha256": "65b9177ad47be72099418ac61e17e2a4277760d397d55828d6e5575ce87d06a4",
+      "rows": 376,
+      "columns": [
+        "Time (s)",
+        "Illuminance 1 (lx)",
+        "Illuminance 2 (lx)",
+        "Raw light 1 word (a.u.)",
+        "Raw light 2 word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/tidal-locking_tmp007.example.csv": {
+      "sha256": "1611b9a47ad8d4e9e944dcf486e656d3b16ad2ff426d5a2affbf0d9ea6a065ba",
+      "rows": 1001,
+      "columns": [
+        "Time (s)",
+        "Ambient temperature 1 (°C)",
+        "Object temperature 1 (°C)",
+        "Ambient temperature 2 (°C)",
+        "Object temperature 2 (°C)",
+        "Raw ambient 1 word (a.u.)",
+        "Raw object 1 word (a.u.)",
+        "Raw ambient 2 word (a.u.)",
+        "Raw object 2 word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/transitmethode_owon.example.csv": {
+      "sha256": "dd3efd0211d246bb9e09fb25dd4c937ea9f8d5413ba8e8b5e75e23f71cfaca72",
+      "rows": 181,
+      "columns": [
+        "Time (s)",
+        "Relative Signal (a.u.)",
+        "Raw numeric field (a.u.)",
+        "Raw decimal code (a.u.)",
+        "Raw unit code (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/transitmethode_phone.example.csv": {
+      "sha256": "e9f0f47f640d2bdf3f5d82d69bbe7000f78fdadf7947cf7821d652bd6055e098",
+      "rows": 901,
+      "columns": [
+        "t (s)",
+        "Relative Signal (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "astronomy/transitmethode_sensortag.example.csv": {
+      "sha256": "ed872470593e791c12018af2da31f61d3b70f200feda1bb4f83f10dc39e1147d",
+      "rows": 113,
+      "columns": [
+        "t (s)",
+        "Relative Signal (a.u.)",
+        "Raw OPT3001 word (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "core/accelerometer_plot_v1-2.example.csv": {
+      "sha256": "70a9bf8624ec322f7b4f553aeb18c364c0b597be5c2fab34e08154721c6e8cad",
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Acceleration x (g)",
+        "Acceleration y (g)",
+        "Acceleration z (g)",
+        "Absolute Acceleration (g)",
+        "Acceleration x (m/s²)",
+        "Acceleration y (m/s²)",
+        "Acceleration z (m/s²)",
+        "Absolute Acceleration (m/s²)"
+      ],
+      "missing_cells": 0
+    },
+    "core/analog_input_plot_v1-2.example.csv": {
+      "sha256": "c1fcdd51c9ba255e33f799cefeef7b987b31a0f4bc125eb15215788330b3a65c",
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Analog Input A0",
+        "Analog Input A1",
+        "Analog Input A2",
+        "Voltage at A0 (mV)",
+        "Voltage at A1 (mV)",
+        "Voltage at A2 (mV)"
+      ],
+      "missing_cells": 0
+    },
+    "core/gyroscope_plot_v1-2.example.csv": {
+      "sha256": "298e2fe92888f8db9370c8e02c9c79bd1cf02869adc041e05a7e7b5cfe0ba39f",
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Angular Velocity x (deg/s)",
+        "Angular Velocity y (deg/s)",
+        "Angular Velocity z (deg/s)",
+        "Absolute Angular Velocity (deg/s)",
+        "Angular Velocity x (rad/s)",
+        "Angular Velocity y (rad/s)",
+        "Angular Velocity z (rad/s)",
+        "Absolute Angular Velocity (rad/s)"
+      ],
+      "missing_cells": 0
+    },
+    "core/light_plot_v1-2.example.csv": {
+      "sha256": "12ee7cd6bfe715a2f60a90950befa101f5c7edaa4013dc13574a1aba14509ce4",
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Relative light level (a.u.)",
+        "Red (a.u.)",
+        "Green (a.u.)",
+        "Blue (a.u.)"
+      ],
+      "missing_cells": 0
+    },
+    "core/magnetometer_plot_v1-2.example.csv": {
+      "sha256": "80e748cff3b78817371533d28aab080526dd56b1bec7c6b27ae393c050bac790",
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Magnetometer x (µT)",
+        "Magnetometer y (µT)",
+        "Magnetometer z (µT)",
+        "Absolute magnetic field (µT)"
+      ],
+      "missing_cells": 16
+    },
+    "core/pressure_plot_v1-2.example.csv": {
+      "sha256": "ac48508efbb5db93e2f61e59df02d18570e68d4254322ed39c65614be5ba7af9",
+      "rows": 3601,
+      "columns": [
+        "Time t (s)",
+        "Pressure (kPa)",
+        "Pressure (hPa)"
+      ],
+      "missing_cells": 0
+    },
+    "core/temperature_plot_v1-2.example.csv": {
+      "sha256": "9019f4e59b9fc19bf3acb6189d0dd6c00004964735cefd3678ecc1f58ae3245f",
+      "rows": 3601,
+      "columns": [
+        "Time t (s)",
+        "Temperature (°C)",
+        "relative Humidity (%)"
+      ],
+      "missing_cells": 0
+    }
+  },
+  "analysis_notes": {
+    "environment": "start inclusive, stop exclusive; all times use Time t (s)"
+  },
+  "metrics": {
+    "pressure": {
+      "file": "core/pressure_plot_v1-2.example.csv",
+      "samples": 3601,
+      "lift": {
+        "pre_window_s": [
+          20,
+          28
+        ],
+        "event_window_s": [
+          36,
+          42
+        ],
+        "post_window_s": [
+          52,
+          60
+        ],
+        "event_n": 119,
+        "baseline_interpolated_hpa": 1009.8119314901721,
+        "event_mean_hpa": 1009.6802735294118,
+        "event_sd_hpa": 0.01937038209979497,
+        "change_hpa": -0.13165796076032166,
+        "height_m_at_293_15K": 1.1188238438871514
+      },
+      "stairs": {
+        "pre_window_s": [
+          60,
+          68
+        ],
+        "event_window_s": [
+          78,
+          84
+        ],
+        "post_window_s": [
+          98,
+          106
+        ],
+        "event_n": 120,
+        "baseline_interpolated_hpa": 1009.7764364478908,
+        "event_mean_hpa": 1009.42501425,
+        "event_sd_hpa": 0.021107274490269883,
+        "change_hpa": -0.3514221978907699,
+        "height_m_at_293_15K": 2.9868011868483366
+      },
+      "bag": {
+        "pre_window_s": [
+          110,
+          118
+        ],
+        "event_window_s": [
+          124,
+          128
+        ],
+        "post_window_s": [
+          145,
+          153
+        ],
+        "event_n": 79,
+        "baseline_interpolated_hpa": 1009.7100156672516,
+        "event_mean_hpa": 1017.6743803797468,
+        "event_sd_hpa": 0.047153682577539775,
+        "change_hpa": 7.9643647124952395
+      },
+      "initial_baseline": {
+        "n": 398,
+        "mean": 1009.7705704020101,
+        "sd": 0.02494073366618604,
+        "minimum": 1009.69215,
+        "maximum": 1009.83398
+      },
+      "maximum_kpa_to_hpa_residual": 1.1368683772161603e-13
+    },
+    "temperature-humidity": {
+      "file": "core/temperature_plot_v1-2.example.csv",
+      "samples": 3601,
+      "baseline_window_s": [
+        20,
+        30
+      ],
+      "baseline_temperature_c": {
+        "n": 198,
+        "mean": 22.788282828282828,
+        "sd": 0.012937993790799806,
+        "minimum": 22.752,
+        "maximum": 22.816
+      },
+      "baseline_relative_humidity_percent": {
+        "n": 198,
+        "mean": 46.8420606060606,
+        "sd": 0.02978018220936047,
+        "minimum": 46.768,
+        "maximum": 46.94
+      },
+      "first_breath_window_s": [
+        35,
+        60
+      ],
+      "first_breath_rh_max_percent": 63.688,
+      "first_breath_rh_max_time_s": 44.6150017,
+      "heating_window_s": [
+        65,
+        115
+      ],
+      "heating_temperature_max_c": 25.152,
+      "heating_temperature_max_time_s": 92.8499985,
+      "heating_rh_min_percent": 40.284,
+      "heating_rh_min_time_s": 92.5970001,
+      "heating_temperature_rise_k": 2.363717171717173,
+      "heating_rh_change_percentage_points": -6.5580606060606
+    },
+    "analog-inputs": {
+      "file": "core/analog_input_plot_v1-2.example.csv",
+      "samples": 1201,
+      "display_mv_per_count": 3.226,
+      "a0_code_range": [
+        187.0,
+        870.0
+      ],
+      "a0_display_range_mv": [
+        603.262,
+        2806.62
+      ],
+      "a2_charge": {
+        "window_s": [
+          5,
+          12
+        ],
+        "n": 139,
+        "t0_s": 5,
+        "tau_s": 0.9997203216685586,
+        "asymptote_mv": 2995.3573165480407,
+        "amplitude_mv": -2993.96088658215,
+        "residual_rms_mv": 1.760487405205479,
+        "model": "U=asymptote+amplitude*exp(-(t-t0)/tau); profile OLS; free asymptote/amplitude; golden-section tau"
+      },
+      "a2_discharge": {
+        "window_s": [
+          35,
+          42
+        ],
+        "n": 139,
+        "t0_s": 35,
+        "tau_s": 0.9994760168395205,
+        "asymptote_mv": 1.7217469796869977,
+        "amplitude_mv": 2994.5428726063838,
+        "residual_rms_mv": 1.9123017307984238,
+        "model": "U=asymptote+amplitude*exp(-(t-t0)/tau); profile OLS; free asymptote/amplitude; golden-section tau"
+      },
+      "a2_charge_early": {
+        "window_s": [
+          5,
+          10
+        ],
+        "n": 99,
+        "t0_s": 5,
+        "tau_s": 0.9997613529586566,
+        "asymptote_mv": 2995.391785767131,
+        "amplitude_mv": -2993.966948780385,
+        "residual_rms_mv": 1.6316959943615092,
+        "model": "U=asymptote+amplitude*exp(-(t-t0)/tau); profile OLS; free asymptote/amplitude; golden-section tau"
+      },
+      "a2_discharge_early": {
+        "window_s": [
+          35,
+          40
+        ],
+        "n": 99,
+        "t0_s": 35,
+        "tau_s": 0.9993518072419572,
+        "asymptote_mv": 1.8163612615977627,
+        "amplitude_mv": 2994.542927749646,
+        "residual_rms_mv": 1.9333393443996727,
+        "model": "U=asymptote+amplitude*exp(-(t-t0)/tau); profile OLS; free asymptote/amplitude; golden-section tau"
+      },
+      "max_code_to_mv_residual": 4.547473508864641e-13
+    },
+    "accelerometer": {
+      "file": "core/accelerometer_plot_v1-2.example.csv",
+      "n": 1201,
+      "columns": [
+        "Time t (s)",
+        "Acceleration x (g)",
+        "Acceleration y (g)",
+        "Acceleration z (g)",
+        "Absolute Acceleration (g)",
+        "Acceleration x (m/s²)",
+        "Acceleration y (m/s²)",
+        "Acceleration z (m/s²)",
+        "Absolute Acceleration (m/s²)"
+      ],
+      "time_end": 60.3860016,
+      "median_dt": 0.050000199999999495,
+      "windows": {
+        "baseline": {
+          "interval_s": [
+            0,
+            8
+          ],
+          "closed": "left",
+          "n": 159,
+          "statistics": {
+            "Acceleration x (g)": {
+              "n_valid": 159,
+              "mean": 0.0017427648386918238,
+              "sample_sd": 0.004351287234980606,
+              "min": -0.0068359375,
+              "max": 0.0087890625
+            },
+            "Acceleration y (g)": {
+              "n_valid": 159,
+              "mean": -0.00047983613396226417,
+              "sample_sd": 0.0033896549870887373,
+              "min": -0.00671386719,
+              "max": 0.00610351562
+            },
+            "Acceleration z (g)": {
+              "n_valid": 159,
+              "mean": 1.0023845939937106,
+              "sample_sd": 0.0011492145309228785,
+              "min": 0.998901367,
+              "max": 1.00561523
+            },
+            "Absolute Acceleration (g)": {
+              "n_valid": 159,
+              "mean": 1.0024013025974843,
+              "sample_sd": 0.0011496612761059297,
+              "min": 0.998937905,
+              "max": 1.00565553
+            },
+            "Acceleration x (m/s²)": {
+              "n_valid": 159,
+              "mean": 0.017096523071383648,
+              "sample_sd": 0.04268612777376872,
+              "min": -0.0670605469,
+              "max": 0.0862207031
+            },
+            "Acceleration y (m/s²)": {
+              "n_valid": 159,
+              "mean": -0.004707192473710692,
+              "sample_sd": 0.03325251542586935,
+              "min": -0.0658630371,
+              "max": 0.0598754883
+            },
+            "Acceleration z (m/s²)": {
+              "n_valid": 159,
+              "mean": 9.833392863836478,
+              "sample_sd": 0.011273783200243696,
+              "min": 9.79922241,
+              "max": 9.86508545
+            },
+            "Absolute Acceleration (m/s²)": {
+              "n_valid": 159,
+              "mean": 9.833556777044025,
+              "sample_sd": 0.011278176098984575,
+              "min": 9.79958085,
+              "max": 9.86548072
+            }
+          }
+        },
+        "positive_tilt": {
+          "interval_s": [
+            16,
+            19
+          ],
+          "closed": "left",
+          "n": 60,
+          "statistics": {
+            "Acceleration x (g)": {
+              "n_valid": 60,
+              "mean": 0.50224609375,
+              "sample_sd": 0.003932425510696095,
+              "min": 0.49621582,
+              "max": 0.509521484
+            },
+            "Acceleration y (g)": {
+              "n_valid": 60,
+              "mean": -0.0012247721356166666,
+              "sample_sd": 0.0028828441024150034,
+              "min": -0.00659179688,
+              "max": 0.00366210938
+            },
+            "Acceleration z (g)": {
+              "n_valid": 60,
+              "mean": 0.8685913086,
+              "sample_sd": 0.00236088794823606,
+              "min": 0.864379883,
+              "max": 0.874633789
+            },
+            "Absolute Acceleration (g)": {
+              "n_valid": 60,
+              "mean": 1.0033594991666666,
+              "sample_sd": 0.001449871556125584,
+              "min": 1.00043428,
+              "max": 1.00707531
+            },
+            "Acceleration x (m/s²)": {
+              "n_valid": 60,
+              "mean": 4.9270341795,
+              "sample_sd": 0.03857709435651137,
+              "min": 4.8678772,
+              "max": 4.99840576
+            },
+            "Acceleration y (m/s²)": {
+              "n_valid": 60,
+              "mean": -0.012015014643333334,
+              "sample_sd": 0.02828070064200927,
+              "min": -0.0646655273,
+              "max": 0.035925293
+            },
+            "Acceleration z (m/s²)": {
+              "n_valid": 60,
+              "mean": 8.520880737833334,
+              "sample_sd": 0.02316031064941769,
+              "min": 8.47956665,
+              "max": 8.58015747
+            },
+            "Absolute Acceleration (m/s²)": {
+              "n_valid": 60,
+              "mean": 9.842956681666667,
+              "sample_sd": 0.014223243269746878,
+              "min": 9.81426028,
+              "max": 9.87940879
+            }
+          }
+        },
+        "negative_tilt": {
+          "interval_s": [
+            26,
+            29
+          ],
+          "closed": "left",
+          "n": 60,
+          "statistics": {
+            "Acceleration x (g)": {
+              "n_valid": 60,
+              "mean": -0.49772949223333335,
+              "sample_sd": 0.003925997722662137,
+              "min": -0.504638672,
+              "max": -0.490600586
+            },
+            "Acceleration y (g)": {
+              "n_valid": 60,
+              "mean": -0.00123087565185,
+              "sample_sd": 0.0028989475875430557,
+              "min": -0.00732421875,
+              "max": 0.00402832031
+            },
+            "Acceleration z (g)": {
+              "n_valid": 60,
+              "mean": 0.8691569010666667,
+              "sample_sd": 0.001834908164056858,
+              "min": 0.864990234,
+              "max": 0.873291016
+            },
+            "Absolute Acceleration (g)": {
+              "n_valid": 60,
+              "mean": 1.00159611615,
+              "sample_sd": 0.0013655795489067497,
+              "min": 0.999159336,
+              "max": 1.00508475
+            },
+            "Acceleration x (m/s²)": {
+              "n_valid": 60,
+              "mean": -4.882726317833333,
+              "sample_sd": 0.03851403807235252,
+              "min": -4.95050537,
+              "max": -4.81279175
+            },
+            "Acceleration y (m/s²)": {
+              "n_valid": 60,
+              "mean": -0.0120748901365,
+              "sample_sd": 0.02843867583819546,
+              "min": -0.0718505859,
+              "max": 0.0395178223
+            },
+            "Acceleration z (m/s²)": {
+              "n_valid": 60,
+              "mean": 8.526429199,
+              "sample_sd": 0.018000449195267592,
+              "min": 8.4855542,
+              "max": 8.56698486
+            },
+            "Absolute Acceleration (m/s²)": {
+              "n_valid": 60,
+              "mean": 9.825657898,
+              "sample_sd": 0.013396332076380527,
+              "min": 9.80175309,
+              "max": 9.85988143
+            }
+          }
+        },
+        "quarter_turn": {
+          "interval_s": [
+            46,
+            49
+          ],
+          "closed": "left",
+          "n": 59,
+          "statistics": {
+            "Acceleration x (g)": {
+              "n_valid": 59,
+              "mean": 0.0028614108845932203,
+              "sample_sd": 0.004285566174507101,
+              "min": -0.00476074219,
+              "max": 0.00891113281
+            },
+            "Acceleration y (g)": {
+              "n_valid": 59,
+              "mean": -1.0014172564067796,
+              "sample_sd": 0.001215434800732474,
+              "min": -1.00390625,
+              "max": -0.998535156
+            },
+            "Acceleration z (g)": {
+              "n_valid": 59,
+              "mean": 0.004036596265881356,
+              "sample_sd": 0.003055280194401159,
+              "min": -0.00207519531,
+              "max": 0.00952148438
+            },
+            "Absolute Acceleration (g)": {
+              "n_valid": 59,
+              "mean": 1.0014430746949152,
+              "sample_sd": 0.00121400850144503,
+              "min": 0.998601198,
+              "max": 1.0039283
+            },
+            "Acceleration x (m/s²)": {
+              "n_valid": 59,
+              "mean": 0.028070440772881355,
+              "sample_sd": 0.04204140417129983,
+              "min": -0.0467028809,
+              "max": 0.0874182129
+            },
+            "Acceleration y (m/s²)": {
+              "n_valid": 59,
+              "mean": -9.82390329220339,
+              "sample_sd": 0.011923403852396833,
+              "min": -9.84832031,
+              "max": -9.79562988
+            },
+            "Acceleration z (m/s²)": {
+              "n_valid": 59,
+              "mean": 0.039599009364745766,
+              "sample_sd": 0.029972298706599565,
+              "min": -0.020357666,
+              "max": 0.0934057617
+            },
+            "Absolute Acceleration (m/s²)": {
+              "n_valid": 59,
+              "mean": 9.824156564745763,
+              "sample_sd": 0.011909420173768084,
+              "min": 9.79627775,
+              "max": 9.84853666
+            }
+          }
+        },
+        "tap_sequence": {
+          "interval_s": [
+            33,
+            38
+          ],
+          "closed": "left",
+          "n": 100,
+          "statistics": {
+            "Acceleration x (g)": {
+              "n_valid": 100,
+              "mean": 0.0054626464920000005,
+              "sample_sd": 0.04517428078653728,
+              "min": -0.145629883,
+              "max": 0.211425781
+            },
+            "Acceleration y (g)": {
+              "n_valid": 100,
+              "mean": -0.00043212890788,
+              "sample_sd": 0.007844367106636342,
+              "min": -0.0164794922,
+              "max": 0.0146484375
+            },
+            "Acceleration z (g)": {
+              "n_valid": 100,
+              "mean": 1.00893432653,
+              "sample_sd": 0.06680139878247059,
+              "min": 0.835327148,
+              "max": 1.33703613
+            },
+            "Absolute Acceleration (g)": {
+              "n_valid": 100,
+              "mean": 1.00990166945,
+              "sample_sd": 0.0679879808793473,
+              "min": 0.847042322,
+              "max": 1.34671569
+            },
+            "Acceleration x (m/s²)": {
+              "n_valid": 100,
+              "mean": 0.053588561964600004,
+              "sample_sd": 0.44315969417229384,
+              "min": -1.42862915,
+              "max": 2.07408691
+            },
+            "Acceleration y (m/s²)": {
+              "n_valid": 100,
+              "mean": -0.0042391845503,
+              "sample_sd": 0.07695324124253715,
+              "min": -0.161663818,
+              "max": 0.143701172
+            },
+            "Acceleration z (m/s²)": {
+              "n_valid": 100,
+              "mean": 9.8976457393,
+              "sample_sd": 0.6553217233793018,
+              "min": 8.19455933,
+              "max": 13.1163245
+            },
+            "Absolute Acceleration (m/s²)": {
+              "n_valid": 100,
+              "mean": 9.907135372099999,
+              "sample_sd": 0.6669620898666445,
+              "min": 8.30948518,
+              "max": 13.2112809
+            }
+          }
+        }
+      },
+      "missing_rows": [],
+      "peak": {
+        "time_s": 36.382,
+        "column": "Absolute Acceleration (g)",
+        "value": 1.34671569
+      }
+    },
+    "gyroscope": {
+      "file": "core/gyroscope_plot_v1-2.example.csv",
+      "n": 1201,
+      "columns": [
+        "Time t (s)",
+        "Angular Velocity x (deg/s)",
+        "Angular Velocity y (deg/s)",
+        "Angular Velocity z (deg/s)",
+        "Absolute Angular Velocity (deg/s)",
+        "Angular Velocity x (rad/s)",
+        "Angular Velocity y (rad/s)",
+        "Angular Velocity z (rad/s)",
+        "Absolute Angular Velocity (rad/s)"
+      ],
+      "time_end": 60.3969994,
+      "median_dt": 0.050000199999999495,
+      "windows": {
+        "baseline": {
+          "interval_s": [
+            0,
+            7
+          ],
+          "closed": "left",
+          "n": 140,
+          "statistics": {
+            "Angular Velocity x (deg/s)": {
+              "n_valid": 140,
+              "mean": 0.08544921879857142,
+              "sample_sd": 0.22905229032969382,
+              "min": -0.427246094,
+              "max": 0.549316406
+            },
+            "Angular Velocity y (deg/s)": {
+              "n_valid": 140,
+              "mean": -0.04970005581285714,
+              "sample_sd": 0.16591823754935875,
+              "min": -0.427246094,
+              "max": 0.305175781
+            },
+            "Angular Velocity z (deg/s)": {
+              "n_valid": 140,
+              "mean": 0.10114397321428571,
+              "sample_sd": 0.34903223561635516,
+              "min": -0.610351562,
+              "max": 0.732421875
+            },
+            "Absolute Angular Velocity (deg/s)": {
+              "n_valid": 140,
+              "mean": 0.4185093544042857,
+              "sample_sd": 0.21343108160164168,
+              "min": 0.0610351562,
+              "max": 0.886586845
+            },
+            "Angular Velocity x (rad/s)": {
+              "n_valid": 140,
+              "mean": 0.0014913689504285714,
+              "sample_sd": 0.0039977132479487145,
+              "min": -0.00745684475,
+              "max": 0.00958737183
+            },
+            "Angular Velocity y (rad/s)": {
+              "n_valid": 140,
+              "mean": -0.0008674288787142856,
+              "sample_sd": 0.0028958170884138073,
+              "min": -0.00745684475,
+              "max": 0.00532631768
+            },
+            "Angular Velocity z (rad/s)": {
+              "n_valid": 140,
+              "mean": 0.0017652938614285715,
+              "sample_sd": 0.006091756564472359,
+              "min": -0.0106526354,
+              "max": 0.0127831624
+            },
+            "Absolute Angular Velocity (rad/s)": {
+              "n_valid": 140,
+              "mean": 0.0073043600185714284,
+              "sample_sd": 0.003725071956941478,
+              "min": 0.00106526354,
+              "max": 0.0154738465
+            }
+          }
+        },
+        "positive_yaw": {
+          "interval_s": [
+            11,
+            17
+          ],
+          "closed": "left",
+          "n": 119,
+          "statistics": {
+            "Angular Velocity x (deg/s)": {
+              "n_valid": 119,
+              "mean": 0.07231896669747899,
+              "sample_sd": 0.21934208204734423,
+              "min": -0.48828125,
+              "max": 0.48828125
+            },
+            "Angular Velocity y (deg/s)": {
+              "n_valid": 119,
+              "mean": -0.06206095723865546,
+              "sample_sd": 0.1540771621405246,
+              "min": -0.366210938,
+              "max": 0.305175781
+            },
+            "Angular Velocity z (deg/s)": {
+              "n_valid": 119,
+              "mean": 39.35998226554622,
+              "sample_sd": 0.3404377483381413,
+              "min": 38.6962891,
+              "max": 40.0390625
+            },
+            "Absolute Angular Velocity (deg/s)": {
+              "n_valid": 119,
+              "mean": 39.361002203361345,
+              "sample_sd": 0.3404982682268211,
+              "min": 38.6992264,
+              "max": 40.0420876
+            },
+            "Angular Velocity x (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.0012622030133613445,
+              "sample_sd": 0.0038282382850577798,
+              "min": -0.00852210829,
+              "max": 0.00852210829
+            },
+            "Angular Velocity y (rad/s)": {
+              "n_valid": 119,
+              "mean": -0.0010831671250420168,
+              "sample_sd": 0.002689151510134007,
+              "min": -0.00639158122,
+              "max": 0.00532631768
+            },
+            "Angular Velocity z (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.6869607039495799,
+              "sample_sd": 0.005941754550370696,
+              "min": 0.675377082,
+              "max": 0.69881288
+            },
+            "Absolute Angular Velocity (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.6869785051596639,
+              "sample_sd": 0.005942810818057135,
+              "min": 0.675428348,
+              "max": 0.698865677
+            }
+          }
+        },
+        "negative_yaw": {
+          "interval_s": [
+            21,
+            27
+          ],
+          "closed": "left",
+          "n": 119,
+          "statistics": {
+            "Angular Velocity x (deg/s)": {
+              "n_valid": 119,
+              "mean": 0.08514147849579831,
+              "sample_sd": 0.22294703308488154,
+              "min": -0.305175781,
+              "max": 0.549316406
+            },
+            "Angular Velocity y (deg/s)": {
+              "n_valid": 119,
+              "mean": -0.06975446434285715,
+              "sample_sd": 0.17648318137781024,
+              "min": -0.427246094,
+              "max": 0.244140625
+            },
+            "Angular Velocity z (deg/s)": {
+              "n_valid": 119,
+              "mean": -39.110199746218484,
+              "sample_sd": 0.35269942881028293,
+              "min": -39.7949219,
+              "max": -38.5131836
+            },
+            "Absolute Angular Velocity (deg/s)": {
+              "n_valid": 119,
+              "mean": 39.11138098319328,
+              "sample_sd": 0.3525267247230512,
+              "min": 38.5151672,
+              "max": 39.7972603
+            },
+            "Angular Velocity x (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.0014859978737815126,
+              "sample_sd": 0.0038911564978019323,
+              "min": -0.00532631768,
+              "max": 0.00958737183
+            },
+            "Angular Velocity y (rad/s)": {
+              "n_valid": 119,
+              "mean": -0.0012174440415966387,
+              "sample_sd": 0.0030802099869792934,
+              "min": -0.00745684475,
+              "max": 0.00426105414
+            },
+            "Angular Velocity z (rad/s)": {
+              "n_valid": 119,
+              "mean": -0.6826011800672269,
+              "sample_sd": 0.0061557612046147635,
+              "min": -0.694551826,
+              "max": -0.672181291
+            },
+            "Absolute Angular Velocity (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.6826217966554622,
+              "sample_sd": 0.006152746894987313,
+              "min": 0.672215912,
+              "max": 0.694592639
+            }
+          }
+        },
+        "positive_roll": {
+          "interval_s": [
+            31,
+            37
+          ],
+          "closed": "left",
+          "n": 119,
+          "statistics": {
+            "Angular Velocity x (deg/s)": {
+              "n_valid": 119,
+              "mean": 52.374831768067224,
+              "sample_sd": 0.21080240820599996,
+              "min": 51.940918,
+              "max": 52.8564453
+            },
+            "Angular Velocity y (deg/s)": {
+              "n_valid": 119,
+              "mean": -0.038980435868907565,
+              "sample_sd": 0.1641463380690271,
+              "min": -0.427246094,
+              "max": 0.366210938
+            },
+            "Angular Velocity z (deg/s)": {
+              "n_valid": 119,
+              "mean": 0.14104762997142856,
+              "sample_sd": 0.3511374448131476,
+              "min": -0.48828125,
+              "max": 0.793457031
+            },
+            "Absolute Angular Velocity (deg/s)": {
+              "n_valid": 119,
+              "mean": 52.37645522773109,
+              "sample_sd": 0.21165561859801335,
+              "min": 51.9441109,
+              "max": 52.8615913
+            },
+            "Angular Velocity x (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.9141124874285714,
+              "sample_sd": 0.0036791930967660824,
+              "min": 0.906539269,
+              "max": 0.922518222
+            },
+            "Angular Velocity y (rad/s)": {
+              "n_valid": 119,
+              "mean": -0.0006803363754621848,
+              "sample_sd": 0.002864891634621712,
+              "min": -0.00745684475,
+              "max": 0.00639158122
+            },
+            "Angular Velocity z (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.002461743468319328,
+              "sample_sd": 0.006128499366048151,
+              "min": -0.00852210829,
+              "max": 0.013848426
+            },
+            "Absolute Angular Velocity (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.914140822117647,
+              "sample_sd": 0.0036940842855604636,
+              "min": 0.906594996,
+              "max": 0.922608037
+            }
+          }
+        },
+        "negative_pitch": {
+          "interval_s": [
+            41,
+            47
+          ],
+          "closed": "left",
+          "n": 119,
+          "statistics": {
+            "Angular Velocity x (deg/s)": {
+              "n_valid": 119,
+              "mean": 0.060522255825210085,
+              "sample_sd": 0.22899329942140034,
+              "min": -0.427246094,
+              "max": 0.610351562
+            },
+            "Angular Velocity y (deg/s)": {
+              "n_valid": 119,
+              "mean": -30.55655857226891,
+              "sample_sd": 0.1696322386417299,
+              "min": -30.8837891,
+              "max": -30.2124023
+            },
+            "Angular Velocity z (deg/s)": {
+              "n_valid": 119,
+              "mean": 0.1005284926420168,
+              "sample_sd": 0.3612276878062135,
+              "min": -0.549316406,
+              "max": 0.793457031
+            },
+            "Absolute Angular Velocity (deg/s)": {
+              "n_valid": 119,
+              "mean": 30.559758852100842,
+              "sample_sd": 0.16832727291005428,
+              "min": 30.2185669,
+              "max": 30.8896999
+            },
+            "Angular Velocity x (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.0010563117423529412,
+              "sample_sd": 0.003996683663831329,
+              "min": -0.00745684475,
+              "max": 0.0106526354
+            },
+            "Angular Velocity y (rad/s)": {
+              "n_valid": 119,
+              "mean": -0.5333121046218487,
+              "sample_sd": 0.0029606384154214917,
+              "min": -0.539023349,
+              "max": -0.52730545
+            },
+            "Angular Velocity z (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.0017545517073949582,
+              "sample_sd": 0.006304607176391485,
+              "min": -0.00958737183,
+              "max": 0.013848426
+            },
+            "Absolute Angular Velocity (rad/s)": {
+              "n_valid": 119,
+              "mean": 0.5333679600504202,
+              "sample_sd": 0.0029378626605366526,
+              "min": 0.527413042,
+              "max": 0.539126513
+            }
+          }
+        },
+        "final_baseline": {
+          "interval_s": [
+            52,
+            59
+          ],
+          "closed": "left",
+          "n": 139,
+          "statistics": {
+            "Angular Velocity x (deg/s)": {
+              "n_valid": 139,
+              "mean": 0.0803556374057554,
+              "sample_sd": 0.22432199171041986,
+              "min": -0.427246094,
+              "max": 0.549316406
+            },
+            "Angular Velocity y (deg/s)": {
+              "n_valid": 139,
+              "mean": -0.06366976730215827,
+              "sample_sd": 0.17072625553513193,
+              "min": -0.48828125,
+              "max": 0.305175781
+            },
+            "Angular Velocity z (deg/s)": {
+              "n_valid": 139,
+              "mean": 0.15017283045467625,
+              "sample_sd": 0.35697352490157414,
+              "min": -0.610351562,
+              "max": 0.915527344
+            },
+            "Absolute Angular Velocity (deg/s)": {
+              "n_valid": 139,
+              "mean": 0.4274623336690647,
+              "sample_sd": 0.23696435039032612,
+              "min": 0.10571599,
+              "max": 1.08154571
+            },
+            "Angular Velocity x (rad/s)": {
+              "n_valid": 139,
+              "mean": 0.0014024692597122302,
+              "sample_sd": 0.003915154032290409,
+              "min": -0.00745684475,
+              "max": 0.00958737183
+            },
+            "Angular Velocity y (rad/s)": {
+              "n_valid": 139,
+              "mean": -0.0011112461349640286,
+              "sample_sd": 0.0029797327616653763,
+              "min": -0.00852210829,
+              "max": 0.00532631768
+            },
+            "Angular Velocity z (rad/s)": {
+              "n_valid": 139,
+              "mean": 0.0026210081263309355,
+              "sample_sd": 0.006230358091971384,
+              "min": -0.0106526354,
+              "max": 0.015978953
+            },
+            "Absolute Angular Velocity (rad/s)": {
+              "n_valid": 139,
+              "mean": 0.007460618849424461,
+              "sample_sd": 0.004135804628917263,
+              "min": 0.00184509054,
+              "max": 0.0188765177
+            }
+          }
+        }
+      },
+      "missing_rows": [],
+      "peak": {
+        "time_s": 36.9959984,
+        "column": "Absolute Angular Velocity (deg/s)",
+        "value": 52.8615913
+      },
+      "reversal": {
+        "reported_positive_mean_dps": 39.35998226554622,
+        "reported_negative_mean_dps": -39.110199746218484,
+        "bias_dps": 0.12489125966386894,
+        "slope_for_nominal_45_dps": 0.87189091124183,
+        "nominal_library_slope": 0.8719308035714285,
+        "nominal_correction_factor": 1.1468800000000001
+      }
+    },
+    "magnetometer": {
+      "file": "core/magnetometer_plot_v1-2.example.csv",
+      "n": 1201,
+      "columns": [
+        "Time t (s)",
+        "Magnetometer x (µT)",
+        "Magnetometer y (µT)",
+        "Magnetometer z (µT)",
+        "Absolute magnetic field (µT)"
+      ],
+      "time_end": 60.4189987,
+      "median_dt": 0.050000199999999495,
+      "windows": {
+        "baseline": {
+          "interval_s": [
+            0,
+            8
+          ],
+          "closed": "left",
+          "n": 159,
+          "statistics": {
+            "Magnetometer x (µT)": {
+              "n_valid": 159,
+              "mean": 19.057709316981132,
+              "sample_sd": 0.11927294404858159,
+              "min": 18.7744141,
+              "max": 19.3481445
+            },
+            "Magnetometer y (µT)": {
+              "n_valid": 159,
+              "mean": -1.3859203027044025,
+              "sample_sd": 0.12103668192820202,
+              "min": -1.70898438,
+              "max": -1.07421875
+            },
+            "Magnetometer z (µT)": {
+              "n_valid": 159,
+              "mean": 42.03364534339622,
+              "sample_sd": 0.1268816337324634,
+              "min": 41.6625977,
+              "max": 42.4072266
+            },
+            "Absolute magnetic field (µT)": {
+              "n_valid": 159,
+              "mean": 46.17329274905661,
+              "sample_sd": 0.12739626875232618,
+              "min": 45.8570671,
+              "max": 46.5193291
+            }
+          }
+        },
+        "reoriented": {
+          "interval_s": [
+            22,
+            28
+          ],
+          "closed": "left",
+          "n": 119,
+          "statistics": {
+            "Magnetometer x (µT)": {
+              "n_valid": 119,
+              "mean": -3.4780806860756304,
+              "sample_sd": 4.13853242673869,
+              "min": -10.2661133,
+              "max": 3.23486328
+            },
+            "Magnetometer y (µT)": {
+              "n_valid": 119,
+              "mean": -17.28997751260504,
+              "sample_sd": 0.10540757323774261,
+              "min": -17.565918,
+              "max": -17.0288086
+            },
+            "Magnetometer z (µT)": {
+              "n_valid": 119,
+              "mean": 41.41189190504202,
+              "sample_sd": 0.5916975921305114,
+              "min": 40.1245117,
+              "max": 42.2363281
+            },
+            "Absolute magnetic field (µT)": {
+              "n_valid": 119,
+              "mean": 45.2025932512605,
+              "sample_sd": 0.22991747067477095,
+              "min": 44.6722374,
+              "max": 45.772953
+            }
+          }
+        },
+        "magnet_approach": {
+          "interval_s": [
+            29,
+            40
+          ],
+          "closed": "left",
+          "n": 219,
+          "statistics": {
+            "Magnetometer x (µT)": {
+              "n_valid": 218,
+              "mean": 30.641664272674312,
+              "sample_sd": 30.973293206008545,
+              "min": -12.0239258,
+              "max": 70.0317383
+            },
+            "Magnetometer y (µT)": {
+              "n_valid": 218,
+              "mean": -42.24086376513762,
+              "sample_sd": 14.370272673563806,
+              "min": -59.9731445,
+              "max": -17.2851562
+            },
+            "Magnetometer z (µT)": {
+              "n_valid": 218,
+              "mean": 86.15980238256881,
+              "sample_sd": 36.79652277809439,
+              "min": 36.0717773,
+              "max": 134.143066
+            },
+            "Absolute magnetic field (µT)": {
+              "n_valid": 218,
+              "mean": 103.0917702646789,
+              "sample_sd": 45.1266748602003,
+              "min": 44.4514618,
+              "max": 162.596497
+            }
+          }
+        },
+        "final_baseline": {
+          "interval_s": [
+            52,
+            59
+          ],
+          "closed": "left",
+          "n": 139,
+          "statistics": {
+            "Magnetometer x (µT)": {
+              "n_valid": 138,
+              "mean": 19.066232879710146,
+              "sample_sd": 0.12234522077294649,
+              "min": 18.7133789,
+              "max": 19.4091797
+            },
+            "Magnetometer y (µT)": {
+              "n_valid": 138,
+              "mean": -1.3550689252898551,
+              "sample_sd": 0.12400188581135908,
+              "min": -1.68457031,
+              "max": -1.03759766
+            },
+            "Magnetometer z (µT)": {
+              "n_valid": 138,
+              "mean": 41.99024145217391,
+              "sample_sd": 0.11726438861969524,
+              "min": 41.7236328,
+              "max": 42.2729492
+            },
+            "Absolute magnetic field (µT)": {
+              "n_valid": 138,
+              "mean": 46.13637719637681,
+              "sample_sd": 0.1281477068284697,
+              "min": 45.779995,
+              "max": 46.4884071
+            }
+          }
+        }
+      },
+      "missing_rows": [
+        217,
+        583,
+        901,
+        1102
+      ],
+      "peak": {
+        "time_s": 32.9399986,
+        "column": "Absolute magnetic field (µT)",
+        "value": 162.596497
+      }
+    },
+    "light-rgb": {
+      "columns": [
+        "Time t (s)",
+        "Relative light level (a.u.)",
+        "Red (a.u.)",
+        "Green (a.u.)",
+        "Blue (a.u.)"
+      ],
+      "samples": 1201,
+      "first_time": 0.0,
+      "last_time": 60.4319992,
+      "dim_baseline_0_4": [
+        38.5,
+        10.4125,
+        11.8,
+        6.8125
+      ],
+      "plateaus": {
+        "white": {
+          "window_s": [
+            6,
+            14
+          ],
+          "n": 159,
+          "means": [
+            1899.0503144654087,
+            951.1132075471698,
+            1020.8867924528302,
+            570.377358490566
+          ],
+          "sample_sd": [
+            26.890494942542727,
+            13.541301627727936,
+            13.429130028315722,
+            8.63000304008851
+          ],
+          "dim_subtracted_RGB_fractions": [
+            0.37428126795246597,
+            0.4014903795896145,
+            0.22422835245791956
+          ],
+          "clipped_all_fraction": 0
+        },
+        "red": {
+          "window_s": [
+            16,
+            24
+          ],
+          "n": 159,
+          "means": [
+            2467.51572327044,
+            1899.8993710691823,
+            293.3018867924528,
+            111.57232704402516
+          ],
+          "sample_sd": [
+            33.75392248109314,
+            28.522075609434474,
+            5.118537564307751,
+            3.2519889133213935
+          ],
+          "dim_subtracted_RGB_fractions": [
+            0.8302704804922508,
+            0.12369639100714734,
+            0.046033128500601886
+          ],
+          "clipped_all_fraction": 0
+        },
+        "green": {
+          "window_s": [
+            26,
+            34
+          ],
+          "n": 158,
+          "means": [
+            2246.7974683544303,
+            264.99367088607596,
+            1551.6835443037974,
+            166.26582278481013
+          ],
+          "sample_sd": [
+            30.697363834964552,
+            4.553289334492766,
+            20.139667929252766,
+            3.56989842942628
+          ],
+          "dim_subtracted_RGB_fractions": [
+            0.13029265605734405,
+            0.7881003779974057,
+            0.08160696594525021
+          ],
+          "clipped_all_fraction": 0
+        },
+        "blue": {
+          "window_s": [
+            36,
+            44
+          ],
+          "n": 159,
+          "means": [
+            2033.6100628930817,
+            190.55974842767296,
+            255.0251572327044,
+            1381.7358490566037
+          ],
+          "sample_sd": [
+            28.384099656095465,
+            3.6778350727549967,
+            4.6031767862807875,
+            18.600208529588063
+          ],
+          "dim_subtracted_RGB_fractions": [
+            0.1001766522303918,
+            0.13525314542656172,
+            0.7645702023430465
+          ],
+          "clipped_all_fraction": 0
+        },
+        "saturation": {
+          "window_s": [
+            46,
+            49
+          ],
+          "n": 59,
+          "means": [
+            4100.0,
+            4100.0,
+            4100.0,
+            4100.0
+          ],
+          "sample_sd": [
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "dim_subtracted_RGB_fractions": [
+            0.33327323215962873,
+            0.3331601604599471,
+            0.3335666073804241
+          ],
+          "clipped_all_fraction": 1
+        }
+      }
+    },
+    "albedo": {
+      "sensortag": {
+        "n": 76,
+        "dark_windows_s": [
+          [
+            0,
+            7
+          ],
+          [
+            57,
+            60.5
+          ]
+        ],
+        "dark_mean": 0.8323076923076923,
+        "reference_window_s": [
+          9,
+          23
+        ],
+        "reference_mean": 432.38588235294117,
+        "plateaus": {
+          "grey": {
+            "window_s": [
+              25,
+              39
+            ],
+            "mean": 159.4964705882353,
+            "sd": 1.7214562918372025,
+            "ratio": 0.36765808977645115
+          },
+          "black": {
+            "window_s": [
+              41,
+              55
+            ],
+            "mean": 18.551176470588235,
+            "sd": 0.24451181855232437,
+            "ratio": 0.04105832929831334
+          }
+        },
+        "extrema_contrast_percent": 99.81802659956865
+      },
+      "phone": {
+        "n": 601,
+        "dark_windows_s": [
+          [
+            0,
+            7
+          ],
+          [
+            57,
+            60.5
+          ]
+        ],
+        "dark_mean": 0.31650890952970295,
+        "reference_window_s": [
+          9,
+          23
+        ],
+        "reference_mean": 522.3007552785714,
+        "plateaus": {
+          "grey": {
+            "window_s": [
+              25,
+              39
+            ],
+            "mean": 190.35821677304963,
+            "sd": 4.019312724966987,
+            "ratio": 0.3640755620221551
+          },
+          "black": {
+            "window_s": [
+              41,
+              55
+            ],
+            "mean": 22.187653192857145,
+            "sd": 0.44674113174376234,
+            "ratio": 0.04190000835363256
+          }
+        },
+        "extrema_contrast_percent": 99.98991836969927
+      }
+    },
+    "ir-distance": {
+      "n": 101,
+      "time_s": [
+        0.0,
+        30.0
+      ],
+      "mouse_count_range": [
+        0.0,
+        3250.0
+      ],
+      "apparent_temperature_range_C": [
+        27.59375,
+        38.125
+      ],
+      "die_temperature_mean_C": 22.99319306930693,
+      "die_temperature_range_C": [
+        22.75,
+        23.1875
+      ],
+      "plateaus": {
+        "out_0.15m": {
+          "window_s": [
+            0,
+            1.5
+          ],
+          "n": 5,
+          "mean_T_IR_C": 38.03125,
+          "mean_d_counts": 0.0,
+          "sample_sd_T_IR_C": 0.07967217989988726
+        },
+        "out_0.50m": {
+          "window_s": [
+            10.5,
+            12
+          ],
+          "n": 5,
+          "mean_T_IR_C": 29.89375,
+          "mean_d_counts": 1750.0,
+          "sample_sd_T_IR_C": 0.11817294000743148
+        },
+        "out_0.80m": {
+          "window_s": [
+            19.5,
+            21
+          ],
+          "n": 5,
+          "mean_T_IR_C": 27.85,
+          "mean_d_counts": 3250.0,
+          "sample_sd_T_IR_C": 0.12382257972599343
+        },
+        "in_0.50m": {
+          "window_s": [
+            26.4,
+            27.3
+          ],
+          "n": 3,
+          "mean_T_IR_C": 28.854166666666668,
+          "mean_d_counts": 1750.0,
+          "sample_sd_T_IR_C": 0.12629537138523064
+        }
+      },
+      "out_minus_return_at_1750_counts_K": 1.0395833333333329
+    },
+    "greenhouse": {
+      "files": [
+        "astronomy/greenhouse.example.csv"
+      ],
+      "time_column": "Time (min)",
+      "time_to_seconds": 60,
+      "columns": [
+        "Temperature 1 (°C)",
+        "Temperature 2 (°C)"
+      ],
+      "windows_s": {
+        "baseline": [
+          0,
+          60
+        ],
+        "late_heating": [
+          330,
+          360
+        ],
+        "late_cooling": [
+          540,
+          600
+        ],
+        "fit": [
+          70,
+          350
+        ]
+      },
+      "window_rule": "start inclusive, end exclusive; minute timestamps converted then rounded to 6 decimal seconds",
+      "sample_counts": [
+        60,
+        30,
+        60
+      ],
+      "baseline_mean_C": [
+        22.9505,
+        22.555166666666665
+      ],
+      "late_heating_mean_C": [
+        26.516333333333332,
+        29.34166666666667
+      ],
+      "late_heating_rise_K": [
+        3.5658333333333303,
+        6.786500000000004
+      ],
+      "baseline_difference_2_minus_1_K": -0.39533333333333687,
+      "late_heating_difference_2_minus_1_K": 2.8253333333333366,
+      "baseline_subtracted_late_heating_difference_K": 3.2206666666666734,
+      "late_cooling_mean_C": [
+        25.04,
+        26.741666666666667
+      ],
+      "fit_model": "T(t)=baseline+A*(1-exp(-(t-60)/tau)); baseline fixed to mean on [0,60), linear amplitude profiled out and tau minimized on [20,1000] s",
+      "fit": [
+        {
+          "tau_s": 179.45434210647153,
+          "asymptotic_rise_K": 4.492027787904274,
+          "residual_rms_K": 0.020255442614413817,
+          "samples": 280
+        },
+        {
+          "tau_s": 150.2008857008429,
+          "asymptotic_rise_K": 7.995904849161779,
+          "residual_rms_K": 0.02035305750783637,
+          "samples": 280
+        }
+      ],
+      "switch_off_jump_K": [
+        1.0599999999999987,
+        1.3399999999999999
+      ]
+    },
+    "pt-star": {
+      "files": [
+        "astronomy/pt-star.example.csv"
+      ],
+      "time_column": "Time (min)",
+      "time_to_seconds": 60,
+      "columns": [
+        "Pressure (hPa)",
+        "Temperature (°C)"
+      ],
+      "windows_s": {
+        "baseline": [
+          0,
+          30
+        ],
+        "compressed": [
+          55,
+          60
+        ],
+        "later_compressed": [
+          70,
+          85
+        ],
+        "recovered": [
+          150,
+          180
+        ]
+      },
+      "window_rule": "start inclusive, end exclusive; timestamps rounded to 6 decimal seconds after conversion",
+      "states": {
+        "baseline": {
+          "samples": 30,
+          "pressure_mean_hPa": 1005.5686666666667,
+          "die_temperature_mean_C": 23.39966666666667
+        },
+        "compressed": {
+          "samples": 5,
+          "pressure_mean_hPa": 1080.598,
+          "die_temperature_mean_C": 24.8
+        },
+        "later_compressed": {
+          "samples": 15,
+          "pressure_mean_hPa": 1078.0739999999998,
+          "die_temperature_mean_C": 24.797333333333334
+        },
+        "recovered": {
+          "samples": 30,
+          "pressure_mean_hPa": 1005.5256666666667,
+          "die_temperature_mean_C": 23.400333333333332
+        }
+      },
+      "pressure_rise_hPa": 75.02933333333328,
+      "die_temperature_rise_K": 1.4003333333333323,
+      "pressure_reduction_early_to_later_hPa": 2.5240000000001146,
+      "conditional_isothermal_volume_ratio": 0.9305668404593259,
+      "conditional_isothermal_volume_reduction_percent": 6.943315954067408,
+      "conditional_model_note": "V1/V0=p0/p1 requires a closed ideal gas at unchanged gas temperature; chamber volume and gas temperature are not CSV observables."
+    },
+    "tidal-locking": {
+      "files": [
+        "astronomy/tidal-locking_bmp280.example.csv",
+        "astronomy/tidal-locking_tmp007.example.csv",
+        "astronomy/tidal-locking_opt3001.example.csv"
+      ],
+      "time_column": "Time (s)",
+      "windows_s": {
+        "baseline": [
+          0,
+          30
+        ],
+        "late_heating": [
+          180,
+          210
+        ],
+        "illuminated": [
+          30,
+          210
+        ]
+      },
+      "window_rule": "start inclusive, end exclusive, retain independent channel time grids",
+      "thermal": {
+        "bmp280": {
+          "columns": [
+            "Temperature 1 (°C)",
+            "Temperature 2 (°C)"
+          ],
+          "sample_counts_baseline_late": [
+            30,
+            30
+          ],
+          "baseline_mean_C": [
+            23.900666666666666,
+            23.399
+          ],
+          "late_heating_mean_C": [
+            36.47233333333333,
+            24.493666666666666
+          ],
+          "late_heating_rise_K": [
+            12.571666666666665,
+            1.0946666666666651
+          ],
+          "baseline_contrast_day_minus_night_K": 0.5016666666666652,
+          "late_heating_contrast_day_minus_night_K": 11.978666666666665,
+          "baseline_subtracted_late_heating_contrast_K": 11.477
+        },
+        "tmp007_object": {
+          "columns": [
+            "Object temperature 1 (°C)",
+            "Object temperature 2 (°C)"
+          ],
+          "sample_counts_baseline_late": [
+            100,
+            100
+          ],
+          "baseline_mean_C": [
+            24.00125,
+            23.3996875
+          ],
+          "late_heating_mean_C": [
+            44.2453125,
+            24.2303125
+          ],
+          "late_heating_rise_K": [
+            20.2440625,
+            0.8306250000000013
+          ],
+          "baseline_contrast_day_minus_night_K": 0.6015625,
+          "late_heating_contrast_day_minus_night_K": 20.014999999999997,
+          "baseline_subtracted_late_heating_contrast_K": 19.413437499999997
+        },
+        "tmp007_die": {
+          "columns": [
+            "Ambient temperature 1 (°C)",
+            "Ambient temperature 2 (°C)"
+          ],
+          "sample_counts_baseline_late": [
+            100,
+            100
+          ],
+          "baseline_mean_C": [
+            22.996875,
+            22.90375
+          ],
+          "late_heating_mean_C": [
+            25.0003125,
+            24.0934375
+          ],
+          "late_heating_rise_K": [
+            2.0034375000000004,
+            1.1896875000000016
+          ],
+          "baseline_contrast_day_minus_night_K": 0.09312500000000057,
+          "late_heating_contrast_day_minus_night_K": 0.9068749999999994,
+          "baseline_subtracted_late_heating_contrast_K": 0.8137499999999989
+        }
+      },
+      "illuminated_samples": 225,
+      "illuminance_mean_day_lx": 12353.831822222222,
+      "illuminance_mean_night_lx": 27.449555555555555,
+      "illuminance_ratio_of_means_day_to_night": 450.0558049917829
+    },
+    "mission-to-mars": {
+      "sensortag": {
+        "file": "astronomy/missiontomars_sensortag.example.csv",
+        "time_column": "Time (s)",
+        "signal_column": "Pressure (hPa)",
+        "rows": 1201,
+        "median_dt_s": 0.10000000000000053,
+        "baseline_window_s": [
+          0,
+          15
+        ],
+        "baseline_hpa": 1009.0156,
+        "early_window_s": [
+          30,
+          35
+        ],
+        "early_excess_hpa": 34.82920000000013,
+        "late_window_s": [
+          50,
+          55
+        ],
+        "late_excess_hpa": 33.79780000000005,
+        "early_to_late_drop_hpa": 1.031400000000076,
+        "slope_window_s": [
+          30,
+          55
+        ],
+        "ols_slope_hpa_per_s": -0.05149414870637967,
+        "range_hpa": 35.110000000000014,
+        "final_window_s": [
+          90,
+          120
+        ],
+        "final_minus_initial_hpa": -0.047366666666562196
+      },
+      "phone": {
+        "file": "astronomy/missiontomars_phone.example.csv",
+        "time_column": "Time (s)",
+        "signal_column": "Pressure (hPa)",
+        "rows": 1201,
+        "median_dt_s": 0.0998864000000026,
+        "baseline_window_s": [
+          0,
+          15
+        ],
+        "baseline_hpa": 1007.8182781456953,
+        "early_window_s": [
+          30,
+          35
+        ],
+        "early_excess_hpa": 34.807321854304746,
+        "late_window_s": [
+          50,
+          55
+        ],
+        "late_excess_hpa": 33.779921854304575,
+        "early_to_late_drop_hpa": 1.0274000000001706,
+        "slope_window_s": [
+          30,
+          55
+        ],
+        "ols_slope_hpa_per_s": -0.051349741977844594,
+        "range_hpa": 35.12999999999988,
+        "final_window_s": [
+          90,
+          120
+        ],
+        "final_minus_initial_hpa": -0.04884670756825926
+      }
+    },
+    "owon-interface": {
+      "file": "astronomy/owon_digital_multimeter-debug.example.csv",
+      "rows": 121,
+      "median_dt_s": 0.5,
+      "decoder": "float(raw numeric)*d[decimal code]*u[unit code]",
+      "max_abs_decoder_residual_v": 2.220446049250313e-16,
+      "negative_rows": 20,
+      "steps": [
+        {
+          "window_s": [
+            1,
+            9
+          ],
+          "nominal_v": 0,
+          "n": 16,
+          "mean_v": 0.0005,
+          "sd_v": 0.0005163977794943223,
+          "mean_minus_nominal_mv": 0.5
+        },
+        {
+          "window_s": [
+            11,
+            19
+          ],
+          "nominal_v": 1,
+          "n": 16,
+          "mean_v": 1.0025,
+          "sd_v": 0.0005163977794942654,
+          "mean_minus_nominal_mv": 2.4999999999999467
+        },
+        {
+          "window_s": [
+            21,
+            29
+          ],
+          "nominal_v": 1.5,
+          "n": 16,
+          "mean_v": 1.503375,
+          "sd_v": 0.000500000000000056,
+          "mean_minus_nominal_mv": 3.374999999999906
+        },
+        {
+          "window_s": [
+            31,
+            39
+          ],
+          "nominal_v": 2,
+          "n": 16,
+          "mean_v": 2.0045,
+          "sd_v": 0.0005163977794942654,
+          "mean_minus_nominal_mv": 4.5000000000001705
+        },
+        {
+          "window_s": [
+            41,
+            49
+          ],
+          "nominal_v": -1,
+          "n": 16,
+          "mean_v": -1.0015625,
+          "sd_v": 0.0005123475382980372,
+          "mean_minus_nominal_mv": -1.5624999999999112
+        },
+        {
+          "window_s": [
+            51,
+            59
+          ],
+          "nominal_v": 0.5,
+          "n": 16,
+          "mean_v": 0.5016875,
+          "sd_v": 0.0004787135538781695,
+          "mean_minus_nominal_mv": 1.687499999999953
+        }
+      ],
+      "plateau_fit": {
+        "model": "mean_v = offset + gain * nominal_v",
+        "gain": 1.001994642857143,
+        "offset_v": 0.000503571428571381,
+        "maximum_absolute_residual_mv": 0.18660714285712032
+      }
+    },
+    "transit-method": {
+      "sensortag": {
+        "file": "astronomy/transitmethode_sensortag.example.csv",
+        "time_column": "t (s)",
+        "signal_column": "Relative Signal (a.u.)",
+        "rows": 113,
+        "median_dt_s": 0.7999999999999989,
+        "events": [
+          {
+            "center_s": 22,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 851.84,
+            "plateau_mean": 820.0,
+            "depth_fraction": 0.037377911344853576,
+            "threshold_fraction": 0.98,
+            "onset_s": 20.8,
+            "end_s": 24.0,
+            "threshold_duration_s": 3.1999999999999993,
+            "samples_within_nominal_four_s_event": 4
+          },
+          {
+            "center_s": 52,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 849.48,
+            "plateau_mean": 814.2933333333333,
+            "depth_fraction": 0.04142141859333559,
+            "threshold_fraction": 0.98,
+            "onset_s": 51.2,
+            "end_s": 53.6,
+            "threshold_duration_s": 2.3999999999999986,
+            "samples_within_nominal_four_s_event": 5
+          },
+          {
+            "center_s": 82,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 848.6933333333334,
+            "plateau_mean": 815.04,
+            "depth_fraction": 0.03965311380632197,
+            "threshold_fraction": 0.98,
+            "onset_s": 80.8,
+            "end_s": 84.0,
+            "threshold_duration_s": 3.200000000000003,
+            "samples_within_nominal_four_s_event": 4
+          }
+        ],
+        "mean_depth_fraction": 0.039484147914837044,
+        "global_extrema_depth_fraction": 0.05267090026148674,
+        "onset_intervals_s": [
+          30.400000000000002,
+          29.599999999999994
+        ],
+        "mean_onset_interval_s": 30.0,
+        "mean_threshold_duration_s": 2.9333333333333336
+      },
+      "phone": {
+        "file": "astronomy/transitmethode_phone.example.csv",
+        "time_column": "t (s)",
+        "signal_column": "Relative Signal (a.u.)",
+        "rows": 901,
+        "median_dt_s": 0.09984719999999925,
+        "events": [
+          {
+            "center_s": 22,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 522.01462265,
+            "plateau_mean": 501.33294305,
+            "depth_fraction": 0.03961896602629589,
+            "threshold_fraction": 0.98,
+            "onset_s": 20.3959127,
+            "end_s": 23.5930534,
+            "threshold_duration_s": 3.1971406999999985,
+            "samples_within_nominal_four_s_event": 40
+          },
+          {
+            "center_s": 52,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 519.3413098833333,
+            "plateau_mean": 498.5801154,
+            "depth_fraction": 0.039976012091156754,
+            "threshold_fraction": 0.98,
+            "onset_s": 50.4684567,
+            "end_s": 53.6696337,
+            "threshold_duration_s": 3.2011770000000013,
+            "samples_within_nominal_four_s_event": 40
+          },
+          {
+            "center_s": 82,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 519.0542817,
+            "plateau_mean": 498.1887828,
+            "depth_fraction": 0.040199069029276835,
+            "threshold_fraction": 0.98,
+            "onset_s": 80.4136726,
+            "end_s": 83.6099119,
+            "threshold_duration_s": 3.196239300000002,
+            "samples_within_nominal_four_s_event": 40
+          }
+        ],
+        "mean_depth_fraction": 0.039931349048909826,
+        "global_extrema_depth_fraction": 0.0522300130777619,
+        "onset_intervals_s": [
+          30.072543999999997,
+          29.9452159
+        ],
+        "mean_onset_interval_s": 30.00887995,
+        "mean_threshold_duration_s": 3.1981856666666673
+      },
+      "owon": {
+        "file": "astronomy/transitmethode_owon.example.csv",
+        "time_column": "Time (s)",
+        "signal_column": "Relative Signal (a.u.)",
+        "rows": 181,
+        "median_dt_s": 0.5,
+        "events": [
+          {
+            "center_s": 22,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 1.85775,
+            "plateau_mean": 1.7838,
+            "depth_fraction": 0.03980621719822364,
+            "threshold_fraction": 0.98,
+            "onset_s": 20.5,
+            "end_s": 24.0,
+            "threshold_duration_s": 3.5,
+            "samples_within_nominal_four_s_event": 7
+          },
+          {
+            "center_s": 52,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 1.8524166666666666,
+            "plateau_mean": 1.7782,
+            "depth_fraction": 0.0400647802420262,
+            "threshold_fraction": 0.98,
+            "onset_s": 50.5,
+            "end_s": 54.0,
+            "threshold_duration_s": 3.5,
+            "samples_within_nominal_four_s_event": 7
+          },
+          {
+            "center_s": 82,
+            "baseline_window_abs_offset_s": [
+              3,
+              6
+            ],
+            "plateau_window_abs_offset_s": [
+              0,
+              1
+            ],
+            "baseline": 1.8521666666666667,
+            "plateau_mean": 1.778,
+            "depth_fraction": 0.04004319265724832,
+            "threshold_fraction": 0.98,
+            "onset_s": 80.5,
+            "end_s": 84.0,
+            "threshold_duration_s": 3.5,
+            "samples_within_nominal_four_s_event": 7
+          }
+        ],
+        "mean_depth_fraction": 0.03997139669916605,
+        "global_extrema_depth_fraction": 0.04357181280258201,
+        "onset_intervals_s": [
+          30.0,
+          30.0
+        ],
+        "mean_onset_interval_s": 30.0,
+        "mean_threshold_duration_s": 3.5
+      }
+    }
+  }
+}

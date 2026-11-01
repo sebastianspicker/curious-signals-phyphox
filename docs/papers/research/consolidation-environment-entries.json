@@ -1,0 +1,31 @@
+[
+  {
+    "slug": "temperature-humidity",
+    "title": "Temperature and Humidity: Local Air State, Calibration and Dynamic Response",
+    "short_title": "Local Temperature and Humidity",
+    "group": "core",
+    "analysis_ids": [
+      "temperature-humidity",
+      "cc2541-humidity",
+      "sensortag-environmental"
+    ],
+    "figures": [
+      "topic-figures/temperature-humidity-states.tex"
+    ],
+    "markdown": "companions/temperature-humidity.md"
+  },
+  {
+    "slug": "analog-inputs",
+    "title": "Voltage Measurement and Circuit Inference: ADC Codes and Multimeter Readings",
+    "short_title": "Voltage Measurement and Circuit Inference",
+    "group": "core",
+    "analysis_ids": [
+      "analog-inputs",
+      "owon-interface"
+    ],
+    "figures": [
+      "topic-figures/analog-inputs-records.tex"
+    ],
+    "markdown": "companions/analog-inputs.md"
+  }
+]

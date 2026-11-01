@@ -1,0 +1,100 @@
+<!-- Original Curious Signals draft from documented protocols; archive provenance is in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+    <title>Draft: Puck.js relative light</title>
+    <category>Curious Signals drafts</category>
+    <description>Install a scoped 4 Hz Puck.js light-sampling timer through Nordic UART; receive relative light, device monotonic seconds, and independent Bluetooth receive time.</description>
+    <data-containers>
+        <container size="0">device_s</container>
+        <container size="0">light_raw</container>
+        <container size="0">receive_s</container>
+        <container size="0">light_relative</container>
+        <container size="1" init="0">dark</container>
+        <container size="1" init="0">reference</container>
+        <container size="1" init="0">reference_valid</container>
+        <container size="0">transmission_candidate</container>
+        <container size="0">relative_transmission_invalid</container>
+        <container size="0">relative_transmission</container>
+    </data-containers>
+    <input>
+        <bluetooth id="cs-puck" name="Puck.js" mode="notification" uuid="6e400001-b5a3-f393-e0a9-e50e24dcca9e" mtu="53">
+            <config char="6e400002-b5a3-f393-e0a9-e50e24dcca9e" conversion="string">(function(){if(global.csLight&amp;&amp;csLight.timer)cle</config>
+            <config char="6e400002-b5a3-f393-e0a9-e50e24dcca9e" conversion="string">arInterval(csLight.timer);global.csLight={};csLi</config>
+            <config char="6e400002-b5a3-f393-e0a9-e50e24dcca9e" conversion="string">ght.timer=setInterval(function(){NRF.updateServi</config>
+            <config char="6e400002-b5a3-f393-e0a9-e50e24dcca9e" conversion="string">ces({'6e400001-b5a3-f393-e0a9-e50e24dcca9e':{'6e</config>
+            <config char="6e400002-b5a3-f393-e0a9-e50e24dcca9e" conversion="string">400003-b5a3-f393-e0a9-e50e24dcca9e':{value:getTi</config>
+            <config char="6e400002-b5a3-f393-e0a9-e50e24dcca9e" conversion="string">me().toFixed(3)+','+Puck.light().toFixed(6),noti</config>
+            <config char="6e400002-b5a3-f393-e0a9-e50e24dcca9e" conversion="string">fy:true}}});},250);})();
+</config>
+            <output char="6e400003-b5a3-f393-e0a9-e50e24dcca9e" conversion="formattedString" separator="," index="0">device_s</output>
+            <output char="6e400003-b5a3-f393-e0a9-e50e24dcca9e" conversion="formattedString" separator="," index="1">light_raw</output>
+            <output char="6e400003-b5a3-f393-e0a9-e50e24dcca9e" extra="time">receive_s</output>
+        </bluetooth>
+    </input>
+    <analysis sleep="0.1" onUserInput="false">
+        <formula formula="[1_]+0*sqrt([1_])*sqrt(1-[1_])">
+            <input clear="false">light_raw</input>
+            <output clear="true">light_relative</output>
+        </formula>
+        <formula formula="([1_]-[2])/([3]-[2])+0*sqrt([3]-[2])/sqrt([3]-[2])+0*sqrt([1_]-[2])">
+            <input clear="false">light_relative</input>
+            <input clear="false">dark</input>
+            <input clear="false">reference</input>
+            <output clear="true">transmission_candidate</output>
+        </formula>
+        <formula formula="[1_]*0/0">
+            <input clear="false">transmission_candidate</input>
+            <output clear="true">relative_transmission_invalid</output>
+        </formula>
+        <if equal="true">
+            <input clear="false">reference_valid</input>
+            <input type="value">1</input>
+            <input clear="false">transmission_candidate</input>
+            <input clear="false">relative_transmission_invalid</input>
+            <output clear="true">relative_transmission</output>
+        </if>
+    </analysis>
+    <views>
+        <view label="Relative light">
+            <graph label="Relative light" labelX="Receive time" unitX="s" labelY="Relative light" unitY="0..1" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">light_relative</input>
+            </graph>
+        </view>
+        <view label="Calibration">
+            <edit label="Measured dark" default="0" unit="" signed="true" decimal="true">
+                <output>dark</output>
+            </edit>
+            <edit label="Measured open reference" default="0" unit="" signed="true" decimal="true">
+                <output>reference</output>
+            </edit>
+            <edit label="Reference verified (0 or 1)" default="0" unit="" signed="true" decimal="true">
+                <output>reference_valid</output>
+            </edit>
+            <graph label="Reference ratio" labelX="Receive time" unitX="s" labelY="Reference ratio" unitY="ratio" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">relative_transmission</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Use a Puck.js with Espruino firmware and Nordic UART available. Connecting sends a RAM script, replaces only global.csLight and its own prior timer, then starts a 250 ms interval (4 Hz). It does not save to flash." />
+            <info label="No reset(), global timer clearing or echo setting is sent. Existing programs still run and may contend for the LED light sensor, UART, power or radio; export/inspect them before connecting. Console output can corrupt this UART stream. Use a device with no other UART writer." />
+            <info label="The installed timer may continue while phyphox is paused/disconnected. In the Espruino IDE, stop it with clearInterval(csLight.timer); delete global.csLight; before restoring other use. Reconnection replaces only this timer." />
+            <info label="Puck.light() uses the LED and reports an uncalibrated, spectrum-dependent 0..1 quantity, not lux. Do not exceed 5 Hz including any other program calls. Keep geometry and spectrum fixed for dark/reference comparisons." />
+            <info label="Device getTime seconds and phone receive seconds are independent clocks. Keep both for latency/dropout checks; do not subtract them as synchronized absolute times." />
+        </view>
+    </views>
+    <export>
+        <set name="Light">
+            <data name="Receive time (s)">receive_s</data>
+            <data name="Puck getTime clock (s)">device_s</data>
+            <data name="Raw relative light">light_raw</data>
+            <data name="Domain checked relative light">light_relative</data>
+            <data name="Dark corrected reference ratio">relative_transmission</data>
+        </set>
+        <set name="Settings">
+            <data name="Measured dark">dark</data>
+            <data name="Measured open reference">reference</data>
+            <data name="Reference verified (0 or 1)">reference_valid</data>
+        </set>
+    </export>
+</phyphox>

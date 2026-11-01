@@ -1,0 +1,94 @@
+<!-- Original Curious Signals draft from documented protocols; archive provenance is in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+    <title>Draft: SensorTag environmental channels</title>
+    <category>Curious Signals drafts</category>
+    <description>Receive HDC1000 humidity and temperature plus BMP280 pressure and die temperature on one CC2650/CC1350 SensorTag. Each notification family keeps its own receive timestamps.</description>
+    <data-containers>
+        <container size="0">hdc_temperature_raw</container>
+        <container size="0">humidity_raw</container>
+        <container size="0">bmp_temperature_raw</container>
+        <container size="0">pressure_raw</container>
+        <container size="0">humidity_receive_s</container>
+        <container size="0">pressure_receive_s</container>
+        <container size="0">humidity_pct</container>
+        <container size="0">hdc_temperature_C</container>
+        <container size="0">bmp_temperature_C</container>
+        <container size="0">pressure_hPa</container>
+    </data-containers>
+    <input>
+        <bluetooth id="environment" name="SensorTag" mode="notification">
+            <config char="F000AA23-0451-4000-B000-000000000000" conversion="hexadecimal">FF</config>
+            <config char="F000AA22-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
+            <config char="F000AA44-0451-4000-B000-000000000000" conversion="hexadecimal">FF</config>
+            <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
+            <output char="F000AA21-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">hdc_temperature_raw</output>
+            <output char="F000AA21-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="2" length="2">humidity_raw</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" conversion="int24LittleEndian" offset="0" length="3">bmp_temperature_raw</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" conversion="uInt24LittleEndian" offset="3" length="3">pressure_raw</output>
+            <output char="F000AA21-0451-4000-B000-000000000000" extra="time">humidity_receive_s</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">pressure_receive_s</output>
+        </bluetooth>
+    </input>
+    <analysis sleep="0.1" onUserInput="false">
+        <formula formula="floor([1_]/4)*4/65536*100">
+            <input clear="false">humidity_raw</input>
+            <output clear="true">humidity_pct</output>
+        </formula>
+        <formula formula="[1_]/65536*165-40">
+            <input clear="false">hdc_temperature_raw</input>
+            <output clear="true">hdc_temperature_C</output>
+        </formula>
+        <formula formula="[1_]/100">
+            <input clear="false">bmp_temperature_raw</input>
+            <output clear="true">bmp_temperature_C</output>
+        </formula>
+        <formula formula="[1_]/100">
+            <input clear="false">pressure_raw</input>
+            <output clear="true">pressure_hPa</output>
+        </formula>
+    </analysis>
+    <views>
+        <view label="Humidity sensor">
+            <graph label="Relative humidity" labelX="Receive time" unitX="s" labelY="Relative humidity" unitY="%" partialUpdate="false">
+                <input axis="x">humidity_receive_s</input>
+                <input axis="y">humidity_pct</input>
+            </graph>
+            <graph label="HDC1000 temperature" labelX="Receive time" unitX="s" labelY="HDC1000 temperature" unitY="°C" partialUpdate="false">
+                <input axis="x">humidity_receive_s</input>
+                <input axis="y">hdc_temperature_C</input>
+            </graph>
+        </view>
+        <view label="Barometer">
+            <graph label="Pressure" labelX="Receive time" unitX="s" labelY="Pressure" unitY="hPa" partialUpdate="false">
+                <input axis="x">pressure_receive_s</input>
+                <input axis="y">pressure_hPa</input>
+            </graph>
+            <graph label="BMP280 die temperature" labelX="Receive time" unitX="s" labelY="BMP280 die temperature" unitY="°C" partialUpdate="false">
+                <input axis="x">pressure_receive_s</input>
+                <input axis="y">bmp_temperature_C</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Select one CC2650/CC1350 SensorTag. Both services share the environment Bluetooth id and therefore the same device selection. The legacy CC2541 packet is incompatible." />
+            <info label="Requested sensor intervals are 2.55 s. Packet loss and scheduling can alter receipt spacing; no sample-count clock is synthesized." />
+            <info label="Humidity and HDC1000 temperature share humidity_receive_s; pressure and BMP280 temperature share pressure_receive_s. Align records deliberately before calculating cross-sensor differences." />
+            <info label="Keep the humidity vent exposed and avoid condensation. Co-locate with traceable references and allow equilibration before interpreting absolute values. Raw readings remain exported." />
+        </view>
+    </views>
+    <export>
+        <set name="Humidity sensor">
+            <data name="Receive time (s)">humidity_receive_s</data>
+            <data name="Relative humidity (%)">humidity_pct</data>
+            <data name="HDC1000 temperature (°C)">hdc_temperature_C</data>
+            <data name="humidity_raw (packet count)">humidity_raw</data>
+            <data name="hdc_temperature_raw (packet count)">hdc_temperature_raw</data>
+        </set>
+        <set name="Barometer">
+            <data name="Receive time (s)">pressure_receive_s</data>
+            <data name="Pressure (hPa)">pressure_hPa</data>
+            <data name="BMP280 die temperature (°C)">bmp_temperature_C</data>
+            <data name="pressure_raw (packet count)">pressure_raw</data>
+            <data name="bmp_temperature_raw (packet count)">bmp_temperature_raw</data>
+        </set>
+    </export>
+</phyphox>

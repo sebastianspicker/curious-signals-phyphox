@@ -1,184 +1,363 @@
 <!-- Written by Sebastian J. Spicker at the Astrolab, University of Cologne. Licence: GPL-3.0, see the repository LICENSE. -->
-<phyphox version="1.7" locale="en">
+<phyphox version="1.8" locale="en">
   <title>Relative Reflected Light</title>
   <category>*Astrolab University of Cologne</category>
       <description>
        Measure the reflected light signal from different surfaces and compare it under fixed geometry to discuss reflectivity and albedo qualitatively. The same file supports the phone light sensor or the TI SensorTag light sensor. This experiment is a classroom analogue and a reflectance proxy: it compares relative reflected-light levels and does not determine a calibrated planetary albedo on its own.
     </description>
   <translations>
-    <translation locale="de">
-      <title>Relatives reflektiertes Licht</title>
-      <category>*Astrolabor Universität zu Köln</category>
-      <description>
+  <translation locale="de">
+    <title>Relatives reflektiertes Licht</title>
+    <category>*Astrolabor Universität zu Köln</category>
+    <description>
        Messe das reflektierte Lichtsignal verschiedener Oberflächen und vergleiche es bei fester Geometrie, um Reflexion und Albedo qualitativ zu diskutieren. Dieselbe Datei unterstützt den Lichtsensor des Smartphones oder den Lichtsensor des TI SensorTag. Dieses Experiment ist eine Klassenzimmer-Analogie und ein Reflexionsproxy: Es vergleicht relative Werte des reflektierten Lichts und bestimmt keine kalibrierte planetare Albedo.
     </description>
-      <string original="Phone reflectance proxy">Reflexionsproxy Smartphone</string>
-      <string original="Use this tab with the phone light sensor under fixed geometry.">Nutze diesen Tab mit dem Lichtsensor des Smartphones bei fester Geometrie.</string>
-      <string original="Relative Light Level">Relatives Lichtniveau</string>
-      <string original="Maximum signal">Maximales Signal</string>
-      <string original="Minimum signal">Minimales Signal</string>
-      <string original="Reflectance proxy">Reflexionsproxy</string>
-      <string original="SensorTag reflectance proxy">Reflexionsproxy SensorTag</string>
-      <string original="Use this tab with the TI SensorTag light sensor under fixed geometry.">Nutze diesen Tab mit dem Lichtsensor des TI SensorTag bei fester Geometrie.</string>
-      <string original="Phone Raw">Smartphone Rohdaten</string>
-      <string original="SensorTag Raw">SensorTag Rohdaten</string>
-      <string original="Relative light level (a.u.)">Relatives Lichtniveau (a.u.)</string>
-    </translation>
-    <translation locale="fr">
-      <title>Lumière réfléchie relative</title>
-      <category>*Astrolab University of Cologne</category>
-      <description>
+    <string original="Phone reflectance proxy">Reflexionsproxy Smartphone</string>
+    <string original="Use this tab with the phone light sensor under fixed geometry.">Nutze diesen Tab mit dem Lichtsensor des Smartphones bei fester Geometrie.</string>
+    <string original="Relative Light Level">Relatives Lichtniveau</string>
+    <string original="Maximum signal">Maximales Signal</string>
+    <string original="Minimum signal">Minimales Signal</string>
+    <string original="Reflectance proxy">Reflexionsproxy</string>
+    <string original="SensorTag reflectance proxy">Reflexionsproxy SensorTag</string>
+    <string original="Use this tab with the TI SensorTag light sensor under fixed geometry.">Nutze diesen Tab mit dem Lichtsensor des TI SensorTag bei fester Geometrie.</string>
+    <string original="Phone Raw">Smartphone Rohdaten</string>
+    <string original="SensorTag Raw">SensorTag Rohdaten</string>
+    <string original="Relative light level (a.u.)">Relatives Lichtniveau (a.u.)</string>
+    <string original="Setup">Aufbau</string>
+    <string original="Calibration">Kalibrierung</string>
+    <string original="Full-record contrast">Kontrast der gesamten Messung</string>
+    <string original="Use entered means (0 or 1)">Eingegebene Mittelwerte nutzen (0 oder 1)</string>
+    <string original="Dark/background mean">Dunkel-/Hintergrundmittelwert</string>
+    <string original="Reference mean">Referenzmittelwert</string>
+    <string original="Sample mean">Probenmittelwert</string>
+    <string original="Relative reflectance">Relativer Reflexionsfaktor</string>
+    <string original="Signal source (1 phone, 2 SensorTag, 3 Owon)">Signalquelle (1 Telefon, 2 SensorTag, 3 Owon)</string>
+    <string original="Owon model (1 B35T, 2 W18B)">Owon-Modell (1 B35T, 2 W18B)</string>
+    <string original="Baseline mean">Basislinienmittelwert</string>
+    <string original="Transit plateau mean">Mittelwert des Transitplateaus</string>
+    <string original="Distance ratio dp/ds">Abstandsverhältnis dp/ds</string>
+    <string original="Local transit depth">Lokale Transittiefe</string>
+    <string original="Complete events">Vollständige Ereignisse</string>
+    <string original="Mean threshold duration">Mittlere Schwellwertdauer</string>
+    <string original="Mean onset period">Mittlere Eintrittsperiode</string>
+    <string original="Lower normalized threshold">Untere normierte Schwelle</string>
+    <string original="Upper normalized threshold">Obere normierte Schwelle</string>
+    <string original="Normalized signal">Normiertes Signal</string>
+    <string original="Detector die temperature">Sensortemperatur</string>
+    <string original="Distance origin">Abstandsursprung</string>
+    <string original="Distance scale">Abstandsskala</string>
+    <string original="Calibrated distance">Kalibrierter Abstand</string>
+    <string original="Fix lamp, sample holder, viewing angles and sensor position; baffle direct lamp light. Record covered-sensor dark, then reference/sample/reference plateaus without moving the geometry. Enter their settled means separately for each sensor and enable the reduction. q=(sample-dark)/(reference-dark) requires reference above dark and sample at least dark.">Lampe, Probenhalter, Blickwinkel und Sensorposition fixieren; direktes Lampenlicht abschirmen. Dunkelsignal bei abgedecktem Sensor sowie Referenz-/Proben-/Referenzplateaus bei gleicher Geometrie messen. Eingeschwungene Mittelwerte für jeden Sensor getrennt eingeben und die Auswertung aktivieren. q=(Probe-Dunkel)/(Referenz-Dunkel) erfordert Referenz über Dunkel und Probe mindestens Dunkel.</string>
+    <string original="Check detector linearity and avoid clipping. The full-record contrast includes covered intervals and noise; it is not the sample reflectance. The ratio is relative to this reference and geometry, not a planetary albedo. SensorTag time is notification arrival time; phone time is its sensor event time.">Linearität prüfen und Sättigung vermeiden. Der Gesamtkontrast enthält abgedeckte Intervalle und Rauschen; er ist kein Reflexionsfaktor der Probe. Das Verhältnis gilt für diese Referenz und Geometrie und ist keine planetare Albedo. SensorTag-Zeit ist die Ankunftszeit der Nachricht; das Telefon nutzt seine Sensorereigniszeit.</string>
+  </translation>
+  <translation locale="fr">
+    <title>Lumière réfléchie relative</title>
+    <category>*Astrolab University of Cologne</category>
+    <description>
        Mesure le signal de lumière réfléchie de différentes surfaces et compare-le dans une géométrie fixe afin de discuter qualitativement de la réflectivité et de l'albédo. Le même fichier prend en charge le capteur de lumière du téléphone ou celui du TI SensorTag. Cette expérience est une analogie de salle de classe et un proxy de réflectance : elle compare des niveaux relatifs de lumière réfléchie et ne détermine pas à elle seule un albédo planétaire calibré.
     </description>
-      <string original="Phone reflectance proxy">Proxy de réflectance téléphone</string>
-      <string original="Use this tab with the phone light sensor under fixed geometry.">Utilise cet onglet avec le capteur de lumière du téléphone dans une géométrie fixe.</string>
-      <string original="Relative Light Level">Niveau lumineux relatif</string>
-      <string original="Maximum signal">Signal maximal</string>
-      <string original="Minimum signal">Signal minimal</string>
-      <string original="Reflectance proxy">Proxy de réflectance</string>
-      <string original="SensorTag reflectance proxy">Proxy de réflectance SensorTag</string>
-      <string original="Use this tab with the TI SensorTag light sensor under fixed geometry.">Utilise cet onglet avec le capteur de lumière du TI SensorTag dans une géométrie fixe.</string>
-      <string original="Phone Raw">Données brutes téléphone</string>
-      <string original="SensorTag Raw">Données brutes SensorTag</string>
-      <string original="Relative light level (a.u.)">Niveau lumineux relatif (u.a.)</string>
-    </translation>
-  </translations>
+    <string original="Phone reflectance proxy">Proxy de réflectance téléphone</string>
+    <string original="Use this tab with the phone light sensor under fixed geometry.">Utilise cet onglet avec le capteur de lumière du téléphone dans une géométrie fixe.</string>
+    <string original="Relative Light Level">Niveau lumineux relatif</string>
+    <string original="Maximum signal">Signal maximal</string>
+    <string original="Minimum signal">Signal minimal</string>
+    <string original="Reflectance proxy">Proxy de réflectance</string>
+    <string original="SensorTag reflectance proxy">Proxy de réflectance SensorTag</string>
+    <string original="Use this tab with the TI SensorTag light sensor under fixed geometry.">Utilise cet onglet avec le capteur de lumière du TI SensorTag dans une géométrie fixe.</string>
+    <string original="Phone Raw">Données brutes téléphone</string>
+    <string original="SensorTag Raw">Données brutes SensorTag</string>
+    <string original="Relative light level (a.u.)">Niveau lumineux relatif (u.a.)</string>
+    <string original="Setup">Montage</string>
+    <string original="Calibration">Étalonnage</string>
+    <string original="Full-record contrast">Contraste sur tout le relevé</string>
+    <string original="Use entered means (0 or 1)">Utiliser les moyennes saisies (0 ou 1)</string>
+    <string original="Dark/background mean">Moyenne sombre/fond</string>
+    <string original="Reference mean">Moyenne de référence</string>
+    <string original="Sample mean">Moyenne de l’échantillon</string>
+    <string original="Relative reflectance">Réflectance relative</string>
+    <string original="Signal source (1 phone, 2 SensorTag, 3 Owon)">Source (1 téléphone, 2 SensorTag, 3 Owon)</string>
+    <string original="Owon model (1 B35T, 2 W18B)">Modèle Owon (1 B35T, 2 W18B)</string>
+    <string original="Baseline mean">Moyenne hors transit</string>
+    <string original="Transit plateau mean">Moyenne du plateau du transit</string>
+    <string original="Distance ratio dp/ds">Rapport des distances dp/ds</string>
+    <string original="Local transit depth">Profondeur locale du transit</string>
+    <string original="Complete events">Événements complets</string>
+    <string original="Mean threshold duration">Durée moyenne entre seuils</string>
+    <string original="Mean onset period">Période moyenne des débuts</string>
+    <string original="Lower normalized threshold">Seuil normalisé inférieur</string>
+    <string original="Upper normalized threshold">Seuil normalisé supérieur</string>
+    <string original="Normalized signal">Signal normalisé</string>
+    <string original="Detector die temperature">Température de la puce du détecteur</string>
+    <string original="Distance origin">Origine de la distance</string>
+    <string original="Distance scale">Échelle de distance</string>
+    <string original="Calibrated distance">Distance étalonnée</string>
+    <string original="Fix lamp, sample holder, viewing angles and sensor position; baffle direct lamp light. Record covered-sensor dark, then reference/sample/reference plateaus without moving the geometry. Enter their settled means separately for each sensor and enable the reduction. q=(sample-dark)/(reference-dark) requires reference above dark and sample at least dark.">Fixer la lampe, le porte-échantillon, les angles et le capteur; masquer la lumière directe. Mesurer le noir avec capteur couvert, puis des plateaux référence/échantillon/référence sans déplacer le montage. Saisir les moyennes stabilisées séparément pour chaque capteur et activer le calcul. q=(échantillon-noir)/(référence-noir) exige une référence au-dessus du noir et un échantillon au moins égal au noir.</string>
+    <string original="Check detector linearity and avoid clipping. The full-record contrast includes covered intervals and noise; it is not the sample reflectance. The ratio is relative to this reference and geometry, not a planetary albedo. SensorTag time is notification arrival time; phone time is its sensor event time.">Vérifier la linéarité et éviter la saturation. Le contraste global inclut les passages couverts et le bruit; il ne donne pas la réflectance de l’échantillon. Le rapport dépend de cette référence et de cette géométrie; ce n’est pas une albédo planétaire. Le temps SensorTag est celui de réception; le téléphone utilise l’horodatage de son capteur.</string>
+  </translation>
+</translations>
+
   <data-containers>
-    <container size="0">phone_amplitude</container>
-    <container size="0">phone_t</container>
-    <container size="0" static="false">phone_max_amplitude</container>
-    <container size="0" static="false">phone_min_amplitude</container>
-    <container size="0" static="false">phone_depth</container>
-    <container size="0" static="false">st_amplitude</container>
-    <container size="0" static="false">st_t</container>
-    <container size="0" static="false">st_max_amplitude</container>
-    <container size="0" static="false">st_min_amplitude</container>
-    <container size="0" static="false">st_depth</container>
-    <container size="0" static="false">st_RawInt</container>
-    <container size="0" static="false">st_e</container>
-    <container size="0" static="false">st_m</container>
-    <container size="1" static="false">st_countI</container>
-    <container size="1" static="false">st_tmax</container>
-    <container size="0" static="false">st_factor</container>
-  </data-containers>
+  <container size="0">phone_amplitude</container>
+  <container size="0">phone_t</container>
+  <container size="0" static="false">phone_max_amplitude</container>
+  <container size="0" static="false">phone_min_amplitude</container>
+  <container size="0" static="false">phone_depth</container>
+  <container size="0" static="false">st_amplitude</container>
+  <container size="0" static="false">st_t</container>
+  <container size="0" static="false">st_max_amplitude</container>
+  <container size="0" static="false">st_min_amplitude</container>
+  <container size="0" static="false">st_depth</container>
+  <container size="0" static="false">st_RawInt</container>
+  <container size="0" static="false">st_e</container>
+  <container size="0" static="false">st_m</container>
+  <container size="1" static="false">st_countI</container>
+  <container size="1" static="false">st_tmax</container>
+  <container size="0" static="false">st_factor</container>
+  <container size="1">phone_dark</container>
+  <container size="1">phone_reference</container>
+  <container size="1">phone_sample</container>
+  <container size="1">phone_use_means</container>
+  <container size="0">phone_ratio_candidate</container>
+  <container size="0">phone_ratio_den</container>
+  <container size="0">phone_ratio_guard</container>
+  <container size="0">phone_ratio_nonnegative</container>
+  <container size="0">phone_ratio</container>
+  <container size="1">st_dark</container>
+  <container size="1">st_reference</container>
+  <container size="1">st_sample</container>
+  <container size="1">st_use_means</container>
+  <container size="0">st_ratio_candidate</container>
+  <container size="0">st_ratio_den</container>
+  <container size="0">st_ratio_guard</container>
+  <container size="0">st_ratio_nonnegative</container>
+  <container size="0">st_ratio</container>
+</data-containers>
+
+
 
   <input>
-    <sensor type="light">
-      <output component="t">phone_t</output>
-      <output component="x">phone_amplitude</output>
-    </sensor>
-    <bluetooth name="SensorTag" mode="notification" rate="1" subscribeOnStart="false">
-        <config char="F000AA73-0451-4000-B000-000000000000" conversion="hexadecimal">50</config>
-        <config char="F000AA72-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
-        <output char="F000AA71-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">st_RawInt</output>
-    </bluetooth>
-  </input>
+  <sensor type="light" ignoreUnavailable="true">
+    <output component="t">phone_t</output>
+    <output component="x">phone_amplitude</output>
+  </sensor>
+  <bluetooth name="SensorTag" mode="notification" rate="1" subscribeOnStart="false">
+    <config char="F000AA73-0451-4000-B000-000000000000" conversion="hexadecimal">50</config>
+    <config char="F000AA72-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
+    <output char="F000AA71-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">st_RawInt</output>
+    <output char="F000AA71-0451-4000-B000-000000000000" extra="time">st_t</output>
+  </bluetooth>
+</input>
+
+
 
     <analysis>
-        <max>
-            <input as="y" clear="false">phone_amplitude</input>
-            <output as="max">phone_max_amplitude</output>
-        </max>
-        <min multiple="false">
-            <input as="y" clear="false">phone_amplitude</input>
-            <output as="min">phone_min_amplitude</output>
-        </min>
-        <formula formula="([1]-[2])/[1]*100">
-            <input as="in" clear="false">phone_max_amplitude</input>
-            <input as="in" clear="false">phone_min_amplitude</input>
-            <output as="out">phone_depth</output>
-        </formula>
-        <formula formula="floor([1_]/4096)">
-            <input as="in" clear="false">st_RawInt</input>
-            <output as="out">st_e</output>
-        </formula>
-        <formula formula="[2_]-[1_]*4096">
-            <input as="in" clear="false">st_e</input>
-            <input as="in" clear="false">st_RawInt</input>
-            <output as="out">st_m</output>
-        </formula>
-        <power>
-            <input as="base" type="value">2</input>
-            <input as="exponent" clear="false">st_e</input>
-            <output as="power">st_factor</output>
-        </power>
-        <formula formula="[2_]*(0.01*[1_])">
-            <input as="in" clear="false">st_factor</input>
-            <input as="in" clear="false">st_m</input>
-            <output as="out">st_amplitude</output>
-        </formula>
-        <count>
-            <input as="buffer" clear="false">st_RawInt</input>
-            <output as="count">st_countI</output>
-        </count>
-        <formula formula="([1]-1)*0.8">
-            <input as="in" clear="false">st_countI</input>
-            <output as="out">st_tmax</output>
-        </formula>
-        <ramp>
-            <input as="start" type="value">0</input>
-            <input as="stop">st_tmax</input>
-            <input as="length">st_countI</input>
-            <output as="out">st_t</output>
-        </ramp>
-        <max>
-            <input as="y" clear="false">st_amplitude</input>
-            <output as="max">st_max_amplitude</output>
-        </max>
-        <min multiple="false">
-            <input as="y" clear="false">st_amplitude</input>
-            <output as="min">st_min_amplitude</output>
-        </min>
-        <formula formula="([1]-[2])/[1]*100">
-            <input as="in" clear="false">st_max_amplitude</input>
-            <input as="in" clear="false">st_min_amplitude</input>
-            <output as="out">st_depth</output>
-        </formula>
-  </analysis>
+  <max>
+    <input as="y" clear="false">phone_amplitude</input>
+    <output as="max">phone_max_amplitude</output>
+  </max>
+  <min multiple="false">
+    <input as="y" clear="false">phone_amplitude</input>
+    <output as="min">phone_min_amplitude</output>
+  </min>
+  <formula formula="([1]-[2])/[1]*100">
+    <input as="in" clear="false">phone_max_amplitude</input>
+    <input as="in" clear="false">phone_min_amplitude</input>
+    <output as="out">phone_depth</output>
+  </formula>
+  <formula formula="floor([1_]/4096)">
+    <input as="in" clear="false">st_RawInt</input>
+    <output as="out">st_e</output>
+  </formula>
+  <formula formula="[2_]-[1_]*4096">
+    <input as="in" clear="false">st_e</input>
+    <input as="in" clear="false">st_RawInt</input>
+    <output as="out">st_m</output>
+  </formula>
+  <power>
+    <input as="base" type="value">2</input>
+    <input as="exponent" clear="false">st_e</input>
+    <output as="power">st_factor</output>
+  </power>
+  <formula formula="[2_]*(0.01*[1_])">
+    <input as="in" clear="false">st_factor</input>
+    <input as="in" clear="false">st_m</input>
+    <output as="out">st_amplitude</output>
+  </formula>
+  <max>
+    <input as="y" clear="false">st_amplitude</input>
+    <output as="max">st_max_amplitude</output>
+  </max>
+  <min multiple="false">
+    <input as="y" clear="false">st_amplitude</input>
+    <output as="min">st_min_amplitude</output>
+  </min>
+  <formula formula="([1]-[2])/[1]*100">
+    <input as="in" clear="false">st_max_amplitude</input>
+    <input as="in" clear="false">st_min_amplitude</input>
+    <output as="out">st_depth</output>
+  </formula>
+  <formula formula="[1]-[2]">
+    <input clear="false" type="buffer">phone_reference</input>
+    <input clear="false" type="buffer">phone_dark</input>
+    <output clear="true">phone_ratio_den</output>
+  </formula>
+  <formula formula="([1]-[2])/([3]-[2])">
+    <input clear="false" type="buffer">phone_sample</input>
+    <input clear="false" type="buffer">phone_dark</input>
+    <input clear="false" type="buffer">phone_reference</input>
+    <output clear="true">phone_ratio_candidate</output>
+  </formula>
+  <if greater="true">
+    <input clear="false" type="buffer" as="a">phone_ratio_den</input>
+    <input clear="false" type="value" as="b">0</input>
+    <input clear="false" type="buffer" as="true">phone_ratio_candidate</input>
+    <input clear="false" type="value" as="false">NaN</input>
+    <output clear="true">phone_ratio_guard</output>
+  </if>
+  <if greater="true" equal="true">
+    <input clear="false" type="buffer" as="a">phone_ratio_guard</input>
+    <input clear="false" type="value" as="b">0</input>
+    <input clear="false" type="buffer" as="true">phone_ratio_guard</input>
+    <input clear="false" type="value" as="false">NaN</input>
+    <output clear="true">phone_ratio_nonnegative</output>
+  </if>
+  <if equal="true">
+    <input clear="false" type="buffer" as="a">phone_use_means</input>
+    <input clear="false" type="value" as="b">1</input>
+    <input clear="false" type="buffer" as="true">phone_ratio_nonnegative</input>
+    <input clear="false" type="value" as="false">NaN</input>
+    <output clear="true">phone_ratio</output>
+  </if>
+  <formula formula="[1]-[2]">
+    <input clear="false" type="buffer">st_reference</input>
+    <input clear="false" type="buffer">st_dark</input>
+    <output clear="true">st_ratio_den</output>
+  </formula>
+  <formula formula="([1]-[2])/([3]-[2])">
+    <input clear="false" type="buffer">st_sample</input>
+    <input clear="false" type="buffer">st_dark</input>
+    <input clear="false" type="buffer">st_reference</input>
+    <output clear="true">st_ratio_candidate</output>
+  </formula>
+  <if greater="true">
+    <input clear="false" type="buffer" as="a">st_ratio_den</input>
+    <input clear="false" type="value" as="b">0</input>
+    <input clear="false" type="buffer" as="true">st_ratio_candidate</input>
+    <input clear="false" type="value" as="false">NaN</input>
+    <output clear="true">st_ratio_guard</output>
+  </if>
+  <if greater="true" equal="true">
+    <input clear="false" type="buffer" as="a">st_ratio_guard</input>
+    <input clear="false" type="value" as="b">0</input>
+    <input clear="false" type="buffer" as="true">st_ratio_guard</input>
+    <input clear="false" type="value" as="false">NaN</input>
+    <output clear="true">st_ratio_nonnegative</output>
+  </if>
+  <if equal="true">
+    <input clear="false" type="buffer" as="a">st_use_means</input>
+    <input clear="false" type="value" as="b">1</input>
+    <input clear="false" type="buffer" as="true">st_ratio_nonnegative</input>
+    <input clear="false" type="value" as="false">NaN</input>
+    <output clear="true">st_ratio</output>
+  </if>
+</analysis>
+
+
 
   <views>
-    <view label="Phone reflectance proxy">
-      <info label="Use this tab with the phone light sensor under fixed geometry." />
-      <graph label="Relative Light Level" labelX="t" unitX="s" labelY="Signal" unitY="a.u." partialUpdate="true">
-        <input axis="x">phone_t</input>
-        <input axis="y">phone_amplitude</input>
-      </graph>
-         <value label="Maximum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1" >
-            <input>phone_max_amplitude</input>
-        </value>
-         <value label="Minimum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1" >
-           <input>phone_min_amplitude</input>
-        </value>
-        <value label="Reflectance proxy" size="2" precision="2" scientific="false" unit="%" factor="1" >
-            <input>phone_depth</input>
-        </value>
-    </view>
-    <view label="SensorTag reflectance proxy">
-      <info label="Use this tab with the TI SensorTag light sensor under fixed geometry." />
-      <graph label="Relative Light Level" labelX="t" unitX="s" labelY="Signal" unitY="a.u." partialUpdate="true">
-        <input axis="x">st_t</input>
-        <input axis="y">st_amplitude</input>
-      </graph>
-         <value label="Maximum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1" >
-            <input>st_max_amplitude</input>
-        </value>
-         <value label="Minimum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1" >
-           <input>st_min_amplitude</input>
-        </value>
-        <value label="Reflectance proxy" size="2" precision="2" scientific="false" unit="%" factor="1" >
-            <input>st_depth</input>
-        </value>
-    </view>
-  </views>
+  <view label="Phone reflectance proxy">
+    <info label="Use this tab with the phone light sensor under fixed geometry." />
+    <graph label="Relative Light Level" labelX="t" unitX="s" labelY="Signal" unitY="a.u." partialUpdate="false">
+      <input axis="x">phone_t</input>
+      <input axis="y">phone_amplitude</input>
+    </graph>
+    <value label="Maximum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1">
+      <input>phone_max_amplitude</input>
+    </value>
+    <value label="Minimum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1">
+      <input>phone_min_amplitude</input>
+    </value>
+    <value label="Full-record contrast" size="2" precision="2" scientific="false" unit="%" factor="1">
+      <input>phone_depth</input>
+    </value>
+    <edit label="Use entered means (0 or 1)" default="0" decimal="false" signed="true" min="0" max="1">
+      <output>phone_use_means</output>
+    </edit>
+    <edit label="Dark/background mean" default="0" decimal="true" signed="true" unit="a.u.">
+      <output>phone_dark</output>
+    </edit>
+    <edit label="Reference mean" default="0" decimal="true" signed="true" unit="a.u.">
+      <output>phone_reference</output>
+    </edit>
+    <edit label="Sample mean" default="0" decimal="true" signed="true" unit="a.u.">
+      <output>phone_sample</output>
+    </edit>
+    <value label="Relative reflectance" precision="4">
+      <input>phone_ratio</input>
+    </value>
+  </view>
+  <view label="SensorTag reflectance proxy">
+    <info label="Use this tab with the TI SensorTag light sensor under fixed geometry." />
+    <graph label="Relative Light Level" labelX="t" unitX="s" labelY="Signal" unitY="a.u." partialUpdate="false">
+      <input axis="x">st_t</input>
+      <input axis="y">st_amplitude</input>
+    </graph>
+    <value label="Maximum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1">
+      <input>st_max_amplitude</input>
+    </value>
+    <value label="Minimum signal" size="2" precision="1" scientific="false" unit="a.u." factor="1">
+      <input>st_min_amplitude</input>
+    </value>
+    <value label="Full-record contrast" size="2" precision="2" scientific="false" unit="%" factor="1">
+      <input>st_depth</input>
+    </value>
+    <edit label="Use entered means (0 or 1)" default="0" decimal="false" signed="true" min="0" max="1">
+      <output>st_use_means</output>
+    </edit>
+    <edit label="Dark/background mean" default="0" decimal="true" signed="true" unit="a.u.">
+      <output>st_dark</output>
+    </edit>
+    <edit label="Reference mean" default="0" decimal="true" signed="true" unit="a.u.">
+      <output>st_reference</output>
+    </edit>
+    <edit label="Sample mean" default="0" decimal="true" signed="true" unit="a.u.">
+      <output>st_sample</output>
+    </edit>
+    <value label="Relative reflectance" precision="4">
+      <input>st_ratio</input>
+    </value>
+  </view>
+  <view label="Setup">
+    <info label="Fix lamp, sample holder, viewing angles and sensor position; baffle direct lamp light. Record covered-sensor dark, then reference/sample/reference plateaus without moving the geometry. Enter their settled means separately for each sensor and enable the reduction. q=(sample-dark)/(reference-dark) requires reference above dark and sample at least dark." />
+    <info label="Check detector linearity and avoid clipping. The full-record contrast includes covered intervals and noise; it is not the sample reflectance. The ratio is relative to this reference and geometry, not a planetary albedo. SensorTag time is notification arrival time; phone time is its sensor event time." />
+  </view>
+</views>
+
+
 
   <export>
-    <set name="Phone Raw">
-      <data name="t (s)">phone_t</data>
-      <data name="Relative light level (a.u.)">phone_amplitude</data>
-    </set>
-    <set name="SensorTag Raw">
-      <data name="t (s)">st_t</data>
-      <data name="Relative light level (a.u.)">st_amplitude</data>
-    </set>
-   </export>
+  <set name="Phone Raw">
+    <data name="t (s)">phone_t</data>
+    <data name="Relative light level (a.u.)">phone_amplitude</data>
+  </set>
+  <set name="SensorTag Raw">
+    <data name="t (s)">st_t</data>
+    <data name="Relative light level (a.u.)">st_amplitude</data>
+  </set>
+  <set name="Phone reduction">
+    <data name="Dark/background mean">phone_dark</data>
+    <data name="Reference mean">phone_reference</data>
+    <data name="Sample mean">phone_sample</data>
+    <data name="Use entered means (0 or 1)">phone_use_means</data>
+    <data name="Relative reflectance">phone_ratio</data>
+  </set>
+  <set name="SensorTag reduction">
+    <data name="Dark/background mean">st_dark</data>
+    <data name="Reference mean">st_reference</data>
+    <data name="Sample mean">st_sample</data>
+    <data name="Use entered means (0 or 1)">st_use_means</data>
+    <data name="Relative reflectance">st_ratio</data>
+  </set>
+</export>
+
 </phyphox>

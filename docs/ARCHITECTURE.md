@@ -46,7 +46,7 @@ those copies from drifting apart:
   `protocol/contract.json` by hand.
 - **Core experiments:** `make validate` checks sources and generated files
   against the parsed contract (UUIDs, offsets, conversions, mode per filename).
-- **Preview:** keep the modes and channel shapes in `demo/fixtures.js` in step
+- **Preview:** keep the modes and channel shapes in the preview data module in step
   with the contract.
 
 ## Components and ownership
@@ -58,14 +58,52 @@ those copies from drifting apart:
 | `src/phyphox/` | Seven editable core experiment definitions and local XInclude fragments | Generator inputs; not distributed directly |
 | `experiments/*.phyphox` | Seven generated, importable core experiments | Tracked distributable artifacts |
 | `experiments/astronomy/` | Eight directly maintained astronomy experiments | Independent importable artifacts |
-| `demo/` | Deterministic simulated traces for the core mode shapes | Static browser content; not a BLE client |
+| `experiments/drafts/` | Twenty-eight directly maintained additional drafts | Separate draft category; actual acquisition identified per file |
+| `docs/drafts/` | Editable companion manuscripts, source review and manifest | Maps drafts to hardware, sources, limitations and fixtures |
+| `arxiv/<paper>/` | Independent TeX source, cited bibliography, figures and data for each topic paper, with a local PDF proof | One arXiv submission per folder; matching `YYYY-MM_paper-title` TeX/PDF names; PDF excluded from upload ZIP |
+| `demo/` | Deterministic example traces for the core mode shapes | Static browser content; not a BLE client |
 | `arduino/toolchain.json` | Pinned board core, sensor libraries, and FQBN | Firmware build reproducibility contract |
 | `src/curious_signals/` | Contract parsing, XML generation, validation, parity, bundling, and Arduino provisioning/compilation | Internal contributor tooling |
 | `scripts/secret-scan.sh` | Credential-pattern scan behind `make security` | Contributor and CI guardrail |
+| `scripts/check_experiment_math.py` | Focused XML analysis interpreter and independent scientific regression fixtures | Software verification behind `make validate`; no runtime dependency |
 
 The astronomy collection may use phone sensors, TI SensorTags, Bluetooth HID, or
 supported Owon multimeters. It has no dependency on the Arduino protocol and
 never enters the core generator.
+
+Additional drafts may use the existing Nano protocol, external sensor protocols
+or explicitly entered observations. `scripts/check_drafts.py` validates their
+manifest coverage, structural references and acquisition contracts, then calls
+five focused XML fixture groups. The twenty-one topic papers cover all
+forty-three experiments. The paper manifest separates the forty-three
+`analysis_sources` from the canonical `papers`, whose `analysis_ids` partition
+those sources. The original fifteen reductions, twenty-eight additional
+reductions and fifteen supplementary analyses retain their own source IDs.
+The draft manifest links each device to its canonical paper and retains the
+experimental validation status.
+`make bundle-drafts` packages the reviewed XML and editable companions locally
+under `output/drafts/`; it does not add them to the core release bundle.
+
+`make arxiv` prepares the twenty-one canonical papers as independent submission
+sources. `docs/papers/prepare_arxiv.py` copies each article's required inputs,
+adds the retrospective title note, and builds in temporary directories outside
+the checkout. It verifies the final upload ZIPs by extracting and compiling
+them again. Source folders and adjacent ignored PDF proofs live under `arxiv/`;
+upload archives and verification records live under the ignored `output/` tree.
+`make check-arxiv` checks source freshness, proof hashes and upload ZIP contents
+without rewriting artifacts.
+
+`make papers` validates or refreshes those standalone proofs and uses them for
+the individual PDFs and collection. `docs/papers/build_retrospective.py` compiles
+the cover, overview and full-title contents from `collection.tex`, then uses
+PyMuPDF to assemble the existing article PDFs. Only the local page numeral is
+replaced; scientific text and vector figures retain their original layout.
+Continuous Arabic numbering counts the unprinted cover as page 1 and matches
+PDF page labels, contents ranges and bookmarks. Article links are resolved and
+remapped to their collection destinations. A build report binds the source
+hashes, pagination, links and output archives; `make check-retrospective` checks
+them without rebuilding. The dedicated retrospective source ZIP includes the
+final article PDFs and sources needed to rebuild independently of this checkout.
 
 ## Runtime data flow
 
@@ -100,9 +138,9 @@ identifier, pairing policy, authorization layer, or application-level
 encryption, so operate one intended board within discovery range. The repository
 does not claim multi-board selection or any form of access control.
 
-The static preview runs separately. It renders fixed deterministic fixtures in a
-browser and makes no Bluetooth, sensor, network, or storage calls. It is
-demonstration content, not evidence about hardware or scientific data.
+The static preview runs separately. It renders fixed deterministic example
+traces in a browser and makes no Bluetooth, sensor, network, or storage calls.
+It illustrates the hardware and data shapes.
 
 ## Build and artifact flow
 
@@ -195,7 +233,7 @@ a disposable `Checkout` copy instead of patching module internals.
 
 - Change shared wire or mode facts in `protocol/contract.json`, update every
   affected concrete implementation (firmware, XML sources and includes, preview
-  fixtures, docs tables), and describe the compatibility impact. `make validate`
+  preview data, docs tables), and describe the compatibility impact. `make validate`
   checks the XML against the contract; the firmware and preview are kept in step
   by hand here and by the maintainer's separate behaviour tests.
 - Edit core experiments under `src/phyphox/` and rebuild their matching root

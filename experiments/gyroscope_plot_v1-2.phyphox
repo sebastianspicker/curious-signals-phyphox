@@ -25,6 +25,17 @@
             <string original="Angular velocity">vitesse angulaire</string>
             <string original="Simple">Composantes</string>
             <string original="Raw Data">Raw Data</string>
+        <string original="Calibration">&#xC9;talonnage</string>
+<string original="Bias x">Biais x</string>
+<string original="Gain x">Facteur x</string>
+<string original="Bias y">Biais y</string>
+<string original="Gain y">Facteur y</string>
+<string original="Bias z">Biais z</string>
+<string original="Gain z">Facteur z</string>
+<string original="Setup">Montage</string>
+<string original="Warm up the powered board and measure each zero-rate bias while motionless. Align one axis with a rotary table and determine gains using equal positive and negative reference rates from an encoder and independent clock. Use k(raw-b); zero-rate data alone cannot determine k. The pinned library scale differs from the datasheet nominal sensitivity: 1.14688 is only a nominal gain comparison, not a board calibration. Integrating a residual bias produces angle drift.">Laisser la carte sous tension se stabiliser puis mesurer les biais &#xE0; l&#x2019;arr&#xEA;t. Aligner un axe sur une table tournante ; d&#xE9;terminer les facteurs avec des vitesses de r&#xE9;f&#xE9;rence oppos&#xE9;es, un encodeur et une horloge ind&#xE9;pendante. Utiliser k(brut-b) ; les donn&#xE9;es &#xE0; l&#x2019;arr&#xEA;t ne d&#xE9;terminent pas k. Le facteur nominal 1,14688 compare les &#xE9;chelles de la biblioth&#xE8;que et de la fiche technique ; il ne constitue pas un &#xE9;talonnage de la carte. Un biais r&#xE9;siduel cr&#xE9;e une d&#xE9;rive de l&#x2019;angle int&#xE9;gr&#xE9;.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Enregistrer une r&#xE9;f&#xE9;rence stable avant et apr&#xE8;s chaque essai. L&#x2019;intervalle BLE est d&#x2019;au moins 50 ms ; les mesures indisponibles restent NaN. Les signaux rapides n&#xE9;cessitent une bande passante v&#xE9;rifi&#xE9;e et un filtre anti-repliement.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Saisir les coefficients mesur&#xE9;s sur ce montage. Les valeurs initiales sont nominales, sans &#xE9;talonnage. Un changement recalcule toute la courbe ; mesures originales et r&#xE9;glages sont export&#xE9;s s&#xE9;par&#xE9;ment. Effacer les donn&#xE9;es r&#xE9;tablit les valeurs initiales.</string>
         </translation>
         <translation locale="de">
             <title>Drehrate (Gyroskop)</title>
@@ -43,6 +54,17 @@
             <string original="Angular velocity">Drehrate</string>
             <string original="Simple">Einfach</string>
             <string original="Raw Data">Rohdaten</string>
+        <string original="Calibration">Kalibrierung</string>
+<string original="Bias x">Offset x</string>
+<string original="Gain x">Faktor x</string>
+<string original="Bias y">Offset y</string>
+<string original="Gain y">Faktor y</string>
+<string original="Bias z">Offset z</string>
+<string original="Gain z">Faktor z</string>
+<string original="Setup">Aufbau</string>
+<string original="Warm up the powered board and measure each zero-rate bias while motionless. Align one axis with a rotary table and determine gains using equal positive and negative reference rates from an encoder and independent clock. Use k(raw-b); zero-rate data alone cannot determine k. The pinned library scale differs from the datasheet nominal sensitivity: 1.14688 is only a nominal gain comparison, not a board calibration. Integrating a residual bias produces angle drift.">Die eingeschaltete Platine aufw&#xE4;rmen und jeden Nullratenoffset in Ruhe messen. Eine Achse am Drehtisch ausrichten; Faktoren aus gleich gro&#xDF;en positiven und negativen Referenzraten mit Encoder und unabh&#xE4;ngiger Uhr bestimmen. Es gilt k(Rohwert-b); Ruhedaten allein bestimmen k nicht. Bibliothek und Datenblatt haben unterschiedliche nominale Skalen: 1,14688 ist nur ein Nennwertvergleich, keine Platinenkalibrierung. Ein verbleibender Offset erzeugt bei Integration Winkeldrift.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Vor und nach jedem Versuch eine stabile Referenz aufzeichnen. Das BLE-Intervall betr&#xE4;gt mindestens 50 ms; nicht verf&#xFC;gbare Sensormesswerte bleiben NaN. Schnelle Signale ben&#xF6;tigen eine unabh&#xE4;ngig gepr&#xFC;fte Bandbreite und einen Anti-Aliasing-Filter.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Am eigenen Aufbau gemessene Koeffizienten eingeben. Vorgaben sind Nennwerte, keine Kalibrierung. &#xC4;nderungen berechnen die gesamte Kurve neu; urspr&#xFC;ngliche Messwerte und Einstellungen werden getrennt exportiert. Daten l&#xF6;schen setzt die Vorgaben zur&#xFC;ck.</string>
         </translation>
     </translations>
     <data-containers>
@@ -59,6 +81,12 @@
 	    <container size="0" static="false" init="">CH3_norm</container>
 	    <container size="0" static="false" init="">CH4_norm</container>
 	    <container size="0" static="false" init="">CH5_norm</container>
+    <container size="1" init="0">bias_x</container>
+<container size="1" init="1">gain_x</container>
+<container size="1" init="0">bias_y</container>
+<container size="1" init="1">gain_y</container>
+<container size="1" init="0">bias_z</container>
+<container size="1" init="1">gain_z</container>
     </data-containers>
     <input>
         <bluetooth mode="notification" rate="1" subscribeOnStart="false" id="Sense">
@@ -80,22 +108,22 @@
     <views>
         
         <view label="Graph">
-            <graph label="Gyroscope x" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Gyroscope x" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2_norm</input>
             </graph>
-            <graph label="Gyroscope y" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Gyroscope y" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH3_norm</input>
             </graph>
-            <graph label="Gyroscope z" aspectRatio="2.5" style="lines" lineWidth="1" color="yellow" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Gyroscope z" aspectRatio="2.5" style="lines" lineWidth="1" color="yellow" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH4_norm</input>
             </graph>
         </view>
         
         <view label="Absolute">
-            <graph label="Absolute angular velocity" aspectRatio="2.5" style="lines" lineWidth="1" color="white" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Absolute angular velocity" aspectRatio="2.5" style="lines" lineWidth="1" color="white" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH5_norm</input>
             </graph>
@@ -105,7 +133,7 @@
         </view>
         
         <view label="Multi">
-            <graph label="Angular velocity" aspectRatio="2.5" style="lines" lineWidth="1" partialUpdate="true" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Angular velocity" aspectRatio="2.5" style="lines" lineWidth="1" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="rad/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x" color="green">CH1</input>
                 <input axis="y">CH2_norm</input>
                 <input axis="x" color="blue">CH1</input>
@@ -146,46 +174,79 @@
         
         <!-- original view of raw sensor data: deg/s -->
         <view label="Raw Data">
-            <graph label="Gyroscope x" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Gyroscope x" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2</input>
             </graph>
-            <graph label="Gyroscope y" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Gyroscope y" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH3</input>
             </graph>
-            <graph label="Gyroscope z" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Gyroscope z" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH4</input>
             </graph>
-            <graph label="Absolute" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" history="1" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Absolute" aspectRatio="2.5" style="lines" lineWidth="1" color="ff7e22" partialUpdate="false" labelX="t" labelY="&#x3C9;" labelZ="" unitX="s" unitY="deg/s" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH5</input>
             </graph>
         </view>
+    <view label="Setup">
+    <info label="Warm up the powered board and measure each zero-rate bias while motionless. Align one axis with a rotary table and determine gains using equal positive and negative reference rates from an encoder and independent clock. Use k(raw-b); zero-rate data alone cannot determine k. The pinned library scale differs from the datasheet nominal sensitivity: 1.14688 is only a nominal gain comparison, not a board calibration. Integrating a residual bias produces angle drift."/>
+    <info label="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering."/>
+</view>
+    <view label="Calibration">
+    <info label="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults."/>
+    <edit label="Bias x" unit="deg/s" default="0" decimal="true" signed="true">
+        <output>bias_x</output>
+    </edit>
+    <edit label="Gain x" unit="" default="1" decimal="true" signed="false" min="0.000000001">
+        <output>gain_x</output>
+    </edit>
+    <edit label="Bias y" unit="deg/s" default="0" decimal="true" signed="true">
+        <output>bias_y</output>
+    </edit>
+    <edit label="Gain y" unit="" default="1" decimal="true" signed="false" min="0.000000001">
+        <output>gain_y</output>
+    </edit>
+    <edit label="Bias z" unit="deg/s" default="0" decimal="true" signed="true">
+        <output>bias_z</output>
+    </edit>
+    <edit label="Gain z" unit="" default="1" decimal="true" signed="false" min="0.000000001">
+        <output>gain_z</output>
+    </edit>
+</view>
     </views>
     
     <!-- deg/s to rad/s -->
-    <analysis sleep="0" onUserInput="false">
-        <formula formula="[1_]*3.14159/180">
-            <input clear="false">CH2</input>
-            <output>CH2_norm</output>
-        </formula>
-        <formula formula="[1_]*3.14159/180">
-            <input clear="false">CH3</input>
-            <output>CH3_norm</output>
-        </formula>
-        <formula formula="[1_]*3.14159/180">
-            <input clear="false">CH4</input>
-            <output>CH4_norm</output>
-        </formula>
-        <formula formula="[1_]*3.14159/180">
-            <input clear="false">CH5</input>
-            <output>CH5_norm</output>
-        </formula>
-    </analysis>
+    <analysis sleep="0.05">
+    <formula formula="([1_]-[2])*[3]*3.141592653589793/180">
+        <input clear="false">CH2</input>
+        <input clear="false">bias_x</input>
+        <input clear="false">gain_x</input>
+        <output clear="true">CH2_norm</output>
+    </formula>
+    <formula formula="([1_]-[2])*[3]*3.141592653589793/180">
+        <input clear="false">CH3</input>
+        <input clear="false">bias_y</input>
+        <input clear="false">gain_y</input>
+        <output clear="true">CH3_norm</output>
+    </formula>
+    <formula formula="([1_]-[2])*[3]*3.141592653589793/180">
+        <input clear="false">CH4</input>
+        <input clear="false">bias_z</input>
+        <input clear="false">gain_z</input>
+        <output clear="true">CH4_norm</output>
+    </formula>
+    <formula formula="sqrt([1_]^2+[2_]^2+[3_]^2)">
+        <input clear="false">CH2_norm</input>
+        <input clear="false">CH3_norm</input>
+        <input clear="false">CH4_norm</input>
+        <output clear="true">CH5_norm</output>
+    </formula>
+</analysis>
     <export>
-    <set name="Raw data (rad/s)">
+    <set name="Calibrated data (rad/s)">
             <data name="Time t (s)">CH1</data>
             <data name="Angular Velocity x (rad/s)">CH2_norm</data>
             <data name="Angular Velocity y (rad/s)">CH3_norm</data>
@@ -199,5 +260,17 @@
             <data name="Angular Velocity z (deg/s)">CH4</data>
             <data name="Absolute Angular Velocity (deg/s)">CH5</data>
         </set>
+    <set name="Calibration settings">
+    <data name="Bias x (deg/s)">bias_x</data>
+    <data name="Gain x">gain_x</data>
+    <data name="Bias y (deg/s)">bias_y</data>
+    <data name="Gain y">gain_y</data>
+    <data name="Bias z (deg/s)">bias_z</data>
+    <data name="Gain z">gain_z</data>
+</set>
+    <set name="Timing">
+    <data name="Device time (s)">CH1</data>
+    <data name="BLE receive time (s)">CH0</data>
+</set>
     </export>
 </phyphox>

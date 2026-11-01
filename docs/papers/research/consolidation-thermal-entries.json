@@ -1,0 +1,45 @@
+[
+  {
+    "slug": "greenhouse",
+    "title": "Enclosure Heating and Thermal Response",
+    "short_title": "Enclosure Heating",
+    "group": "thermal",
+    "analysis_ids": [
+      "greenhouse",
+      "greenhouse-single"
+    ],
+    "figures": [
+      "topic-figures/greenhouse-response.tex"
+    ],
+    "markdown": "companions/greenhouse.md"
+  },
+  {
+    "slug": "mission-to-mars",
+    "title": "Pressure, Compression and Relaxation in Gas Enclosures",
+    "short_title": "Gas Enclosures",
+    "group": "thermal",
+    "analysis_ids": [
+      "mission-to-mars",
+      "cc2541-pressure",
+      "pt-star"
+    ],
+    "figures": [
+      "topic-figures/mission-to-mars-cases.tex"
+    ],
+    "markdown": "companions/mission-to-mars.md"
+  },
+  {
+    "slug": "tidal-locking",
+    "title": "From Illumination Geometry to Thermal Contrast",
+    "short_title": "Illumination and Thermal Contrast",
+    "group": "thermal",
+    "analysis_ids": [
+      "tidal-locking",
+      "seasons-obliquity"
+    ],
+    "figures": [
+      "topic-figures/tidal-locking-response.tex"
+    ],
+    "markdown": "companions/tidal-locking.md"
+  }
+]

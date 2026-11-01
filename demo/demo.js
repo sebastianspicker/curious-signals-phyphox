@@ -168,8 +168,8 @@ function renderChart(mode) {
   document.querySelector("#chart-pens").replaceChildren(...heads);
   document.querySelector("#chart-labels").replaceChildren(...labels);
   document.querySelector("#chart-label").textContent = mode.name;
-  document.querySelector("#chart-progress").textContent = `${fixtureSeconds(state.visiblePoints)} s fixture`;
-  document.querySelector("#chart-title").textContent = `Simulated ${mode.name.toLowerCase()} traces`;
+  document.querySelector("#chart-progress").textContent = `${fixtureSeconds(state.visiblePoints)} s trace`;
+  document.querySelector("#chart-title").textContent = `Example ${mode.name.toLowerCase()} traces`;
   document.querySelector("#chart-description").textContent = `A deterministic line chart that previews the structure of mode ${mode.id} measurements. It is not recorded sensor data.`;
   const legendItems = mode.series.map((series, seriesIndex) => {
     const item = createElement("span", { class: "legend-item" });
@@ -255,7 +255,7 @@ function stopStream(message) {
   state.running = false;
   streamStatus.dataset.state = "idle";
   if (message) streamStatus.textContent = message;
-  renderToggleButton("m8 5 11 7-11 7V5Z", "Start simulated stream");
+  renderToggleButton("m8 5 11 7-11 7V5Z", "Start example stream");
 }
 
 function renderToggleButton(path, label) {
@@ -269,18 +269,18 @@ function startStream() {
   if (reducedMotion.matches) {
     state.visiblePoints = pointCount;
     renderWorkspace();
-    streamStatus.textContent = "Simulated stream complete. Full fixture shown with reduced motion.";
+    streamStatus.textContent = "Example stream complete. Full trace shown with reduced motion.";
     return;
   }
   state.running = true;
   streamStatus.dataset.state = "running";
-  streamStatus.textContent = "Simulated stream started.";
+  streamStatus.textContent = "Example stream started.";
   renderWorkspace();
-  renderToggleButton("M7 5h4v14H7zM13 5h4v14h-4z", "Pause simulated stream");
+  renderToggleButton("M7 5h4v14H7zM13 5h4v14h-4z", "Pause example stream");
   state.timer = window.setInterval(() => {
     state.visiblePoints += 1;
     renderWorkspace();
-    if (state.visiblePoints >= pointCount) stopStream("Simulated stream complete. Full fixture shown.");
+    if (state.visiblePoints >= pointCount) stopStream("Example stream complete. Full trace shown.");
   }, 90);
 }
 
@@ -291,15 +291,15 @@ modeList.addEventListener("click", (event) => {
   state.modeId = Number(button.dataset.mode);
   state.visiblePoints = pointCount;
   renderWorkspace();
-  streamStatus.textContent = `${currentMode().name} fixture ready.`;
+  streamStatus.textContent = `${currentMode().name} example trace ready.`;
 });
 
-toggleButton.addEventListener("click", () => state.running ? stopStream("Simulated stream paused.") : startStream());
-resetButton.addEventListener("click", () => { stopStream("Simulated fixture reset. Full fixture shown."); state.visiblePoints = pointCount; renderWorkspace(); });
+toggleButton.addEventListener("click", () => state.running ? stopStream("Example stream paused.") : startStream());
+resetButton.addEventListener("click", () => { stopStream("Example trace reset. Full trace shown."); state.visiblePoints = pointCount; renderWorkspace(); });
 
 reducedMotion.addEventListener("change", () => {
   if (reducedMotion.matches && state.running) {
-    stopStream("Simulated stream complete. Full fixture shown with reduced motion.");
+    stopStream("Example stream complete. Full trace shown with reduced motion.");
     state.visiblePoints = pointCount;
     renderWorkspace();
   }

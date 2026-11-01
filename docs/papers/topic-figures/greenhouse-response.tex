@@ -1,0 +1,22 @@
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2,vertical sep=1.55cm},width=0.97\columnwidth,height=3.6cm,
+grid=major,enlarge x limits=false,xmin=0,
+legend style={font=\scriptsize,at={(0.5,1.03)},anchor=south,legend columns=3,draw=none,fill=none},
+title style={font=\scriptsize,at={(0.02,0.98)},anchor=north west,fill=white},
+ylabel style={font=\footnotesize},xlabel style={font=\footnotesize},tick label style={font=\scriptsize}]
+\nextgroupplot[ylabel={Rise (K)},xlabel={Paired run time (s)},xmax=600,ymin=-0.3,ymax=9]
+\addplot[csblue,line width=0.8pt] table[col sep=comma,x expr={60*\thisrow{c0}},y expr={\thisrow{c1}-22.9505}] {data/greenhouse.csv};
+\addlegendentry{Open}
+\addplot[csred,dashed,line width=0.8pt] table[col sep=comma,x expr={60*\thisrow{c0}},y expr={\thisrow{c2}-22.5551666667}] {data/greenhouse.csv};
+\addlegendentry{Covered}
+\draw[black!40,densely dashed] (axis cs:60,-0.3)--(axis cs:60,9);
+\draw[black!40,densely dashed] (axis cs:360,-0.3)--(axis cs:360,9);
+\nextgroupplot[ylabel={Rise (K)},xlabel={Single run receive time (s)},xmax=300,ymin=-0.3,ymax=9.5]
+\addplot[csblue,line width=0.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c3}-22.7008928571}] {data/drafts/greenhouse-single.csv};
+\addlegendentry{Single sensor}
+\addplot[csred,dashed,line width=0.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c1}-22.7008928571}] {data/drafts/greenhouse-single_fit.csv};
+\addlegendentry{Heating fit}
+\draw[black!40,densely dashed] (axis cs:60,-0.3)--(axis cs:60,9.5);
+\draw[black!40,densely dashed] (axis cs:240,-0.3)--(axis cs:240,9.5);
+\end{groupplot}
+\end{tikzpicture}

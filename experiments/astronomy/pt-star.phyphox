@@ -18,6 +18,15 @@
             <string original="Maximum Temperature">Maximale Temperatur</string>
             <string original="Minimum Temperature">Minimale Temperatur</string>
             <string original="Time (min)">Zeit (min)</string>
+            <string original="BMP280 die temperature">BMP280-Chiptemperatur</string>
+            <string original="Maximum BMP280 die temperature">Maximum der BMP280-Chiptemperatur</string>
+            <string original="Minimum BMP280 die temperature">Minimum der BMP280-Chiptemperatur</string>
+            <string original="BMP280 die temperature (°C)">BMP280-Chiptemperatur (°C)</string>
+            <string original="BMP280 die temperature (K)">BMP280-Chiptemperatur (K)</string>
+            <string original="Setup">Aufbau</string>
+            <string original="Measure absolute pressure and record a calibrated chamber volume, including tubing and dead volume. Check leakage and chamber compliance before comparing slow and fast compression.">Miss den Absolutdruck und erfasse das kalibrierte Kammervolumen einschließlich Leitungen und Totvolumen. Prüfe Dichtheit und Kammernachgiebigkeit vor dem Vergleich langsamer und schneller Kompression.</string>
+            <string original="The temperature channel measures the BMP280 die. Use a separate fast gas probe, shielded from direct radiation and clear of walls, to test pV = nRT. Enter gas temperature in kelvin; die temperature is a diagnostic.">Der Temperaturkanal misst den BMP280-Chip. Verwende einen separaten schnellen Gasfühler, gegen direkte Strahlung abgeschirmt und ohne Wandkontakt, um pV = nRT zu prüfen. Setze Gastemperatur in Kelvin ein; die Chiptemperatur ist eine Diagnosegröße.</string>
+            <string original="The nominal one-second sampling interval can miss a fast pressure peak. Bluetooth receive timestamps preserve delays but do not measure the conversion instant. Compare settled windows and report thermal lag.">Das nominale Abtastintervall von einer Sekunde kann schnelle Druckspitzen verpassen. Bluetooth-Empfangszeiten erhalten Verzögerungen, messen aber nicht den Wandlungszeitpunkt. Vergleiche eingeschwungene Zeitfenster und gib thermische Verzögerungen an.</string>
         </translation>
         <translation locale="fr">
             <title>Pression et température : analogie de formation stellaire</title>
@@ -33,6 +42,15 @@
             <string original="Maximum Temperature">Température maximale</string>
             <string original="Minimum Temperature">Température minimale</string>
             <string original="Time (min)">Temps (min)</string>
+            <string original="BMP280 die temperature">Température de puce BMP280</string>
+            <string original="Maximum BMP280 die temperature">Maximum de température de puce BMP280</string>
+            <string original="Minimum BMP280 die temperature">Minimum de température de puce BMP280</string>
+            <string original="BMP280 die temperature (°C)">Température de puce BMP280 (°C)</string>
+            <string original="BMP280 die temperature (K)">Température de puce BMP280 (K)</string>
+            <string original="Setup">Montage</string>
+            <string original="Measure absolute pressure and record a calibrated chamber volume, including tubing and dead volume. Check leakage and chamber compliance before comparing slow and fast compression.">Mesure la pression absolue et relève le volume calibré de l'enceinte, tubes et volumes morts compris. Vérifie les fuites et la déformation de l'enceinte avant de comparer compressions lentes et rapides.</string>
+            <string original="The temperature channel measures the BMP280 die. Use a separate fast gas probe, shielded from direct radiation and clear of walls, to test pV = nRT. Enter gas temperature in kelvin; die temperature is a diagnostic.">Le canal de température mesure la puce BMP280. Utilise une sonde de gaz rapide distincte, protégée du rayonnement direct et éloignée des parois, pour tester pV = nRT. Utilise la température du gaz en kelvins ; la température de puce est un diagnostic.</string>
+            <string original="The nominal one-second sampling interval can miss a fast pressure peak. Bluetooth receive timestamps preserve delays but do not measure the conversion instant. Compare settled windows and report thermal lag.">L'intervalle nominal d'une seconde peut manquer un pic de pression rapide. Les temps de réception Bluetooth conservent les retards mais ne mesurent pas l'instant de conversion. Compare des intervalles stabilisés et indique le retard thermique.</string>
         </translation>
     </translations>
     <data-containers>
@@ -41,13 +59,12 @@
         <container size="0" static="false">tempCal</container>
         <container size="0" static="false">pCal</container>
         <container size="0" static="false">t</container>
-        <container size="1" static="false">count</container>
-        <container size="1" static="false">tmax</container>
-
         <container size="1" static="false">p_max</container>
         <container size="1" static="false">p_min</container>
         <container size="1" static="false">T_max</container>
         <container size="1" static="false">T_min</container>
+        <container size="0" static="false">receive_t</container>
+        <container size="0" static="false">tempK</container>
     </data-containers>
     <input>
         <bluetooth name="SensorTag" mode="notification" rate="1" subscribeOnStart="false">
@@ -55,11 +72,12 @@
             <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
             <output char="F000AA41-0451-4000-B000-000000000000" conversion="uInt24LittleEndian" offset="3" length="3">pRaw</output>
             <output char="F000AA41-0451-4000-B000-000000000000" conversion="int24LittleEndian" offset="0" length="3">tempRaw</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">receive_t</output>
         </bluetooth>
     </input>
     <output>
     </output>
-    <analysis sleep="0"  onUserInput="false">
+    <analysis sleep="0" onUserInput="false">
         <multiply>
             <input as="factor" clear="false">tempRaw</input>
             <input as="factor" type="value">0.01</input>
@@ -86,56 +104,56 @@
             <input as="y" clear="false">pCal</input>
             <output as="min">p_min</output>
         </min>
-        <count>
-            <input as="buffer" clear="false">tempRaw</input>
-            <output as="count">count</output>
-        </count>
-        <formula formula="([1]-1)*0.0166666666">
-            <input as="in" clear="false">count</input>
-            <output as="out">tmax</output>
+        <formula formula="[1_]/60">
+            <input clear="false">receive_t</input>
+            <output clear="true">t</output>
         </formula>
-        <ramp>
-            <input as="start" type="value">0</input>
-            <input as="stop">tmax</input>
-            <input as="length">count</input>
-            <output as="out">t</output>
-        </ramp>
+        <formula formula="[1_]+273.15">
+            <input clear="false">tempCal</input>
+            <output clear="true">tempK</output>
+        </formula>
     </analysis>
     <views>
         <view label="Analogy Comparison">
             <info label="This classroom analogue does not model star formation directly. It compares how pressure and temperature change together in a controlled setup." />
-            <separator height="1"/>
+            <separator height="1" />
             <info label="Use the graphs to discuss which quantity changes first, which one changes more strongly, and why this is only an analogy for astrophysical environments." />
-            <separator height="1"/>
-            <graph label="Pressure" partialUpdate="true" history="1" labelX="t" labelY="p" unitX="min" unitY="hPa" xPrecision="0" yPrecision="4">
+            <separator height="1" />
+            <graph label="Pressure" partialUpdate="false" labelX="t" labelY="p" unitX="min" unitY="hPa" xPrecision="0" yPrecision="4">
                 <input axis="x">t</input>
                 <input axis="y">pCal</input>
             </graph>
-            <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
+            <graph label="BMP280 die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
                 <input axis="x">t</input>
                 <input axis="y">tempCal</input>
             </graph>
-            <separator height="1"/>
-            <value label="Maximum Pressure" size="2" precision="2" scientific="false" unit="hPa" factor="1" >
-           <input>p_max</input>
+            <separator height="1" />
+            <value label="Maximum Pressure" size="2" precision="2" scientific="false" unit="hPa" factor="1">
+                <input>p_max</input>
             </value>
-            <value label="Minimum Pressure" size="2" precision="2" scientific="false" unit="hPa" factor="1" >
-           <input>p_min</input>
+            <value label="Minimum Pressure" size="2" precision="2" scientific="false" unit="hPa" factor="1">
+                <input>p_min</input>
             </value>
-            <separator height="1"/>
-            <value label="Maximum Temperature" size="2" precision="2" scientific="false" unit="°C" factor="1" >
-           <input>T_max</input>
+            <separator height="1" />
+            <value label="Maximum BMP280 die temperature" size="2" precision="2" scientific="false" unit="°C" factor="1">
+                <input>T_max</input>
             </value>
-            <value label="Minimum Temperature" size="2" precision="2" scientific="false" unit="°C" factor="1" >
-           <input>T_min</input>
+            <value label="Minimum BMP280 die temperature" size="2" precision="2" scientific="false" unit="°C" factor="1">
+                <input>T_min</input>
             </value>
+        </view>
+        <view label="Setup">
+            <info label="Measure absolute pressure and record a calibrated chamber volume, including tubing and dead volume. Check leakage and chamber compliance before comparing slow and fast compression." />
+            <info label="The temperature channel measures the BMP280 die. Use a separate fast gas probe, shielded from direct radiation and clear of walls, to test pV = nRT. Enter gas temperature in kelvin; die temperature is a diagnostic." />
+            <info label="The nominal one-second sampling interval can miss a fast pressure peak. Bluetooth receive timestamps preserve delays but do not measure the conversion instant. Compare settled windows and report thermal lag." />
         </view>
     </views>
     <export>
         <set name="p(t), T(t)">
             <data name="Time (min)">t</data>
             <data name="Pressure (hPa)">pCal</data>
-            <data name="Temperature (°C)">tempCal</data>
+            <data name="BMP280 die temperature (°C)">tempCal</data>
+            <data name="BMP280 die temperature (K)">tempK</data>
         </set>
     </export>
 </phyphox>

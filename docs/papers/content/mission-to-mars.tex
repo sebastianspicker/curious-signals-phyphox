@@ -1,0 +1,133 @@
+\begin{abstract}
+Pressure loading, compression and relaxation are different consequences of the same gas-state constraint. Independent enclosure examples give pressure excesses near 34.8~hPa for phone and BMP280 indications and 20.005~hPa for a T5400 indication. Their gradual declines quantify local relaxation, whose gas-flow interpretation depends on temperature and volume. A separate compression example rises by 75.03~hPa while the barometer die warms by 1.40~K. The observed pressure ratio is compatible with conditional isothermal and reversible adiabatic volume ratios of 0.93057 and 0.94990; their interpretation using chip thermometry depends on thermal coupling to the gas. A common measurement model connects these cases to force, gas amount and compression work, while separating per-device pressure compensation from reference calibration. Spacecraft enclosures and star formation supply physical contexts whose additional boundary conditions must remain explicit.
+\end{abstract}
+\begin{IEEEkeywords}
+Gas pressure, compression, thermal relaxation, barometer, identifiability, physical analogies.
+\end{IEEEkeywords}
+
+\section{From pressure loading to a gas-state model}
+Pressure measures mechanical action at a boundary. For a surface of effective area $A$ under uniform pressures,
+\begin{equation}
+ F=(p_{\rm in}-p_{\rm out})A.
+ \label{eq:mission-to-mars-force}
+\end{equation}
+The difference determines loading, whereas absolute pressure enters the gas equation of state. Mission to Mars uses this distinction in the design of a model enclosure that retains an atmosphere as external pressure falls~\cite{mars2022}. A near-ambient pressure excursion can examine the mechanical relation without reproducing the surrounding conditions of spaceflight.
+
+For an approximately ideal gas in a uniform thermodynamic state,
+\begin{equation}
+ pV=nRT_g,\qquad
+ \frac{\dot p}{p}=\frac{\dot n}{n}+\frac{\dot T_g}{T_g}-\frac{\dot V}{V}.
+ \label{eq:mission-to-mars-state}
+\end{equation}
+Here $T_g$ is gas temperature in kelvin, $V$ includes connected dead space and $n$ is the amount of gas. Pressure alone observes one combination of three changing quantities. A decline can result from gas loss, cooling or chamber expansion. Conversely, a rise can follow compression or heating, so its interpretation depends on which boundaries are controlled.
+
+The examples examine three related questions: how to quantify a pressure excess, what a short decline establishes, and which compression path is compatible with the observed endpoints. They use independent histories and initial states. Agreement of their indicated excursions cannot be interpreted as an inter-instrument calibration or a common chamber property.
+
+\section{Pressure compensation and independent thermometry}
+A controlled chamber needs a pressure reference, a valve or piston, and a separate gas-temperature probe (Fig.~\ref{fig:mission-to-mars-apparatus}). The sensor port must communicate freely with the gas; narrow tubing delays equilibration. The tubing volume contributes to $V$, while flexible walls and seals can make $V$ pressure dependent. A displacement scale is necessary when compression is to be measured rather than inferred conditionally.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.91cm,y=0.91cm,font=\scriptsize]
+ \fill[csblue!6] (0.3,0.5) rectangle (4.3,2.3);
+ \draw[thick] (0.3,0.5) rectangle (5.6,2.3);
+ \draw[thick,fill=csgray!20] (4.3,0.5) rectangle (4.5,2.3);
+ \draw[thick] (4.5,1.4)--(6.9,1.4);
+ \draw[<->] (4.4,2.65)--(5.6,2.65);
+ \node[above] at (5,2.65) {volume scale};
+ \node at (2.2,1.9) {gas: $p$, $T_g$, $V$, $n$};
+ \node[draw,fill=white] at (1.25,0.9) {barometer};
+ \draw[csred,thick] (3,0.1)--(3,1.15);
+ \fill[csred] (3,1.15) circle(0.045);
+ \node[below] at (3,0.05) {gas thermometer};
+ \draw[thick] (0.3,1.5)--(-0.15,1.5)--(-0.15,3.15)--(1.0,3.15);
+ \node[draw,anchor=west] at (1,3.15) {absolute-pressure reference};
+ \draw[thick] (0.8,0.5)--(0.8,-0.4);
+ \draw[thick] (0.55,-0.15)--(1.05,-0.3);
+ \node[below] at (0.8,-0.45) {valve};
+ \node[align=center] at (5.8,-0.65) {fixed-volume hold\\or piston motion};
+\end{tikzpicture}
+\caption{A common chamber arrangement for pressure loading, relaxation and compression. A controlled valve or measured piston motion defines the boundary condition; gas thermometry is independent of the pressure sensor's compensation temperature.}
+\label{fig:mission-to-mars-apparatus}
+\end{figure}
+
+The BMP280 is specified over 300--1100~hPa. Its temperature indication is affected by board temperature and self-heating~\cite{bmp280}. It is therefore denoted $T_b$, rather than substituted for $T_g$. A phone barometer has additional device-specific enclosure and filtering behaviour.
+
+The legacy CC2541 SensorTag's T5400 requires its own stored pressure-compensation coefficients~\cite{t5400}. In compact form, its pressure is $p=f(U_P,U_T;\boldsymbol c)$, where pressure and temperature codes $U_P,U_T$ are combined with the correct coefficient set $\boldsymbol c$. This conversion precedes calibration of the completed instrument against a reference. Dickow and Feiertag's pressure--temperature calibration study illustrates the value of independently varied reference states and observations withheld from fitting~\cite{dickow2015}. Mounting stress, thermal dependence and hysteresis enter the assembled instrument's calibration.
+
+In the T5400 example, local regression gives about $0.0244\unit{hPa}$ per pressure count, while temperature levels are separated by about 0.179~K. The pressure relation is local because its coefficients depend on temperature. These different increments show why a flat compensation-temperature interval cannot rule out smaller gas-temperature changes. A low-mass gas probe with an independently characterized response is needed for rapid compression. Air-step comparisons involving BMP280 and other mounted sensors show that thermal channels can disagree during transients~\cite{elyounsi2021}; neither their package location nor their nominal sampling interval establishes their response to the chamber gas.
+
+\section{Pressure excess and local relaxation}
+Define an excess relative to a settled pre-event mean,
+\begin{equation}
+ \Delta p(t)=p(t)-\bar p_0.
+ \label{eq:mission-to-mars-excess}
+\end{equation}
+Every interval below includes its lower boundary and excludes its upper. The independent phone and BMP280 examples use 0--15~s baselines, 30--35~s early plateaus and 50--55~s late plateaus. Linear least-squares fits over 30--55~s describe the intervening decline. Table~\ref{tab:mission-to-mars-relaxation} reports these values beside the T5400 case.
+
+\begin{table}[t]
+\caption{Baseline pressures, early excesses and local linear decline rates for three independent enclosure records. The T5400 analysis uses its own early-state and slope windows.}
+\label{tab:mission-to-mars-relaxation}
+\centering\small
+\begin{tabular}{@{}P{0.33\columnwidth}rrr@{}}
+\toprule
+Quantity & BMP280 & Phone & T5400\\
+\midrule
+Baseline (hPa) & 1009.016 & 1007.818 & 1008.000\\
+Early excess (hPa) & 34.829 & 34.807 & 20.005\\
+Decline (hPa/s) & $-0.05149$ & $-0.05135$ & $-0.09091$\\
+Slope window (s) & 30--55 & 30--55 & 28--44\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+For the phone and BMP280 records, early-to-late falls are 1.027 and 1.031~hPa. Their full pressure spans, 35.13 and 35.11~hPa, also include transient maxima and noise and should not replace settled-state comparisons. The 90--120~s recovery means lie about 0.05~hPa below their respective initial means.
+
+The T5400 reduction uses 0--18~s as baseline, 26--30~s as the early state and 52--60~s after release. The first two means are 1007.9998 and 1028.0049~hPa. The released mean is 1007.9979~hPa, demonstrating return close to the initial indication at the example resolution. Its decay-fit RMS residual is 0.0343~hPa; that residual characterizes the local line, rather than the uncertainty of a gas-flow inference.
+
+At fixed volume and gas temperature, Eq.~\eqref{eq:mission-to-mars-state} reduces to $\dot n/n=\dot p/p$. Under those additional assumptions, the T5400's local fractional decline is approximately $-8.85\times10^{-5}\unit{s^{-1}}$. Converting it to molar flow still requires $V$ and $T_g$. The same decline could instead reflect cooling with constant gas amount. If conductance is approximately proportional to a small pressure excess, a longer isothermal fixed-volume record may support exponential relaxation of $\Delta p$. Extrapolation of a relaxation time constant depends on the conductance model and the duration over which it applies.
+
+\begin{figure}[t]
+\centering
+\input{topic-figures/mission-to-mars-cases.tex}
+\caption{Baseline-relative pressure for (a) independent phone/BMP280 enclosure records, (b) T5400 relaxation and (c) compression. Panel (d) shows the compression run's die-temperature rise. Each record retains its own clock.}
+\label{fig:mission-to-mars-data}
+\end{figure}
+
+\section{Compression paths and gas thermometry}
+The compression analysis uses pressure and BMP280 die temperature to compare thermodynamic paths. Its four states use 0--30~s, 55--60~s, 70--85~s and 150--180~s windows (Table~\ref{tab:mission-to-mars-compression}). The original minute coordinate is converted to seconds without changing the record's one-second grid. This spacing does not establish that an earlier compression peak was resolved.
+
+\begin{table}[t]
+\caption{Compression-state means of pressure and barometer die temperature $T_b$. The early-state mean contains five samples from a single compression cycle.}
+\label{tab:mission-to-mars-compression}
+\centering\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Interval (s) & $p$ (hPa) & $T_b$ (${}^\circ$C)\\
+\midrule
+Baseline, 0--30 & 1005.57 & 23.400\\
+Early, 55--60 & 1080.60 & 24.800\\
+Later, 70--85 & 1078.07 & 24.797\\
+Recovered, 150--180 & 1005.53 & 23.400\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The initial pressure rise is 75.03~hPa, with $p_1/p_0=1.07461$. For a closed gas, isothermal compression gives $V_1/V_0=p_0/p_1=0.93057$, a conditional 6.94\% volume reduction. Reversible adiabatic compression with constant heat-capacity ratio $\gamma$ instead requires
+\begin{equation}
+ pV^\gamma=\mathrm{constant},\qquad
+ T_gV^{\gamma-1}=\mathrm{constant}.
+ \label{eq:mission-to-mars-adiabatic}
+\end{equation}
+For $\gamma=1.4$, the same pressure ratio gives $V_1/V_0=0.94990$. If the initial gas temperature equalled the baseline die value, 296.55~K, this path would predict a 6.16-K gas-temperature rise. The observed 1.40-K die rise reflects the sensor assembly's thermal response; comparison with gas-temperature predictions depends on thermal coupling to the gas. Substitution of die temperature into $pV/T$ gives a conditional volume ratio of 0.93496.
+
+Between the early and later states, pressure falls by 2.524~hPa while the die indication falls by only 0.0027~K. At fixed volume and gas amount, a gas initially at 297.95~K would need to cool by about 0.696~K to account for that pressure fall. The mismatch identifies the importance of independent thermometry; it does not distinguish leakage from delayed sensor response or piston motion.
+
+The first law, $dU=\delta Q-p\,dV$ for quasistatic boundary work, provides the physical distinction. Compression adds work; the resulting warming depends on how much energy escapes during the motion. Slow volume steps should be compared after thermal equilibration. Rapid steps require a gas probe and pressure port fast enough to follow the transient. A fitted relation $\log p=a-\beta\log V$ becomes available only after volume is independently measured. Calling $\beta$ a heat-capacity ratio additionally requires evidence that heat transfer and gas loss were negligible.
+
+\section{Calibration, closure and astronomical contexts}
+A calibration design should vary reference pressure and temperature independently; otherwise a warming pressure sweep can confound thermal drift with gain. Include increasing and decreasing pressures, repeat an initial state after each block and reserve conditions for validation. For transient comparisons, retain actual acquisition timestamps and check channel alignment. Neither polling time nor wireless frame spacing establishes the conversion instant or gas equilibration time.
+
+A stable additive offset largely cancels from $\Delta p$, while gain, changing thermal bias and baseline drift remain. Shared calibration terms create covariance between the plateau estimates. Propagate these terms with the temperature, volume and reference-pressure uncertainties required by the intended inference. Repeated complete cycles establish preparation-to-preparation variation; many correlated samples within one hold do not supply that evidence.
+
+The spacecraft context makes pressure loading concrete: Eq.~\eqref{eq:mission-to-mars-force} requires an effective area and the actual external pressure. A near-ambient chamber record does not by itself reproduce a cabin exposed to near-vacuum. The stellar context isolates another part of the model: compression work competes with cooling. Larson's collapse calculations established strongly nonuniform evolution and central-core formation~\cite{larson1969}; radiation-hydrodynamic studies examine how accretion energy is radiated or retained by a protostar~\cite{bhandare2025}. Self-gravity and spatial radiation transport distinguish those systems from a piston chamber. Across all three laboratory cases, the productive question is which independent observation closes the gas-state model: an area for force, volume and gas temperature for flow, or a measured thermodynamic path for compression work.

@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Original draft adaptation; source context and validation limits are in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+  <title>Draft: Coronagraph image observations</title>
+  <category>Curious Signals drafts</category>
+  <description>Manual fixed-exposure ROI means from separate unmasked and masked images. Records target/background contrast and optional noise-normalized detectability; no implemented camera pipeline.</description>
+  <data-containers>
+    <container size="1" init="0">id_in</container>
+    <container size="0">id_row</container>
+    <container size="1" init="0">mask_in</container>
+    <container size="0">mask_row</container>
+    <container size="1" init="0">separation_in</container>
+    <container size="0">separation_row</container>
+    <container size="1" init="0">exposure_in</container>
+    <container size="0">exposure_row</container>
+    <container size="1" init="0">target_in</container>
+    <container size="0">target_row</container>
+    <container size="1" init="0">background_in</container>
+    <container size="0">background_row</container>
+    <container size="1" init="0">sigma_in</container>
+    <container size="0">sigma_row</container>
+    <container size="1" init="0">ceiling_in</container>
+    <container size="0">ceiling_row</container>
+    <container size="1" init="0">paired_in</container>
+    <container size="0">paired_row</container>
+    <container size="1" init="0">record_request</container>
+    <container size="0">net_signal</container>
+    <container size="0">net_signal_calculation</container>
+    <container size="0">contrast</container>
+    <container size="0">contrast_calculation</container>
+    <container size="0">net_rate</container>
+    <container size="0">net_rate_calculation</container>
+    <container size="0">snr</container>
+    <container size="0">snr_calculation</container>
+    <container size="0">unmasked_contrast</container>
+    <container size="0">unmasked_contrast_calculation</container>
+    <container size="0">masked_contrast</container>
+    <container size="0">masked_contrast_calculation</container>
+    <container size="1">id_pending</container>
+    <container size="1">mask_pending</container>
+    <container size="1">separation_pending</container>
+    <container size="1">exposure_pending</container>
+    <container size="1">target_pending</container>
+    <container size="1">background_pending</container>
+    <container size="1">sigma_pending</container>
+    <container size="1">ceiling_pending</container>
+    <container size="1">paired_pending</container>
+    <container size="1">row_count</container>
+  </data-containers>
+  <views>
+    <view label="Observe">
+      <info label="Manual observation rows. Edit all paired values, then press Record row once. Wait for Recorded rows to increment before the next press. Saved inputs and settings are immutable until Clear rows. The app Clear data command also resets settings. No automatic physical validation." />
+      <edit label="Observation ID" unit="" default="0" decimal="true" signed="true">
+        <output>id_in</output>
+      </edit>
+      <edit label="Mask code (0 absent, 1 present)" unit="" default="0" decimal="true" signed="true">
+        <output>mask_in</output>
+      </edit>
+      <edit label="Image separation" unit="pixel" default="0" decimal="true" signed="true">
+        <output>separation_in</output>
+      </edit>
+      <edit label="Exposure duration" unit="ms" default="0" decimal="true" signed="true">
+        <output>exposure_in</output>
+      </edit>
+      <edit label="Target ROI mean" unit="a.u." default="0" decimal="true" signed="true">
+        <output>target_in</output>
+      </edit>
+      <edit label="Local background ROI mean" unit="a.u." default="0" decimal="true" signed="true">
+        <output>background_in</output>
+      </edit>
+      <edit label="Uncertainty of target-minus-background mean" unit="a.u." default="0" decimal="true" signed="true">
+        <output>sigma_in</output>
+      </edit>
+      <edit label="Unsaturated ceiling" unit="a.u." default="0" decimal="true" signed="true">
+        <output>ceiling_in</output>
+      </edit>
+      <edit label="Fixed linear image settings checked (1=yes)" unit="" default="0" decimal="true" signed="true">
+        <output>paired_in</output>
+      </edit>
+      <button label="Record row">
+        <input>id_in</input>
+        <output>id_pending</output>
+        <input>mask_in</input>
+        <output>mask_pending</output>
+        <input>separation_in</input>
+        <output>separation_pending</output>
+        <input>exposure_in</input>
+        <output>exposure_pending</output>
+        <input>target_in</input>
+        <output>target_pending</output>
+        <input>background_in</input>
+        <output>background_pending</output>
+        <input>sigma_in</input>
+        <output>sigma_pending</output>
+        <input>ceiling_in</input>
+        <output>ceiling_pending</output>
+        <input>paired_in</input>
+        <output>paired_pending</output>
+        <input type="value">1</input>
+        <output>record_request</output>
+      </button>
+      <button label="Clear rows">
+        <input type="empty" />
+        <output>id_row</output>
+        <input type="empty" />
+        <output>mask_row</output>
+        <input type="empty" />
+        <output>separation_row</output>
+        <input type="empty" />
+        <output>exposure_row</output>
+        <input type="empty" />
+        <output>target_row</output>
+        <input type="empty" />
+        <output>background_row</output>
+        <input type="empty" />
+        <output>sigma_row</output>
+        <input type="empty" />
+        <output>ceiling_row</output>
+        <input type="empty" />
+        <output>paired_row</output>
+        <input type="empty" />
+        <output>id_pending</output>
+        <input type="empty" />
+        <output>mask_pending</output>
+        <input type="empty" />
+        <output>separation_pending</output>
+        <input type="empty" />
+        <output>exposure_pending</output>
+        <input type="empty" />
+        <output>target_pending</output>
+        <input type="empty" />
+        <output>background_pending</output>
+        <input type="empty" />
+        <output>sigma_pending</output>
+        <input type="empty" />
+        <output>ceiling_pending</output>
+        <input type="empty" />
+        <output>paired_pending</output>
+        <input type="empty" />
+        <output>net_signal</output>
+        <input type="empty" />
+        <output>contrast</output>
+        <input type="empty" />
+        <output>net_rate</output>
+        <input type="empty" />
+        <output>snr</output>
+        <input type="empty" />
+        <output>unmasked_contrast</output>
+        <input type="empty" />
+        <output>masked_contrast</output>
+        <input type="empty" />
+        <output>net_signal_calculation</output>
+        <input type="empty" />
+        <output>contrast_calculation</output>
+        <input type="empty" />
+        <output>net_rate_calculation</output>
+        <input type="empty" />
+        <output>snr_calculation</output>
+        <input type="empty" />
+        <output>unmasked_contrast_calculation</output>
+        <input type="empty" />
+        <output>masked_contrast_calculation</output>
+        <input type="empty" />
+        <output>row_count</output>
+        <input type="value">0</input>
+        <output>record_request</output>
+      </button>
+      <value label="Recorded rows" unit="" precision="4">
+        <input>row_count</input>
+      </value>
+    </view>
+    <view label="Results">
+      <graph label="Unmasked contrast by separation" labelX="Image separation" labelY="Local relative contrast" unitX="pixel" unitY="" style="dots" partialUpdate="false">
+        <input axis="x">separation_row</input>
+        <input axis="y">unmasked_contrast</input>
+      </graph>
+      <graph label="Masked contrast by separation" labelX="Image separation" labelY="Local relative contrast" unitX="pixel" unitY="" style="dots" partialUpdate="false">
+        <input axis="x">separation_row</input>
+        <input axis="y">masked_contrast</input>
+      </graph>
+      <graph label="Noise-normalized detection by separation" labelX="Image separation" labelY="Signal / uncertainty" unitX="pixel" unitY="" style="dots" partialUpdate="false">
+        <input axis="x">separation_row</input>
+        <input axis="y">snr</input>
+      </graph>
+    </view>
+    <view label="Setup">
+      <info label="Use a bright lamp star, nearby pinhead planet and removable cardboard occulting disk as a classroom model. Fix camera, focus, exposure, ISO/gain, white balance, geometry and illumination. Obtain images with a separate camera app; this draft does not acquire or analyze images." />
+      <info label="In an external image tool, choose equal documented target and nearby background ROIs in linear, unsaturated image data. Enter their means in the same units, exposure in ms, separation in pixels, and mask code 0 or 1. Save image and ROI coordinates against Observation ID." />
+      <info label="Set Fixed linear image settings checked to 1 only after verifying linearity, clipping and exposure comparability. Contrast = (target-background)/background; net rate = (target-background)/(exposure/1000). Negative signal is retained, not replaced with zero." />
+      <info label="Optional uncertainty is the standard uncertainty of the difference of ROI means, including correlations and background-estimation error. A background pixel standard deviation alone is not this quantity. Zero or unknown uncertainty leaves SNR undefined." />
+      <info label="Compare saved rows at the same separation and settings before/after the mask. Automatic exposure, tone mapping, flare and masked target light can mimic improvement. This mask is a simple glare-blocking analogy, not a diffraction-controlled astronomical coronagraph." />
+    </view>
+  </views>
+  <analysis sleep="0.1" onUserInput="true">
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">id_pending</input>
+      <output append="true">id_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">mask_pending</input>
+      <output append="true">mask_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">separation_pending</input>
+      <output append="true">separation_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">exposure_pending</input>
+      <output append="true">exposure_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">target_pending</input>
+      <output append="true">target_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">background_pending</input>
+      <output append="true">background_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">sigma_pending</input>
+      <output append="true">sigma_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">ceiling_pending</input>
+      <output append="true">ceiling_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">paired_pending</input>
+      <output append="true">paired_row</output>
+    </if>
+    <append>
+      <input type="value">0</input>
+      <output append="false">record_request</output>
+    </append>
+    <!--Each derived calculation is filtered by x+0*x: finite values are unchanged; native IEEE infinities become NaN gaps.-->
+    <formula formula="([4_]-[5_])/((1+0*[2_])*(1+0*[3_])*(1+0*[6_])*max(0,sign([3_]))*heaviside([4_])*heaviside([5_])*max(0,sign([6_]-[4_]))*max(0,sign([6_]-[5_]))*max(0,1-abs(sign([7_]-1)))*heaviside([2_])*(max(0,1-abs(sign([1_]-0)))+max(0,1-abs(sign([1_]-1)))))">
+      <input keep="true">mask_row</input>
+      <input keep="true">separation_row</input>
+      <input keep="true">exposure_row</input>
+      <input keep="true">target_row</input>
+      <input keep="true">background_row</input>
+      <input keep="true">ceiling_row</input>
+      <input keep="true">paired_row</input>
+      <output append="false">net_signal_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">net_signal_calculation</input>
+      <output append="false">net_signal</output>
+    </formula>
+    <formula formula="[1_]/[2_]">
+      <input keep="true">net_signal</input>
+      <input keep="true">background_row</input>
+      <output append="false">contrast_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">contrast_calculation</input>
+      <output append="false">contrast</output>
+    </formula>
+    <formula formula="1000*[1_]/[2_]">
+      <input keep="true">net_signal</input>
+      <input keep="true">exposure_row</input>
+      <output append="false">net_rate_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">net_rate_calculation</input>
+      <output append="false">net_rate</output>
+    </formula>
+    <formula formula="[1_]/([2_]*max(0,sign([2_]))*(1+0*[2_]))">
+      <input keep="true">net_signal</input>
+      <input keep="true">sigma_row</input>
+      <output append="false">snr_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">snr_calculation</input>
+      <output append="false">snr</output>
+    </formula>
+    <formula formula="[1_]/max(0,1-abs(sign([2_]-0)))">
+      <input keep="true">contrast</input>
+      <input keep="true">mask_row</input>
+      <output append="false">unmasked_contrast_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">unmasked_contrast_calculation</input>
+      <output append="false">unmasked_contrast</output>
+    </formula>
+    <formula formula="[1_]/max(0,1-abs(sign([2_]-1)))">
+      <input keep="true">contrast</input>
+      <input keep="true">mask_row</input>
+      <output append="false">masked_contrast_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">masked_contrast_calculation</input>
+      <output append="false">masked_contrast</output>
+    </formula>
+    <count>
+      <input keep="true">id_row</input>
+      <output append="false">row_count</output>
+    </count>
+  </analysis>
+  <export>
+    <set name="Captured observation rows">
+      <data name="Observation ID">id_row</data>
+      <data name="Mask code (0 absent, 1 present)">mask_row</data>
+      <data name="Image separation (pixel)">separation_row</data>
+      <data name="Exposure duration (ms)">exposure_row</data>
+      <data name="Target ROI mean (a.u.)">target_row</data>
+      <data name="Local background ROI mean (a.u.)">background_row</data>
+      <data name="Uncertainty of target-minus-background mean (a.u.)">sigma_row</data>
+      <data name="Unsaturated ceiling (a.u.)">ceiling_row</data>
+      <data name="Fixed linear image settings checked (1=yes)">paired_row</data>
+      <data name="Target minus background (a.u.)">net_signal</data>
+      <data name="Local relative contrast">contrast</data>
+      <data name="Net signal rate (a.u./s)">net_rate</data>
+      <data name="Noise-normalized signal">snr</data>
+      <data name="Unmasked local contrast">unmasked_contrast</data>
+      <data name="Masked local contrast">masked_contrast</data>
+    </set>
+    <set name="Current entry settings">
+      <data name="Observation ID">id_in</data>
+      <data name="Mask code (0 absent, 1 present)">mask_in</data>
+      <data name="Image separation (pixel)">separation_in</data>
+      <data name="Exposure duration (ms)">exposure_in</data>
+      <data name="Target ROI mean (a.u.)">target_in</data>
+      <data name="Local background ROI mean (a.u.)">background_in</data>
+      <data name="Uncertainty of target-minus-background mean (a.u.)">sigma_in</data>
+      <data name="Unsaturated ceiling (a.u.)">ceiling_in</data>
+      <data name="Fixed linear image settings checked (1=yes)">paired_in</data>
+    </set>
+  </export>
+</phyphox>

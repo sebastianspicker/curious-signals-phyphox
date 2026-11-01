@@ -1,0 +1,98 @@
+\begin{abstract}
+Sound and stray magnetic field provide different views of a motor's operating state. Their slow changes can be compared without assuming a common spectral response or precise sample synchronization. In the data, three on-minus-off comparisons give an energy-based relative audio-level change of 11.56~dB and a mean magnetic-magnitude change of $4.03\unit{\mu T}$. The calculation retains separate time axes, weights audio blocks by their actual sample counts, and distinguishes a vector-field change from a change in its norm. Signal amplitude, relative channel timing and the block-averaging intervals determine the timescale of these comparisons.
+\end{abstract}
+\begin{IEEEkeywords}
+Audio RMS, stray magnetic field, motor state, relative level, asynchronous sampling.
+\end{IEEEkeywords}
+
+\section{Two observables of one operating state}
+An energized motor can change both its acoustic environment and the magnetic field outside its enclosure. Those changes have different physical pathways. Sound depends on mechanical vibration, airflow, mounting and radiation into the room; the external magnetic field contains contributions from windings, magnetic material and supply leads. Fixed placement is consequently part of the measurement definition. Moving a lead or a reflecting surface may change one observable while leaving the other nearly unchanged.
+
+Liu \emph{et al.} demonstrate operating-load information in the stray field of an induction machine using dedicated magnetic sensors~\cite{liu2017stray}. That result motivates the observable, while its machine-specific load calibration remains separate. Here the inference is a contrast between settled on/off states, rather than a diagnosis of the motor's internal dynamics.
+
+Figure~\ref{fig:audio-magnetic-apparatus} gives the arrangement: an enclosed low-voltage DC motor, a fixed phone and stationary leads. The supply and switch should be far enough from the phone that operating them does not move nearby metal or dominate the field. A switch-only control and an alternative motor distance help distinguish a motor-associated change from operator motion and lead fields. The phone remains electrically separate from the circuit.
+
+\begin{figure}[!b]
+\centering
+\begin{tikzpicture}[x=0.88cm,y=0.88cm]
+ \node[draw,minimum width=1.4cm,minimum height=1cm,align=center] (m) at (1.4,1.3) {enclosed\\DC motor};
+ \node[draw,minimum width=1.6cm,minimum height=1.1cm,align=center] (p) at (5.3,1.3) {fixed phone\\mic + $\bm B$};
+ \draw[csblue,thick,->] (m.east)--(p.west) node[midway,above] {sound};
+ \draw[csteal,dashed,->] (2,0.65) to[bend right=30] node[midway,below] {stray field} (4.8,0.65);
+ \node[draw,align=center] (s) at (1.4,-1.0) {low-voltage supply\\and remote switch};
+ \draw[thick] (s.west)--(0,-1)--(0,1.3)--(m.west);
+ \draw[thick] (s.east)--(2.9,-1)--(2.9,0.6)--(m.south);
+ \node at (5.2,-0.8) {nonmagnetic holder};
+\end{tikzpicture}
+\caption{Motor-state comparison with fixed phone, motor and return lead. Slow switching changes the acoustic and magnetic observables while preserving the sensing geometry.}
+\label{fig:audio-magnetic-apparatus}
+\end{figure}
+
+A rigid rotation preserves the norm of a uniform field, but sensor offsets and unequal axis responses can make the indicated norm orientation dependent~\cite{kok2016}. Keeping the phone fixed suppresses that ambiguity. Retaining all three components then permits a directional comparison of the operating-state change.
+
+\section{Energy reduction and separate clocks}
+For audio block $j$ with $N_j$ samples $x_{jk}$, define
+\begin{equation}
+ r_j^2=\frac{1}{N_j}\sum_{k=1}^{N_j}x_{jk}^2,
+ \qquad L_j=20\log_{10}\frac{r_j}{r_{\rm ref}}.
+ \label{eq:audio-magnetic-rms}
+\end{equation}
+The values are digital relative amplitudes, with $r_{\rm ref}=0.020$ and an assigned reference level of 0~dB. They are not pressures referenced to $20\unit{\mu Pa}$. Specified frequency weighting and the performance of the complete instrument are central to IEC sound-level metrology~\cite{iec61672}. Kardous and Shaw's microphone-calibration study illustrates why the acquisition path must be characterized before device-specific acoustic accuracy can be asserted~\cite{kardous2016}.
+
+Every example block contains 4800 samples at $48000\unit{s^{-1}}$, corresponding to 0.100~s. The actual sample count and recorded rate define the averaging interval; a nominal requested rate need not be realized on every platform~\cite{phyphoxinputs2026}. For a collection of blocks, the energy-consistent reduction is
+\begin{equation}
+ r_{\rm agg}^2=\frac{\sum_j N_j r_j^2}{\sum_j N_j},
+ \qquad L_{\rm agg}=10\log_{10}\frac{r_{\rm agg}^2}{r_{\rm ref}^2}.
+ \label{eq:audio-magnetic-aggregate}
+\end{equation}
+This is a sample-weighted mean square. With a constant rate it is also time weighted; varying rates would require duration weights for a time average. An arithmetic mean of block decibels describes a different statistic because the logarithm is nonlinear.
+
+The audio timestamps refer to block processing on the experiment-session clock; magnetic readings carry their own sensor times. The 601 audio blocks and 1201 magnetic samples are not paired by row. Each stream is selected independently over 1--9, 11--19, 21--29, 31--39, 41--49 and 51--59~s, using left-closed, right-open intervals. Each window contains 80 audio blocks and 159 magnetic readings. For channel latencies shorter than the one-second margin at switching boundaries, the selected windows compare settled motor states.
+
+\section{State contrasts in the data}
+Figure~\ref{fig:audio-magnetic-example} shows the shared slow switching pattern. The first off/on windows have aggregate RMS amplitudes 0.01190 and 0.04506, respectively, corresponding to $-4.510$ and $7.056$~dB relative to the chosen reference. Their difference is 11.566~dB. Averaging the off-state block levels instead gives $-4.640$~dB, a 0.129-dB difference from the energy-based value; the choice of averaging convention is already visible in this short record.
+
+\begin{figure}[t]
+\centering
+\input{figures/audio-magnetic.tex}
+\caption{(a) Audio-block RMS and (b) magnetic-field magnitude through three motor switching cycles. Each stream retains its recorded session timestamps.}
+\label{fig:audio-magnetic-example}
+\end{figure}
+
+With angle brackets denoting the sample mean within each state, the magnetic contrasts are
+\begin{equation}
+ \begin{aligned}
+ \Delta B_{\rm norm}&=\langle|\bm B|\rangle_{\rm on}-\langle|\bm B|\rangle_{\rm off},\\
+ \Delta B_{\rm vec}&=\big|\langle\bm B\rangle_{\rm on}-\langle\bm B\rangle_{\rm off}\big|.
+ \end{aligned}
+ \label{eq:audio-magnetic-vector}
+\end{equation}
+
+\begin{table}[t]
+\caption{Cyclewise on-minus-off contrasts: audio level, mean field magnitude and magnitude of the mean field-vector difference.}
+\label{tab:audio-magnetic-contrasts}
+\centering\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Cycle & $\Delta L$ (dB) & $\Delta B_{\rm norm}$ ($\unit{\mu T}$) & $\Delta B_{\rm vec}$ ($\unit{\mu T}$)\\
+\midrule
+1 & 11.566 & 4.040 & 4.222\\
+2 & 11.520 & 4.056 & 4.240\\
+3 & 11.582 & 3.983 & 4.177\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Across the three cycle contrasts in Table~\ref{tab:audio-magnetic-contrasts}, the mean audio change is 11.556~dB with cycle sample standard deviation 0.032~dB. The corresponding magnetic-norm change is $4.026\unit{\mu T}$ with cycle scatter $0.039\unit{\mu T}$. These are spreads among three state comparisons. Adjacent readings share a motor state and acquisition conditions, so their much larger count cannot be treated as an equal number of independent repetitions.
+
+For the first cycle, the component difference is approximately $(2.009,-1.183,3.519)\unit{\mu T}$, whose norm is $4.222\unit{\mu T}$. It differs from the $4.040\unit{\mu T}$ change in total magnitude because the motor-associated vector adds to a nonzero background.
+
+The two estimators generally differ. A norm contrast can be small even for a detectable component change if that change is largely perpendicular to the background.
+
+\section{Noise floor and identifiable information}
+Using a background RMS reference $r_n=0.010$, the independent-noise model gives $r_s=\sqrt{r^2-r_n^2}$ only when $r>r_n$. Forty of the 601 blocks are at or below this reference. Their zero-valued corrected amplitudes are therefore interpreted as unresolved positive amplitudes, not exact silence. The guarded inverse leaves them censored. For the first off plateau, subtracting noise after energy aggregation gives 0.00645, far smaller than the uncorrected 0.01190 and correspondingly sensitive to the chosen noise reference.
+
+That subtraction presumes stable, uncorrelated background and unchanged gain. Automatic gain changes or structure-borne vibration can violate those assumptions. Near the floor, uncertainty in the background dominates the recovered amplitude; the result cannot establish acoustic power. The block envelopes also omit the waveform information needed for a new acoustic spectrum.
+
+\newpage
+The common switching pattern associates both observables with operating state. Comparisons of phase, propagation delay and transfer response depend on relative channel timing and waveform-resolved signals.

@@ -1,5 +1,5 @@
 <!-- Credits & licence: see src/phyphox/README.md and repository README. Based on phyphox (RWTH Aachen), LGPL-3.0+. -->
-<phyphox version="1.7" locale="en" xmlns:xi="http://www.w3.org/2001/XInclude">
+<phyphox version="1.10" locale="en" xmlns:xi="http://www.w3.org/2001/XInclude">
     <title>Relative Light Level with Colors</title>
     <category>Arduino Nano 33 BLE Sense</category>
     <description>Plots relative light level and color channel counts measured by the Arduino Nano 33 BLE Sense's APDS-9960 sensor; values are arbitrary units and are meant for relative comparison, not calibrated illuminance.</description>
@@ -22,6 +22,21 @@
             <string original="Green">Vert</string>
             <string original="Blue">Bleu</string>
             <string original="Simple">Composantes</string>
+        <string original="Calibration">Étalonnage</string>
+<string original="Dark corrected">Obscurité soustraite</string>
+<string original="Clear">Clair</string>
+<string original="Dark Clear">Obscurité Clair</string>
+<string original="Red">Rouge</string>
+<string original="Dark Red">Obscurité Rouge</string>
+<string original="Green">Vert</string>
+<string original="Dark Green">Obscurité Vert</string>
+<string original="Blue">Bleu</string>
+<string original="Dark Blue">Obscurité Bleu</string>
+<string original="At nominal ceiling (1=yes)">Plafond nominal atteint (1=oui)</string>
+<string original="Setup">Montage</string>
+<string original="Fix lamp, detector, aperture and sample angles; baffle direct lamp light. Measure covered-sensor dark counts for all four channels before setting their offsets. A dim-room baseline is not a dark measurement. The pinned 16× gain and 11.12 ms integration give a nominal ceiling near 4100 counts, not 65535. The ceiling flag is a screening aid, not a linearity calibration: reduce illumination before clipping and verify proportionality. These are detector counts, not lux or standard colour coordinates.">Fixer lampe, détecteur, ouverture et angles de l’échantillon ; masquer la lumière directe. Mesurer les quatre valeurs d’obscurité avec le capteur couvert avant de saisir les offsets. Une pièce sombre ne constitue pas une mesure d’obscurité. Au gain fixé de 16× et à 11,12 ms d’intégration, le plafond nominal est proche de 4100 comptes, pas 65535. L’indicateur aide au contrôle mais ne vérifie pas la linéarité : réduire l’éclairement avant saturation et tester la proportionnalité. Ce ne sont ni des lux ni des coordonnées colorimétriques normalisées.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Enregistrer une référence stable avant et après chaque essai. L’intervalle BLE est d’au moins 50 ms ; les mesures indisponibles restent NaN. Les signaux rapides nécessitent une bande passante vérifiée et un filtre anti-repliement.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Saisir les coefficients mesurés sur ce montage. Les valeurs initiales sont nominales, sans étalonnage. Un changement recalcule toute la courbe ; mesures originales et réglages sont exportés séparément. Effacer les données rétablit les valeurs initiales.</string>
         </translation>
         <translation locale="de">
             <title>Relativer Lichtpegel</title>
@@ -38,10 +53,34 @@
             <string original="Green">Grün</string>
             <string original="Blue">Blau</string>
             <string original="Simple">Einfach</string>
+        <string original="Calibration">Kalibrierung</string>
+<string original="Dark corrected">Dunkelwertkorrektur</string>
+<string original="Clear">Klar</string>
+<string original="Dark Clear">Dunkelwert Klar</string>
+<string original="Red">Rot</string>
+<string original="Dark Red">Dunkelwert Rot</string>
+<string original="Green">Grün</string>
+<string original="Dark Green">Dunkelwert Grün</string>
+<string original="Blue">Blau</string>
+<string original="Dark Blue">Dunkelwert Blau</string>
+<string original="At nominal ceiling (1=yes)">Nominalgrenze erreicht (1=ja)</string>
+<string original="Setup">Aufbau</string>
+<string original="Fix lamp, detector, aperture and sample angles; baffle direct lamp light. Measure covered-sensor dark counts for all four channels before setting their offsets. A dim-room baseline is not a dark measurement. The pinned 16× gain and 11.12 ms integration give a nominal ceiling near 4100 counts, not 65535. The ceiling flag is a screening aid, not a linearity calibration: reduce illumination before clipping and verify proportionality. These are detector counts, not lux or standard colour coordinates.">Lampe, Detektor, Blende und Probenwinkel fixieren; direktes Lampenlicht abschirmen. Dunkelwerte aller vier Kanäle mit abgedecktem Sensor messen und als Offsets eintragen. Ein schwach beleuchteter Raum ist keine Dunkelmessung. Bei festgelegter 16-facher Verstärkung und 11,12 ms Integration liegt die nominale Grenze bei etwa 4100 statt 65535 Zählwerten. Die Grenzanzeige ist nur ein Hinweis, keine Linearitätskalibrierung: Beleuchtung vorher reduzieren und Proportionalität prüfen. Die Werte sind weder Lux noch Standardfarbkoordinaten.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Vor und nach jedem Versuch eine stabile Referenz aufzeichnen. Das BLE-Intervall beträgt mindestens 50 ms; nicht verfügbare Sensormesswerte bleiben NaN. Schnelle Signale benötigen eine unabhängig geprüfte Bandbreite und einen Anti-Aliasing-Filter.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Am eigenen Aufbau gemessene Koeffizienten eingeben. Vorgaben sind Nennwerte, keine Kalibrierung. Änderungen berechnen die gesamte Kurve neu; ursprüngliche Messwerte und Einstellungen werden getrennt exportiert. Daten löschen setzt die Vorgaben zurück.</string>
         </translation>
     </translations>
     <data-containers>
 	    <xi:include href="includes/containers_ch0_ch5.xml" xpointer="xpointer(/containers/node())" />
+    <container size="1" init="0">dark_clear</container>
+<container size="0">CH2_dark_corrected</container>
+<container size="1" init="0">dark_red</container>
+<container size="0">CH3_dark_corrected</container>
+<container size="1" init="0">dark_green</container>
+<container size="0">CH4_dark_corrected</container>
+<container size="1" init="0">dark_blue</container>
+<container size="0">CH5_dark_corrected</container>
+<container size="0">nominal_clipping</container>
     </data-containers>
     <input>
         <bluetooth mode="notification" rate="1" subscribeOnStart="false" id="Sense">
@@ -57,26 +96,26 @@
     <!-- Relative APDS-9960 counts; keep the raw clear-channel range intact and treat it as an arbitrary unit. -->
     <views>
         <view label="Graph">
-            <graph label="Relative Light Level" aspectRatio="2.5" style="lines" lineWidth="1" color="white" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Relative Light Level" aspectRatio="2.5" style="lines" lineWidth="1" color="white" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2</input>
             </graph>
-            <graph label="Red" aspectRatio="2.5" style="lines" lineWidth="1" color="red" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Red" aspectRatio="2.5" style="lines" lineWidth="1" color="red" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH3</input>
             </graph>
-            <graph label="Green" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Green" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH4</input>
             </graph>
-            <graph label="Blue" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Blue" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH5</input>
             </graph>
         </view>
         
         <view label="Ambient">
-        <graph label="Ambient" aspectRatio="2.5" style="lines" lineWidth="1" color="white" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+        <graph label="Ambient" aspectRatio="2.5" style="lines" lineWidth="1" color="white" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH2</input>
             </graph>
@@ -86,21 +125,21 @@
         </view>
         
         <view label="Colors (RGB)">
-        <graph label="Red" aspectRatio="2.5" style="lines" lineWidth="1" color="red" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+        <graph label="Red" aspectRatio="2.5" style="lines" lineWidth="1" color="red" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH3</input>
             </graph>
             <value label="Red" size="2" precision="2" unit="a.u." color="red">
                 <input>CH3</input>
             </value>
-            <graph label="Green" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Green" aspectRatio="2.5" style="lines" lineWidth="1" color="green" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH4</input>
             </graph>
             <value label="Green" size="2" precision="2" unit="a.u." color="green">
                 <input>CH4</input>
             </value>
-            <graph label="Blue" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Blue" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
                 <input axis="y">CH5</input>
             </graph>
@@ -110,7 +149,7 @@
         </view>
         
         <view label="Multi">
-            <graph label="Relative Light Level" aspectRatio="2.5" style="lines" lineWidth="1" partialUpdate="true" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Relative Light Level" aspectRatio="2.5" style="lines" lineWidth="1" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x" color="white">CH1</input>
                 <input axis="y">CH2</input>
                 <input axis="x" color="red">CH1</input>
@@ -132,7 +171,7 @@
             <value label="Blue" size="2" precision="2" unit="a.u." color="blue">
                 <input>CH5</input>
             </value>
-            <graph label="Colors (RGB)" aspectRatio="2.5" style="lines" lineWidth="1" color="" partialUpdate="false" history="1" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Colors (RGB)" aspectRatio="2.5" style="lines" lineWidth="1" partialUpdate="false" labelX="t" labelY="counts" labelZ="" unitX="s" unitY="a.u." unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x" color="red">CH1</input>
                 <input axis="y">CH3</input>
                 <input axis="x" color="green">CH1</input>
@@ -157,8 +196,76 @@
             </value>
         </view>
         
+    <view label="Dark corrected">
+    <graph label="Clear" labelX="t" unitX="s" labelY="Clear" unitY="count" partialUpdate="false">
+        <input axis="x">CH1</input>
+        <input axis="y">CH2_dark_corrected</input>
+    </graph>
+    <graph label="Red" labelX="t" unitX="s" labelY="Red" unitY="count" partialUpdate="false">
+        <input axis="x">CH1</input>
+        <input axis="y">CH3_dark_corrected</input>
+    </graph>
+    <graph label="Green" labelX="t" unitX="s" labelY="Green" unitY="count" partialUpdate="false">
+        <input axis="x">CH1</input>
+        <input axis="y">CH4_dark_corrected</input>
+    </graph>
+    <graph label="Blue" labelX="t" unitX="s" labelY="Blue" unitY="count" partialUpdate="false">
+        <input axis="x">CH1</input>
+        <input axis="y">CH5_dark_corrected</input>
+    </graph>
+    <value label="At nominal ceiling (1=yes)" precision="0">
+        <input>nominal_clipping</input>
+    </value>
+</view>
+    <view label="Setup">
+    <info label="Fix lamp, detector, aperture and sample angles; baffle direct lamp light. Measure covered-sensor dark counts for all four channels before setting their offsets. A dim-room baseline is not a dark measurement. The pinned 16× gain and 11.12 ms integration give a nominal ceiling near 4100 counts, not 65535. The ceiling flag is a screening aid, not a linearity calibration: reduce illumination before clipping and verify proportionality. These are detector counts, not lux or standard colour coordinates." />
+    <info label="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering." />
+</view>
+    <view label="Calibration">
+    <info label="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults." />
+    <edit label="Dark Clear" unit="count" default="0" decimal="true" signed="true">
+        <output>dark_clear</output>
+    </edit>
+    <edit label="Dark Red" unit="count" default="0" decimal="true" signed="true">
+        <output>dark_red</output>
+    </edit>
+    <edit label="Dark Green" unit="count" default="0" decimal="true" signed="true">
+        <output>dark_green</output>
+    </edit>
+    <edit label="Dark Blue" unit="count" default="0" decimal="true" signed="true">
+        <output>dark_blue</output>
+    </edit>
+</view>
     </views>
-    <analysis sleep="0" onUserInput="false"/>
+    <analysis sleep="0.05" onUserInput="false">
+    <formula formula="[1_]-[2]">
+        <input clear="false">CH2</input>
+        <input clear="false">dark_clear</input>
+        <output clear="true">CH2_dark_corrected</output>
+    </formula>
+    <formula formula="[1_]-[2]">
+        <input clear="false">CH3</input>
+        <input clear="false">dark_red</input>
+        <output clear="true">CH3_dark_corrected</output>
+    </formula>
+    <formula formula="[1_]-[2]">
+        <input clear="false">CH4</input>
+        <input clear="false">dark_green</input>
+        <output clear="true">CH4_dark_corrected</output>
+    </formula>
+    <formula formula="[1_]-[2]">
+        <input clear="false">CH5</input>
+        <input clear="false">dark_blue</input>
+        <output clear="true">CH5_dark_corrected</output>
+    </formula>
+    <formula formula="heaviside(max(max([1_],[2_]),max([3_],[4_]))-4099.5)">
+        <input clear="false">CH2</input>
+        <input clear="false">CH3</input>
+        <input clear="false">CH4</input>
+        <input clear="false">CH5</input>
+        <output clear="true">nominal_clipping</output>
+    </formula>
+</analysis>
     <export>
         <set name="Raw data">
             <data name="Time t (s)">CH1</data>
@@ -167,5 +274,23 @@
             <data name="Green (a.u.)">CH4</data>
             <data name="Blue (a.u.)">CH5</data>
         </set>
+    <set name="Dark-subtracted counts">
+    <data name="Time t (s)">CH1</data>
+    <data name="Clear minus dark (count)">CH2_dark_corrected</data>
+    <data name="Red minus dark (count)">CH3_dark_corrected</data>
+    <data name="Green minus dark (count)">CH4_dark_corrected</data>
+    <data name="Blue minus dark (count)">CH5_dark_corrected</data>
+    <data name="At nominal ceiling (1=yes)">nominal_clipping</data>
+</set>
+    <set name="Calibration settings">
+    <data name="Dark Clear (count)">dark_clear</data>
+    <data name="Dark Red (count)">dark_red</data>
+    <data name="Dark Green (count)">dark_green</data>
+    <data name="Dark Blue (count)">dark_blue</data>
+</set>
+    <set name="Timing">
+    <data name="Device time (s)">CH1</data>
+    <data name="BLE receive time (s)">CH0</data>
+</set>
     </export>
 </phyphox>

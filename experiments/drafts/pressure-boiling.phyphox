@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Original draft adaptation; source context and validation limits are in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+  <title>Draft: Pressure-dependent boiling observations</title>
+  <category>Curious Signals drafts</category>
+  <description>Manual paired absolute-pressure and independent liquid-temperature readings, with observed boiling codes. Requires calibrated wet-isolated instruments; no phone or Nano automatic measurement.</description>
+  <data-containers>
+    <container size="1" init="0">id_in</container>
+    <container size="0">id_row</container>
+    <container size="1" init="0">pressure_in</container>
+    <container size="0">pressure_row</container>
+    <container size="1" init="0">temperature_in</container>
+    <container size="0">temperature_row</container>
+    <container size="1" init="2">code_in</container>
+    <container size="0">code_row</container>
+    <container size="1" init="0">valid_in</container>
+    <container size="0">valid_row</container>
+    <container size="1" init="0">up_in</container>
+    <container size="0">up_row</container>
+    <container size="1" init="0">ut_in</container>
+    <container size="0">ut_row</container>
+    <container size="1" init="0">record_request</container>
+    <container size="0">kelvin</container>
+    <container size="0">kelvin_calculation</container>
+    <container size="0">pressure_valid</container>
+    <container size="0">pressure_valid_calculation</container>
+    <container size="0">boiling_pressure</container>
+    <container size="0">boiling_pressure_calculation</container>
+    <container size="1">id_pending</container>
+    <container size="1">pressure_pending</container>
+    <container size="1">temperature_pending</container>
+    <container size="1">code_pending</container>
+    <container size="1">valid_pending</container>
+    <container size="1">up_pending</container>
+    <container size="1">ut_pending</container>
+    <container size="1">row_count</container>
+  </data-containers>
+  <views>
+    <view label="Observe">
+      <info label="Manual observation rows. Edit all paired values, then press Record row once. Wait for Recorded rows to increment before the next press. Saved inputs and settings are immutable until Clear rows. The app Clear data command also resets settings. No automatic physical validation." />
+      <edit label="Observation ID" unit="" default="0" decimal="true" signed="true">
+        <output>id_in</output>
+      </edit>
+      <edit label="Absolute pressure" unit="kPa" default="0" decimal="true" signed="true">
+        <output>pressure_in</output>
+      </edit>
+      <edit label="Liquid temperature" unit="degC" default="0" decimal="true" signed="true">
+        <output>temperature_in</output>
+      </edit>
+      <edit label="Observation code (0 liquid, 1 sustained boiling, 2 uncertain)" unit="" default="2" decimal="true" signed="true">
+        <output>code_in</output>
+      </edit>
+      <edit label="Pair checked (1=yes)" unit="" default="0" decimal="true" signed="true">
+        <output>valid_in</output>
+      </edit>
+      <edit label="Pressure uncertainty" unit="kPa" default="0" decimal="true" signed="true">
+        <output>up_in</output>
+      </edit>
+      <edit label="Temperature uncertainty" unit="K" default="0" decimal="true" signed="true">
+        <output>ut_in</output>
+      </edit>
+      <button label="Record row">
+        <input>id_in</input>
+        <output>id_pending</output>
+        <input>pressure_in</input>
+        <output>pressure_pending</output>
+        <input>temperature_in</input>
+        <output>temperature_pending</output>
+        <input>code_in</input>
+        <output>code_pending</output>
+        <input>valid_in</input>
+        <output>valid_pending</output>
+        <input>up_in</input>
+        <output>up_pending</output>
+        <input>ut_in</input>
+        <output>ut_pending</output>
+        <input type="value">1</input>
+        <output>record_request</output>
+      </button>
+      <button label="Clear rows">
+        <input type="empty" />
+        <output>id_row</output>
+        <input type="empty" />
+        <output>pressure_row</output>
+        <input type="empty" />
+        <output>temperature_row</output>
+        <input type="empty" />
+        <output>code_row</output>
+        <input type="empty" />
+        <output>valid_row</output>
+        <input type="empty" />
+        <output>up_row</output>
+        <input type="empty" />
+        <output>ut_row</output>
+        <input type="empty" />
+        <output>id_pending</output>
+        <input type="empty" />
+        <output>pressure_pending</output>
+        <input type="empty" />
+        <output>temperature_pending</output>
+        <input type="empty" />
+        <output>code_pending</output>
+        <input type="empty" />
+        <output>valid_pending</output>
+        <input type="empty" />
+        <output>up_pending</output>
+        <input type="empty" />
+        <output>ut_pending</output>
+        <input type="empty" />
+        <output>kelvin</output>
+        <input type="empty" />
+        <output>pressure_valid</output>
+        <input type="empty" />
+        <output>boiling_pressure</output>
+        <input type="empty" />
+        <output>kelvin_calculation</output>
+        <input type="empty" />
+        <output>pressure_valid_calculation</output>
+        <input type="empty" />
+        <output>boiling_pressure_calculation</output>
+        <input type="empty" />
+        <output>row_count</output>
+        <input type="value">0</input>
+        <output>record_request</output>
+      </button>
+      <value label="Recorded rows" unit="" precision="4">
+        <input>row_count</input>
+      </value>
+    </view>
+    <view label="Results">
+      <graph label="Measured pressure-temperature observations" labelX="Liquid temperature" labelY="Absolute pressure" unitX="K" unitY="kPa" style="dots" partialUpdate="false">
+        <input axis="x">kelvin</input>
+        <input axis="y">pressure_valid</input>
+      </graph>
+      <graph label="Observed sustained-boiling points" labelX="Liquid temperature" labelY="Observed boiling pressure" unitX="K" unitY="kPa" style="dots" partialUpdate="false">
+        <input axis="x">kelvin</input>
+        <input axis="y">boiling_pressure</input>
+      </graph>
+    </view>
+    <view label="Setup">
+      <info label="Use an institution-approved pressure-rated vessel or syringe demonstration with independent calibrated absolute-pressure and immersed liquid-temperature instruments. Keep electronics dry using an appropriate wet-isolated pressure connection; record instrument ranges and response times externally." />
+      <info label="Enter simultaneous settled absolute pressure in kPa and liquid temperature in degC. Gauge pressure must first be converted using independently measured local atmospheric pressure. Code 1 means sustained boiling observed, not isolated dissolved-gas bubbles. Set Pair checked to 1 only after checking units, timing and apparatus range." />
+      <info label="Results show positive pressure and Kelvin temperature only for checked, physically valid rows. Boiling markers select observed code 1; no saturation model or automatic phase identification is fitted. Codes 0 and 2 remain in raw exports." />
+      <info label="Keep a written link from Observation ID to time, vessel, instruments, observations and uncertainty. Clear rows preserves current entry settings; Record row works between analysis cycles, including paused use. A later edit never changes a captured row." />
+      <info label="Do not infer Mars pressure capability from a syringe demonstration. A board barometer or die temperature is not a wet-compatible absolute-pressure/liquid-temperature pair. Validate leaks, range, thermal lag and native app behavior before classroom use." />
+    </view>
+  </views>
+  <analysis sleep="0.1" onUserInput="true">
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">id_pending</input>
+      <output append="true">id_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">pressure_pending</input>
+      <output append="true">pressure_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">temperature_pending</input>
+      <output append="true">temperature_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">code_pending</input>
+      <output append="true">code_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">valid_pending</input>
+      <output append="true">valid_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">up_pending</input>
+      <output append="true">up_row</output>
+    </if>
+    <if equal="true">
+      <input as="a" keep="true">record_request</input>
+      <input as="b" type="value">1</input>
+      <input as="true" keep="true">ut_pending</input>
+      <output append="true">ut_row</output>
+    </if>
+    <append>
+      <input type="value">0</input>
+      <output append="false">record_request</output>
+    </append>
+    <!--Each derived calculation is filtered by x+0*x: finite values are unchanged; native IEEE infinities become NaN gaps.-->
+    <formula formula="([1_]+273.15)/(max(0,sign([1_]+273.15))*max(0,1-abs(sign([2_]-1)))*max(0,sign([3_]))*(1+0*[1_])*(1+0*[3_]))">
+      <input keep="true">temperature_row</input>
+      <input keep="true">valid_row</input>
+      <input keep="true">pressure_row</input>
+      <output append="false">kelvin_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">kelvin_calculation</input>
+      <output append="false">kelvin</output>
+    </formula>
+    <formula formula="[1_]/(max(0,sign([1_]))*max(0,sign([2_]))*(1+0*[1_]))">
+      <input keep="true">pressure_row</input>
+      <input keep="true">kelvin</input>
+      <output append="false">pressure_valid_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">pressure_valid_calculation</input>
+      <output append="false">pressure_valid</output>
+    </formula>
+    <formula formula="[1_]/max(0,1-abs(sign([2_]-1)))">
+      <input keep="true">pressure_valid</input>
+      <input keep="true">code_row</input>
+      <output append="false">boiling_pressure_calculation</output>
+    </formula>
+    <formula formula="[1_]+0*[1_]">
+      <input keep="true">boiling_pressure_calculation</input>
+      <output append="false">boiling_pressure</output>
+    </formula>
+    <count>
+      <input keep="true">id_row</input>
+      <output append="false">row_count</output>
+    </count>
+  </analysis>
+  <export>
+    <set name="Captured observation rows">
+      <data name="Observation ID">id_row</data>
+      <data name="Absolute pressure (kPa)">pressure_row</data>
+      <data name="Liquid temperature (degC)">temperature_row</data>
+      <data name="Observation code (0 liquid, 1 sustained boiling, 2 uncertain)">code_row</data>
+      <data name="Pair checked (1=yes)">valid_row</data>
+      <data name="Pressure uncertainty (kPa)">up_row</data>
+      <data name="Temperature uncertainty (K)">ut_row</data>
+      <data name="Checked liquid temperature (K)">kelvin</data>
+      <data name="Checked absolute pressure (kPa)">pressure_valid</data>
+      <data name="Observed sustained-boiling pressure (kPa)">boiling_pressure</data>
+    </set>
+    <set name="Current entry settings">
+      <data name="Observation ID">id_in</data>
+      <data name="Absolute pressure (kPa)">pressure_in</data>
+      <data name="Liquid temperature (degC)">temperature_in</data>
+      <data name="Observation code (0 liquid, 1 sustained boiling, 2 uncertain)">code_in</data>
+      <data name="Pair checked (1=yes)">valid_in</data>
+      <data name="Pressure uncertainty (kPa)">up_in</data>
+      <data name="Temperature uncertainty (K)">ut_in</data>
+    </set>
+  </export>
+</phyphox>

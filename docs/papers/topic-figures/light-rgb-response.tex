@@ -1,0 +1,16 @@
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2,vertical sep=1.35cm},
+ width=0.96\columnwidth,height=3.5cm,grid=major,enlarge x limits=false,
+ legend style={font=\scriptsize,at={(0.5,1.03)},anchor=south,legend columns=4,
+ draw=none,fill=none,column sep=4pt},tick label style={font=\scriptsize}]
+\nextgroupplot[ylabel={Counts ($10^3$)},xlabel={Colour-response time (s)},ymin=0,ymax=4.8]
+\addplot[csgray,densely dotted,line width=.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c1}/1000}] {data/light_plot_v1-2.csv};\addlegendentry{Clear}
+\addplot[csred,solid,line width=.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c2}/1000}] {data/light_plot_v1-2.csv};\addlegendentry{Red}
+\addplot[csteal,dashed,line width=.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c3}/1000}] {data/light_plot_v1-2.csv};\addlegendentry{Green}
+\addplot[csblue,dashdotted,line width=.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c4}/1000}] {data/light_plot_v1-2.csv};\addlegendentry{Blue}
+\nextgroupplot[ylabel={Channel transmission},xlabel={Filter-response device time (s)},ymin=-.02,ymax=1.15]
+\addplot[csred,solid,line width=.8pt] table[col sep=comma,x=c0,y=c2] {data/drafts/optics-rgb-local.csv};\addlegendentry{Red}
+\addplot[csteal,dashed,line width=.8pt] table[col sep=comma,x=c0,y=c3] {data/drafts/optics-rgb-local.csv};\addlegendentry{Green}
+\addplot[csblue,dashdotted,line width=.8pt] table[col sep=comma,x=c0,y=c4] {data/drafts/optics-rgb-local.csv};\addlegendentry{Blue}
+\end{groupplot}
+\end{tikzpicture}

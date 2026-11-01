@@ -64,12 +64,12 @@ def _container_errors(path: str, root: ET.Element) -> tuple[list[str], list[str]
 def _references(root: ET.Element) -> Iterator[str]:
     input_element = _child(root, "input")
     if input_element is not None:
-        for bluetooth in _children(input_element, "bluetooth"):
-            for output in _children(bluetooth, "output"):
+        for source in input_element:
+            for output in _children(source, "output"):
                 if target := _text(output):
                     yield target
     sections = (
-        ("views", {"input"}),
+        ("views", {"input", "output"}),
         ("analysis", {"input", "output"}),
         ("export", {"data"}),
     )
@@ -77,8 +77,24 @@ def _references(root: ET.Element) -> Iterator[str]:
         parent = _child(root, parent_name)
         if parent is not None:
             for element in parent.iter():
-                if _local_name(element.tag) in tags and (target := _text(element)):
+                if (
+                    _local_name(element.tag) in tags
+                    and element.attrib.get("type", "buffer") == "buffer"
+                    and (target := _text(element))
+                ):
                     yield target
+
+
+def _data_errors(path: str, root: ET.Element) -> list[str]:
+    names, errors = _container_errors(path, root)
+    unknown = sorted(set(_references(root)) - set(names))
+    if unknown:
+        errors.append(f"{path}: references unknown data containers: {', '.join(unknown)}")
+    for dataset in root.findall("./export/set"):
+        headings = [column.get("name") for column in dataset.findall("data")]
+        if len(set(headings)) != len(headings):
+            errors.append(f"{path}: duplicate column names in export {dataset.get('name')!r}")
+    return errors
 
 
 def _bluetooth_errors(
@@ -251,17 +267,13 @@ def check_core_experiment(
     errors, continue_validation = _root_errors(source, root)
     if not continue_validation:
         return errors
-    container_names, container_errors = _container_errors(source, root)
-    errors.extend(container_errors)
-    unknown = sorted(set(_references(root)) - set(container_names))
-    if unknown:
-        errors.append(f"{source}: references unknown data containers: {', '.join(unknown)}")
+    errors.extend(_data_errors(source, root))
     errors.extend(_bluetooth_errors(source, root, protocol, expected_mode))
     return errors
 
 
 def check_astronomy_experiment(path: Path) -> list[str]:
-    """Return XML safety and English, German, French locale errors for one astronomy file."""
+    """Check astronomy structure, data references, and English, German, French locales."""
 
     try:
         root = ET.parse(path).getroot()
@@ -271,9 +283,10 @@ def check_astronomy_experiment(path: Path) -> list[str]:
         return [f"{path}: unsafe XML rejected: {error}"]
     except ET.ParseError as error:
         return [f"{path}: XML parse error: {error}"]
-    errors: list[str] = []
-    if _local_name(root.tag) != "phyphox":
-        errors.append(f"{path}: root element must be <phyphox>")
+    errors, continue_validation = _root_errors(str(path), root)
+    if not continue_validation:
+        return errors
+    errors.extend(_data_errors(str(path), root))
     if root.attrib.get("locale") != "en":
         errors.append(f"{path}: root locale must be en")
     locales = {

@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "static-friction",
+    "title": "First Slip, Inclination, and the Meaning of Static Friction",
+    "short_title": "First Slip and Static Friction",
+    "group": "mechanics",
+    "analysis_ids": ["static-friction"],
+    "figures": ["figures/static-friction.tex"],
+    "markdown": "companions/static-friction.md"
+  },
+  {
+    "slug": "audio-magnetic",
+    "title": "Motor-State Comparisons from Sound Envelopes and Magnetic Fields",
+    "short_title": "Sound Envelopes and Magnetic Fields",
+    "group": "mechanics",
+    "analysis_ids": ["audio-magnetic"],
+    "figures": ["figures/audio-magnetic.tex"],
+    "markdown": "companions/audio-magnetic.md"
+  }
+]

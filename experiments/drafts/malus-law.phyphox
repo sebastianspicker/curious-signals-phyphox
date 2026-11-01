@@ -1,0 +1,207 @@
+<?xml version='1.0' encoding='utf-8'?>
+<phyphox version="1.17" locale="en">
+  <!--Original Curious Signals optics draft; see companion manuscript for source anchors, method and limitations.-->
+  <title>Draft: Malus law with observed angle</title>
+  <category>Curious Signals drafts</category>
+  <description>Acquire Nano mode 6 clear counts and record settled protractor-angle observations. Calibrate angular zero, parallel signal and background, then compare normalized transmission with cos squared and inspect residuals.</description>
+  <icon>Opt</icon>
+  <data-containers>
+    <container size="0">device_t</container>
+    <container size="0">clear</container>
+    <container size="0">red</container>
+    <container size="0">green</container>
+    <container size="0">blue</container>
+    <container size="0">receive_t</container>
+    <container size="1" init="0">entered_angle</container>
+    <container size="1" init="NaN">current_device_t</container>
+    <container size="1" init="NaN">current_receive_t</container>
+    <container size="1" init="NaN">current_clear</container>
+    <container size="0">row_angle</container>
+    <container size="0">row_device_t</container>
+    <container size="0">row_receive_t</container>
+    <container size="0">row_clear</container>
+    <container size="1" init="0">enabled</container>
+    <container size="1" init="0">angle_zero</container>
+    <container size="1" init="0">background</container>
+    <container size="1" init="0">parallel</container>
+    <container size="1" init="4100">ceiling</container>
+    <container size="0">theta</container>
+    <container size="0">prediction</container>
+    <container size="0">normalized</container>
+    <container size="0">residual</container>
+    <container size="1" init="1">sentinel</container>
+    <container size="1" init="0">record_request</container>
+    <container size="1" init="NaN">pending_row_angle</container>
+    <container size="1" init="NaN">pending_row_device_t</container>
+    <container size="1" init="NaN">pending_row_receive_t</container>
+    <container size="1" init="NaN">pending_row_clear</container>
+  </data-containers>
+  <input>
+    <bluetooth name="phyphox-sense" id="Sense" mode="notification" subscribeOnStart="false">
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="0">device_t</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="4">clear</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="8">red</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="12">green</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="16">blue</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" extra="time">receive_t</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="0">current_device_t</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" extra="time">current_receive_t</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="4">current_clear</output>
+    </bluetooth>
+  </input>
+  <output>
+    <bluetooth id="Sense">
+      <config char="cddf1003-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian">6</config>
+    </bluetooth>
+  </output>
+  <analysis sleep="0.1" onUserInput="false">
+    <if equal="true">
+      <input as="a" type="buffer" clear="false">record_request</input>
+      <input as="b" type="value" clear="false">1</input>
+      <input as="true" type="buffer" clear="false">pending_row_angle</input>
+      <output clear="false">row_angle</output>
+    </if>
+    <if equal="true">
+      <input as="a" type="buffer" clear="false">record_request</input>
+      <input as="b" type="value" clear="false">1</input>
+      <input as="true" type="buffer" clear="false">pending_row_device_t</input>
+      <output clear="false">row_device_t</output>
+    </if>
+    <if equal="true">
+      <input as="a" type="buffer" clear="false">record_request</input>
+      <input as="b" type="value" clear="false">1</input>
+      <input as="true" type="buffer" clear="false">pending_row_receive_t</input>
+      <output clear="false">row_receive_t</output>
+    </if>
+    <if equal="true">
+      <input as="a" type="buffer" clear="false">record_request</input>
+      <input as="b" type="value" clear="false">1</input>
+      <input as="true" type="buffer" clear="false">pending_row_clear</input>
+      <output clear="false">row_clear</output>
+    </if>
+    <formula formula="[1]*0">
+      <input clear="false">sentinel</input>
+      <output clear="true">record_request</output>
+    </formula>
+    <formula formula="[1_]-[2]">
+      <input clear="false">row_angle</input>
+      <input clear="false">angle_zero</input>
+      <output clear="true">theta</output>
+    </formula>
+    <formula formula="cos([1_]*0.017453292519943295)^2">
+      <input clear="false">theta</input>
+      <output clear="true">prediction</output>
+    </formula>
+    <formula formula="([1_]-[2])/([3]-[2])/((max(0,sign([4]-0.5))/max(0,sign([4]-0.5)))*(max(0,sign([3]-[2]))/max(0,sign([3]-[2])))*(max(0,sign([5]-max([1_],[3])))/max(0,sign([5]-max([1_],[3]))))*(heaviside([1_]-[2])/heaviside([1_]-[2])))">
+      <input clear="false">row_clear</input>
+      <input clear="false">background</input>
+      <input clear="false">parallel</input>
+      <input clear="false">enabled</input>
+      <input clear="false">ceiling</input>
+      <output clear="true">normalized</output>
+    </formula>
+    <formula formula="[1_]-[2_]">
+      <input clear="false">normalized</input>
+      <input clear="false">prediction</input>
+      <output clear="true">residual</output>
+    </formula>
+  </analysis>
+  <views>
+    <view label="Record angle">
+      <edit label="Observed analyzer angle" default="0" unit="deg" signed="true" decimal="true">
+        <output>entered_angle</output>
+      </edit>
+      <value label="Live clear counts" unit="counts" precision="4">
+        <input>clear</input>
+      </value>
+      <button label="Record">
+        <input type="buffer">entered_angle</input>
+        <output clear="true">pending_row_angle</output>
+        <input type="buffer">current_device_t</input>
+        <output clear="true">pending_row_device_t</output>
+        <input type="buffer">current_receive_t</input>
+        <output clear="true">pending_row_receive_t</output>
+        <input type="buffer">current_clear</input>
+        <output clear="true">pending_row_clear</output>
+        <input type="value">1</input>
+        <output clear="true">record_request</output>
+      </button>
+      <button label="Clear observations">
+        <input type="empty" />
+        <output clear="true">row_angle</output>
+        <input type="empty" />
+        <output clear="true">row_device_t</output>
+        <input type="empty" />
+        <output clear="true">row_receive_t</output>
+        <input type="empty" />
+        <output clear="true">row_clear</output>
+        <input type="value">0</input>
+        <output clear="true">record_request</output>
+      </button>
+      <graph label="Measured transmission" labelX="Angle from parallel" labelY="Signal" unitX="deg" unitY="1" partialUpdate="false" style="dots">
+        <input axis="x">theta</input>
+        <input axis="y">normalized</input>
+      </graph>
+      <graph label="Measured versus cos squared" labelX="cos squared" labelY="Signal" unitX="1" unitY="1" partialUpdate="false" style="dots">
+        <input axis="x">prediction</input>
+        <input axis="y">normalized</input>
+      </graph>
+      <graph label="Residual from cos squared" labelX="Angle from parallel" labelY="Signal" unitX="deg" unitY="1" partialUpdate="false" style="dots">
+        <input axis="x">theta</input>
+        <input axis="y">residual</input>
+      </graph>
+      <info label="Use a fixed source polarizer and rotating analyzer with a protractor; leave the detector fixed behind it. Observe angle only after settling, then press Record while light is stable. The row uses the latest acquired BLE notification and both real clocks. Pause then Record uses the last sample. No phone gyro or Nano gyro is acquired." />
+    </view>
+    <view label="Calibration">
+      <edit label="Calibration checked (0 or 1)" default="0" unit="" signed="true" decimal="true">
+        <output>enabled</output>
+      </edit>
+      <edit label="Parallel-axis protractor reading" default="0" unit="deg" signed="true" decimal="true">
+        <output>angle_zero</output>
+      </edit>
+      <edit label="Background / extinction floor" default="0" unit="counts" signed="true" decimal="true">
+        <output>background</output>
+      </edit>
+      <edit label="Parallel signal" default="0" unit="counts" signed="true" decimal="true">
+        <output>parallel</output>
+      </edit>
+      <edit label="Count ceiling (screening only)" default="4100" unit="counts" signed="true" decimal="true">
+        <output>ceiling</output>
+      </edit>
+    </view>
+    <view label="Setup">
+      <info label="Use a steady lamp plus fixed polarizer and rotatable analyzer, or first verify that an LCD emits stable linearly polarized light. Fix screen brightness and disable automatic brightness. Keep separation, aperture, normal incidence and detector orientation constant." />
+      <info label="Locate maximum transmission and enter its protractor reading as Parallel-axis protractor reading. Measure Parallel signal and Background / extinction floor without moving detector geometry; inspect whether the extinction floor is angle independent. Enter stable means, then set Calibration checked to 1." />
+      <info label="Record several angles in both rotation directions over at least 90 degrees. Malus law predicts (I-B)/(Iparallel-B)=cos²(theta). Residuals reveal angle offset, imperfect polarization, drift and mounting errors. Count values are not lux; a fixed spectrum is required for a count ratio to track intensity. Calibration changes recompute every recorded observation." />
+      <info label="Draft: numerical and schema checks are software evidence only. Native Android/iOS import, BLE acquisition and physical calibration still require validation. Export before using the app menu Clear data; it resets raw histories and edit defaults." />
+    </view>
+  </views>
+  <export>
+    <set name="Raw Nano mode 6">
+      <data name="device_t (s)">device_t</data>
+      <data name="receive_t (s)">receive_t</data>
+      <data name="clear (counts)">clear</data>
+      <data name="red (counts)">red</data>
+      <data name="green (counts)">green</data>
+      <data name="blue (counts)">blue</data>
+    </set>
+    <set name="Settled angle observations">
+      <data name="Observed protractor angle (deg)">row_angle</data>
+      <data name="Captured device time (s)">row_device_t</data>
+      <data name="Captured receive time (s)">row_receive_t</data>
+      <data name="Captured clear signal (counts)">row_clear</data>
+      <data name="Angle from parallel (deg)">theta</data>
+      <data name="Cos-squared prediction (1)">prediction</data>
+      <data name="Normalized transmission (1)">normalized</data>
+      <data name="Measured minus cos-squared (1)">residual</data>
+    </set>
+    <set name="Current settings (applied to whole derived record)">
+      <data name="Observed analyzer angle">entered_angle</data>
+      <data name="Calibration checked (0 or 1)">enabled</data>
+      <data name="Parallel-axis protractor reading">angle_zero</data>
+      <data name="Background / extinction floor">background</data>
+      <data name="Parallel signal">parallel</data>
+      <data name="Count ceiling (screening only)">ceiling</data>
+    </set>
+  </export>
+</phyphox>

@@ -1,0 +1,114 @@
+\begin{abstract}
+Surface brightness becomes a reflectance measurement only after illumination, viewing geometry and detector weighting have been specified. In example phone and SensorTag records, dark-subtracted grey-to-reference ratios are 0.364 and 0.368; black-to-reference ratios are approximately 0.042 and 0.041. The full-record extrema contrast instead approaches 100\% because the sequence includes a covered sensor. Calibrated reflectance requires a characterized reference and matched geometry, while a planetary albedo additionally depends on angular scattering and spectral integration.
+\end{abstract}
+\begin{IEEEkeywords}
+Reflectance, albedo, optical sensors, reference substitution, astronomy education.
+\end{IEEEkeywords}
+
+\section{From reflected light to albedo}
+The astro-lab activity compares lamp-illuminated reflecting surfaces using a phone or SensorTag\cite{astrolab2022}. At fixed illumination and viewing directions, reference substitution compares surfaces while preserving optical throughput. The signal nevertheless retains the detector's wavelength weighting and restricted collection angle.
+
+Nicodemus and colleagues distinguish directional measurements, hemispherically integrated reflectance and whole-planet albedo\cite{nicodemus1977}. The experiment directly establishes a detector-weighted sample-to-reference ratio. Absolute reflectance requires a characterized reference and matching geometry. Planetary albedo additionally requires the illuminated body's angular scattering and, for an energy budget, spectral integration.
+
+\section{Instrument and geometry}
+Use a stable lamp, an exchangeable sample holder and a baffled detector arranged as in Fig.~\ref{fig:alb-apparatus}. The lamp, detector, incidence angle, viewing angle and illuminated area remain fixed while the target is replaced. Prevent direct lamp radiation from reaching the detector. Record surface orientation because texture and gloss can make reflection strongly directional.
+
+\begin{figure}[!htbp]
+\centering
+\begin{tikzpicture}[x=1cm,y=1cm]
+ \node[draw,circle,fill=csred!10,minimum size=0.7cm] (lamp) at (0.65,1.0) {};
+ \node[above] at (0.65,1.45) {lamp};
+ \draw[thick] (2.75,0)--(4.65,0);
+ \draw[very thick,csgray] (3.1,0.08)--(4.3,0.08);
+ \node[below,align=center] at (3.7,-0.05) {interchangeable\\target/reference};
+ \draw[dashed] (3.7,0.1)--(3.7,1.9);
+ \node[above] at (3.7,1.9) {normal};
+ \draw[->,csred,thick] (1.04,0.87)--(3.55,0.13);
+ \draw[->,csblue,thick] (3.85,0.13)--(6.4,0.9);
+ \node[draw,rounded corners,align=center] at (6.95,1.0) {light\\sensor};
+ \draw[thick] (5.9,0.45)--(5.9,0.63);
+ \draw[thick] (5.9,0.95)--(5.9,1.5);
+ \node[above] at (5.9,1.5) {baffle};
+ \node at (2.3,0.8) {$\theta_i$};
+ \node at (4.95,0.85) {$\theta_o$};
+\end{tikzpicture}
+\caption{Apparatus schematic. Reference and sample occupy the same holder. Fixed incidence and viewing directions define the comparison; the baffle suppresses direct illumination of the sensor.}
+\label{fig:alb-apparatus}
+\end{figure}
+
+The OPT3001 approximately follows human photopic sensitivity~\cite{opt3001}. This weighting matters for coloured targets: a photometric ratio need not equal a ratio of total radiant power. The phone has its own sensor response and gain, so the two acquisition paths are reduced separately.
+
+The example SensorTag spacing is 0.8~s, compared with approximately 0.1~s for the phone. Both resolve the stable target plateaux. SensorTag timestamps record notification arrival, while phone timestamps follow sensor events. Missing notifications therefore leave time gaps; delivery jitter and integration still affect the time assigned to an optical change.
+
+\section{Reference substitution and example reduction}
+Let $D$ be the covered-sensor mean, $X_r$ the reference mean and $X_s$ the sample mean. The operational ratio is
+\begin{equation}
+ q_s=\frac{X_s-D}{X_r-D}.
+ \label{eq:alb-ratio}
+\end{equation}
+For a characterized reference factor $\rho_r$, a corresponding sample factor is $\rho_s=\rho_r q_s$ only when the geometry and spectral transfer are appropriate. We report $q_s$ as the sample-to-reference ratio, with the characterized reference factor defining the corresponding reflectance scale.
+
+Both sequences progress from a covered sensor to a white reference, grey and black targets, then another covered interval. Estimate $D$ by pooling samples in $[0,7)$ and $[57,60.5)$~s. The reference, grey and black means use $[9,23)$, $[25,39)$ and $[41,55)$~s, respectively. These interior windows exclude transitions. Figure~\ref{fig:albedo-example} expresses each trace relative to its own dark-subtracted reference.
+
+\begin{figure}[!htbp]
+\centering
+\input{figures/albedo.tex}
+\caption{Dark-subtracted phone and SensorTag signals normalized to their respective white references. Grey and black plateaux retain approximately 0.36 and 0.04 of the reference signal.}
+\label{fig:albedo-example}
+\end{figure}
+
+\begin{table}[!htbp]
+\caption{Phone and SensorTag mean signals (arbitrary units) and dark-subtracted sample-to-reference ratios $q$.}
+\label{tab:alb-example}
+\centering\small
+\begin{tabular}{@{}lrr@{}}
+\toprule
+Quantity & Phone & SensorTag\\
+\midrule
+Covered-sensor mean $D$ & 0.317 & 0.832\\
+White-reference mean $X_r$ & 522.30 & 432.39\\
+Grey-target mean $X_g$ & 190.36 & 159.50\\
+Black-target mean $X_b$ & 22.19 & 18.55\\
+Grey ratio $q_g$ & 0.3641 & 0.3677\\
+Black ratio $q_b$ & 0.04190 & 0.04106\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The grey ratios differ by approximately 0.0036, or 1\% of their magnitude. This agreement compares the two reductions; its interpretation across instruments depends on matched spectra, geometry and instrument responses. The black ratios are more sensitive to the covered-sensor correction because their net signals are small.
+
+The built-in display instead calculates the full-record contrast
+\begin{equation}
+ C=100\frac{X_{\max}-X_{\min}}{X_{\max}}.
+ \label{eq:alb-contrast}
+\end{equation}
+It gives 99.990\% for the phone record and 99.818\% for SensorTag. The near-total contrast is caused by including the deliberately covered intervals. It contains little information about the grey target's reflectance. Maxima and minima also depend on noise and record length. Predeclared plateau means address the intended surface comparison more directly.
+
+\section{Uncertainty and validation}
+For $A=X_s-D$ and $H=X_r-D$, the ratio sensitivities are
+\begin{equation}
+ \frac{\partial q_s}{\partial X_s}=\frac{1}{H},\quad
+ \frac{\partial q_s}{\partial X_r}=-\frac{A}{H^2},\quad
+ \frac{\partial q_s}{\partial D}=\frac{A-H}{H^2}.
+ \label{eq:alb-sensitivity}
+\end{equation}
+The same dark estimate enters both numerator and denominator, so two independent dark-error terms would be inappropriate. Propagate the joint input covariance. Reference interpolation and lamp drift can introduce further correlations. The scatter of individual readings should be distinguished from variability between complete target replacements.
+
+A laboratory sequence should alternate reference, sample and reference rather than acquire all references first. Compare dark readings before and after the sequence, test linearity over the working signal range, and repeat each physical replacement. Then use a second characterized surface, withheld from calibration, to check the inferred factor. This follows the reference-transfer logic of spectral reflectance metrology, where calibrated standards and defined collection geometry establish the scale\cite{barnes1998}. These checks distinguish repeatability within a plateau from transfer across physical target replacements. Changing the viewing angle and lamp spectrum tests the range over which the comparison remains transferable.
+
+\section{Spectral weighting and planetary interpretation}
+For a fixed geometry, channel $c$ responds schematically as
+\begin{equation}
+ X_c-D_c=G_c\int E_\lambda\,\rho_{\rm geom}(\lambda)
+ S_c(\lambda)\,d\lambda,
+ \label{eq:alb-spectral}
+\end{equation}
+where $E_\lambda$ is the illuminating spectrum, $S_c$ the channel responsivity and $G_c$ the fixed geometrical and electronic factor. A ratio cancels $G_c$ when sample and reference share it, but the integral retains its spectral weighting. The two grey-target ratios can therefore agree even if the detectors would disagree for a strongly coloured surface or another lamp. Such agreement does not determine the responsivity curves or the surface's resolved reflectance spectrum.
+
+For reflected light from a distant, unresolved planet,
+\begin{equation}
+ \frac{F_p}{F_\star}=A_g\left(\frac{R_p}{a}\right)^2\Phi(\alpha),
+ \label{eq:alb-planet}
+\end{equation}
+where $A_g$ is geometric albedo and $\Phi$ the phase function normalized at full phase. Modern phase-curve models explicitly connect albedo to scattering and viewing geometry\cite{heng2021}. A single brightness contrast therefore leaves radius, illumination and phase-function dependencies unresolved. At each wavelength the phase integral $Q=2\int_0^\pi\Phi(\alpha)\sin\alpha\,d\alpha$ connects spherical and geometric albedo, $A_s=Q A_g$. Bond albedo then averages $A_s$ over the incident stellar spectrum. Neither the directional sample ratio nor three broad colour channels determine these integrations.
+

@@ -1,0 +1,7 @@
+Observation ID,Unfiltered reference (count),Covered detector dark (count),Paired linear readings checked (1=yes),Measured ADC voltage gain (V/count),Measured ADC voltage offset (V),ADC calibration checked (1=yes),Measured detector irradiance gain (W/m2/V),Irradiance calibration checked (1=yes),Captured A0 (count),Captured device time (s),Captured receive time (s),UV detector weighted transmission,Calibrated sample voltage (V),Calibrated dark voltage (V),Calibrated detector-band irradiance (W/m2)
+1,610,10,1,0.00322580645,0,1,0.01,1,310,12.4770002,12.5145424,0.5,1,0.0322580645,0.00967741935
+2,610,10,1,0.00322580645,0,1,0.01,1,250,17.5020008,17.5369022,0.4,0.806451613,0.0322580645,0.00774193548
+3,610,10,1,0.00322580645,0,1,0.01,1,180,22.4820004,22.5144602,0.283333333,0.580645161,0.0322580645,0.00548387097
+4,610,10,1,0.00322580645,0,1,0.01,1,310,27.5049992,27.5431019,0.5,1,0.0322580645,0.00967741935
+5,610,10,1,0.00322580645,0,1,0.01,1,250,32.4850006,32.5169982,0.4,0.806451613,0.0322580645,0.00774193548
+6,610,10,1,0.00322580645,0,1,0.01,1,310,37.5200005,37.5587717,0.5,1,0.0322580645,0.00967741935

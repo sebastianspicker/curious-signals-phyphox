@@ -1,0 +1,123 @@
+[
+  {
+    "slug": "greenhouse-single",
+    "title": "Single-Sensor Warming: Baselines, Thermal Response and Sequential Comparisons",
+    "short_title": "Single-Sensor Warming",
+    "period": "October 2026",
+    "date_basis": "bmp280",
+    "experiment": "experiments/drafts/greenhouse-single.phyphox",
+    "datasets": [
+      "drafts/greenhouse-single.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "sensortag-environmental",
+    "title": "Humidity and Board Temperature on Independent SensorTag Clocks",
+    "short_title": "Independent Environmental Clocks",
+    "period": "October 2026",
+    "date_basis": "hdc1000",
+    "experiment": "experiments/drafts/sensortag-environmental.phyphox",
+    "datasets": [
+      "drafts/sensortag-environmental_humidity.example.csv",
+      "drafts/sensortag-environmental_barometer.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "puck-light",
+    "title": "Relative LED Photometry with Interleaved Dark and Reference Observations",
+    "short_title": "Relative LED Photometry",
+    "period": "October 2026",
+    "date_basis": "pucklight2026",
+    "experiment": "experiments/drafts/puck-light.phyphox",
+    "datasets": [
+      "drafts/puck-light.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "cc2541-accelerometer",
+    "title": "Tilt and Quantization in a Legacy Eight-Bit Accelerometer",
+    "short_title": "Eight-Bit Tilt Measurement",
+    "period": "October 2026",
+    "date_basis": "cc2541quick",
+    "experiment": "experiments/drafts/cc2541-accelerometer.phyphox",
+    "datasets": [
+      "drafts/cc2541-accelerometer.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "cc2541-gyroscope",
+    "title": "Signed Rotation, Bias and Finite-Interval Integration with a CC2541 Gyroscope",
+    "short_title": "Legacy Signed Angular Rate",
+    "period": "October 2026",
+    "date_basis": "cc2541protocol",
+    "experiment": "experiments/drafts/cc2541-gyroscope.phyphox",
+    "datasets": [
+      "drafts/cc2541-gyroscope.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "cc2541-magnetometer",
+    "title": "Separating Reorientation from Magnetic Disturbance with a Triaxis Sensor",
+    "short_title": "Reorientation and Magnetic Disturbance",
+    "period": "October 2026",
+    "date_basis": "mag3110",
+    "experiment": "experiments/drafts/cc2541-magnetometer.phyphox",
+    "datasets": [
+      "drafts/cc2541-magnetometer.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "cc2541-humidity",
+    "title": "SHT21 Humidity Pulses: Conversion, Temperature and Reference Calibration",
+    "short_title": "Humidity Pulse Metrology",
+    "period": "October 2026",
+    "date_basis": "sht21",
+    "experiment": "experiments/drafts/cc2541-humidity.phyphox",
+    "datasets": [
+      "drafts/cc2541-humidity.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "cc2541-pressure",
+    "title": "T5400 Pressure Excursions: Compensation and the Limits of Leak Inference",
+    "short_title": "Pressure Excursion and Compensation",
+    "period": "October 2026",
+    "date_basis": "dickow2015",
+    "experiment": "experiments/drafts/cc2541-pressure.phyphox",
+    "datasets": [
+      "drafts/cc2541-pressure.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "cc2541-ir-temperature",
+    "title": "TMP006 Radiometry: Die Compensation and Application Sensitivity",
+    "short_title": "Thermopile Application Calibration",
+    "period": "October 2026",
+    "date_basis": "tmp006",
+    "experiment": "experiments/drafts/cc2541-ir-temperature.phyphox",
+    "datasets": [
+      "drafts/cc2541-ir-temperature.example.csv"
+    ],
+    "group": "drafts"
+  },
+  {
+    "slug": "pocketlab-gyroscope",
+    "title": "PocketLab Voyager Rotation: Signed Cancellation and Angular Path Length",
+    "short_title": "Voyager Signed Rotation",
+    "period": "October 2026",
+    "date_basis": "voyagerspec",
+    "experiment": "experiments/drafts/pocketlab-gyroscope.phyphox",
+    "datasets": [
+      "drafts/pocketlab-gyroscope.example.csv"
+    ],
+    "group": "drafts"
+  }
+]

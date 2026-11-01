@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "illuminance-distance",
+    "title": "Inverse-Square Photometry: Distance, Timing and Averaging",
+    "short_title": "Inverse-Square Photometry",
+    "group": "Radiometry",
+    "analysis_ids": ["illuminance-distance", "illuminance-distance-manual"],
+    "figures": ["topic-figures/illuminance-distance.tex"],
+    "markdown": "companions/illuminance-distance.md"
+  },
+  {
+    "slug": "ir-distance",
+    "title": "Infrared Radiometry: Calibration and Distance-Dependent Heating",
+    "short_title": "Infrared Radiometry and Heating",
+    "group": "Radiometry",
+    "analysis_ids": ["ir-distance", "cc2541-ir-temperature"],
+    "figures": ["topic-figures/ir-distance.tex"],
+    "markdown": "companions/ir-distance.md"
+  }
+]

@@ -1,0 +1,204 @@
+<!-- Original Curious Signals draft from documented protocols; archive provenance is in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+    <title>Draft: CC2541 T5400 pressure calibration</title>
+    <category>Curious Signals drafts</category>
+    <description>Poll the CC2541 T5400 calibration characteristic and raw temperature/pressure, with explicit calibration/data state and verification gate. Missing calibration yields gaps.</description>
+    <data-containers>
+        <container size="1">c0</container>
+        <container size="1">c1</container>
+        <container size="1">c2</container>
+        <container size="1">c3</container>
+        <container size="1">c4</container>
+        <container size="1">c5</container>
+        <container size="1">c6</container>
+        <container size="1">c7</container>
+        <container size="1">calibration_receive_s</container>
+        <container size="0">temperature_raw</container>
+        <container size="0">pressure_raw</container>
+        <container size="0">receive_s</container>
+        <container size="1" init="2">requested_state</container>
+        <container size="1" init="0">calibration_verified</container>
+        <container size="0">sensitivity</container>
+        <container size="0">offset</container>
+        <container size="0">pressure_candidate</container>
+        <container size="0">temperature_candidate</container>
+        <container size="0">valid_state</container>
+        <container size="0">pressure_gated_invalid</container>
+        <container size="0">pressure_gated</container>
+        <container size="0">temperature_gated_invalid</container>
+        <container size="0">temperature_gated</container>
+        <container size="0">pressure_hPa</container>
+        <container size="0">temperature_C</container>
+    </data-containers>
+    <input>
+        <bluetooth id="t5400" name="SensorTag" mode="poll" rate="1">
+            <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">02</config>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">c0</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="2" length="2">c1</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="4" length="2">c2</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="6" length="2">c3</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="8" length="2">c4</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="10" length="2">c5</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="12" length="2">c6</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="14" length="2">c7</output>
+            <output char="F000AA43-0451-4000-B000-000000000000" extra="time">calibration_receive_s</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="0" length="2">temperature_raw</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="2" length="2">pressure_raw</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">receive_s</output>
+        </bluetooth>
+    </input>
+    <output>
+        <bluetooth id="t5400" name="SensorTag">
+            <input char="F000AA42-0451-4000-B000-000000000000" conversion="uInt8">requested_state</input>
+        </bluetooth>
+    </output>
+    <analysis sleep="0.1" onUserInput="false">
+        <formula formula="[1]+[2]*[3_]/131072+[4]*[3_]^2/17179869184">
+            <input clear="false">c2</input>
+            <input clear="false">c3</input>
+            <input clear="false">temperature_raw</input>
+            <input clear="false">c4</input>
+            <output clear="true">sensitivity</output>
+        </formula>
+        <formula formula="[1]*16384+[2]*[3_]/8+[4]*[3_]^2/524288">
+            <input clear="false">c5</input>
+            <input clear="false">c6</input>
+            <input clear="false">temperature_raw</input>
+            <input clear="false">c7</input>
+            <output clear="true">offset</output>
+        </formula>
+        <formula formula="([1_]*[2_]+[3_])/1638400+0*sqrt([1_])/sqrt([1_])">
+            <input clear="false">sensitivity</input>
+            <input clear="false">pressure_raw</input>
+            <input clear="false">offset</input>
+            <output clear="true">pressure_candidate</output>
+        </formula>
+        <formula formula="100*([1]*[2_]/256+[3]*64)/65536">
+            <input clear="false">c0</input>
+            <input clear="false">temperature_raw</input>
+            <input clear="false">c1</input>
+            <output clear="true">temperature_candidate</output>
+        </formula>
+        <formula formula="1/(1+abs([1]-1)+abs([2]-1))">
+            <input clear="false">calibration_verified</input>
+            <input clear="false">requested_state</input>
+            <output clear="true">valid_state</output>
+        </formula>
+        <formula formula="[1_]*0/0">
+            <input clear="false">pressure_candidate</input>
+            <output clear="true">pressure_gated_invalid</output>
+        </formula>
+        <if equal="true">
+            <input clear="false">valid_state</input>
+            <input type="value">1</input>
+            <input clear="false">pressure_candidate</input>
+            <input clear="false">pressure_gated_invalid</input>
+            <output clear="true">pressure_gated</output>
+        </if>
+        <formula formula="[1_]*0/0">
+            <input clear="false">temperature_candidate</input>
+            <output clear="true">temperature_gated_invalid</output>
+        </formula>
+        <if equal="true">
+            <input clear="false">valid_state</input>
+            <input type="value">1</input>
+            <input clear="false">temperature_candidate</input>
+            <input clear="false">temperature_gated_invalid</input>
+            <output clear="true">temperature_gated</output>
+        </if>
+        <formula formula="[1_]+0*sqrt([1_])/sqrt([1_])">
+            <input clear="false">pressure_gated</input>
+            <output clear="true">pressure_hPa</output>
+        </formula>
+        <formula formula="[1_]">
+            <input clear="false">temperature_gated</input>
+            <output clear="true">temperature_C</output>
+        </formula>
+    </analysis>
+    <views>
+        <view label="Calibration">
+            <info label="Start with Requested state 2, wait for all eight coefficients below, then set state 1 and Calibration verified 1 only after checking device identity and reference pressure. State 0 disables sensor. Keep acquisition running for state writes." />
+            <edit label="Requested state (0 off, 2 calibration, 1 data)" default="2" unit="" signed="true" decimal="true">
+                <output>requested_state</output>
+            </edit>
+            <edit label="Calibration verified (0 or 1)" default="0" unit="" signed="true" decimal="true">
+                <output>calibration_verified</output>
+            </edit>
+            <value label="Read coefficient c0" precision="0">
+                <input>c0</input>
+            </value>
+            <value label="Read coefficient c1" precision="0">
+                <input>c1</input>
+            </value>
+            <value label="Read coefficient c2" precision="0">
+                <input>c2</input>
+            </value>
+            <value label="Read coefficient c3" precision="0">
+                <input>c3</input>
+            </value>
+            <value label="Read coefficient c4" precision="0">
+                <input>c4</input>
+            </value>
+            <value label="Read coefficient c5" precision="0">
+                <input>c5</input>
+            </value>
+            <value label="Read coefficient c6" precision="0">
+                <input>c6</input>
+            </value>
+            <value label="Read coefficient c7" precision="0">
+                <input>c7</input>
+            </value>
+        </view>
+        <view label="Pressure">
+            <graph label="Calibrated pressure" labelX="Receive time" unitX="s" labelY="Calibrated pressure" unitY="hPa" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">pressure_hPa</input>
+            </graph>
+            <graph label="T5400 temperature" labelX="Receive time" unitX="s" labelY="T5400 temperature" unitY="°C" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">temperature_C</input>
+            </graph>
+        </view>
+        <view label="Packet diagnostics">
+            <graph label="Pressure raw" labelX="Receive time" unitX="s" labelY="Pressure raw" unitY="count" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">pressure_raw</input>
+            </graph>
+            <graph label="Temperature raw" labelX="Receive time" unitX="s" labelY="Temperature raw" unitY="count" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">temperature_raw</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Only the CC2541 T5400 variant is intended. Correct calibration UUID is F000AA43-0451-4000-B000-000000000000, actively polled here; it is not a notification or a CC2650 BMP280 packet." />
+            <info label="Connecting requests config 02 (copy device coefficients). Start, wait for populated c0..c7, then use Requested state 1 to enable pressure. Set Calibration verified to 1 only after recording the eight actual device coefficients and a plausible reference comparison. No default coefficient is supplied." />
+            <info label="The input polls AA43 and AA41 at 1 Hz; this is receipt/read timing, not the sensor conversion timestamp. The Calibration read set and Samples set have independent clocks. Paused control changes may not reach BLE until running resumes." />
+            <info label="Missing coefficients, a disabled gate, nonpositive sensitivity or nonpositive pressure produces gaps. A stale successful calibration can belong to a different tag after reconnect: reset the experiment and repeat verification when changing device." />
+            <info label="The published external phyphox CC2541 pressure adapter warns of device-dependent accuracy. Bench verification must test calibration loading, signed temperature, state transitions, read failures, stable reference pressure and multiple devices before trusting this draft." />
+        </view>
+    </views>
+    <export>
+        <set name="Samples">
+            <data name="Data read receive time (s)">receive_s</data>
+            <data name="Unsigned pressure word">pressure_raw</data>
+            <data name="Signed temperature word">temperature_raw</data>
+            <data name="Pressure (hPa)">pressure_hPa</data>
+            <data name="T5400 temperature (°C)">temperature_C</data>
+        </set>
+        <set name="Read calibration">
+            <data name="Calibration read receive time (s)">calibration_receive_s</data>
+            <data name="Read calibration c0">c0</data>
+            <data name="Read calibration c1">c1</data>
+            <data name="Read calibration c2">c2</data>
+            <data name="Read calibration c3">c3</data>
+            <data name="Read calibration c4">c4</data>
+            <data name="Read calibration c5">c5</data>
+            <data name="Read calibration c6">c6</data>
+            <data name="Read calibration c7">c7</data>
+        </set>
+        <set name="Settings">
+            <data name="Requested state (0 off, 2 calibration, 1 data)">requested_state</data>
+            <data name="Calibration verified (0 or 1)">calibration_verified</data>
+        </set>
+    </export>
+</phyphox>

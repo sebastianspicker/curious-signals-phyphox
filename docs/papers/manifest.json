@@ -1,0 +1,938 @@
+{
+  "edition_date": "2026-10-27",
+  "source_commit": "0a5cf6f",
+  "authors": [
+    "Sebastian J. Spicker",
+    "Alexander Küpper"
+  ],
+  "affiliation": "Institute of Physics Education, University of Cologne",
+  "schema_version": 2,
+  "work_period": {
+    "start": 2018,
+    "end": 2024,
+    "institution": "Institute of Physics Education, University of Cologne"
+  },
+  "analysis_sources": [
+    {
+      "slug": "accelerometer",
+      "title": "Measuring Specific Force with a Wireless Accelerometer",
+      "short_title": "Specific Force",
+      "period": "July 2022",
+      "date_basis": "arduinoproject",
+      "experiment": "experiments/accelerometer_plot_v1-2.phyphox",
+      "datasets": [
+        "core/accelerometer_plot_v1-2.example.csv"
+      ],
+      "group": "Sensors and measurement",
+      "related_datasets": [
+        "drafts/cc2541-accelerometer.example.csv"
+      ]
+    },
+    {
+      "slug": "gyroscope",
+      "title": "Angular Velocity and Bias in a Wireless MEMS Gyroscope",
+      "short_title": "Angular Velocity and Bias",
+      "period": "July 2022",
+      "date_basis": "arduinoproject",
+      "experiment": "experiments/gyroscope_plot_v1-2.phyphox",
+      "datasets": [
+        "core/gyroscope_plot_v1-2.example.csv"
+      ],
+      "group": "Sensors and measurement",
+      "related_datasets": [
+        "drafts/cc2541-gyroscope.example.csv"
+      ]
+    },
+    {
+      "slug": "magnetometer",
+      "title": "Three-Axis Magnetic Measurements and Their Calibration",
+      "short_title": "Magnetic Measurements",
+      "period": "July 2022",
+      "date_basis": "arduinoproject",
+      "experiment": "experiments/magnetometer_plot_v1-2.phyphox",
+      "datasets": [
+        "core/magnetometer_plot_v1-2.example.csv"
+      ],
+      "group": "Sensors and measurement",
+      "related_datasets": [
+        "drafts/magnetic-current.example.csv"
+      ]
+    },
+    {
+      "slug": "pressure",
+      "title": "Barometric Pressure and Relative Height",
+      "short_title": "Pressure and Relative Height",
+      "period": "July 2022",
+      "date_basis": "arduinoproject",
+      "experiment": "experiments/pressure_plot_v1-2.phyphox",
+      "datasets": [
+        "core/pressure_plot_v1-2.example.csv"
+      ],
+      "group": "Sensors and measurement",
+      "related_datasets": [
+        "drafts/pressure-boiling.example.csv"
+      ]
+    },
+    {
+      "slug": "temperature-humidity",
+      "title": "Temperature and Humidity: Response and Calibration",
+      "short_title": "Temperature and Humidity",
+      "period": "July 2022",
+      "date_basis": "arduinoproject",
+      "experiment": "experiments/temperature_plot_v1-2.phyphox",
+      "datasets": [
+        "core/temperature_plot_v1-2.example.csv"
+      ],
+      "group": "Sensors and measurement",
+      "related_datasets": [
+        "drafts/sensortag-environmental_humidity.example.csv",
+        "drafts/cc2541-humidity.example.csv"
+      ]
+    },
+    {
+      "slug": "light-rgb",
+      "title": "Relative Colour Measurements with a Four-Channel Light Sensor",
+      "short_title": "Relative Colour Measurements",
+      "period": "July 2022",
+      "date_basis": "arduinoproject",
+      "experiment": "experiments/light_plot_v1-2.phyphox",
+      "datasets": [
+        "core/light_plot_v1-2.example.csv"
+      ],
+      "group": "Sensors and measurement",
+      "related_datasets": [
+        "drafts/rgb-filter-transmission.example.csv"
+      ]
+    },
+    {
+      "slug": "analog-inputs",
+      "title": "Voltage Measurement with a Wireless Microcontroller",
+      "short_title": "Voltage Measurement",
+      "period": "July 2022",
+      "date_basis": "arduinoproject",
+      "experiment": "experiments/analog_input_plot_v1-2.phyphox",
+      "datasets": [
+        "core/analog_input_plot_v1-2.example.csv"
+      ],
+      "group": "Sensors and measurement",
+      "related_datasets": [
+        "drafts/uv-transmission_observations.example.csv"
+      ]
+    },
+    {
+      "slug": "albedo",
+      "title": "From Reflected Light to Relative Reflectance",
+      "short_title": "Relative Reflectance",
+      "period": "October 2022",
+      "date_basis": "astrolab2022",
+      "experiment": "experiments/astronomy/albedo.phyphox",
+      "datasets": [
+        "astronomy/albedo_phone.example.csv",
+        "astronomy/albedo_sensortag.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": [
+        "drafts/rgb-filter-transmission.example.csv"
+      ]
+    },
+    {
+      "slug": "greenhouse",
+      "title": "Heating Open and Covered Enclosures",
+      "short_title": "Enclosure Heating",
+      "period": "October 2022",
+      "date_basis": "astrolab2022",
+      "experiment": "experiments/astronomy/greenhouse.phyphox",
+      "datasets": [
+        "astronomy/greenhouse.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": [
+        "drafts/greenhouse-single.example.csv"
+      ]
+    },
+    {
+      "slug": "ir-distance",
+      "title": "Infrared Temperature and Source Distance",
+      "short_title": "Infrared Temperature and Distance",
+      "period": "October 2022",
+      "date_basis": "astrolab2022",
+      "experiment": "experiments/astronomy/ir-dist_habitable.phyphox",
+      "datasets": [
+        "astronomy/ir-dist_habitable.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": [
+        "drafts/illuminance-distance-manual_observations.example.csv"
+      ]
+    },
+    {
+      "slug": "mission-to-mars",
+      "title": "Mission to Mars: Pressure Changes in a Model Cabin",
+      "short_title": "Mission to Mars",
+      "period": "January 2022",
+      "date_basis": "mars2022",
+      "experiment": "experiments/astronomy/missiontomars.phyphox",
+      "datasets": [
+        "astronomy/missiontomars_phone.example.csv",
+        "astronomy/missiontomars_sensortag.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": [
+        "drafts/pressure-boiling.example.csv"
+      ]
+    },
+    {
+      "slug": "owon-interface",
+      "title": "Voltage Acquisition with a Bluetooth Multimeter",
+      "short_title": "Bluetooth Multimeter Acquisition",
+      "period": "March 2024",
+      "date_basis": "transit2024",
+      "experiment": "experiments/astronomy/owon_digital_multimeter-debug.phyphox",
+      "datasets": [
+        "astronomy/owon_digital_multimeter-debug.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": [
+        "core/analog_input_plot_v1-2.example.csv"
+      ]
+    },
+    {
+      "slug": "pt-star",
+      "title": "Compression and Heating: A Star-Formation Analogy",
+      "short_title": "Compression and Star Formation",
+      "period": "September 2020",
+      "date_basis": "star2020",
+      "experiment": "experiments/astronomy/pt-star.phyphox",
+      "datasets": [
+        "astronomy/pt-star.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": []
+    },
+    {
+      "slug": "tidal-locking",
+      "title": "Day--Night Illumination and Thermal Response",
+      "short_title": "Day--Night Thermal Response",
+      "period": "October 2022",
+      "date_basis": "astrolab2022",
+      "experiment": "experiments/astronomy/tidal-locking.phyphox",
+      "datasets": [
+        "astronomy/tidal-locking_bmp280.example.csv",
+        "astronomy/tidal-locking_opt3001.example.csv",
+        "astronomy/tidal-locking_tmp007.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": [
+        "drafts/seasons-obliquity_observations.example.csv"
+      ]
+    },
+    {
+      "slug": "transit-method",
+      "title": "Laboratory Transit Photometry",
+      "short_title": "Transit Photometry",
+      "period": "March 2024",
+      "date_basis": "transit2024",
+      "experiment": "experiments/astronomy/transitmethode.phyphox",
+      "datasets": [
+        "astronomy/transitmethode_owon.example.csv",
+        "astronomy/transitmethode_phone.example.csv",
+        "astronomy/transitmethode_sensortag.example.csv"
+      ],
+      "group": "Laboratory models and astronomy",
+      "related_datasets": [
+        "drafts/nano-transit.example.csv",
+        "drafts/exomoon-photometry.example.csv",
+        "drafts/starspot-crossing.example.csv",
+        "drafts/eclipsing-binary.example.csv"
+      ]
+    },
+    {
+      "slug": "rgb-filter-transmission",
+      "title": "Broad-Band Filter Transmission and the Choice of Optical Reference",
+      "short_title": "Broad-Band Filter Transmission",
+      "period": "October 2026",
+      "date_basis": "ErolDemir2024",
+      "experiment": "experiments/drafts/rgb-filter-transmission.phyphox",
+      "datasets": [
+        "drafts/rgb-filter-transmission.example.csv"
+      ],
+      "group": "Optics and measurement"
+    },
+    {
+      "slug": "illuminance-distance",
+      "title": "Inverse-Square Photometry with Independently Timed Position Observations",
+      "short_title": "Inverse-Square Photometry",
+      "period": "October 2026",
+      "date_basis": "vera2014",
+      "experiment": "experiments/drafts/illuminance-distance.phyphox",
+      "datasets": [
+        "drafts/illuminance-distance_light.example.csv",
+        "drafts/illuminance-distance_mouse.example.csv"
+      ],
+      "group": "Optics and measurement"
+    },
+    {
+      "slug": "illuminance-distance-manual",
+      "title": "Relative-Light Distance Laws from Paired Ruler Observations",
+      "short_title": "Paired Ruler Photometry",
+      "period": "October 2026",
+      "date_basis": "campione2024",
+      "experiment": "experiments/drafts/illuminance-distance-manual.phyphox",
+      "datasets": [
+        "drafts/illuminance-distance-manual.example.csv",
+        "drafts/illuminance-distance-manual_observations.example.csv"
+      ],
+      "group": "Optics and measurement"
+    },
+    {
+      "slug": "malus-law",
+      "title": "Settled-Angle Polarimetry: Scale, Floor and Angular Zero in Malus' Law",
+      "short_title": "Settled-Angle Polarimetry",
+      "period": "October 2026",
+      "date_basis": "monteiro2017malus",
+      "experiment": "experiments/drafts/malus-law.phyphox",
+      "datasets": [
+        "drafts/malus-law.example.csv",
+        "drafts/malus-law_observations.example.csv"
+      ],
+      "group": "Optics and measurement"
+    },
+    {
+      "slug": "colour-temperature",
+      "title": "Indicative Colour Temperature and the Limits of a Transferred Sensor Matrix",
+      "short_title": "Indicative Colour Temperature",
+      "period": "October 2026",
+      "date_basis": "McCamy1992",
+      "experiment": "experiments/drafts/colour-temperature.phyphox",
+      "datasets": [
+        "drafts/colour-temperature.example.csv"
+      ],
+      "group": "Optics and measurement"
+    },
+    {
+      "slug": "detector-characterization",
+      "title": "Delivered Sampling and the Detectability of Short Optical Features",
+      "short_title": "Sampling and Detectability",
+      "period": "October 2026",
+      "date_basis": "kipping2010",
+      "experiment": "experiments/drafts/detector-characterization.phyphox",
+      "datasets": [
+        "drafts/detector-characterization.example.csv",
+        "drafts/detector-characterization_summary.example.csv"
+      ],
+      "group": "Optics and measurement"
+    },
+    {
+      "slug": "nano-transit",
+      "title": "Local Baselines in Nano Transit Photometry",
+      "short_title": "Nano Transit Photometry",
+      "period": "October 2026",
+      "date_basis": "transit2024",
+      "experiment": "experiments/drafts/nano-transit.phyphox",
+      "datasets": [
+        "drafts/nano-transit.example.csv"
+      ],
+      "group": "Astronomical photometry"
+    },
+    {
+      "slug": "exomoon-photometry",
+      "title": "Extra Blocking and Overlap in Planet--Moon Photometry",
+      "short_title": "Planet--Moon Photometry",
+      "period": "October 2026",
+      "date_basis": "exomoonlesson2023",
+      "experiment": "experiments/drafts/exomoon-photometry.phyphox",
+      "datasets": [
+        "drafts/exomoon-photometry.example.csv"
+      ],
+      "group": "Astronomical photometry"
+    },
+    {
+      "slug": "starspot-crossing",
+      "title": "Local Surface Brightness in Starspot-Crossing Photometry",
+      "short_title": "Starspot Crossings",
+      "period": "October 2026",
+      "date_basis": "agphotometry2024",
+      "experiment": "experiments/drafts/starspot-crossing.phyphox",
+      "datasets": [
+        "drafts/starspot-crossing.example.csv"
+      ],
+      "group": "Astronomical photometry"
+    },
+    {
+      "slug": "eclipsing-binary",
+      "title": "Two Luminous Bodies: Eclipse Depths and Recurrence",
+      "short_title": "Eclipsing Binary Photometry",
+      "period": "October 2026",
+      "date_basis": "agphotometry2024",
+      "experiment": "experiments/drafts/eclipsing-binary.phyphox",
+      "datasets": [
+        "drafts/eclipsing-binary.example.csv"
+      ],
+      "group": "Astronomical photometry"
+    },
+    {
+      "slug": "seasons-obliquity",
+      "title": "Obliquity, Detector Orientation and Seasonal Illumination",
+      "short_title": "Obliquity and Illumination",
+      "period": "October 2026",
+      "date_basis": "paillard2026",
+      "experiment": "experiments/drafts/seasons-obliquity.phyphox",
+      "datasets": [
+        "drafts/seasons-obliquity.example.csv",
+        "drafts/seasons-obliquity_observations.example.csv"
+      ],
+      "group": "Astronomical photometry"
+    },
+    {
+      "slug": "static-friction",
+      "title": "First Slip, Inclination, and the Meaning of Static Friction",
+      "short_title": "First Slip and Static Friction",
+      "period": "October 2026",
+      "date_basis": "astmg2192024",
+      "experiment": "experiments/drafts/static-friction.phyphox",
+      "datasets": [
+        "drafts/static-friction_gravity.example.csv",
+        "drafts/static-friction_linear.example.csv"
+      ],
+      "group": "Mechanics and paired measurements"
+    },
+    {
+      "slug": "audio-magnetic",
+      "title": "Motor-State Comparisons from Sound Envelopes and Magnetic Fields",
+      "short_title": "Sound Envelopes and Magnetic Fields",
+      "period": "October 2026",
+      "date_basis": "liu2017stray",
+      "experiment": "experiments/drafts/audio-magnetic.phyphox",
+      "datasets": [
+        "drafts/audio-magnetic_audio.example.csv",
+        "drafts/audio-magnetic_magnetic.example.csv"
+      ],
+      "group": "Mechanics and paired measurements"
+    },
+    {
+      "slug": "magnetic-current",
+      "title": "DC Current from a Fixed Magnetic Geometry: Calibration and Identifiability",
+      "short_title": "Magnetic DC Current Calibration",
+      "period": "October 2026",
+      "date_basis": "phyphoxammeters2018",
+      "experiment": "experiments/drafts/magnetic-current.phyphox",
+      "datasets": [
+        "drafts/magnetic-current.example.csv"
+      ],
+      "group": "Mechanics and paired measurements"
+    },
+    {
+      "slug": "pressure-boiling",
+      "title": "Pressure-Dependent Boiling: Equilibrium Curves and Observational Thresholds",
+      "short_title": "Pressure-Dependent Boiling",
+      "period": "October 2026",
+      "date_basis": "iapws1992",
+      "experiment": "experiments/drafts/pressure-boiling.phyphox",
+      "datasets": [
+        "drafts/pressure-boiling.example.csv"
+      ],
+      "group": "External observations"
+    },
+    {
+      "slug": "spectral-fingerprints",
+      "title": "Paired Spectral Ratios: Separating Shared Features from Additional Attenuation",
+      "short_title": "Paired Spectral Ratios",
+      "period": "October 2026",
+      "date_basis": "robertson2013",
+      "experiment": "experiments/drafts/spectral-fingerprints.phyphox",
+      "datasets": [
+        "drafts/spectral-fingerprints.example.csv"
+      ],
+      "group": "External observations"
+    },
+    {
+      "slug": "coronagraph-contrast",
+      "title": "Occulting Masks, Local Contrast and the Cost of Lost Target Throughput",
+      "short_title": "Occulting-Mask Contrast",
+      "period": "October 2026",
+      "date_basis": "mawet2014",
+      "experiment": "experiments/drafts/coronagraph-contrast.phyphox",
+      "datasets": [
+        "drafts/coronagraph-contrast.example.csv"
+      ],
+      "group": "External observations"
+    },
+    {
+      "slug": "uv-transmission",
+      "title": "Ultraviolet Transmission: Detector Weighting, Calibration and Paired Observations",
+      "short_title": "Ultraviolet Transmission",
+      "period": "October 2026",
+      "date_basis": "cie220",
+      "experiment": "experiments/drafts/uv-transmission.phyphox",
+      "datasets": [
+        "drafts/uv-transmission_raw.example.csv",
+        "drafts/uv-transmission_observations.example.csv"
+      ],
+      "group": "External observations"
+    },
+    {
+      "slug": "greenhouse-single",
+      "title": "Single-Sensor Warming: Baselines, Thermal Response and Sequential Comparisons",
+      "short_title": "Single-Sensor Warming",
+      "period": "October 2026",
+      "date_basis": "bmp280",
+      "experiment": "experiments/drafts/greenhouse-single.phyphox",
+      "datasets": [
+        "drafts/greenhouse-single.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "sensortag-environmental",
+      "title": "Humidity and Board Temperature on Independent SensorTag Clocks",
+      "short_title": "Independent Environmental Clocks",
+      "period": "October 2026",
+      "date_basis": "hdc1000",
+      "experiment": "experiments/drafts/sensortag-environmental.phyphox",
+      "datasets": [
+        "drafts/sensortag-environmental_humidity.example.csv",
+        "drafts/sensortag-environmental_barometer.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "puck-light",
+      "title": "Relative LED Photometry with Interleaved Dark and Reference Observations",
+      "short_title": "Relative LED Photometry",
+      "period": "October 2026",
+      "date_basis": "pucklight2026",
+      "experiment": "experiments/drafts/puck-light.phyphox",
+      "datasets": [
+        "drafts/puck-light.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "cc2541-accelerometer",
+      "title": "Tilt and Quantization in a Legacy Eight-Bit Accelerometer",
+      "short_title": "Eight-Bit Tilt Measurement",
+      "period": "October 2026",
+      "date_basis": "cc2541quick",
+      "experiment": "experiments/drafts/cc2541-accelerometer.phyphox",
+      "datasets": [
+        "drafts/cc2541-accelerometer.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "cc2541-gyroscope",
+      "title": "Signed Rotation, Bias and Finite-Interval Integration with a CC2541 Gyroscope",
+      "short_title": "Legacy Signed Angular Rate",
+      "period": "October 2026",
+      "date_basis": "cc2541protocol",
+      "experiment": "experiments/drafts/cc2541-gyroscope.phyphox",
+      "datasets": [
+        "drafts/cc2541-gyroscope.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "cc2541-magnetometer",
+      "title": "Separating Reorientation from Magnetic Disturbance with a Triaxis Sensor",
+      "short_title": "Reorientation and Magnetic Disturbance",
+      "period": "October 2026",
+      "date_basis": "mag3110",
+      "experiment": "experiments/drafts/cc2541-magnetometer.phyphox",
+      "datasets": [
+        "drafts/cc2541-magnetometer.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "cc2541-humidity",
+      "title": "SHT21 Humidity Pulses: Conversion, Temperature and Reference Calibration",
+      "short_title": "Humidity Pulse Metrology",
+      "period": "October 2026",
+      "date_basis": "sht21",
+      "experiment": "experiments/drafts/cc2541-humidity.phyphox",
+      "datasets": [
+        "drafts/cc2541-humidity.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "cc2541-pressure",
+      "title": "T5400 Pressure Excursions: Compensation and the Limits of Leak Inference",
+      "short_title": "Pressure Excursion and Compensation",
+      "period": "October 2026",
+      "date_basis": "dickow2015",
+      "experiment": "experiments/drafts/cc2541-pressure.phyphox",
+      "datasets": [
+        "drafts/cc2541-pressure.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "cc2541-ir-temperature",
+      "title": "TMP006 Radiometry: Die Compensation and Application Sensitivity",
+      "short_title": "Thermopile Application Calibration",
+      "period": "October 2026",
+      "date_basis": "tmp006",
+      "experiment": "experiments/drafts/cc2541-ir-temperature.phyphox",
+      "datasets": [
+        "drafts/cc2541-ir-temperature.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    },
+    {
+      "slug": "pocketlab-gyroscope",
+      "title": "PocketLab Voyager Rotation: Signed Cancellation and Angular Path Length",
+      "short_title": "Voyager Signed Rotation",
+      "period": "October 2026",
+      "date_basis": "voyagerspec",
+      "experiment": "experiments/drafts/pocketlab-gyroscope.phyphox",
+      "datasets": [
+        "drafts/pocketlab-gyroscope.example.csv"
+      ],
+      "group": "Sensor interfaces"
+    }
+  ],
+  "papers": [
+    {
+      "slug": "accelerometer",
+      "title": "Specific Force, Inclination and the Limits of Resolution",
+      "short_title": "Specific Force and Inclination",
+      "group": "Motion, fields and electrical measurements",
+      "analysis_ids": [
+        "accelerometer",
+        "cc2541-accelerometer"
+      ],
+      "figures": [
+        "topic-figures/accelerometer-comparison.tex"
+      ],
+      "markdown": "companions/accelerometer.md",
+      "page_limit": 6,
+      "period": "February 2021"
+    },
+    {
+      "slug": "gyroscope",
+      "title": "Angular Rate, Reversal and Integrated Rotation",
+      "short_title": "Angular Rate and Integrated Rotation",
+      "group": "Motion, fields and electrical measurements",
+      "analysis_ids": [
+        "gyroscope",
+        "cc2541-gyroscope",
+        "pocketlab-gyroscope"
+      ],
+      "figures": [
+        "topic-figures/gyroscope-comparison.tex"
+      ],
+      "markdown": "companions/gyroscope.md",
+      "page_limit": 6,
+      "period": "June 2021"
+    },
+    {
+      "slug": "magnetometer",
+      "title": "Magnetic Vector Calibration and Indirect DC Current Measurement",
+      "short_title": "Magnetic Calibration and DC Current",
+      "group": "Motion, fields and electrical measurements",
+      "analysis_ids": [
+        "magnetometer",
+        "cc2541-magnetometer",
+        "magnetic-current"
+      ],
+      "figures": [
+        "topic-figures/magnetometer-comparison.tex"
+      ],
+      "markdown": "companions/magnetometer.md",
+      "page_limit": 6,
+      "period": "February 2022"
+    },
+    {
+      "slug": "analog-inputs",
+      "title": "Voltage Measurement and Circuit Inference: ADC Codes and Multimeter Readings",
+      "short_title": "Voltage Measurement and Circuit Inference",
+      "group": "Motion, fields and electrical measurements",
+      "analysis_ids": [
+        "analog-inputs",
+        "owon-interface"
+      ],
+      "figures": [
+        "topic-figures/analog-inputs-records.tex"
+      ],
+      "markdown": "companions/analog-inputs.md",
+      "page_limit": 9,
+      "period": "July 2022"
+    },
+    {
+      "slug": "static-friction",
+      "title": "First Slip, Inclination, and the Meaning of Static Friction",
+      "short_title": "First Slip and Static Friction",
+      "group": "Motion, fields and electrical measurements",
+      "analysis_ids": [
+        "static-friction"
+      ],
+      "figures": [
+        "figures/static-friction.tex"
+      ],
+      "markdown": "companions/static-friction.md",
+      "page_limit": 3,
+      "period": "March 2018"
+    },
+    {
+      "slug": "audio-magnetic",
+      "title": "Motor-State Comparisons from Sound Envelopes and Magnetic Fields",
+      "short_title": "Sound Envelopes and Magnetic Fields",
+      "group": "Motion, fields and electrical measurements",
+      "analysis_ids": [
+        "audio-magnetic"
+      ],
+      "figures": [
+        "figures/audio-magnetic.tex"
+      ],
+      "markdown": "companions/audio-magnetic.md",
+      "page_limit": 3,
+      "period": "February 2019"
+    },
+    {
+      "slug": "pressure",
+      "title": "Barometric Height Changes with Bracketed Pressure References",
+      "short_title": "Barometric Height Changes",
+      "group": "Pressure, humidity and thermal response",
+      "analysis_ids": [
+        "pressure"
+      ],
+      "figures": [
+        "figures/pressure.tex"
+      ],
+      "markdown": "companions/pressure.md",
+      "page_limit": 3,
+      "period": "November 2023"
+    },
+    {
+      "slug": "temperature-humidity",
+      "title": "Temperature and Humidity: Local Air State, Calibration and Dynamic Response",
+      "short_title": "Local Temperature and Humidity",
+      "group": "Pressure, humidity and thermal response",
+      "analysis_ids": [
+        "temperature-humidity",
+        "cc2541-humidity",
+        "sensortag-environmental"
+      ],
+      "figures": [
+        "topic-figures/temperature-humidity-states.tex"
+      ],
+      "markdown": "companions/temperature-humidity.md",
+      "page_limit": 6,
+      "period": "October 2021"
+    },
+    {
+      "slug": "greenhouse",
+      "title": "Enclosure Heating and Thermal Response",
+      "short_title": "Enclosure Heating",
+      "group": "Pressure, humidity and thermal response",
+      "analysis_ids": [
+        "greenhouse",
+        "greenhouse-single"
+      ],
+      "figures": [
+        "topic-figures/greenhouse-response.tex"
+      ],
+      "markdown": "companions/greenhouse.md",
+      "page_limit": 9,
+      "period": "May 2019"
+    },
+    {
+      "slug": "mission-to-mars",
+      "title": "Pressure, Compression and Relaxation in Gas Enclosures",
+      "short_title": "Gas Enclosures",
+      "group": "Pressure, humidity and thermal response",
+      "analysis_ids": [
+        "mission-to-mars",
+        "cc2541-pressure",
+        "pt-star"
+      ],
+      "figures": [
+        "topic-figures/mission-to-mars-cases.tex"
+      ],
+      "markdown": "companions/mission-to-mars.md",
+      "page_limit": 9,
+      "period": "September 2020"
+    },
+    {
+      "slug": "pressure-boiling",
+      "title": "Pressure-Dependent Boiling: Equilibrium Curves and Observational Thresholds",
+      "short_title": "Pressure-Dependent Boiling",
+      "group": "Pressure, humidity and thermal response",
+      "analysis_ids": [
+        "pressure-boiling"
+      ],
+      "figures": [
+        "figures/pressure-boiling.tex"
+      ],
+      "markdown": "companions/pressure-boiling.md",
+      "page_limit": 3,
+      "period": "December 2019"
+    },
+    {
+      "slug": "light-rgb",
+      "title": "Optical Response, Reference Substitution and Detector-Weighted Transmission",
+      "short_title": "Optical Response and Transmission",
+      "group": "Optics and radiometry",
+      "analysis_ids": [
+        "light-rgb",
+        "rgb-filter-transmission",
+        "puck-light",
+        "uv-transmission"
+      ],
+      "figures": [
+        "topic-figures/light-rgb-response.tex",
+        "topic-figures/light-rgb-reference-transfer.tex"
+      ],
+      "markdown": "companions/light-rgb.md",
+      "page_limit": 6,
+      "period": "July 2023"
+    },
+    {
+      "slug": "illuminance-distance",
+      "title": "Inverse-Square Photometry: Distance, Timing and Averaging",
+      "short_title": "Inverse-Square Photometry",
+      "group": "Optics and radiometry",
+      "analysis_ids": [
+        "illuminance-distance",
+        "illuminance-distance-manual"
+      ],
+      "figures": [
+        "topic-figures/illuminance-distance.tex"
+      ],
+      "markdown": "companions/illuminance-distance.md",
+      "page_limit": 6,
+      "period": "March 2020"
+    },
+    {
+      "slug": "albedo",
+      "title": "From Reflected Light to Relative Reflectance",
+      "short_title": "Relative Reflectance",
+      "group": "Optics and radiometry",
+      "analysis_ids": [
+        "albedo"
+      ],
+      "figures": [
+        "figures/albedo.tex"
+      ],
+      "markdown": "companions/albedo.md",
+      "page_limit": 4,
+      "period": "June 2018"
+    },
+    {
+      "slug": "malus-law",
+      "title": "Settled-Angle Polarimetry: Scale, Floor and Angular Zero in Malus' Law",
+      "short_title": "Settled-Angle Polarimetry",
+      "group": "Optics and radiometry",
+      "analysis_ids": [
+        "malus-law"
+      ],
+      "figures": [
+        "figures/malus-law.tex"
+      ],
+      "markdown": "companions/malus-law.md",
+      "page_limit": 3,
+      "period": "September 2018"
+    },
+    {
+      "slug": "colour-temperature",
+      "title": "Indicative Colour Temperature and the Limits of a Transferred Sensor Matrix",
+      "short_title": "Indicative Colour Temperature",
+      "group": "Optics and radiometry",
+      "analysis_ids": [
+        "colour-temperature"
+      ],
+      "figures": [
+        "figures/colour-temperature.tex"
+      ],
+      "markdown": "companions/colour-temperature.md",
+      "page_limit": 3,
+      "period": "October 2019"
+    },
+    {
+      "slug": "ir-distance",
+      "title": "Infrared Radiometry: Calibration and Distance-Dependent Heating",
+      "short_title": "Infrared Radiometry and Heating",
+      "group": "Optics and radiometry",
+      "analysis_ids": [
+        "ir-distance",
+        "cc2541-ir-temperature"
+      ],
+      "figures": [
+        "topic-figures/ir-distance.tex"
+      ],
+      "markdown": "companions/ir-distance.md",
+      "page_limit": 9,
+      "period": "August 2020"
+    },
+    {
+      "slug": "spectral-fingerprints",
+      "title": "Paired Spectral Ratios: Separating Shared Features from Additional Attenuation",
+      "short_title": "Paired Spectral Ratios",
+      "group": "Optics and radiometry",
+      "analysis_ids": [
+        "spectral-fingerprints"
+      ],
+      "figures": [
+        "figures/spectral-fingerprints.tex"
+      ],
+      "markdown": "companions/spectral-fingerprints.md",
+      "page_limit": 3,
+      "period": "February 2024"
+    },
+    {
+      "slug": "tidal-locking",
+      "title": "From Illumination Geometry to Thermal Contrast",
+      "short_title": "Illumination and Thermal Contrast",
+      "group": "Planetary and astronomical models",
+      "analysis_ids": [
+        "tidal-locking",
+        "seasons-obliquity"
+      ],
+      "figures": [
+        "topic-figures/tidal-locking-response.tex"
+      ],
+      "markdown": "companions/tidal-locking.md",
+      "page_limit": 9,
+      "period": "November 2020"
+    },
+    {
+      "slug": "transit-method",
+      "title": "Laboratory Transit Photometry: Calibration, Temporal Resolution and Visible-Area Models",
+      "short_title": "Laboratory Transit Photometry",
+      "group": "Planetary and astronomical models",
+      "analysis_ids": [
+        "transit-method",
+        "nano-transit",
+        "detector-characterization",
+        "exomoon-photometry",
+        "starspot-crossing",
+        "eclipsing-binary"
+      ],
+      "figures": [
+        "topic-figures/transit-method-paths.tex",
+        "topic-figures/transit-method-sampling.tex",
+        "topic-figures/transit-method-brightenings.tex",
+        "topic-figures/transit-method-binary.tex"
+      ],
+      "markdown": "companions/transit-method.md",
+      "page_limit": 9,
+      "period": "September 2024"
+    },
+    {
+      "slug": "coronagraph-contrast",
+      "title": "Occulting Masks: Background Suppression and Target Detectability",
+      "short_title": "Occulting-Mask Detectability",
+      "group": "Planetary and astronomical models",
+      "analysis_ids": [
+        "coronagraph-contrast"
+      ],
+      "figures": [
+        "figures/coronagraph-contrast.tex"
+      ],
+      "markdown": "companions/coronagraph-contrast.md",
+      "page_limit": 3,
+      "period": "April 2022"
+    }
+  ]
+}

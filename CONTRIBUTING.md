@@ -16,9 +16,12 @@ source .venv/bin/activate
 python -m pip install -e '.[dev]'
 ```
 
-There is no automated behavioural test suite in this repository; the maintainer
-runs one separately. The `make` targets below are the public gate; `make ci`
-runs them plus the firmware provision and compile steps. Run the narrower checks
+Scientific XML regression fixtures run as part of `make validate` and can also
+be run with `make check-experiment-math`. They exercise actual analysis blocks
+with known physical inputs, invalid values and repeated processing cycles.
+The broader behavioural suite is maintained separately. The `make` targets
+below are the public gate; `make ci` runs them plus the firmware provision and
+compile steps. Run the narrower checks
 while you work and the full gate before you open a pull request:
 
 ```sh
@@ -63,12 +66,33 @@ If you change an activity's input path, model, or scope limit, update its note
 in [docs/ASTRONOMY_EXPERIMENTS_COMPANION.md](docs/ASTRONOMY_EXPERIMENTS_COMPANION.md)
 in the same change.
 
+## Changing an additional draft
+
+Edit `experiments/drafts/<id>.phyphox` and its companion under `docs/drafts/`
+together. Register every file in `docs/drafts/manifest.json`, including its
+actual acquisition type, hardware, source anchors and material limitations.
+Keep the Draft title and category until native and physical validation supports
+promotion. These files do not pass through the core generator.
+
+```sh
+make check-drafts
+make bundle-drafts
+```
+
+The checks evaluate actual XML, including repeated processing, missing inputs,
+calibration domains and Record/Clear behavior. They run within `make validate`.
+Phyphox buttons replace destination buffers; use singleton pending snapshots
+and request-gated analysis when collecting rows. Native arithmetic can produce
+infinity, so a zero-denominator guard alone does not guarantee a NaN. Preserve
+raw data and acquired clocks. See [validation notes](docs/drafts/validation.md)
+for optional full-schema checks and the app/hardware checks still required.
+
 ## Changing the firmware or the protocol
 
 `protocol/contract.json` owns the shared device name, UUIDs, frame layout,
 timing, mode numbers, channel meanings, and filenames. When you change a fact
 there, update every concrete implementation that depends on it, including the
-preview fixtures. The sketch keeps its own literals so it stays a single file,
+preview example data. The sketch keeps its own literals so it stays a single file,
 so keep them consistent with the contract by hand.
 
 ```sh

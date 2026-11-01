@@ -1,0 +1,144 @@
+\begin{abstract}
+Illumination geometry determines where energy arrives; thermal exchange determines how a body responds. These stages require different observables. Twelve fixed-distance, labelled detector observations test a seasonal geometry but show large positional changes even at zero tilt and no northern--southern exchange. The corresponding continuous plateaus reveal fluctuations much smaller than those changes. A separate fixed-illumination example gives a day-to-night illuminance ratio of 450 and baseline-corrected thermal contrasts of 19.41~K for the infrared object-temperature indication and 11.48~K for barometer die temperature. A common framework connects incidence angle, rotation and two-region energy balance while retaining the distinction between optical response, absorbed power and temperature. The examples show which symmetry tests constrain the forcing and which additional measurements are needed to identify thermal redistribution.
+\end{abstract}
+\begin{IEEEkeywords}
+Illumination geometry, obliquity, synchronous rotation, thermal contrast, infrared thermometry.
+\end{IEEEkeywords}
+
+\section{Geometry before a temperature interpretation}
+A tilted model under a lamp can represent incidence angle, daylight duration or persistent hemispheric forcing, depending on how it moves. These are distinct questions. A synchronously rotating planet on a circular orbit with negligible obliquity can keep the same hemisphere facing its star. The corresponding condition is $\Omega_{\rm spin}=n_{\rm orbit}$, which requires angular-rate information; a fixed light or temperature contrast does not measure synchronism.
+
+For latitude $\varphi$, stellar declination $\delta$ and local hour angle $h$, the ideal incidence factor is
+\begin{equation}
+ \mu=\sin\varphi\sin\delta+\cos\varphi\cos\delta\cos h.
+ \label{eq:tidal-locking-incidence}
+\end{equation}
+A small horizontal patch under a collimated beam receives irradiance proportional to $\max(0,\mu)$. Obliquity $\epsilon$ and solar longitude $\lambda$ determine declination through $\sin\delta=\sin\epsilon\sin\lambda$, when longitude is measured from the northern spring equinox. Consequently, zero and 180 degrees denote equinoxes under that convention. An orbital label without a defined origin does not identify a season.
+
+Instantaneous incidence also differs from daily energy input. For a circular orbit and stellar irradiance $S$ normal to the rays, the daily mean is
+\begin{equation}
+ \bar Q=\frac{S}{\pi}\left[H_0\sin\varphi\sin\delta+
+ \cos\varphi\cos\delta\sin H_0\right],
+ \label{eq:tidal-locking-daily}
+\end{equation}
+where $H_0$ is the sunrise hour angle, with appropriate polar-day and polar-night limits. Paillard distinguishes these instantaneous and integrated quantities and their conventions~\cite{paillard2026}. A stationary detector snapshot does not perform the rotation integral.
+
+These relations supply useful symmetry tests. At zero obliquity, equal-distance configurations at the same latitude and rotation phase should show no seasonal difference. Opposite solstitial configurations should exchange the northern and southern illumination. At local noon with $\delta=\pm23.5^\circ$, the ideal response ratio at $+60^\circ$ and $-60^\circ$ is about 7.10 and reverses with declination. This numerical prediction presupposes the specified geometry. Synchronous planets with obliquity or eccentricity can have moving substellar points, as Dobrovolskis' insolation calculations illustrate~\cite{dobrovolskis2011}; synchronism alone does not prescribe an invariant illumination map.
+
+\section{Optical response and thermal measurands}
+Figure~\ref{fig:tidal-locking-apparatus} shows the controls needed for the two cases. In an orbital comparison, the rotation axes remain parallel in the room, the local detector normal follows the intended latitude, and rotation phase is documented. Keeping lamp distance constant controls only one variable. A nearby extended lamp, board shadow or changed source direction can still change the detector response.
+
+\begin{figure}[t]
+\centering
+\begin{tikzpicture}[x=0.87cm,y=0.87cm,font=\scriptsize]
+ \draw[dashed] (3.7,2.5) ellipse (2.4 and 0.6);
+ \fill[csgold!30] (3.7,2.5) circle(0.22);
+ \node[above] at (3.7,2.85) {lamp};
+ \foreach \x/\name in {1.3/A,6.1/B}{
+  \draw[fill=csblue!7] (\x,2.5) circle(0.4);
+  \draw[->,thick] (\x-0.25,1.95)--(\x+0.25,3.05);
+  \fill[csred] (\x,2.75) circle(0.045);
+  \node[above] at (\x,3.15) {position \name};
+ }
+ \node[align=center] at (3.7,1.15) {parallel axes; fixed distance;\\known local normal and rotation phase};
+ \node[draw,fill=csgray!8] at (0.9,-0.25) {lamp};
+ \draw[->,csred,thick] (1.45,-0.25)--(2.65,-0.25);
+ \draw[fill=csgray!8] (3.5,-0.25) circle(0.9);
+ \draw[dashed] (3.5,-1.15)--(3.5,0.65);
+ \node[font=\scriptsize] at (3.0,-0.25) {day};
+ \node[font=\scriptsize] at (4.0,-0.25) {night};
+ \node[draw,align=center] at (7.0,-0.25) {fixed optical views\\and surface references};
+ \draw[->,csblue] (5.5,-0.6)--(4.15,-0.9);
+ \node[below] at (4.1,-1.6) {persistent illumination and thermal exchange};
+\end{tikzpicture}
+\caption{Geometry and response are controlled separately. Upper: a fixed-distance orbital comparison with documented local orientation. Lower: fixed illumination of two model regions, observed with matched optical views and independent surface-temperature references.}
+\label{fig:tidal-locking-apparatus}
+\end{figure}
+
+The seasonal observations use the APDS-9960 clear channel. It reports spectrally weighted counts whose gain and integration affect the response~\cite{apds9960}; conversion to irradiance depends on calibration of its angular response. Angular acceptance is itself a source of irradiance error~\cite{vijeta2021}. Counts are therefore interpreted here as relative detector response, rather than converted to absorbed power.
+
+The fixed-illumination example uses OPT3001 illuminance, TMP007 infrared object and die temperatures, and BMP280 die temperatures. The OPT3001 weights visible light approximately by the human photopic response and rejects much infrared radiation~\cite{opt3001}. Lux describes the visible illumination pattern, not broadband absorbed flux. The TMP007 infers object temperature from its thermopile signal and die temperature; emissivity, reflected surroundings and target filling of its view enter that inference~\cite{tmp007}. The BMP280 indication instead follows its die and board thermal environment~\cite{bmp280}. These channels require separate interpretations even when placed in the same nominal region.
+
+\section{The seasonal symmetry test}
+The twelve labelled observations span latitudes $-60^\circ$, $0^\circ$ and $+60^\circ$, tilt labels zero and $23.5^\circ$, and orbital labels 0 and 180 degrees. The latter are denoted A and B throughout the comparison. Every source distance is recorded as $100\unit{cm}$. Each snapshot is matched to the corresponding device-time sample in twelve consecutive five-second states, preserving the independent receive coordinate. The match is exact at the recorded precision.
+
+For clear count $X$, dark count $X_d$ and reference count $X_r$, define
+\begin{equation}
+ R=\frac{X-X_d}{X_r-X_d}.
+ \label{eq:tidal-locking-response}
+\end{equation}
+Here $X_d=10$ and $X_r=1100$ counts, giving $(X-10)/1090$. Responses above unity are retained: an entered reference need not equal the largest observed signal. Table~\ref{tab:tidal-locking-seasons} contains all twelve conditions.
+
+\begin{table}[t]
+\caption{Relative snapshot response $R=(X-10)/1090$ at a recorded source distance of $100\unit{cm}$. A/B denote orbital positions labelled 0/180 degrees.}
+\label{tab:tidal-locking-seasons}
+\centering\small
+\begin{tabular}{@{}rrrrr@{}}
+\toprule
+Latitude & $0^\circ$, A & $0^\circ$, B & $23.5^\circ$, A & $23.5^\circ$, B\\
+\midrule
+$-60^\circ$ & 0.522 & 0.188 & 0.450 & 0.105\\
+$0^\circ$ & 1.052 & 0.983 & 1.032 & 0.939\\
+$+60^\circ$ & 0.514 & 0.189 & 0.453 & 0.112\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+At zero tilt, A-to-B response falls by 0.334 at the southern location and 0.325 at the northern location; the equatorial fall is 0.0688. Such orbital dependence is absent from the ideal zero-obliquity, fixed-phase model. At $23.5^\circ$ tilt, the northern-minus-southern differences remain only 0.0037 at A and 0.0073 at B. Both hemispheres decrease together rather than exhibiting the predicted exchange. The shared positional response occurs at unchanged recorded distance. Attribution to seasonal declination depends on local normal, rotation phase, source direction and detector acceptance.
+
+The continuous record quantifies the scale of that discrepancy. Select device-time windows $[5i+1,5i+4)\unit{s}$ for states $i=0,\ldots,11$, avoiding transitions. Their sample SDs range from 2.76 to 12.10 counts; the largest snapshot-minus-plateau-mean difference is 14.13 counts. These fluctuations are much smaller than the hundreds of counts separating high-latitude A/B states. They therefore do not account for the failed symmetry test. With one snapshot per geometry, these fluctuations describe within-state scatter; repeat-placement uncertainty is a separate quantity estimated from repeated complete configurations.
+
+\section{Persistent forcing and the measured thermal contrast}
+The separate fixed-illumination example turns its lamp on at 30~s and off at 210~s. Baseline means use 0--30~s, late-heating means use 180--210~s, and all windows are half open. For each temperature channel, define
+\begin{equation}
+ D_T=(\bar T_{d,h}-\bar T_{d,0})
+     -(\bar T_{n,h}-\bar T_{n,0}),
+ \label{eq:tidal-locking-contrast}
+\end{equation}
+where $d,n$ denote illuminated and shaded regions and $h$ the late interval. Each channel retains its own grid: 1.0~s for BMP280, 0.3~s for TMP007 and 0.8~s for OPT3001 in the example. Transient interpretation also requires checking acquisition timestamps and relative alignment.
+
+\begin{table}[t]
+\caption{Day/night rises above 0--30~s baselines during 180--210~s, and day-minus-night contrast $D_T$, by channel.}
+\label{tab:tidal-locking-thermal}
+\centering\small
+\begin{tabular}{@{}lrrr@{}}
+\toprule
+Channel & Day (K) & Night (K) & $D_T$ (K)\\
+\midrule
+TMP007 object & 20.24 & 0.83 & 19.41\\
+BMP280 die & 12.57 & 1.09 & 11.48\\
+TMP007 die & 2.00 & 1.19 & 0.81\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+The uncorrected late infrared-object contrast is 20.015~K; subtracting its initial 0.602-K contrast gives 19.413~K. The corresponding BMP280 values are 11.979 and 0.502~K, giving 11.477~K. Baseline correction removes a stable additive difference while retaining the distinct thermal interpretation of each channel.
+
+Illuminance means over the entire illuminated interval, 30--210~s, are 12353.83 and 27.45~lx. Their ratio of means is 450.06. The shaded region has a small but nonzero visible signal. Conversion of this illuminance ratio to an absorbed-power contrast depends on source- and target-specific spectral and angular calibration. Figure~\ref{fig:tidal-locking-data} places the seasonal observations and persistent-forcing results in separate panels; each retains its own detector scale.
+
+\begin{figure}[t]
+\centering
+\input{topic-figures/tidal-locking-response.tex}
+\caption{Seasonal clear counts and labelled snapshots (a); separate fixed-illumination day/night illuminance (b) and baseline-corrected temperature contrasts (c). Each channel retains its own time grid. Dashed lines mark lamp switching; panel (b) displays illuminances from 1~lx upward.}
+\label{fig:tidal-locking-data}
+\end{figure}
+
+\section{From forcing to thermal redistribution}
+For effective regional temperatures near a common boundary temperature $T_a$, write
+\begin{equation}
+ C_i\dot\theta_i=Q_i-G_i\theta_i-K(\theta_i-\theta_j),
+ \quad\theta_i=T_i-T_a.
+ \label{eq:tidal-locking-balance}
+\end{equation}
+$Q_i$ is absorbed power, $G_i$ local heat loss and $K$ exchange between the regions. For equal capacitances $C$ and loss coefficients $G$,
+\begin{equation}
+ C\dot{\Delta T}=\Delta Q-(G+2K)\Delta T.
+ \label{eq:tidal-locking-difference}
+\end{equation}
+The equilibrium contrast is $\Delta Q/(G+2K)$ and its relaxation time is $C/(G+2K)$. Stronger coupling reduces the contrast under fixed forcing, but weaker absorption can produce the same effect. A temperature-difference curve cannot identify these explanations separately.
+
+A characterized temperature channel must first represent the intended thermal node. The different object and die responses in Table~\ref{tab:tidal-locking-thermal} motivate channel-specific thermal nodes. Changes at nominal switch-off call for separate branch initial states or an explicit transition model when fitting heating and cooling.
+
+The geometry and thermal tests therefore constrain different parts of the explanation. An upright, fixed-phase configuration should first reproduce the same response at opposite orbital positions; a known tilted configuration can then test hemispheric exchange or integrate a complete rotation. Under fixed illumination, exchanged sensor positions and reference surface temperatures test offsets, emissivity and mounting effects. Repeated complete configurations, rather than adjacent samples, establish reproducibility. During transients, calibration covariance and relative timing affect baseline-corrected contrasts.
+
+Planetary heat redistribution additionally involves atmospheric pressure, optical thickness and circulation. Koll's scaling relates those properties to the balance between radiation and atmospheric motion~\cite{koll2022}. The laboratory two-region model focuses on imposed forcing and thermal coupling. Its useful inference follows the same order as the physical problem: constrain the geometry, characterize absorbed forcing, then ask which thermal parameters the observed response can distinguish.

@@ -1,0 +1,181 @@
+<?xml version='1.0' encoding='utf-8'?>
+<phyphox version="1.17" locale="en">
+  <!--Original Curious Signals optics draft; see companion manuscript for source anchors, method and limitations.-->
+  <title>Draft: Illuminance versus calibrated distance</title>
+  <category>Curious Signals drafts</category>
+  <description>Acquire SensorTag OPT3001 illuminance and BLE HID boot-mouse rail position with separate receive timestamps. Pair the most recent mouse position at each light timestamp, subtract background and test an inverse-square relation.</description>
+  <icon>Opt</icon>
+  <data-containers>
+    <container size="0">dx</container>
+    <container size="0">dy</container>
+    <container size="0">mouse_t</container>
+    <container size="0">light_t</container>
+    <container size="0">light_raw</container>
+    <container size="1" init="0">enabled</container>
+    <container size="1" init="0">scale</container>
+    <container size="1" init="0">origin</container>
+    <container size="1" init="0">background</container>
+    <container size="0">x</container>
+    <container size="0">y</container>
+    <container size="0">displacement</container>
+    <container size="0">paired_counts</container>
+    <container size="0">first_mouse_t</container>
+    <container size="0">distance</container>
+    <container size="0">exponent</container>
+    <container size="0">lux</container>
+    <container size="0">corrected_lux</container>
+    <container size="0">inverse_square</container>
+    <container size="0">scaled_light</container>
+    <container size="0">log_distance</container>
+    <container size="0">log_light</container>
+  </data-containers>
+  <input>
+    <bluetooth uuid="00001812-0000-1000-8000-00805f9b34fb" mode="notification">
+      <config char="00002A4e-0000-1000-8000-00805F9B34FB" conversion="hexadecimal">00</config>
+      <output char="00002A33-0000-1000-8000-00805F9B34FB" offset="1" length="1" conversion="int8">dx</output>
+      <output char="00002A33-0000-1000-8000-00805F9B34FB" offset="2" length="1" conversion="int8">dy</output>
+      <output char="00002A33-0000-1000-8000-00805F9B34FB" extra="time">mouse_t</output>
+    </bluetooth>
+    <bluetooth name="SensorTag" mode="notification">
+      <config char="F000AA73-0451-4000-B000-000000000000" conversion="hexadecimal">50</config>
+      <config char="F000AA72-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
+      <output char="F000AA71-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">light_raw</output>
+      <output char="F000AA71-0451-4000-B000-000000000000" extra="time">light_t</output>
+    </bluetooth>
+  </input>
+  <output />
+  <analysis sleep="0.1" onUserInput="false">
+    <integrate>
+      <input as="in" clear="false">dx</input>
+      <output as="out" clear="true">x</output>
+    </integrate>
+    <integrate>
+      <input as="in" clear="false">dy</input>
+      <output as="out" clear="true">y</output>
+    </integrate>
+    <formula formula="sqrt([1_]^2+[2_]^2)">
+      <input clear="false">x</input>
+      <input clear="false">y</input>
+      <output clear="true">displacement</output>
+    </formula>
+    <interpolate method="previous">
+      <input as="x" clear="false">mouse_t</input>
+      <input as="y" clear="false">displacement</input>
+      <input as="xi" clear="false">light_t</input>
+      <output as="out" clear="true">paired_counts</output>
+    </interpolate>
+    <min>
+      <input as="y" clear="false">mouse_t</input>
+      <output as="min" clear="true">first_mouse_t</output>
+    </min>
+    <formula formula="([1]+[2]*[3_])/((max(0,sign([4]-0.5))/max(0,sign([4]-0.5)))*(max(0,sign([2]))/max(0,sign([2])))*(heaviside([5_]-[6])/heaviside([5_]-[6]))) /(max(0,sign([1]+[2]*[3_]))/max(0,sign([1]+[2]*[3_])))">
+      <input clear="false">origin</input>
+      <input clear="false">scale</input>
+      <input clear="false">paired_counts</input>
+      <input clear="false">enabled</input>
+      <input clear="false">light_t</input>
+      <input clear="false">first_mouse_t</input>
+      <output clear="true">distance</output>
+    </formula>
+    <formula formula="floor([1_]/4096)">
+      <input clear="false">light_raw</input>
+      <output clear="true">exponent</output>
+    </formula>
+    <formula formula="0.01*([1_]-4096*[2_])*2^[2_]/((max(0,sign(49152-[1_]))/max(0,sign(49152-[1_])))*(heaviside([1_])/heaviside([1_])))">
+      <input clear="false">light_raw</input>
+      <input clear="false">exponent</input>
+      <output clear="true">lux</output>
+    </formula>
+    <formula formula="([1_]-[2])/(heaviside([1_]-[2])/heaviside([1_]-[2]))">
+      <input clear="false">lux</input>
+      <input clear="false">background</input>
+      <output clear="true">corrected_lux</output>
+    </formula>
+    <formula formula="1/[1_]^2/(max(0,sign([1_]))/max(0,sign([1_])))">
+      <input clear="false">distance</input>
+      <output clear="true">inverse_square</output>
+    </formula>
+    <formula formula="[1_]*[2_]^2/(max(0,sign([2_]))/max(0,sign([2_])))">
+      <input clear="false">corrected_lux</input>
+      <input clear="false">distance</input>
+      <output clear="true">scaled_light</output>
+    </formula>
+    <formula formula="log([1_])/(max(0,sign([1_]))/max(0,sign([1_])))">
+      <input clear="false">distance</input>
+      <output clear="true">log_distance</output>
+    </formula>
+    <formula formula="log([1_])/(max(0,sign([1_]))/max(0,sign([1_])))">
+      <input clear="false">corrected_lux</input>
+      <output clear="true">log_light</output>
+    </formula>
+  </analysis>
+  <views>
+    <view label="Distance law">
+      <graph label="Background-corrected illuminance" labelX="Distance" labelY="Signal" unitX="m" unitY="lx" partialUpdate="false" style="dots">
+        <input axis="x">distance</input>
+        <input axis="y">corrected_lux</input>
+      </graph>
+      <graph label="Linearized inverse-square comparison" labelX="Inverse square distance" labelY="Signal" unitX="1/m²" unitY="lx" partialUpdate="false" style="dots">
+        <input axis="x">inverse_square</input>
+        <input axis="y">corrected_lux</input>
+      </graph>
+      <graph label="Log comparison (slope expected -2)" labelX="ln(r / m)" labelY="ln(E / lx)" unitX="1" unitY="1" partialUpdate="false" style="dots">
+        <input axis="x">log_distance</input>
+        <input axis="y">log_light</input>
+      </graph>
+      <graph label="E times r squared" labelX="Time" labelY="Signal" unitX="s" unitY="lx m²" partialUpdate="false" style="lines">
+        <input axis="x">light_t</input>
+        <input axis="y">scaled_light</input>
+      </graph>
+    </view>
+    <view label="Rail calibration">
+      <edit label="Rail calibration checked (0 or 1)" default="0" unit="" signed="true" decimal="true">
+        <output>enabled</output>
+      </edit>
+      <edit label="Distance scale" default="0" unit="m/count" signed="true" decimal="true">
+        <output>scale</output>
+      </edit>
+      <edit label="Source distance at reset" default="0" unit="m" signed="true" decimal="true">
+        <output>origin</output>
+      </edit>
+      <edit label="Lamp-off background" default="0" unit="lx" signed="true" decimal="true">
+        <output>background</output>
+      </edit>
+      <info label="Measure source centre to sensor aperture at reset, then fit positive metres per radial mouse count against several ruler positions. Rail must remain straight, with no mouse rotation and on one side of reset. Set checked to 1 only after return-travel checks. Changing settings recomputes all derived points." />
+    </view>
+    <view label="Setup">
+      <info label="Use a supported BLE HID boot mouse (desktop OS support varies) and CC2650 SensorTag with OPT3001. Fix mouse and sensor rigidly on a straight rail. SensorTag light packet and HID report layout must be verified on your hardware." />
+      <info label="Move once before taking data to establish an actual mouse timestamp, stop at each position, and wait several light reports. Previous-position pairing is deliberate, not synchronized sampling. Stop-and-settle reduces BLE latency error. Points before the first mouse report remain unavailable." />
+      <info label="Use a small stable lamp far enough away to approximate a point source; avoid saturation and reflections. Measure lamp-off background at identical geometry. Illuminance may scale with inverse-square distance for a fixed spectrum; near-field geometry and varying background can invalidate this model." />
+      <info label="Draft: numerical and schema checks are software evidence only. Native Android/iOS import, BLE acquisition and physical calibration still require validation. Export before using the app menu Clear data; it resets raw histories and edit defaults." />
+    </view>
+  </views>
+  <export>
+    <set name="Light at light receive times">
+      <data name="Light receive time (s)">light_t</data>
+      <data name="OPT3001 raw word (uint16)">light_raw</data>
+      <data name="Decoded illuminance (lx)">lux</data>
+      <data name="Background-corrected illuminance (lx)">corrected_lux</data>
+      <data name="Previous mouse displacement at light time (counts)">paired_counts</data>
+      <data name="Calibrated source distance (m)">distance</data>
+      <data name="Inverse square distance (1/m²)">inverse_square</data>
+      <data name="Corrected illuminance times distance squared (lx m²)">scaled_light</data>
+      <data name="ln(distance / m)">log_distance</data>
+      <data name="ln(corrected illuminance / lx)">log_light</data>
+    </set>
+    <set name="Mouse at mouse receive times">
+      <data name="Mouse receive time (s)">mouse_t</data>
+      <data name="Mouse delta x (counts)">dx</data>
+      <data name="Mouse delta y (counts)">dy</data>
+      <data name="Integrated mouse x (counts)">x</data>
+      <data name="Integrated mouse y (counts)">y</data>
+      <data name="Radial mouse displacement (counts)">displacement</data>
+    </set>
+    <set name="Current settings (applied to whole derived record)">
+      <data name="Rail calibration checked (0 or 1)">enabled</data>
+      <data name="Distance scale">scale</data>
+      <data name="Source distance at reset">origin</data>
+      <data name="Lamp-off background">background</data>
+    </set>
+  </export>
+</phyphox>

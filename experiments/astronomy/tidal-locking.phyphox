@@ -46,6 +46,60 @@
             <string original="Object temperature 2 (°C)">Objekttemperatur 2 (°C)</string>
             <string original="Light (OPT3001)">Licht (OPT3001)</string>
             <string original="Illuminance (lx)">Beleuchtungsstärke (lx)</string>
+            <string original="BMP280 die temperature">BMP280-Chiptemperatur</string>
+            <string original="Max. BMP280 die 1">Max. BMP280-Chip 1</string>
+            <string original="Min. BMP280 die 1">Min. BMP280-Chip 1</string>
+            <string original="Max. BMP280 die 2">Max. BMP280-Chip 2</string>
+            <string original="Min. BMP280 die 2">Min. BMP280-Chip 2</string>
+            <string original="TMP007 detector die temperature">TMP007-Detektorchiptemperatur</string>
+            <string original="TMP007 object temperature">TMP007-Objekttemperatur</string>
+            <string original="Max. TMP007 die 1">Max. TMP007-Chip 1</string>
+            <string original="Min. TMP007 die 1">Min. TMP007-Chip 1</string>
+            <string original="Max. TMP007 die 2">Max. TMP007-Chip 2</string>
+            <string original="Min. TMP007 die 2">Min. TMP007-Chip 2</string>
+            <string original="Temperature rise">Temperaturanstieg</string>
+            <string original="Enter each sensor's mean during the same equilibrated lamp-off interval. Zero defaults are placeholders; enter the measured baselines before interpreting temperature rises.">Trage für jeden Sensor den Mittelwert desselben eingeschwungenen Zeitintervalls bei ausgeschalteter Lampe ein. Die Vorgaben null sind Platzhalter; setze die gemessenen Ausgangswerte vor der Auswertung der Temperaturanstiege.</string>
+            <string original="Initial BMP280 1">Anfangswert BMP280-Chip 1</string>
+            <string original="Initial BMP280 2">Anfangswert BMP280-Chip 2</string>
+            <string original="BMP280 temperature rises">BMP280-Temperaturanstiege</string>
+            <string original="Initial TMP007 object 1">Anfangswert TMP007-Objekt 1</string>
+            <string original="Initial TMP007 object 2">Anfangswert TMP007-Objekt 2</string>
+            <string original="TMP007 object temperature rises">TMP007-Objekttemperaturanstiege</string>
+            <string original="Initial TMP007 die 1">Anfangswert TMP007-Detektorchip 1</string>
+            <string original="Initial TMP007 die 2">Anfangswert TMP007-Detektorchip 2</string>
+            <string original="TMP007 detector temperature rises">TMP007-Detektortemperaturanstiege</string>
+            <string original="BMP280 1">BMP280-Chip 1</string>
+            <string original="Time 1 (s)">Zeit 1 (s)</string>
+            <string original="BMP280 die temperature 1 (°C)">BMP280-Chip-Temperatur 1 (°C)</string>
+            <string original="Temperature rise 1 (K)">Temperaturanstieg 1 (K)</string>
+            <string original="BMP280 2">BMP280-Chip 2</string>
+            <string original="Time 2 (s)">Zeit 2 (s)</string>
+            <string original="BMP280 die temperature 2 (°C)">BMP280-Chip-Temperatur 2 (°C)</string>
+            <string original="Temperature rise 2 (K)">Temperaturanstieg 2 (K)</string>
+            <string original="TMP007 object 1">TMP007-Objekt 1</string>
+            <string original="TMP007 object temperature 1 (°C)">TMP007-Objekt-Temperatur 1 (°C)</string>
+            <string original="TMP007 object 2">TMP007-Objekt 2</string>
+            <string original="TMP007 object temperature 2 (°C)">TMP007-Objekt-Temperatur 2 (°C)</string>
+            <string original="TMP007 die 1">TMP007-Detektorchip 1</string>
+            <string original="TMP007 die temperature 1 (°C)">TMP007-Detektorchip-Temperatur 1 (°C)</string>
+            <string original="TMP007 die 2">TMP007-Detektorchip 2</string>
+            <string original="TMP007 die temperature 2 (°C)">TMP007-Detektorchip-Temperatur 2 (°C)</string>
+            <string original="OPT3001 1">OPT3001 1</string>
+            <string original="Illuminance 1 (lx)">Beleuchtungsstärke 1 (lx)</string>
+            <string original="OPT3001 2">OPT3001 2</string>
+            <string original="Illuminance 2 (lx)">Beleuchtungsstärke 2 (lx)</string>
+            <string original="Baseline settings">Ausgangswerte</string>
+            <string original="Initial BMP280 1 (°C)">Anfangswert BMP280 1 (°C)</string>
+            <string original="Initial BMP280 2 (°C)">Anfangswert BMP280 2 (°C)</string>
+            <string original="Initial TMP007 object 1 (°C)">Anfangswert TMP007 Objekt 1 (°C)</string>
+            <string original="Initial TMP007 object 2 (°C)">Anfangswert TMP007 Objekt 2 (°C)</string>
+            <string original="Initial TMP007 die 1 (°C)">Anfangswert TMP007 Detektorchip 1 (°C)</string>
+            <string original="Initial TMP007 die 2 (°C)">Anfangswert TMP007 Detektorchip 2 (°C)</string>
+            <string original="Setup">Aufbau</string>
+            <string original="Fix the lamp and matched sensor mounts on the lit and shaded regions. Co-locate the tags for a baseline check and exchange their positions in a repeat run to distinguish sensor offsets from the spatial contrast.">Fixiere Lampe und passende Sensorhalterungen an beleuchteter und beschatteter Region. Lege die Tags für einen Ausgangsvergleich nebeneinander und vertausche ihre Positionen bei einer Wiederholung, um Sensoroffsets vom räumlichen Unterschied zu trennen.</string>
+            <string original="BMP280 measures its die temperature. TMP007 reports inferred object temperature and detector die temperature. Keep target emissivity, viewed area, distance, orientation, airflow and support conduction fixed; check surface temperature with independent references.">BMP280 misst seine Chiptemperatur. TMP007 liefert eine abgeleitete Objekttemperatur und die Detektorchiptemperatur. Halte Emissionsgrad, betrachtete Fläche, Abstand, Orientierung, Luftströmung und Wärmeleitung der Halterung konstant; prüfe Oberflächentemperaturen mit unabhängigen Referenzen.</string>
+            <string original="Lux measures visible illuminance rather than total absorbed heating power. Compare temperature rises for the same sensor type over a common settled interval; report the day-side rise minus the night-side rise.">Lux misst sichtbare Beleuchtungsstärke und nicht die gesamte absorbierte Heizleistung. Vergleiche Temperaturanstiege desselben Sensortyps über ein gemeinsames eingeschwungenes Zeitintervall; gib den Anstieg der Tagseite minus den Anstieg der Nachtseite an.</string>
+            <string original="Times are Bluetooth receive times. Each sensor keeps its own clock; compare means over the same time interval or align the records before subtracting them.">Die Zeiten sind Bluetooth-Empfangszeiten. Jeder Sensor behält seine eigene Zeitachse; vergleiche Mittelwerte desselben Zeitintervalls oder gleiche die Datensätze vor dem Subtrahieren zeitlich ab.</string>
         </translation>
         <translation locale="fr">
             <title>Verrouillage gravitationnel</title>
@@ -89,56 +143,94 @@
             <string original="Object temperature 2 (°C)">Température de l'objet 2 (°C)</string>
             <string original="Light (OPT3001)">Lumière (OPT3001)</string>
             <string original="Illuminance (lx)">Éclairement (lx)</string>
+            <string original="BMP280 die temperature">Température de puce BMP280</string>
+            <string original="Max. BMP280 die 1">Max. puce BMP280 1</string>
+            <string original="Min. BMP280 die 1">Min. puce BMP280 1</string>
+            <string original="Max. BMP280 die 2">Max. puce BMP280 2</string>
+            <string original="Min. BMP280 die 2">Min. puce BMP280 2</string>
+            <string original="TMP007 detector die temperature">Température de puce détectrice TMP007</string>
+            <string original="TMP007 object temperature">Température d'objet TMP007</string>
+            <string original="Max. TMP007 die 1">Max. puce TMP007 1</string>
+            <string original="Min. TMP007 die 1">Min. puce TMP007 1</string>
+            <string original="Max. TMP007 die 2">Max. puce TMP007 2</string>
+            <string original="Min. TMP007 die 2">Min. puce TMP007 2</string>
+            <string original="Temperature rise">Élévation de température</string>
+            <string original="Enter each sensor's mean during the same equilibrated lamp-off interval. Zero defaults are placeholders; enter the measured baselines before interpreting temperature rises.">Saisis pour chaque capteur sa moyenne pendant le même intervalle stabilisé, lampe éteinte. Les zéros sont des valeurs provisoires ; saisis les niveaux mesurés avant d'interpréter les élévations de température.</string>
+            <string original="Initial BMP280 1">Niveau initial puce BMP280 1</string>
+            <string original="Initial BMP280 2">Niveau initial puce BMP280 2</string>
+            <string original="BMP280 temperature rises">Élévations de température BMP280</string>
+            <string original="Initial TMP007 object 1">Niveau initial objet TMP007 1</string>
+            <string original="Initial TMP007 object 2">Niveau initial objet TMP007 2</string>
+            <string original="TMP007 object temperature rises">Élévations de température d'objet TMP007</string>
+            <string original="Initial TMP007 die 1">Niveau initial puce détectrice TMP007 1</string>
+            <string original="Initial TMP007 die 2">Niveau initial puce détectrice TMP007 2</string>
+            <string original="TMP007 detector temperature rises">Élévations de température du détecteur TMP007</string>
+            <string original="BMP280 1">puce BMP280 1</string>
+            <string original="Time 1 (s)">Temps 1 (s)</string>
+            <string original="BMP280 die temperature 1 (°C)">Température puce BMP280 1 (°C)</string>
+            <string original="Temperature rise 1 (K)">Élévation de température 1 (K)</string>
+            <string original="BMP280 2">puce BMP280 2</string>
+            <string original="Time 2 (s)">Temps 2 (s)</string>
+            <string original="BMP280 die temperature 2 (°C)">Température puce BMP280 2 (°C)</string>
+            <string original="Temperature rise 2 (K)">Élévation de température 2 (K)</string>
+            <string original="TMP007 object 1">objet TMP007 1</string>
+            <string original="TMP007 object temperature 1 (°C)">Température objet TMP007 1 (°C)</string>
+            <string original="TMP007 object 2">objet TMP007 2</string>
+            <string original="TMP007 object temperature 2 (°C)">Température objet TMP007 2 (°C)</string>
+            <string original="TMP007 die 1">puce détectrice TMP007 1</string>
+            <string original="TMP007 die temperature 1 (°C)">Température puce détectrice TMP007 1 (°C)</string>
+            <string original="TMP007 die 2">puce détectrice TMP007 2</string>
+            <string original="TMP007 die temperature 2 (°C)">Température puce détectrice TMP007 2 (°C)</string>
+            <string original="OPT3001 1">OPT3001 1</string>
+            <string original="Illuminance 1 (lx)">Éclairement 1 (lx)</string>
+            <string original="OPT3001 2">OPT3001 2</string>
+            <string original="Illuminance 2 (lx)">Éclairement 2 (lx)</string>
+            <string original="Baseline settings">Niveaux initiaux</string>
+            <string original="Initial BMP280 1 (°C)">Niveau initial BMP280 1 (°C)</string>
+            <string original="Initial BMP280 2 (°C)">Niveau initial BMP280 2 (°C)</string>
+            <string original="Initial TMP007 object 1 (°C)">Niveau initial TMP007 objet 1 (°C)</string>
+            <string original="Initial TMP007 object 2 (°C)">Niveau initial TMP007 objet 2 (°C)</string>
+            <string original="Initial TMP007 die 1 (°C)">Niveau initial TMP007 puce détectrice 1 (°C)</string>
+            <string original="Initial TMP007 die 2 (°C)">Niveau initial TMP007 puce détectrice 2 (°C)</string>
+            <string original="Setup">Montage</string>
+            <string original="Fix the lamp and matched sensor mounts on the lit and shaded regions. Co-locate the tags for a baseline check and exchange their positions in a repeat run to distinguish sensor offsets from the spatial contrast.">Fixe la lampe et des supports comparables dans les régions éclairée et ombragée. Place les capteurs côte à côte pour vérifier le niveau initial et inverse leurs positions lors d'un second essai afin de distinguer offsets et contraste spatial.</string>
+            <string original="BMP280 measures its die temperature. TMP007 reports inferred object temperature and detector die temperature. Keep target emissivity, viewed area, distance, orientation, airflow and support conduction fixed; check surface temperature with independent references.">Le BMP280 mesure sa température de puce. Le TMP007 fournit une température d'objet déduite et la température de sa puce détectrice. Garde constants émissivité, surface observée, distance, orientation, circulation d'air et conduction des supports ; contrôle la température de surface avec des références indépendantes.</string>
+            <string original="Lux measures visible illuminance rather than total absorbed heating power. Compare temperature rises for the same sensor type over a common settled interval; report the day-side rise minus the night-side rise.">Le lux mesure l'éclairement visible plutôt que la puissance totale absorbée. Compare les élévations du même type de capteur sur un intervalle stabilisé commun ; calcule l'élévation du côté jour moins celle du côté nuit.</string>
+            <string original="Times are Bluetooth receive times. Each sensor keeps its own clock; compare means over the same time interval or align the records before subtracting them.">Les temps sont ceux de réception Bluetooth. Chaque capteur conserve sa propre série temporelle ; compare les moyennes sur le même intervalle ou aligne les séries avant de les soustraire.</string>
         </translation>
     </translations>
     <data-containers>
-        <container size="0" static="false">t</container>
-        <container size="1" static="false">count</container>
-        <container size="1" static="false">tmax</container>
-        <!-- 1 -->
         <container size="0" static="false">tempRaw1</container>
         <container size="0" static="false">tempCal1</container>
         <container size="1" static="false">T_max1</container>
         <container size="1" static="false">T_min1</container>
-
         <container size="0">objRaw1</container>
         <container size="0">ambRaw1</container>
         <container size="0">objCal1</container>
         <container size="0">ambCal1</container>
-        <container size="0">t1</container>
-        <container size="1">count1</container>
-        <container size="1">tmax1</container>
         <container size="0" static="false">factor1</container>
         <container size="1" static="false">T_max1_obj</container>
         <container size="1" static="false">T_min1_obj</container>
         <container size="1" static="false">T_max1_amb</container>
         <container size="1" static="false">T_min1_amb</container>
-
         <container size="0" static="false">RawInt1</container>
         <container size="0" static="false">e1</container>
         <container size="0" static="false">m1</container>
-        <container size="1" static="false">countI2</container>
-        <container size="0">t2</container>
-        <container size="1" static="false">tmax2</container>
         <container size="0">amplitude1</container>
         <container size="1" static="false">amplitude_max1</container>
         <container size="1" static="false">amplitude_min1</container>
-
-        <!-- 2 -->
         <container size="0" static="false">tempRaw2</container>
         <container size="0" static="false">tempCal2</container>
         <container size="1" static="false">T_max2</container>
         <container size="1" static="false">T_min2</container>
-
         <container size="0">objRaw2</container>
         <container size="0">ambRaw2</container>
         <container size="0">objCal2</container>
         <container size="0">ambCal2</container>
-         <container size="1" static="false">T_max2_obj</container>
+        <container size="1" static="false">T_max2_obj</container>
         <container size="1" static="false">T_min2_obj</container>
         <container size="1" static="false">T_max2_amb</container>
         <container size="1" static="false">T_min2_amb</container>
-
         <container size="0" static="false">RawInt2</container>
         <container size="0" static="false">e2</container>
         <container size="0" static="false">m2</container>
@@ -146,45 +238,60 @@
         <container size="0">amplitude2</container>
         <container size="1" static="false">amplitude_max2</container>
         <container size="1" static="false">amplitude_min2</container>
+        <container size="0" static="false">bmp_t1</container>
+        <container size="0" static="false">ir_t1</container>
+        <container size="0" static="false">light_t1</container>
+        <container size="0" static="false">bmp_t2</container>
+        <container size="0" static="false">ir_t2</container>
+        <container size="0" static="false">light_t2</container>
+        <container size="1" static="false" init="0">tempCalBaseline1</container>
+        <container size="0" static="false">tempCal1_rise</container>
+        <container size="1" static="false" init="0">tempCalBaseline2</container>
+        <container size="0" static="false">tempCal2_rise</container>
+        <container size="1" static="false" init="0">objCalBaseline1</container>
+        <container size="0" static="false">objCal1_rise</container>
+        <container size="1" static="false" init="0">objCalBaseline2</container>
+        <container size="0" static="false">objCal2_rise</container>
+        <container size="1" static="false" init="0">ambCalBaseline1</container>
+        <container size="0" static="false">ambCal1_rise</container>
+        <container size="1" static="false" init="0">ambCalBaseline2</container>
+        <container size="0" static="false">ambCal2_rise</container>
     </data-containers>
     <input>
-        <!-- 1 -->
         <bluetooth name="SensorTag" mode="notification" rate="1" subscribeOnStart="false">
-            <!-- temp, ambient -->
             <config char="F000AA44-0451-4000-B000-000000000000" conversion="hexadecimal">64</config>
             <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
             <output char="F000AA41-0451-4000-B000-000000000000" conversion="int24LittleEndian" offset="0" length="3">tempRaw1</output>
-            <!-- temp, ir -->
             <config char="F000AA03-0451-4000-B000-000000000000" conversion="hexadecimal">1E</config>
             <config char="F000AA02-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
-            <output char="F000AA01-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">objRaw1</output>
-            <output char="F000AA01-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="2" length="2">ambRaw1</output>
-            <!-- light -->
+            <output char="F000AA01-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="0" length="2">objRaw1</output>
+            <output char="F000AA01-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="2" length="2">ambRaw1</output>
             <config char="F000AA73-0451-4000-B000-000000000000" conversion="hexadecimal">50</config>
             <config char="F000AA72-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
             <output char="F000AA71-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">RawInt1</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">bmp_t1</output>
+            <output char="F000AA01-0451-4000-B000-000000000000" extra="time">ir_t1</output>
+            <output char="F000AA71-0451-4000-B000-000000000000" extra="time">light_t1</output>
         </bluetooth>
-        <!-- 2 -->
         <bluetooth name="SensorTag" mode="notification" rate="1" subscribeOnStart="false">
-            <!-- temp, ambient -->
             <config char="F000AA44-0451-4000-B000-000000000000" conversion="hexadecimal">64</config>
             <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
             <output char="F000AA41-0451-4000-B000-000000000000" conversion="int24LittleEndian" offset="0" length="3">tempRaw2</output>
-            <!-- temp, ir -->
             <config char="F000AA03-0451-4000-B000-000000000000" conversion="hexadecimal">1E</config>
             <config char="F000AA02-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
-            <output char="F000AA01-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">objRaw2</output>
-            <output char="F000AA01-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="2" length="2">ambRaw2</output>
-            <!-- light -->
+            <output char="F000AA01-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="0" length="2">objRaw2</output>
+            <output char="F000AA01-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="2" length="2">ambRaw2</output>
             <config char="F000AA73-0451-4000-B000-000000000000" conversion="hexadecimal">50</config>
             <config char="F000AA72-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
             <output char="F000AA71-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">RawInt2</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">bmp_t2</output>
+            <output char="F000AA01-0451-4000-B000-000000000000" extra="time">ir_t2</output>
+            <output char="F000AA71-0451-4000-B000-000000000000" extra="time">light_t2</output>
         </bluetooth>
     </input>
     <output>
     </output>
-    <analysis sleep="0"  onUserInput="false">
-        <!-- 1 -->
+    <analysis sleep="0" onUserInput="false">
         <multiply>
             <input as="factor" clear="false">tempRaw1</input>
             <input as="factor" type="value">0.01</input>
@@ -198,21 +305,6 @@
             <input as="y" clear="false">tempCal1</input>
             <output as="min">T_min1</output>
         </min>
-        <count>
-            <input as="buffer" clear="false">tempRaw1</input>
-            <output as="count">count</output>
-        </count>
-        <formula formula="[1]-1">
-            <input as="in" clear="false">count</input>
-            <output as="out">tmax</output>
-        </formula>
-        <ramp>
-            <input as="start" type="value">0</input>
-            <input as="stop">tmax</input>
-            <input as="length">count</input>
-            <output as="out">t</output>
-        </ramp>
-
         <formula formula="floor([1_]/4)*0.03125">
             <input clear="false">ambRaw1</input>
             <output clear="true">ambCal1</output>
@@ -237,21 +329,6 @@
             <input as="y" clear="false">ambCal1</input>
             <output as="min">T_min1_amb</output>
         </min>
-        <count>
-            <input clear="false">ambRaw1</input>
-            <output>count1</output>
-        </count>
-        <formula formula="([1]-1)*0.3">
-            <input clear="false">count1</input>
-            <output>tmax1</output>
-        </formula>
-        <ramp>
-            <input as="start" type="value">0</input>
-            <input as="stop">tmax1</input>
-            <input as="length">count1</input>
-            <output>t1</output>
-        </ramp>
-
         <formula formula="floor([1_]/4096)">
             <input as="in" clear="false">RawInt1</input>
             <output as="out">e1</output>
@@ -279,22 +356,6 @@
             <input as="y" clear="false">amplitude1</input>
             <output as="min">amplitude_min1</output>
         </min>
-        <count>
-            <input as="buffer" clear="false">RawInt1</input>
-            <output as="count">countI2</output>
-        </count>
-        <formula formula="([1]-1)*0.8">
-            <input as="in" clear="false">countI2</input>
-            <output as="out">tmax2</output>
-        </formula>
-        <ramp>
-            <input as="start" type="value">0</input>
-            <input as="stop">tmax2</input>
-            <input as="length">countI2</input>
-            <output as="out">t2</output>
-        </ramp>
-
-        <!-- 2 -->
         <multiply>
             <input as="factor" clear="false">tempRaw2</input>
             <input as="factor" type="value">0.01</input>
@@ -359,178 +420,265 @@
             <input as="y" clear="false">amplitude2</input>
             <output as="min">amplitude_min2</output>
         </min>
+        <formula formula="[1_]-[2]">
+            <input clear="false">tempCal1</input>
+            <input clear="false">tempCalBaseline1</input>
+            <output clear="true">tempCal1_rise</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">tempCal2</input>
+            <input clear="false">tempCalBaseline2</input>
+            <output clear="true">tempCal2_rise</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">objCal1</input>
+            <input clear="false">objCalBaseline1</input>
+            <output clear="true">objCal1_rise</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">objCal2</input>
+            <input clear="false">objCalBaseline2</input>
+            <output clear="true">objCal2_rise</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">ambCal1</input>
+            <input clear="false">ambCalBaseline1</input>
+            <output clear="true">ambCal1_rise</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">ambCal2</input>
+            <input clear="false">ambCalBaseline2</input>
+            <output clear="true">ambCal2_rise</output>
+        </formula>
     </analysis>
     <views>
-        <view label="Temperature">
-            <info label ="Sensor #1 (S1), orange" />
-            <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t</input>
+        <view label="BMP280 die temperature">
+            <info label="Sensor #1 (S1), orange" />
+            <graph label="BMP280 die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">bmp_t1</input>
                 <input axis="y" color="orange">tempCal1</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Temp. S1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <separator height="1" />
+            <value label="Max. BMP280 die 1" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_max1</input>
             </value>
-            <value label="Min. Temp. S1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Min. BMP280 die 1" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min1</input>
             </value>
-            <separator height="1"/>
-            <info label ="Sensor #2 (S2), blue" />
-            <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t</input>
+            <separator height="1" />
+            <info label="Sensor #2 (S2), blue" />
+            <graph label="BMP280 die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">bmp_t2</input>
                 <input axis="y" color="blue">tempCal2</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Temp. S2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <separator height="1" />
+            <value label="Max. BMP280 die 2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_max2</input>
             </value>
-            <value label="Min. Temp. S2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Min. BMP280 die 2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min2</input>
             </value>
-            <separator height="1"/>
-            <info label ="Combined comparison" />
-             <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t</input>
+            <separator height="1" />
+            <info label="Combined comparison" />
+            <graph label="BMP280 die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">bmp_t1</input>
                 <input axis="y" color="orange">tempCal1</input>
-                <input axis="x">t</input>
+                <input axis="x">bmp_t2</input>
                 <input axis="y" color="blue">tempCal2</input>
             </graph>
         </view>
-
         <view label="IR">
-        <info label ="Sensor #1 (S1), orange" />
-            <graph label="Ambient Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t1</input>
+            <info label="Sensor #1 (S1), orange" />
+            <graph label="TMP007 detector die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">ir_t1</input>
                 <input axis="y" color="orange">ambCal1</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Amb. S1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <separator height="1" />
+            <value label="Max. TMP007 die 1" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_max1_amb</input>
             </value>
-            <value label="Min. Amb. S1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Min. TMP007 die 1" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min1_amb</input>
             </value>
-            <separator height="1"/>
-            <graph label="IR Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t1</input>
+            <separator height="1" />
+            <graph label="TMP007 object temperature" partialUpdate="false" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">ir_t1</input>
                 <input axis="y" color="orange">objCal1</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. IR S1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <separator height="1" />
+            <value label="Max. IR S1" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_max1_obj</input>
             </value>
-            <value label="Min. IR S1" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Min. IR S1" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min1_obj</input>
             </value>
-            <separator height="1"/>
-            <info label ="Sensor #2 (S2), blue" />
-            <graph label="Ambient Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t1</input>
+            <separator height="1" />
+            <info label="Sensor #2 (S2), blue" />
+            <graph label="TMP007 detector die temperature" partialUpdate="false" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">ir_t2</input>
                 <input axis="y" color="blue">ambCal2</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Amb. S2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <separator height="1" />
+            <value label="Max. TMP007 die 2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_max2_amb</input>
             </value>
-            <value label="Min. Amb. S2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Min. TMP007 die 2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min2_amb</input>
             </value>
-            <separator height="1"/>
-            <graph label="IR Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t1</input>
+            <separator height="1" />
+            <graph label="TMP007 object temperature" partialUpdate="false" labelX="t" labelY="T" unitX="s" unitY="°C" xPrecision="0" yPrecision="1">
+                <input axis="x">ir_t2</input>
                 <input axis="y" color="blue">objCal2</input>
             </graph>
-             <separator height="1"/>
-            <value label="Max. IR S2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <separator height="1" />
+            <value label="Max. IR S2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_max2_obj</input>
             </value>
-            <value label="Min. IR S2" size="2" precision="2" scientific="false" unit="°C" factor="1" >
+            <value label="Min. IR S2" size="2" precision="2" scientific="false" unit="°C" factor="1">
                 <input>T_min2_obj</input>
             </value>
-            <separator height="1"/>
-            <info label ="Combined comparison" />
-            <graph label="Ambient temperature" labelX="t" unitX="s" labelY="T" unitY="°C" partialUpdate="true">
-                <input axis="x">t1</input>
+            <separator height="1" />
+            <info label="Combined comparison" />
+            <graph label="TMP007 detector die temperature" labelX="t" unitX="s" labelY="T" unitY="°C" partialUpdate="false">
+                <input axis="x">ir_t1</input>
                 <input axis="y" color="orange">ambCal1</input>
-                <input axis="x">t1</input>
+                <input axis="x">ir_t2</input>
                 <input axis="y" color="blue">ambCal2</input>
             </graph>
-            <graph label="Object Temperature" labelX="t" unitX="s" labelY="T" unitY="°C" partialUpdate="true">
-                <input axis="x">t1</input>
+            <graph label="TMP007 object temperature" labelX="t" unitX="s" labelY="T" unitY="°C" partialUpdate="false">
+                <input axis="x">ir_t1</input>
                 <input axis="y" color="orange">objCal1</input>
-                <input axis="x">t1</input>
+                <input axis="x">ir_t2</input>
                 <input axis="y" color="blue">objCal2</input>
             </graph>
         </view>
-
         <view label="Light">
-            <info label ="Sensor #1 (S1), orange" />
-            <graph label="Illuminance" labelX="t" unitX="s" labelY="Ev" unitY="lx" partialUpdate="true">
-                <input axis="x">t2</input>
+            <info label="Sensor #1 (S1), orange" />
+            <graph label="Illuminance" labelX="t" unitX="s" labelY="Ev" unitY="lx" partialUpdate="false">
+                <input axis="x">light_t1</input>
                 <input axis="y" color="orange">amplitude1</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Illum. S1" size="2" precision="2" scientific="false" unit="lx" factor="1" >
+            <separator height="1" />
+            <value label="Max. Illum. S1" size="2" precision="2" scientific="false" unit="lx" factor="1">
                 <input>amplitude_max1</input>
             </value>
-            <value label="Min. Illum. S1" size="2" precision="2" scientific="false" unit="lx" factor="1" >
+            <value label="Min. Illum. S1" size="2" precision="2" scientific="false" unit="lx" factor="1">
                 <input>amplitude_min1</input>
             </value>
-            <separator height="1"/>
-            <info label ="Sensor #2 (S2), blue" />
-            <graph label="Illuminance" labelX="t" unitX="s" labelY="Ev" unitY="lx" partialUpdate="true">
-                <input axis="x">t2</input>
+            <separator height="1" />
+            <info label="Sensor #2 (S2), blue" />
+            <graph label="Illuminance" labelX="t" unitX="s" labelY="Ev" unitY="lx" partialUpdate="false">
+                <input axis="x">light_t2</input>
                 <input axis="y" color="blue">amplitude2</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Illum. S2" size="2" precision="2" scientific="false" unit="lx" factor="1" >
+            <separator height="1" />
+            <value label="Max. Illum. S2" size="2" precision="2" scientific="false" unit="lx" factor="1">
                 <input>amplitude_max2</input>
             </value>
-            <value label="Min. Illum. S2" size="2" precision="2" scientific="false" unit="lx" factor="1" >
+            <value label="Min. Illum. S2" size="2" precision="2" scientific="false" unit="lx" factor="1">
                 <input>amplitude_min2</input>
             </value>
-            <separator height="1"/>
-            <info label ="Combined comparison" />
-            <graph label="Illuminance" labelX="t" unitX="s" labelY="Ev" unitY="lx" partialUpdate="true">
-                <input axis="x">t2</input>
+            <separator height="1" />
+            <info label="Combined comparison" />
+            <graph label="Illuminance" labelX="t" unitX="s" labelY="Ev" unitY="lx" partialUpdate="false">
+                <input axis="x">light_t1</input>
                 <input axis="y" color="orange">amplitude1</input>
-                <input axis="x">t2</input>
+                <input axis="x">light_t2</input>
                 <input axis="y" color="blue">amplitude2</input>
             </graph>
         </view>
-
-        <!-- single>
-        <view label="Temperature">
-            <graph label="Temperature" partialUpdate="true" history="1" labelX="t" labelY="T" unitX="min" unitY="°C" xPrecision="0" yPrecision="1">
-                <input axis="x">t</input>
-                <input axis="y" color="orange">tempCal1</input>
+        <view label="Temperature rise">
+            <info label="Enter each sensor's mean during the same equilibrated lamp-off interval. Zero defaults are placeholders; enter the measured baselines before interpreting temperature rises." />
+            <edit label="Initial BMP280 1" unit="°C" signed="true" decimal="true" default="0">
+                <output>tempCalBaseline1</output>
+            </edit>
+            <edit label="Initial BMP280 2" unit="°C" signed="true" decimal="true" default="0">
+                <output>tempCalBaseline2</output>
+            </edit>
+            <graph label="BMP280 temperature rises" labelX="t" unitX="s" labelY="ΔT" unitY="K" partialUpdate="false" yPrecision="2">
+                <input axis="x">bmp_t1</input>
+                <input axis="y" color="orange">tempCal1_rise</input>
+                <input axis="x">bmp_t2</input>
+                <input axis="y" color="blue">tempCal2_rise</input>
             </graph>
-            <separator height="1"/>
-            <value label="Max. Temp." size="2" precision="2" scientific="false" unit="°C" factor="1" >
-           <input>T_max1</input>
-            </value>
-            <value label="Min. Temp." size="2" precision="2" scientific="false" unit="°C" factor="1" >
-                <input>T_min1</input>
-            </value>
-        </view-->
+            <edit label="Initial TMP007 object 1" unit="°C" signed="true" decimal="true" default="0">
+                <output>objCalBaseline1</output>
+            </edit>
+            <edit label="Initial TMP007 object 2" unit="°C" signed="true" decimal="true" default="0">
+                <output>objCalBaseline2</output>
+            </edit>
+            <graph label="TMP007 object temperature rises" labelX="t" unitX="s" labelY="ΔT" unitY="K" partialUpdate="false" yPrecision="2">
+                <input axis="x">ir_t1</input>
+                <input axis="y" color="orange">objCal1_rise</input>
+                <input axis="x">ir_t2</input>
+                <input axis="y" color="blue">objCal2_rise</input>
+            </graph>
+            <edit label="Initial TMP007 die 1" unit="°C" signed="true" decimal="true" default="0">
+                <output>ambCalBaseline1</output>
+            </edit>
+            <edit label="Initial TMP007 die 2" unit="°C" signed="true" decimal="true" default="0">
+                <output>ambCalBaseline2</output>
+            </edit>
+            <graph label="TMP007 detector temperature rises" labelX="t" unitX="s" labelY="ΔT" unitY="K" partialUpdate="false" yPrecision="2">
+                <input axis="x">ir_t1</input>
+                <input axis="y" color="orange">ambCal1_rise</input>
+                <input axis="x">ir_t2</input>
+                <input axis="y" color="blue">ambCal2_rise</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Fix the lamp and matched sensor mounts on the lit and shaded regions. Co-locate the tags for a baseline check and exchange their positions in a repeat run to distinguish sensor offsets from the spatial contrast." />
+            <info label="BMP280 measures its die temperature. TMP007 reports inferred object temperature and detector die temperature. Keep target emissivity, viewed area, distance, orientation, airflow and support conduction fixed; check surface temperature with independent references." />
+            <info label="Lux measures visible illuminance rather than total absorbed heating power. Compare temperature rises for the same sensor type over a common settled interval; report the day-side rise minus the night-side rise." />
+            <info label="Times are Bluetooth receive times. Each sensor keeps its own clock; compare means over the same time interval or align the records before subtracting them." />
+        </view>
     </views>
     <export>
-        <set name="Temperature (BMP280)">
-            <data name="Time (s)">t</data>
-            <data name="Temperature 1 (°C)">tempCal1</data>
-            <data name="Temperature 2 (°C)">tempCal2</data>
+        <set name="BMP280 1">
+            <data name="Time 1 (s)">bmp_t1</data>
+            <data name="BMP280 die temperature 1 (°C)">tempCal1</data>
+            <data name="Temperature rise 1 (K)">tempCal1_rise</data>
         </set>
-        <set name="Temperature (TMP007)">
-            <data name="Time (s)">t1</data>
-            <data name="Ambient temperature 1 (°C)">ambCal1</data>
-            <data name="Object temperature 1 (°C)">objCal1</data>
-            <data name="Ambient temperature 2 (°C)">ambCal2</data>
-            <data name="Object temperature 2 (°C)">objCal2</data>
+        <set name="BMP280 2">
+            <data name="Time 2 (s)">bmp_t2</data>
+            <data name="BMP280 die temperature 2 (°C)">tempCal2</data>
+            <data name="Temperature rise 2 (K)">tempCal2_rise</data>
         </set>
-        <set name="Light (OPT3001)">
-            <data name="Time (s)">t2</data>
-            <data name="Illuminance (lx)">amplitude1</data>
-            <data name="Illuminance (lx)">amplitude2</data>
+        <set name="TMP007 object 1">
+            <data name="Time 1 (s)">ir_t1</data>
+            <data name="TMP007 object temperature 1 (°C)">objCal1</data>
+            <data name="Temperature rise 1 (K)">objCal1_rise</data>
+        </set>
+        <set name="TMP007 object 2">
+            <data name="Time 2 (s)">ir_t2</data>
+            <data name="TMP007 object temperature 2 (°C)">objCal2</data>
+            <data name="Temperature rise 2 (K)">objCal2_rise</data>
+        </set>
+        <set name="TMP007 die 1">
+            <data name="Time 1 (s)">ir_t1</data>
+            <data name="TMP007 die temperature 1 (°C)">ambCal1</data>
+            <data name="Temperature rise 1 (K)">ambCal1_rise</data>
+        </set>
+        <set name="TMP007 die 2">
+            <data name="Time 2 (s)">ir_t2</data>
+            <data name="TMP007 die temperature 2 (°C)">ambCal2</data>
+            <data name="Temperature rise 2 (K)">ambCal2_rise</data>
+        </set>
+        <set name="OPT3001 1">
+            <data name="Time 1 (s)">light_t1</data>
+            <data name="Illuminance 1 (lx)">amplitude1</data>
+        </set>
+        <set name="OPT3001 2">
+            <data name="Time 2 (s)">light_t2</data>
+            <data name="Illuminance 2 (lx)">amplitude2</data>
+        </set>
+        <set name="Baseline settings">
+            <data name="Initial BMP280 1 (°C)">tempCalBaseline1</data>
+            <data name="Initial BMP280 2 (°C)">tempCalBaseline2</data>
+            <data name="Initial TMP007 object 1 (°C)">objCalBaseline1</data>
+            <data name="Initial TMP007 object 2 (°C)">objCalBaseline2</data>
+            <data name="Initial TMP007 die 1 (°C)">ambCalBaseline1</data>
+            <data name="Initial TMP007 die 2 (°C)">ambCalBaseline2</data>
         </set>
     </export>
 </phyphox>

@@ -1,0 +1,58 @@
+% Shared typography for the Curious Signals topic papers.
+\documentclass[journal]{IEEEtran}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{graphicx,booktabs,array}
+\usepackage{siunitx}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,decorations.pathmorphing}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+\usepackage{cite,microtype}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xurl}
+\definecolor{csblue}{HTML}{245B78}
+\definecolor{csred}{HTML}{B65338}
+\definecolor{csteal}{HTML}{278078}
+\definecolor{csgold}{HTML}{967135}
+\definecolor{csgray}{HTML}{62676C}
+\renewcommand{\unit}[1]{\ensuremath{\,\mathrm{#1}}}
+\newcommand{\code}[1]{\texttt{#1}}
+\newcolumntype{P}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcommand{\sourcecommit}{0a5cf6f}
+\newcommand{\editiondate}{October 27, 2026}
+\newcommand{\paperauthors}{Sebastian J. Spicker, Alexander K\"upper}
+\pgfplotsset{every axis/.append style={
+  width=0.98\columnwidth,height=4.8cm,
+  label style={font=\footnotesize},tick label style={font=\scriptsize},
+  legend style={font=\footnotesize,draw=none,fill=white},
+  axis line style={black!65},tick style={black!65},
+  grid style={black!12},major grid style={black!12},
+  scaled ticks=false,
+  unbounded coords=jump,
+  axis on top,
+  axis background/.style={fill=white}
+}}
+\tikzset{>=Latex,every node/.style={font=\footnotesize}}
+\setlength{\emergencystretch}{1em}
+\newcommand{\dataprovenance}{Data provenance: the datasets analysed in this
+  paper are deterministic example data, generated for the October 2026 edition from fixed
+  seeds by the scripts in \texttt{example-data/}. They are modelled on the named
+  sensors' units, sampling, resolution, noise and limits; they are not
+  recordings from the original work. The date above is the author's
+  approximate dating of that work, not of these data.}
+\newcommand{\makepapertitle}{%
+  \hypersetup{pdftitle={\papertitle},pdfauthor={\paperauthors},
+    pdfsubject={Measurements and laboratory models; \paperperiod; collected edition \editiondate},
+    pdfkeywords={physics education, instrumentation, calibration, uncertainty, phyphox}}%
+  \title{\fontsize{21}{25}\selectfont\papertitle}%
+  \author{Sebastian~J.~Spicker, Alexander~K\"upper\\[0.5ex]
+    {\normalsize Institute of Physics Education\\University of Cologne, Germany
+      \quad\textperiodcentered\quad\paperperiod}\thanks{\dataprovenance}}%
+  \markboth{Curious Signals --- Measurements and Laboratory Models}%
+    {Spicker and K\"upper: \papershorttitle}%
+  \maketitle
+}

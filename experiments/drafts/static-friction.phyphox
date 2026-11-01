@@ -1,0 +1,358 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<phyphox version="1.17" locale="en">
+  <!--Original implementation; lesson context: phyphox/motion_stopwatch_inclination.phyphox, acquisition and inclination sections. No donor XML copied; donor license is unspecified.-->
+  <title>Draft: First slip on an inclined plane</title>
+  <category>Curious Signals drafts</category>
+  <description>Phone accelerometer (gravity while stationary) and linear acceleration retain separate measured timestamps. Arm one trial; capture the first sustained slip using an earlier quasi-static inclination.</description>
+  <data-containers>
+    <container size="1" init="1">threshold</container>
+    <container size="1" init="1">armed_threshold</container>
+    <container size="1" init="0.15">debounce</container>
+    <container size="1" init="0.15">armed_debounce</container>
+    <container size="1" init="0.1">prelag</container>
+    <container size="1" init="0.1">armed_prelag</container>
+    <container size="1" init="0.2">maxage</container>
+    <container size="1" init="0.2">armed_maxage</container>
+    <container size="1" init="0.15">maxgap</container>
+    <container size="1" init="0.15">armed_maxgap</container>
+    <container size="1" init="0">armed</container>
+    <container size="1" init="0">arm_time</container>
+    <container size="0">gx</container>
+    <container size="0">gy</container>
+    <container size="0">gz</container>
+    <container size="0">gravity_t</container>
+    <container size="0">lin_a</container>
+    <container size="0">lin_t</container>
+    <container size="0">angle</container>
+    <container size="0">gnorm</container>
+    <container size="0">valid_t</container>
+    <container size="0">valid_a</container>
+    <container size="0">trial_t</container>
+    <container size="0">trial_a</container>
+    <container size="0">query_prev</container>
+    <container size="0">prev_t</container>
+    <container size="0">gap</container>
+    <container size="0">reset_metric</container>
+    <container size="0">low_t</container>
+    <container size="0">low_a</container>
+    <container size="0">last_low</container>
+    <container size="0">duration</container>
+    <container size="0">pre_query</container>
+    <container size="0">pre_angle</container>
+    <container size="0">pre_norm</container>
+    <container size="0">pre_sample_t</container>
+    <container size="0">pre_age</container>
+    <container size="0">candidate_t</container>
+    <container size="0">candidate_angle</container>
+    <container size="0">candidate_pre_t</container>
+    <container size="0">candidate_duration</container>
+    <container size="0">candidate_age</container>
+    <container size="0">candidate_norm</container>
+    <container size="1">trigger_time</container>
+    <container size="1">chosen_angle</container>
+    <container size="1">pre_time</container>
+    <container size="1">slip_angle</container>
+    <container size="1">mu</container>
+    <container size="1">capture_gate</container>
+    <container size="0">low_metric</container>
+    <container size="0">last_reset_a</container>
+    <container size="0">candidate_reset_a</container>
+  </data-containers>
+  <input>
+    <sensor type="accelerometer" rate="50">
+      <output component="x">gx</output>
+      <output component="y">gy</output>
+      <output component="z">gz</output>
+      <output component="t">gravity_t</output>
+    </sensor>
+    <sensor type="linear_acceleration" rate="50">
+      <output component="abs">lin_a</output>
+      <output component="t">lin_t</output>
+    </sensor>
+  </input>
+  <views>
+    <view label="Capture">
+      <info label="Secure phone to a sliding block, screen plane parallel to ramp. Use a catch tray. Start recording while stationary, then Arm first slip. Raise ramp slowly. Clear capture disarms without deleting raw data. Export before arming another trial; app Clear data resets everything."/>
+      <edit label="Slip threshold" default="1" unit="m/s²" min="0.01">
+        <output>threshold</output>
+      </edit>
+      <edit label="Sustained duration" default="0.15" unit="s" min="0.01">
+        <output>debounce</output>
+      </edit>
+      <edit label="Pre-slip margin" default="0.1" unit="s" min="0">
+        <output>prelag</output>
+      </edit>
+      <edit label="Maximum gravity age" default="0.2" unit="s" min="0.01">
+        <output>maxage</output>
+      </edit>
+      <edit label="Maximum sample gap" default="0.15" unit="s" min="0.01">
+        <output>maxgap</output>
+      </edit>
+      <button label="Arm first slip">
+        <input type="value">1</input>
+        <output>armed</output>
+        <input type="buffer">lin_t</input>
+        <output>arm_time</output>
+        <input type="buffer">threshold</input>
+        <output>armed_threshold</output>
+        <input type="buffer">debounce</input>
+        <output>armed_debounce</output>
+        <input type="buffer">prelag</input>
+        <output>armed_prelag</output>
+        <input type="buffer">maxage</input>
+        <output>armed_maxage</output>
+        <input type="buffer">maxgap</input>
+        <output>armed_maxgap</output>
+      </button>
+      <button label="Clear capture">
+        <input type="value">0</input>
+        <output>armed</output>
+      </button>
+      <value label="Armed (1=yes)" unit="" precision="3">
+        <input>armed</input>
+      </value>
+      <value label="First sustained-slip time" unit="s" precision="3">
+        <input>trigger_time</input>
+      </value>
+      <value label="Pre-slip gravity time" unit="s" precision="3">
+        <input>pre_time</input>
+      </value>
+      <value label="First-slip angle" unit="°" precision="3">
+        <input>slip_angle</input>
+      </value>
+      <value label="Static friction estimate" unit="" precision="3">
+        <input>mu</input>
+      </value>
+    </view>
+    <view label="Histories">
+      <graph label="Inclination" labelX="Session time" unitX="s" labelY="Inclination" unitY="°" partialUpdate="false">
+        <input axis="x">gravity_t</input>
+        <input axis="y">angle</input>
+      </graph>
+      <graph label="Linear acceleration" labelX="Session time" unitX="s" labelY="Linear acceleration" unitY="m/s²" partialUpdate="false">
+        <input axis="x">lin_t</input>
+        <input axis="y">lin_a</input>
+      </graph>
+    </view>
+    <view label="Setup">
+      <info label="Screen-normal z axis must be perpendicular to the sliding surface. Angle uses atan2(sqrt(gx²+gy²),abs(gz)). Only 0–85° and gravity magnitude 9.3–10.3 m/s² are accepted. A preceding low-acceleration sample and fresh pre-slip gravity are required. Sampling gaps reset debounce. First valid result stays selected from full raw history; later jolts cannot replace it. Threshold settings are copied when arming. This is a slip proxy, requiring visual confirmation; phone sensor fusion may lag. No kinetic friction estimate."/>
+    </view>
+  </views>
+  <analysis sleep="0.1" onUserInput="false">
+    <formula formula="sqrt([1_]^2+[2_]^2+[3_]^2)">
+      <input clear="false">gx</input>
+      <input clear="false">gy</input>
+      <input clear="false">gz</input>
+      <output>gnorm</output>
+    </formula>
+    <formula formula="atan2(sqrt([1_]^2+[2_]^2),abs([3_]))*180/3.141592653589793">
+      <input clear="false">gx</input>
+      <input clear="false">gy</input>
+      <input clear="false">gz</input>
+      <output>angle</output>
+    </formula>
+    <match>
+      <input clear="false">lin_t</input>
+      <input clear="false">lin_a</input>
+      <output>valid_t</output>
+      <output>valid_a</output>
+    </match>
+    <rangefilter>
+      <input clear="false">valid_t</input>
+      <input clear="false" as="min">arm_time</input>
+      <input clear="false">valid_a</input>
+      <output>trial_t</output>
+      <output>trial_a</output>
+    </rangefilter>
+    <formula formula="[1_]-0.000000001">
+      <input clear="false">trial_t</input>
+      <output>query_prev</output>
+    </formula>
+    <interpolate method="previous">
+      <input clear="false" as="x">trial_t</input>
+      <input clear="false" as="y">trial_t</input>
+      <input clear="false" as="xi">query_prev</input>
+      <output>prev_t</output>
+    </interpolate>
+    <formula formula="[1_]-[2_]">
+      <input clear="false">trial_t</input>
+      <input clear="false">prev_t</input>
+      <output>gap</output>
+    </formula>
+    <formula formula="min([1_]-[2],[3]-[4_])">
+      <input clear="false">trial_a</input>
+      <input clear="false">armed_threshold</input>
+      <input clear="false">armed_maxgap</input>
+      <input clear="false">gap</input>
+      <output>reset_metric</output>
+    </formula>
+    <rangefilter>
+      <input clear="false">reset_metric</input>
+      <input type="value" as="max">0</input>
+      <input clear="false">trial_t</input>
+      <input clear="false">trial_a</input>
+      <output>low_metric</output>
+      <output>low_t</output>
+      <output>low_a</output>
+    </rangefilter>
+    <interpolate method="previous">
+      <input clear="false" as="x">low_t</input>
+      <input clear="false" as="y">low_t</input>
+      <input clear="false" as="xi">trial_t</input>
+      <output>last_low</output>
+    </interpolate>
+    <interpolate method="previous">
+      <input as="x" clear="false">low_t</input>
+      <input as="y" clear="false">low_a</input>
+      <input as="xi" clear="false">trial_t</input>
+      <output>last_reset_a</output>
+    </interpolate>
+    <formula formula="[1_]-[2_]">
+      <input clear="false">trial_t</input>
+      <input clear="false">last_low</input>
+      <output>duration</output>
+    </formula>
+    <formula formula="[1_]-[2]">
+      <input clear="false">last_low</input>
+      <input clear="false">armed_prelag</input>
+      <output>pre_query</output>
+    </formula>
+    <interpolate method="previous">
+      <input clear="false" as="x">gravity_t</input>
+      <input clear="false" as="y">angle</input>
+      <input clear="false" as="xi">pre_query</input>
+      <output>pre_angle</output>
+    </interpolate>
+    <interpolate method="previous">
+      <input clear="false" as="x">gravity_t</input>
+      <input clear="false" as="y">gnorm</input>
+      <input clear="false" as="xi">pre_query</input>
+      <output>pre_norm</output>
+    </interpolate>
+    <interpolate method="previous">
+      <input clear="false" as="x">gravity_t</input>
+      <input clear="false" as="y">gravity_t</input>
+      <input clear="false" as="xi">pre_query</input>
+      <output>pre_sample_t</output>
+    </interpolate>
+    <formula formula="[1_]-[2_]">
+      <input clear="false">pre_query</input>
+      <input clear="false">pre_sample_t</input>
+      <output>pre_age</output>
+    </formula>
+    <match>
+      <input clear="false">trial_t</input>
+      <input clear="false">pre_angle</input>
+      <input clear="false">pre_sample_t</input>
+      <input clear="false">duration</input>
+      <input clear="false">pre_age</input>
+      <input clear="false">pre_norm</input>
+      <output>candidate_t</output>
+      <output>candidate_angle</output>
+      <output>candidate_pre_t</output>
+      <output>candidate_duration</output>
+      <output>candidate_age</output>
+      <output>candidate_norm</output>
+      <input clear="false">last_reset_a</input>
+      <output>candidate_reset_a</output>
+    </match>
+    <rangefilter>
+      <input clear="false">candidate_t</input>
+      <input clear="false">candidate_angle</input>
+      <input type="value" as="min">0</input>
+      <input type="value" as="max">85</input>
+      <input clear="false">candidate_pre_t</input>
+      <input clear="false">candidate_duration</input>
+      <input clear="false" as="min">armed_debounce</input>
+      <input clear="false">candidate_age</input>
+      <input type="value" as="min">0</input>
+      <input clear="false" as="max">armed_maxage</input>
+      <input clear="false">candidate_norm</input>
+      <input type="value" as="min">9.3</input>
+      <input type="value" as="max">10.3</input>
+      <output>candidate_t</output>
+      <output>candidate_angle</output>
+      <output>candidate_pre_t</output>
+      <output>candidate_duration</output>
+      <output>candidate_age</output>
+      <output>candidate_norm</output>
+      <input clear="false">candidate_reset_a</input>
+      <input clear="false" as="max">armed_threshold</input>
+      <output>candidate_reset_a</output>
+    </rangefilter>
+    <min>
+      <input clear="false" as="y">candidate_t</input>
+      <output as="min">trigger_time</output>
+    </min>
+    <if equal="true">
+      <input clear="false">armed</input>
+      <input type="value">1</input>
+      <input type="value">1</input>
+      <input type="value">NaN</input>
+      <output>capture_gate</output>
+    </if>
+    <formula formula="[1]+0*[2]">
+      <input clear="false">trigger_time</input>
+      <input clear="false">capture_gate</input>
+      <output>trigger_time</output>
+    </formula>
+    <interpolate method="previous">
+      <input clear="false" as="x">candidate_t</input>
+      <input clear="false" as="y">candidate_angle</input>
+      <input clear="false" as="xi">trigger_time</input>
+      <output>chosen_angle</output>
+    </interpolate>
+    <interpolate method="previous">
+      <input clear="false" as="x">candidate_t</input>
+      <input clear="false" as="y">candidate_pre_t</input>
+      <input clear="false" as="xi">trigger_time</input>
+      <output>pre_time</output>
+    </interpolate>
+    <formula formula="[1]+0*[2]">
+      <input clear="false">chosen_angle</input>
+      <input clear="false">trigger_time</input>
+      <output>slip_angle</output>
+    </formula>
+    <formula formula="[1]+0*[2]">
+      <input clear="false">pre_time</input>
+      <input clear="false">trigger_time</input>
+      <output>pre_time</output>
+    </formula>
+    <formula formula="sin([1]*3.141592653589793/180)/cos([1]*3.141592653589793/180)">
+      <input clear="false">slip_angle</input>
+      <output>mu</output>
+    </formula>
+  </analysis>
+  <export>
+    <set name="Raw acceleration and inclination">
+      <data name="gx">gx</data>
+      <data name="gy">gy</data>
+      <data name="gz">gz</data>
+      <data name="gravity_t">gravity_t</data>
+      <data name="lin_a">lin_a</data>
+      <data name="lin_t">lin_t</data>
+      <data name="angle">angle</data>
+      <data name="gnorm">gnorm</data>
+    </set>
+    <set name="Current capture">
+      <data name="trigger_time">trigger_time</data>
+      <data name="pre_time">pre_time</data>
+      <data name="slip_angle">slip_angle</data>
+      <data name="mu">mu</data>
+      <data name="armed">armed</data>
+      <data name="arm_time">arm_time</data>
+      <data name="armed_threshold">armed_threshold</data>
+      <data name="armed_debounce">armed_debounce</data>
+      <data name="armed_prelag">armed_prelag</data>
+      <data name="armed_maxage">armed_maxage</data>
+      <data name="armed_maxgap">armed_maxgap</data>
+    </set>
+    <set name="Next capture settings">
+      <data name="threshold">threshold</data>
+      <data name="debounce">debounce</data>
+      <data name="prelag">prelag</data>
+      <data name="maxage">maxage</data>
+      <data name="maxgap">maxgap</data>
+    </set>
+  </export>
+</phyphox>

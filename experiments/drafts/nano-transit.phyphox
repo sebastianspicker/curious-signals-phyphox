@@ -1,0 +1,815 @@
+<!-- Event analysis adapted from the corrected transit experiment by Sebastian J. Spicker at Astrolab, University of Cologne; GPL-3.0, see repository LICENSE. Original Curious Signals Nano draft adaptation. Source lesson attribution and limits: docs/drafts/nano-transit.md. -->
+<phyphox version="1.17" locale="en">
+  <title>Draft: Nano transit photometry</title>
+  <category>Curious Signals drafts</category>
+  <description>Record raw RGBC counts and device/receive timestamps from Nano mode 6. Reduce locally entered baseline and plateau means, projected radius, and up to six complete two-threshold transit events. This is an unvalidated Nano-only adaptation of the corrected transit tool.</description>
+  <data-containers>
+    <container size="0">device_time</container>
+    <container size="0">receive_time</container>
+    <container size="0">clear</container>
+    <container size="0">red</container>
+    <container size="0">green</container>
+    <container size="0">blue</container>
+    <container size="1" init="0">enabled</container>
+    <container size="1" init="0">dark</container>
+    <container size="1" init="0">baseline</container>
+    <container size="1">den</container>
+    <container size="0">normalized</container>
+    <container size="0">amplitude</container>
+    <container size="0">t</container>
+    <container size="1">use_means</container>
+    <container size="0">depth_den</container>
+    <container size="0">signal_candidate</container>
+    <container size="0">signal_invalid</container>
+    <container size="0">norm_uncalibrated</container>
+    <container size="1">threshold_high</container>
+    <container size="1">threshold_low</container>
+    <container size="0">threshold_gap</container>
+    <container size="0">norm_thresholded</container>
+    <container size="0">timing_t</container>
+    <container size="0">timing_signal</container>
+    <container size="1">plateau</container>
+    <container size="0">depth_candidate</container>
+    <container size="0">depth_nonnegative</container>
+    <container size="0">depth_bounded</container>
+    <container size="0">depth_guard</container>
+    <container size="0">depth_enabled</container>
+    <container size="0">transit_depth</container>
+    <container size="1">R_star</container>
+    <container size="1">distance_ratio</container>
+    <container size="0">R_planet</container>
+    <container size="0">Quot_R</container>
+    <container size="0">max_amplitude</container>
+    <container size="0">min_amplitude</container>
+    <container size="0">max_t</container>
+    <container size="1">on0</container>
+    <container size="0">search_t_candidate</container>
+    <container size="0">search_a_candidate</container>
+    <container size="0">search_t</container>
+    <container size="0">search_a</container>
+    <container size="1">off0</container>
+    <container size="1">duration_candidate0</container>
+    <container size="1">don0</container>
+    <container size="1">on1</container>
+    <container size="1">off1</container>
+    <container size="1">duration_candidate1</container>
+    <container size="1">don1</container>
+    <container size="1">period_candidate0</container>
+    <container size="1">dt01</container>
+    <container size="1">on2</container>
+    <container size="1">off2</container>
+    <container size="1">duration_candidate2</container>
+    <container size="1">don2</container>
+    <container size="1">period_candidate1</container>
+    <container size="1">dt12</container>
+    <container size="1">on3</container>
+    <container size="1">off3</container>
+    <container size="1">duration_candidate3</container>
+    <container size="1">don3</container>
+    <container size="1">period_candidate2</container>
+    <container size="1">dt23</container>
+    <container size="1">on4</container>
+    <container size="1">off4</container>
+    <container size="1">duration_candidate4</container>
+    <container size="1">don4</container>
+    <container size="1">period_candidate3</container>
+    <container size="1">dt34</container>
+    <container size="1">on5</container>
+    <container size="1">off5</container>
+    <container size="1">duration_candidate5</container>
+    <container size="1">don5</container>
+    <container size="1">period_candidate4</container>
+    <container size="1">dt45</container>
+    <container size="0">duration_list</container>
+    <container size="0">period_list</container>
+    <container size="0">valid_durations</container>
+    <container size="0">complete_count</container>
+    <container size="0">avg_transit_time</container>
+    <container size="0">avg_year_duration</container>
+  </data-containers>
+  <input>
+    <bluetooth id="Sense" name="phyphox-sense" mode="notification" subscribeOnStart="true">
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="0">device_time</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="4">clear</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="8">red</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="12">green</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian" offset="16">blue</output>
+      <output char="cddf1002-30f7-4671-8b43-5e40ba53514a" extra="time">receive_time</output>
+    </bluetooth>
+  </input>
+  <output>
+    <bluetooth id="Sense" name="phyphox-sense">
+      <config char="cddf1003-30f7-4671-8b43-5e40ba53514a" conversion="float32LittleEndian">6</config>
+    </bluetooth>
+  </output>
+  <analysis sleep="0.1">
+    <append>
+      <input type="buffer" clear="false">enabled</input>
+      <output clear="true">use_means</output>
+    </append>
+    <append>
+      <input type="buffer" clear="false">clear</input>
+      <output clear="true">amplitude</output>
+    </append>
+    <append>
+      <input type="buffer" clear="false">receive_time</input>
+      <output clear="true">t</output>
+    </append>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">baseline</input>
+      <input clear="false" type="buffer">dark</input>
+      <output clear="true">depth_den</output>
+    </formula>
+    <formula formula="([1_]-[2])/([3]-[2])">
+      <input clear="false" type="buffer">amplitude</input>
+      <input clear="false" type="buffer">dark</input>
+      <input clear="false" type="buffer">baseline</input>
+      <output clear="true">signal_candidate</output>
+    </formula>
+    <formula formula="[1_]*0/0">
+      <input clear="false" type="buffer">amplitude</input>
+      <output clear="true">signal_invalid</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">depth_den</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">signal_candidate</input>
+      <input clear="false" type="buffer" as="false">signal_invalid</input>
+      <output clear="true">norm_uncalibrated</output>
+    </if>
+    <if equal="true">
+      <input type="buffer" clear="false" as="a">enabled</input>
+      <input type="value" as="b">1</input>
+      <input type="buffer" clear="false" as="true">norm_uncalibrated</input>
+      <input type="buffer" clear="false" as="false">signal_invalid</input>
+      <output clear="true">normalized</output>
+    </if>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">threshold_high</input>
+      <input clear="false" type="buffer">threshold_low</input>
+      <output clear="true">threshold_gap</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">threshold_gap</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">normalized</input>
+      <input clear="false" type="buffer" as="false">signal_invalid</input>
+      <output clear="true">norm_thresholded</output>
+    </if>
+    <match>
+      <input clear="false" type="buffer">t</input>
+      <input clear="false" type="buffer">norm_thresholded</input>
+      <output clear="true">timing_t</output>
+      <output clear="true">timing_signal</output>
+    </match>
+    <formula formula="([1]-[2])/([1]-[3])">
+      <input clear="false" type="buffer">baseline</input>
+      <input clear="false" type="buffer">plateau</input>
+      <input clear="false" type="buffer">dark</input>
+      <output clear="true">depth_candidate</output>
+    </formula>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">depth_candidate</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">depth_candidate</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">depth_nonnegative</output>
+    </if>
+    <if less="true" equal="true">
+      <input clear="false" type="buffer" as="a">depth_nonnegative</input>
+      <input clear="false" type="value" as="b">1</input>
+      <input clear="false" type="buffer" as="true">depth_nonnegative</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">depth_bounded</output>
+    </if>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">depth_den</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">depth_bounded</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">depth_guard</output>
+    </if>
+    <if equal="true">
+      <input clear="false" type="buffer" as="a">use_means</input>
+      <input clear="false" type="value" as="b">1</input>
+      <input clear="false" type="buffer" as="true">depth_guard</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">depth_enabled</output>
+    </if>
+    <formula formula="100*[1]">
+      <input clear="false" type="buffer">depth_enabled</input>
+      <output clear="true">transit_depth</output>
+    </formula>
+    <formula formula="[1]*[2]*sqrt([3])*((heaviside([1]))/(heaviside([1])))*((sign([1]))/(sign([1])))*((heaviside([2]))/(heaviside([2])))*((sign([2]))/(sign([2])))">
+      <input clear="false" type="buffer">R_star</input>
+      <input clear="false" type="buffer">distance_ratio</input>
+      <input clear="false" type="buffer">depth_enabled</input>
+      <output clear="true">R_planet</output>
+    </formula>
+    <formula formula="100*[1]*sqrt([2])*((heaviside([1]))/(heaviside([1])))*((sign([1]))/(sign([1])))">
+      <input clear="false" type="buffer">distance_ratio</input>
+      <input clear="false" type="buffer">depth_enabled</input>
+      <output clear="true">Quot_R</output>
+    </formula>
+    <max>
+      <input clear="false" type="buffer" as="y">amplitude</input>
+      <output clear="true" as="max">max_amplitude</output>
+    </max>
+    <min>
+      <input clear="false" type="buffer" as="y">amplitude</input>
+      <output clear="true" as="min">min_amplitude</output>
+    </min>
+    <max>
+      <input clear="false" type="buffer" as="y">t</input>
+      <output clear="true" as="max">max_t</output>
+    </max>
+    <threshold falling="true">
+      <input clear="false" type="buffer" as="x">timing_t</input>
+      <input clear="false" type="buffer" as="y">timing_signal</input>
+      <input clear="false" type="buffer" as="threshold">threshold_low</input>
+      <output clear="true" as="position">on0</output>
+    </threshold>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">on0</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on0</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on0</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="false">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_high</input>
+      <output clear="true" as="position">off0</output>
+    </threshold>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">off0</input>
+      <input clear="false" type="buffer">on0</input>
+      <output clear="true">duration_candidate0</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">duration_candidate0</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">duration_candidate0</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">don0</output>
+    </if>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">off0</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off0</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off0</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="true">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_low</input>
+      <output clear="true" as="position">on1</output>
+    </threshold>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">on1</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on1</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on1</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="false">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_high</input>
+      <output clear="true" as="position">off1</output>
+    </threshold>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">off1</input>
+      <input clear="false" type="buffer">on1</input>
+      <output clear="true">duration_candidate1</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">duration_candidate1</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">duration_candidate1</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">don1</output>
+    </if>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">on1</input>
+      <input clear="false" type="buffer">on0</input>
+      <output clear="true">period_candidate0</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">period_candidate0</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">period_candidate0</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">dt01</output>
+    </if>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">off1</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off1</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off1</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="true">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_low</input>
+      <output clear="true" as="position">on2</output>
+    </threshold>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">on2</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on2</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on2</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="false">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_high</input>
+      <output clear="true" as="position">off2</output>
+    </threshold>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">off2</input>
+      <input clear="false" type="buffer">on2</input>
+      <output clear="true">duration_candidate2</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">duration_candidate2</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">duration_candidate2</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">don2</output>
+    </if>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">on2</input>
+      <input clear="false" type="buffer">on1</input>
+      <output clear="true">period_candidate1</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">period_candidate1</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">period_candidate1</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">dt12</output>
+    </if>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">off2</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off2</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off2</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="true">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_low</input>
+      <output clear="true" as="position">on3</output>
+    </threshold>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">on3</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on3</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on3</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="false">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_high</input>
+      <output clear="true" as="position">off3</output>
+    </threshold>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">off3</input>
+      <input clear="false" type="buffer">on3</input>
+      <output clear="true">duration_candidate3</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">duration_candidate3</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">duration_candidate3</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">don3</output>
+    </if>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">on3</input>
+      <input clear="false" type="buffer">on2</input>
+      <output clear="true">period_candidate2</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">period_candidate2</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">period_candidate2</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">dt23</output>
+    </if>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">off3</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off3</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off3</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="true">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_low</input>
+      <output clear="true" as="position">on4</output>
+    </threshold>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">on4</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on4</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on4</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="false">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_high</input>
+      <output clear="true" as="position">off4</output>
+    </threshold>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">off4</input>
+      <input clear="false" type="buffer">on4</input>
+      <output clear="true">duration_candidate4</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">duration_candidate4</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">duration_candidate4</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">don4</output>
+    </if>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">on4</input>
+      <input clear="false" type="buffer">on3</input>
+      <output clear="true">period_candidate3</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">period_candidate3</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">period_candidate3</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">dt34</output>
+    </if>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">off4</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off4</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">off4</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="true">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_low</input>
+      <output clear="true" as="position">on5</output>
+    </threshold>
+    <rangefilter>
+      <input clear="false" type="buffer">timing_t</input>
+      <input clear="false" type="buffer" as="min">on5</input>
+      <input clear="false" type="buffer">timing_signal</input>
+      <output clear="true">search_t_candidate</output>
+      <output clear="true">search_a_candidate</output>
+    </rangefilter>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on5</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_t_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_t</output>
+    </if>
+    <if greater="true" equal="true">
+      <input clear="false" type="buffer" as="a">on5</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">search_a_candidate</input>
+      <input clear="false" type="empty" as="false" />
+      <output clear="true">search_a</output>
+    </if>
+    <threshold falling="false">
+      <input clear="false" type="buffer" as="x">search_t</input>
+      <input clear="false" type="buffer" as="y">search_a</input>
+      <input clear="false" type="buffer" as="threshold">threshold_high</input>
+      <output clear="true" as="position">off5</output>
+    </threshold>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">off5</input>
+      <input clear="false" type="buffer">on5</input>
+      <output clear="true">duration_candidate5</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">duration_candidate5</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">duration_candidate5</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">don5</output>
+    </if>
+    <formula formula="[1]-[2]">
+      <input clear="false" type="buffer">on5</input>
+      <input clear="false" type="buffer">on4</input>
+      <output clear="true">period_candidate4</output>
+    </formula>
+    <if greater="true">
+      <input clear="false" type="buffer" as="a">period_candidate4</input>
+      <input clear="false" type="value" as="b">0</input>
+      <input clear="false" type="buffer" as="true">period_candidate4</input>
+      <input clear="false" type="value" as="false">NaN</input>
+      <output clear="true">dt45</output>
+    </if>
+    <append>
+      <input clear="false" type="buffer">don0</input>
+      <input clear="false" type="buffer">don1</input>
+      <input clear="false" type="buffer">don2</input>
+      <input clear="false" type="buffer">don3</input>
+      <input clear="false" type="buffer">don4</input>
+      <input clear="false" type="buffer">don5</input>
+      <output clear="true">duration_list</output>
+    </append>
+    <append>
+      <input clear="false" type="buffer">dt01</input>
+      <input clear="false" type="buffer">dt12</input>
+      <input clear="false" type="buffer">dt23</input>
+      <input clear="false" type="buffer">dt34</input>
+      <input clear="false" type="buffer">dt45</input>
+      <output clear="true">period_list</output>
+    </append>
+    <match>
+      <input clear="false" type="buffer">duration_list</input>
+      <output clear="true">valid_durations</output>
+    </match>
+    <count>
+      <input clear="false" type="buffer" as="buffer">valid_durations</input>
+      <output clear="true" as="count">complete_count</output>
+    </count>
+    <average>
+      <input clear="false" type="buffer" as="buffer">duration_list</input>
+      <output clear="true" as="average">avg_transit_time</output>
+    </average>
+    <average>
+      <input clear="false" type="buffer" as="buffer">period_list</input>
+      <output clear="true" as="average">avg_year_duration</output>
+    </average>
+  </analysis>
+  <views>
+    <view label="Acquisition">
+      <graph label="Raw clear counts" labelX="Receive time" labelY="Clear counts" unitX="s" unitY="counts" partialUpdate="false" style="lines">
+        <input axis="x">receive_time</input>
+        <input axis="y">clear</input>
+      </graph>
+      <value label="Device time (separate clock)" unit="s" precision="4">
+        <input>device_time</input>
+      </value>
+      <graph label="Normalized light curve" labelX="Receive time" labelY="Relative signal" unitX="s" unitY="1" partialUpdate="false" style="lines">
+        <input axis="x">receive_time</input>
+        <input axis="y">normalized</input>
+      </graph>
+    </view>
+    <view label="Calibration">
+      <edit label="Enable reduction (0 or 1)" default="0" signed="true" decimal="true" min="0" max="1">
+        <output>enabled</output>
+      </edit>
+      <edit label="Dark/background mean" default="0" signed="true" decimal="true">
+        <output>dark</output>
+      </edit>
+      <edit label="Unocculted baseline mean" default="0" signed="true" decimal="true">
+        <output>baseline</output>
+      </edit>
+      <edit label="Transit plateau mean" default="0" signed="true" decimal="true">
+        <output>plateau</output>
+      </edit>
+      <edit label="Source radius" default="0" signed="true" decimal="true" min="0" unit="cm">
+        <output>R_star</output>
+      </edit>
+      <edit label="Detector-to-planet / detector-to-source distance" default="0" signed="true" decimal="true" min="0">
+        <output>distance_ratio</output>
+      </edit>
+      <edit label="Lower normalized threshold" default="0.98" signed="true" decimal="true">
+        <output>threshold_low</output>
+      </edit>
+      <edit label="Upper normalized threshold" default="0.99" signed="true" decimal="true">
+        <output>threshold_high</output>
+      </edit>
+      <info>Measure background and bracketed local baseline/plateau means in raw clear counts. Enter measured geometry, then enable. Lower &lt; upper thresholds must lie between normalized plateau and 1. Events beginning before recording are ignored. Durations and periods use receive time, not device time. Up to six complete events are recomputed from retained history; no fixed-cycle divisor.</info>
+    </view>
+    <view label="Transit results">
+      <value label="Local transit depth" unit="%" precision="4">
+        <input>transit_depth</input>
+      </value>
+      <value label="Projected planet radius" unit="cm" precision="4">
+        <input>R_planet</input>
+      </value>
+      <value label="Planet/source radius" unit="%" precision="4">
+        <input>Quot_R</input>
+      </value>
+      <value label="Complete events (up to six)" unit="1" precision="4">
+        <input>complete_count</input>
+      </value>
+      <value label="Mean threshold duration" unit="s" precision="4">
+        <input>avg_transit_time</input>
+      </value>
+      <value label="Mean onset period" unit="s" precision="4">
+        <input>avg_year_duration</input>
+      </value>
+    </view>
+    <view label="Setup">
+      <info>Use a rigid luminous disk, one opaque sphere and Nano facing the source. Measure both distances from the detector; Rp=Rs*(dp/ds)*sqrt(depth). Assumes linear response, uniform source disk, opaque fully superimposed planet and locally steady illumination. Partial/grazing occultation, rods, lamp curvature and nonuniformity break the radius model. Record an unobscured interval before each event. Clear all data after changing the track. See the manuscript for timing and uncertainty controls.</info>
+      <info>Draft software only. Import, BLE delivery, Android/iOS button behavior and physical apparatus remain to be validated. Counts are not lux. Keep source geometry and spectral output fixed; test linearity and avoid clipping. Changing current settings recalculates the live curve; export before changing runs. Device seconds and receive seconds are independent clocks. Do not infer timing precision from nominal firmware rate.</info>
+    </view>
+  </views>
+  <export>
+    <set name="Raw Nano mode 6">
+      <data name="receive_time">receive_time</data>
+      <data name="device_time">device_time</data>
+      <data name="clear">clear</data>
+      <data name="red">red</data>
+      <data name="green">green</data>
+      <data name="blue">blue</data>
+    </set>
+    <set name="Current controls">
+      <data name="enabled">enabled</data>
+      <data name="dark">dark</data>
+      <data name="baseline">baseline</data>
+      <data name="plateau">plateau</data>
+      <data name="R_star">R_star</data>
+      <data name="distance_ratio">distance_ratio</data>
+      <data name="threshold_low">threshold_low</data>
+      <data name="threshold_high">threshold_high</data>
+    </set>
+    <set name="Reduction">
+      <data name="normalized">normalized</data>
+      <data name="transit_depth">transit_depth</data>
+      <data name="R_planet">R_planet</data>
+      <data name="Quot_R">Quot_R</data>
+      <data name="complete_count">complete_count</data>
+      <data name="avg_transit_time">avg_transit_time</data>
+      <data name="avg_year_duration">avg_year_duration</data>
+      <data name="on0">on0</data>
+      <data name="off0">off0</data>
+      <data name="don0">don0</data>
+      <data name="on1">on1</data>
+      <data name="off1">off1</data>
+      <data name="don1">don1</data>
+      <data name="on2">on2</data>
+      <data name="off2">off2</data>
+      <data name="don2">don2</data>
+      <data name="on3">on3</data>
+      <data name="off3">off3</data>
+      <data name="don3">don3</data>
+      <data name="on4">on4</data>
+      <data name="off4">off4</data>
+      <data name="don4">don4</data>
+      <data name="on5">on5</data>
+      <data name="off5">off5</data>
+      <data name="don5">don5</data>
+    </set>
+    <set name="Onset intervals">
+      <data name="dt01">dt01</data>
+      <data name="dt12">dt12</data>
+      <data name="dt23">dt23</data>
+      <data name="dt34">dt34</data>
+      <data name="dt45">dt45</data>
+    </set>
+  </export>
+</phyphox>

@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="See what the Curious Signals board sends before you plug it in: an offline, simulated preview of the Arduino Nano 33 BLE Sense and phyphox classroom kit.">
+    <meta name="description" content="See what the Curious Signals board sends before you plug it in: an offline, example preview of the Arduino Nano 33 BLE Sense and phyphox classroom kit.">
     <meta name="color-scheme" content="light dark">
     <meta name="theme-color" content="#f5f3ec" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="#131416" media="(prefers-color-scheme: dark)">
@@ -32,7 +32,7 @@
       <section class="statement" aria-labelledby="statement-title">
         <div>
           <h1 id="statement-title">See what the board sends before you plug it in.</h1>
-          <p class="statement-lede">An original Arduino Nano 33 BLE Sense streams its sensors to phyphox on a phone. Pick a mode to see the channels, units, and trace shape your class will get. Every trace here comes from a stored fixture, not from a board.</p>
+          <p class="statement-lede">An original Arduino Nano 33 BLE Sense streams its sensors to phyphox on a phone. Pick a mode to see the channels, units, and trace shape your class will get. Every trace here comes from stored example data, not from a board.</p>
         </div>
         <dl class="spec">
           <div><dt>Device name</dt><dd>phyphox-sense</dd></div>
@@ -47,7 +47,7 @@
           <h2 class="label">Sensor mode</h2>
           <div id="mode-list" class="mode-list">
             <!-- demo.js replaces this note; it stays only when the preview cannot run. -->
-            <p class="preview-fallback">This simulated recorder needs JavaScript and a browser from 2022 or later (Chrome or Edge 92, Firefox 90, Safari 15.4). The experiment files work without it.</p>
+            <p class="preview-fallback">This example recorder needs JavaScript and a browser from 2022 or later (Chrome or Edge 92, Firefox 90, Safari 15.4). The experiment files work without it.</p>
           </div>
         </aside>
 
@@ -56,7 +56,7 @@
             <p class="kicker label"><span id="mode-kicker">Mode 5</span><span class="sep" aria-hidden="true">/</span><span id="mode-sensor">HTS221</span></p>
             <h2 id="experiment-title">Temperature &amp; humidity</h2>
             <p id="experiment-description">Temperature and relative humidity, each on its own axis. Breathe on the sensor and humidity climbs within seconds.</p>
-            <p class="simulation-status">Simulated<br>no board connected</p>
+            <p class="simulation-status">Example<br>no board connected</p>
           </header>
 
           <div class="readout-strip">
@@ -66,7 +66,7 @@
 
           <figure class="chart-shell">
             <svg id="chart" viewBox="0 0 920 340" role="img" aria-labelledby="chart-title chart-description">
-              <title id="chart-title">Simulated temperature and humidity traces</title>
+              <title id="chart-title">Example temperature and humidity traces</title>
               <desc id="chart-description">A deterministic line chart that previews the structure of mode 5 measurements. It is not recorded sensor data.</desc>
               <g id="chart-grid"></g>
               <g id="chart-lines"></g>
@@ -74,7 +74,7 @@
               <g id="chart-labels"></g>
             </svg>
             <figcaption>
-              <span class="caption-title"><strong id="chart-label">Temperature &amp; humidity</strong> · simulated trace · <span id="chart-progress">24.0 s fixture</span></span>
+              <span class="caption-title"><strong id="chart-label">Temperature &amp; humidity</strong> · example trace · <span id="chart-progress">24.0 s trace</span></span>
               <span id="legend" class="legend"></span>
             </figcaption>
           </figure>
@@ -82,14 +82,14 @@
           <div class="simulation-controls">
             <button id="toggle-stream" type="button">
               <svg aria-hidden="true" viewBox="0 0 24 24"><path d="m8 5 11 7-11 7V5Z"/></svg>
-              Start simulated stream
+              Start example stream
             </button>
             <button id="reset-fixture" class="secondary" type="button">
               <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v6h-6"/></svg>
-              Reset simulated fixture
+              Reset example trace
             </button>
-            <p id="stream-status" role="status" aria-live="polite" aria-atomic="true" data-state="idle">Simulated fixture ready.</p>
-            <p class="controls-note">Playback redraws the stored fixture point by point; it never touches Bluetooth. With reduced motion, the whole trace appears at once.</p>
+            <p id="stream-status" role="status" aria-live="polite" aria-atomic="true" data-state="idle">Example trace ready.</p>
+            <p class="controls-note">Playback redraws the stored example trace point by point; it never touches Bluetooth. With reduced motion, the whole trace appears at once.</p>
           </div>
 
           <section class="frame" aria-labelledby="frame-title">
@@ -98,7 +98,7 @@
               <span class="label" id="frame-summary">Sample 121 of 121 · little-endian float32</span>
             </div>
             <ol class="frame-fields" id="frame-fields"></ol>
-            <p class="frame-note"><span id="frame-note">phyphox shows these values unchanged.</span> Encoded in this page from the fixture with the repository’s frame layout. The board sends a frame at most every 50 ms; the fixture holds one sample per 200 ms. Channels a mode can’t fill are sent as <code>NaN</code>.</p>
+            <p class="frame-note"><span id="frame-note">phyphox shows these values unchanged.</span> Encoded in this page from the example data with the repository’s frame layout. The board sends a frame at most every 50 ms; the example data hold one sample per 200 ms. Channels a mode can’t fill are sent as <code>NaN</code>.</p>
           </section>
         </div>
       </section>
@@ -146,9 +146,9 @@
             </ul>
           </section>
           <section class="ledger-sim" aria-labelledby="ledger-sim-title">
-            <h3 id="ledger-sim-title">Simulated here</h3>
+            <h3 id="ledger-sim-title">Example here</h3>
             <ul>
-              <li>Every trace value: a fixed fixture, identical on every visit</li>
+              <li>Every trace value: a fixed example trace, identical on every visit</li>
               <li>No Bluetooth, sensors, network, or storage used by this page</li>
               <li>Not a measurement, calibration, or proof that a board works</li>
             </ul>

@@ -1,0 +1,45 @@
+[
+  {
+    "slug": "accelerometer",
+    "related_datasets": [
+      "drafts/cc2541-accelerometer.example.csv"
+    ]
+  },
+  {
+    "slug": "gyroscope",
+    "related_datasets": [
+      "drafts/cc2541-gyroscope.example.csv"
+    ]
+  },
+  {
+    "slug": "magnetometer",
+    "related_datasets": [
+      "drafts/magnetic-current.example.csv"
+    ]
+  },
+  {
+    "slug": "pressure",
+    "related_datasets": [
+      "drafts/pressure-boiling.example.csv"
+    ]
+  },
+  {
+    "slug": "temperature-humidity",
+    "related_datasets": [
+      "drafts/sensortag-environmental_humidity.example.csv",
+      "drafts/cc2541-humidity.example.csv"
+    ]
+  },
+  {
+    "slug": "light-rgb",
+    "related_datasets": [
+      "drafts/rgb-filter-transmission.example.csv"
+    ]
+  },
+  {
+    "slug": "analog-inputs",
+    "related_datasets": [
+      "drafts/uv-transmission_observations.example.csv"
+    ]
+  }
+]

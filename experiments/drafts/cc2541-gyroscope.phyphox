@@ -1,0 +1,120 @@
+<!-- Original Curious Signals draft from documented protocols; archive provenance is in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+    <title>Draft: CC2541 gyroscope</title>
+    <category>Curious Signals drafts</category>
+    <description>Receive signed three-component CC2541 gyroscope packet values and actual Bluetooth receive time. Subtract measured per-channel biases; exported raw histories are retained.</description>
+    <data-containers>
+        <container size="0">raw_x</container>
+        <container size="0">raw_y</container>
+        <container size="0">raw_z</container>
+        <container size="0">receive_s</container>
+        <container size="1" init="0">bias_x</container>
+        <container size="0">value_x</container>
+        <container size="1" init="0">bias_y</container>
+        <container size="0">value_y</container>
+        <container size="1" init="0">bias_z</container>
+        <container size="0">value_z</container>
+        <container size="0">magnitude</container>
+    </data-containers>
+    <input>
+        <bluetooth id="cc2541" name="SensorTag" mode="notification">
+            <config char="F000AA52-0451-4000-B000-000000000000" conversion="hexadecimal">07</config>
+            <output char="F000AA51-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="0" length="2">raw_x</output>
+            <output char="F000AA51-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="2" length="2">raw_y</output>
+            <output char="F000AA51-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="4" length="2">raw_z</output>
+            <output char="F000AA51-0451-4000-B000-000000000000" extra="time">receive_s</output>
+        </bluetooth>
+    </input>
+    <analysis sleep="0.1" onUserInput="false">
+        <formula formula="[1_]*0.00013315805450396189-[2]">
+            <input clear="false">raw_x</input>
+            <input clear="false">bias_x</input>
+            <output clear="true">value_x</output>
+        </formula>
+        <formula formula="[1_]*0.00013315805450396189-[2]">
+            <input clear="false">raw_y</input>
+            <input clear="false">bias_y</input>
+            <output clear="true">value_y</output>
+        </formula>
+        <formula formula="[1_]*0.00013315805450396189-[2]">
+            <input clear="false">raw_z</input>
+            <input clear="false">bias_z</input>
+            <output clear="true">value_z</output>
+        </formula>
+        <formula formula="sqrt([1_]^2+[2_]^2+[3_]^2)">
+            <input clear="false">value_x</input>
+            <input clear="false">value_y</input>
+            <input clear="false">value_z</input>
+            <output clear="true">magnitude</output>
+        </formula>
+    </analysis>
+    <views>
+        <view label="Calibration">
+            <info label="Measure stationary per-channel offsets in the final mounting. Bias changes recompute history; export settings with each run." />
+            <edit label="Bias x" default="0" unit="rad/s" signed="true" decimal="true">
+                <output>bias_x</output>
+            </edit>
+            <edit label="Bias y" default="0" unit="rad/s" signed="true" decimal="true">
+                <output>bias_y</output>
+            </edit>
+            <edit label="Bias z" default="0" unit="rad/s" signed="true" decimal="true">
+                <output>bias_z</output>
+            </edit>
+        </view>
+        <view label="Components">
+            <graph label="Component x" labelX="Receive time" unitX="s" labelY="Component x" unitY="rad/s" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">value_x</input>
+            </graph>
+            <graph label="Component y" labelX="Receive time" unitX="s" labelY="Component y" unitY="rad/s" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">value_y</input>
+            </graph>
+            <graph label="Component z" labelX="Receive time" unitX="s" labelY="Component z" unitY="rad/s" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">value_z</input>
+            </graph>
+            <graph label="Vector magnitude" labelX="Receive time" unitX="s" labelY="Vector magnitude" unitY="rad/s" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">magnitude</input>
+            </graph>
+        </view>
+        <view label="Packet diagnostics">
+            <graph label="Signed packet x" labelX="Receive time" unitX="s" labelY="Signed packet x" unitY="count" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">raw_x</input>
+            </graph>
+            <graph label="Signed packet y" labelX="Receive time" unitX="s" labelY="Signed packet y" unitY="count" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">raw_y</input>
+            </graph>
+            <graph label="Signed packet z" labelX="Receive time" unitX="s" labelY="Signed packet z" unitY="count" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">raw_z</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Use TI SensorTag CC2541 with its documented stock sensor service. A CC2650/CC1350 SensorTag has a different movement packet and is incompatible." />
+            <info label="Receive times describe notification arrival and include BLE scheduling jitter. Histories are recomputed, never appended on each analysis cycle. Use the app export before trash/reset; interrupted runs retain their raw samples." />
+            <info label="AA51 carries signed little-endian 16-bit channels at 0,2,4. Stock nominal span is 500/65536 degrees/s per count, converted to rad/s. Check each positive rotation to establish board axis signs; packet component labels are not an attitude solution." />
+            <info label="Bench work still required: compare stationary bias, controlled positive/negative orientations or rotations, saturation and packet losses. A software fixture validates formulas and signed byte fields, not physical accuracy." />
+        </view>
+    </views>
+    <export>
+        <set name="Vector">
+            <data name="Receive time (s)">receive_s</data>
+            <data name="Signed packet x (count)">raw_x</data>
+            <data name="Signed packet y (count)">raw_y</data>
+            <data name="Signed packet z (count)">raw_z</data>
+            <data name="Bias corrected x (rad/s)">value_x</data>
+            <data name="Bias corrected y (rad/s)">value_y</data>
+            <data name="Bias corrected z (rad/s)">value_z</data>
+            <data name="Vector magnitude (rad/s)">magnitude</data>
+        </set>
+        <set name="Settings">
+            <data name="Bias x (rad/s)">bias_x</data>
+            <data name="Bias y (rad/s)">bias_y</data>
+            <data name="Bias z (rad/s)">bias_z</data>
+        </set>
+    </export>
+</phyphox>

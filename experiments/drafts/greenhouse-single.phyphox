@@ -1,0 +1,90 @@
+<!-- Original Curious Signals draft from documented protocols; archive provenance is in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+    <title>Draft: Single SensorTag warming</title>
+    <category>Curious Signals drafts</category>
+    <description>Receive one CC2650/CC1350 SensorTag BMP280 die-temperature stream. Enter a measured baseline and enable temperature-rise reduction; compare separately exported repeated runs.</description>
+    <data-containers>
+        <container size="0">temperature_raw</container>
+        <container size="0">receive_s</container>
+        <container size="0">temperature_C</container>
+        <container size="0">receive_min</container>
+        <container size="1" init="0">baseline_C</container>
+        <container size="1" init="0">baseline_valid</container>
+        <container size="0">rise_candidate</container>
+        <container size="0">rise_K_invalid</container>
+        <container size="0">rise_K</container>
+    </data-containers>
+    <input>
+        <bluetooth id="single" name="SensorTag" mode="notification">
+            <config char="F000AA44-0451-4000-B000-000000000000" conversion="hexadecimal">64</config>
+            <config char="F000AA42-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
+            <output char="F000AA41-0451-4000-B000-000000000000" conversion="int24LittleEndian" offset="0" length="3">temperature_raw</output>
+            <output char="F000AA41-0451-4000-B000-000000000000" extra="time">receive_s</output>
+        </bluetooth>
+    </input>
+    <analysis sleep="0.1" onUserInput="false">
+        <formula formula="[1_]/100">
+            <input clear="false">temperature_raw</input>
+            <output clear="true">temperature_C</output>
+        </formula>
+        <formula formula="[1_]/60">
+            <input clear="false">receive_s</input>
+            <output clear="true">receive_min</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">temperature_C</input>
+            <input clear="false">baseline_C</input>
+            <output clear="true">rise_candidate</output>
+        </formula>
+        <formula formula="[1_]*0/0">
+            <input clear="false">rise_candidate</input>
+            <output clear="true">rise_K_invalid</output>
+        </formula>
+        <if equal="true">
+            <input clear="false">baseline_valid</input>
+            <input type="value">1</input>
+            <input clear="false">rise_candidate</input>
+            <input clear="false">rise_K_invalid</input>
+            <output clear="true">rise_K</output>
+        </if>
+    </analysis>
+    <views>
+        <view label="Temperature">
+            <graph label="BMP280 die temperature" labelX="Receive time" unitX="s" labelY="BMP280 die temperature" unitY="°C" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">temperature_C</input>
+            </graph>
+        </view>
+        <view label="Baseline">
+            <edit label="Measured initial temperature" default="0" unit="°C" signed="true" decimal="true">
+                <output>baseline_C</output>
+            </edit>
+            <edit label="Baseline verified (0 or 1)" default="0" unit="" signed="true" decimal="true">
+                <output>baseline_valid</output>
+            </edit>
+            <graph label="Temperature rise" labelX="Receive time" unitX="s" labelY="Temperature rise" unitY="K" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">rise_K</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Use one CC2650 or CC1350 SensorTag, not a CC2541. Mount the same tag reproducibly in each enclosure; allow full thermal equilibration between runs." />
+            <info label="Before heating, record a stable interval, enter its mean as Measured initial temperature, and set Baseline verified to 1. Defaults are disabled placeholders." />
+            <info label="Export each complete run before using the app trash/reset command. Run A, B, then A again with equal lamp distance, duration, mounting and airflow. Compare matched late-interval means offline; there is no simultaneous subtraction." />
+            <info label="The sensor reports its die temperature, including board self-heating, direct radiation and thermal lag. This classroom warming comparison does not isolate a planetary greenhouse mechanism." />
+        </view>
+    </views>
+    <export>
+        <set name="Run">
+            <data name="Receive time (s)">receive_s</data>
+            <data name="Receive time (min)">receive_min</data>
+            <data name="Signed BMP280 packet count">temperature_raw</data>
+            <data name="Die temperature (°C)">temperature_C</data>
+            <data name="Baseline corrected rise (K)">rise_K</data>
+        </set>
+        <set name="Settings">
+            <data name="Measured initial temperature (°C)">baseline_C</data>
+            <data name="Baseline verified (0 or 1)">baseline_valid</data>
+        </set>
+    </export>
+</phyphox>

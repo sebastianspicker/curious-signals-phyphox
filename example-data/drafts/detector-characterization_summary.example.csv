@@ -1,0 +1,2 @@
+Mean device interval (s),Mean receive interval (s),Device interval sample SD (s),Receive interval sample SD (s),Mean delivered device rate (Hz),Mean delivered receive rate (Hz),Selected baseline count (1),Baseline mean (counts),Baseline sample SD (counts),Proposed signal drop (counts),Expected single-sample SNR (1),Mean samples per feature (1)
+0.0503400008,0.0503437329,0.000473955661,0.00424460286,19.8649182,19.8634456,318,1022.73585,10.6356064,20.294717,1.90818616,19.8649182

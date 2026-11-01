@@ -1,0 +1,23 @@
+[
+  {
+    "slug": "albedo",
+    "related_datasets": ["drafts/rgb-filter-transmission.example.csv"]
+  },
+  {
+    "slug": "transit-method",
+    "related_datasets": [
+      "drafts/nano-transit.example.csv",
+      "drafts/exomoon-photometry.example.csv",
+      "drafts/starspot-crossing.example.csv",
+      "drafts/eclipsing-binary.example.csv"
+    ]
+  },
+  {
+    "slug": "owon-interface",
+    "related_datasets": ["core/analog_input_plot_v1-2.example.csv"]
+  },
+  {
+    "slug": "ir-distance",
+    "related_datasets": ["drafts/illuminance-distance-manual_observations.example.csv"]
+  }
+]

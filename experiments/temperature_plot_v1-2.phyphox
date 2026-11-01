@@ -18,6 +18,13 @@
             <string original="relative Humidity">Humidit&#xE9;</string>
             <string original="time">temps</string>
             <string original="Simple">Valeurs</string>
+        <string original="Calibration">&#xC9;talonnage</string>
+<string original="Temperature bias">Biais de temp&#xE9;rature</string>
+<string original="Humidity bias">Biais d&#x2019;humidit&#xE9;</string>
+<string original="Setup">Montage</string>
+<string original="Place calibrated temperature and humidity references beside the sensor in controlled airflow. Shield from lamp radiation and board heating; avoid condensation. Allow several sensor response times after each change. Enter indicated-minus-reference biases; do not clamp readings outside 0&#x2013;100% RH, investigate them. A fall in relative humidity during warming does not by itself show water loss. Temperature and humidity are acquired sequentially and describe the local sensor environment.">Placer des r&#xE9;f&#xE9;rences &#xE9;talonn&#xE9;es de temp&#xE9;rature et d&#x2019;humidit&#xE9; pr&#xE8;s du capteur, dans un flux d&#x2019;air contr&#xF4;l&#xE9;. Prot&#xE9;ger du rayonnement de la lampe et de la chaleur de la carte ; &#xE9;viter la condensation. Attendre plusieurs temps de r&#xE9;ponse apr&#xE8;s chaque changement. Saisir les biais indication moins r&#xE9;f&#xE9;rence ; examiner les valeurs hors de 0&#x2013;100 % HR sans les &#xE9;cr&#xEA;ter. Une baisse d&#x2019;humidit&#xE9; relative au r&#xE9;chauffement ne prouve pas une perte d&#x2019;eau. Les deux mesures sont s&#xE9;quentielles et locales.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Enregistrer une r&#xE9;f&#xE9;rence stable avant et apr&#xE8;s chaque essai. L&#x2019;intervalle BLE est d&#x2019;au moins 50 ms ; les mesures indisponibles restent NaN. Les signaux rapides n&#xE9;cessitent une bande passante v&#xE9;rifi&#xE9;e et un filtre anti-repliement.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Saisir les coefficients mesur&#xE9;s sur ce montage. Les valeurs initiales sont nominales, sans &#xE9;talonnage. Un changement recalcule toute la courbe ; mesures originales et r&#xE9;glages sont export&#xE9;s s&#xE9;par&#xE9;ment. Effacer les donn&#xE9;es r&#xE9;tablit les valeurs initiales.</string>
         </translation>
         <translation locale="de">
             <title>Temperatur und Luftfeuchtigkeit</title>
@@ -29,6 +36,13 @@
             <string original="relative Humidity">relative Luftfeuchtigkeit</string>
             <string original="time">Zeit</string>
             <string original="Simple">Einfach</string>
+        <string original="Calibration">Kalibrierung</string>
+<string original="Temperature bias">Temperaturoffset</string>
+<string original="Humidity bias">Feuchteoffset</string>
+<string original="Setup">Aufbau</string>
+<string original="Place calibrated temperature and humidity references beside the sensor in controlled airflow. Shield from lamp radiation and board heating; avoid condensation. Allow several sensor response times after each change. Enter indicated-minus-reference biases; do not clamp readings outside 0&#x2013;100% RH, investigate them. A fall in relative humidity during warming does not by itself show water loss. Temperature and humidity are acquired sequentially and describe the local sensor environment.">Kalibrierte Temperatur- und Feuchtereferenzen neben dem Sensor in kontrollierter Luftstr&#xF6;mung platzieren. Vor Lampenstrahlung und Platinenw&#xE4;rme abschirmen; Kondensation vermeiden. Nach jeder &#xC4;nderung mehrere Sensorzeitkonstanten abwarten. Als Offsets Anzeige minus Referenz eingeben; Werte au&#xDF;erhalb 0&#x2013;100 % rF untersuchen, nicht begrenzen. Sinkende relative Feuchte bei Erw&#xE4;rmung beweist keinen Wasserverlust. Beide Gr&#xF6;&#xDF;en werden nacheinander erfasst und beschreiben die Sensorumgebung.</string>
+<string original="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering.">Vor und nach jedem Versuch eine stabile Referenz aufzeichnen. Das BLE-Intervall betr&#xE4;gt mindestens 50 ms; nicht verf&#xFC;gbare Sensormesswerte bleiben NaN. Schnelle Signale ben&#xF6;tigen eine unabh&#xE4;ngig gepr&#xFC;fte Bandbreite und einen Anti-Aliasing-Filter.</string>
+<string original="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults.">Am eigenen Aufbau gemessene Koeffizienten eingeben. Vorgaben sind Nennwerte, keine Kalibrierung. &#xC4;nderungen berechnen die gesamte Kurve neu; urspr&#xFC;ngliche Messwerte und Einstellungen werden getrennt exportiert. Daten l&#xF6;schen setzt die Vorgaben zur&#xFC;ck.</string>
         </translation>
     </translations>
     <data-containers>
@@ -40,6 +54,10 @@
   <container size="0" static="false" init="">CH5</container>
   <container size="0" static="false" init="">CH0</container>
 
+    <container size="1" init="0">temperature_bias</container>
+<container size="0">CH2_cal</container>
+<container size="1" init="0">humidity_bias</container>
+<container size="0">CH3_cal</container>
     </data-containers>
     <input>
         <bluetooth mode="notification" rate="1" subscribeOnStart="false" id="Sense">
@@ -60,52 +78,89 @@
     </output>
     <views>
         <view label="Graph">
-            <graph label="Temperature" aspectRatio="2.5" style="lines" lineWidth="1" color="orange" partialUpdate="false" history="1" labelX="t" labelY="T" labelZ="" unitX="s" unitY="&#xB0;C" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Temperature" aspectRatio="2.5" style="lines" lineWidth="1" color="orange" partialUpdate="false" labelX="t" labelY="T" labelZ="" unitX="s" unitY="&#xB0;C" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
-                <input axis="y">CH2</input>
+                <input axis="y">CH2_cal</input>
             </graph>
-            <graph label="Humidity" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" history="1" labelX="t" labelY="rH" labelZ="" unitX="s" unitY="%" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Humidity" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" labelX="t" labelY="rH" labelZ="" unitX="s" unitY="%" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
-                <input axis="y">CH3</input>
+                <input axis="y">CH3_cal</input>
             </graph>
         </view>
         
         <view label="Temperature">
-            <graph label="Temperature" aspectRatio="2.5" style="lines" lineWidth="1" color="orange" partialUpdate="false" history="1" labelX="t" labelY="T" labelZ="" unitX="s" unitY="&#xB0;C" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Temperature" aspectRatio="2.5" style="lines" lineWidth="1" color="orange" partialUpdate="false" labelX="t" labelY="T" labelZ="" unitX="s" unitY="&#xB0;C" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
-                <input axis="y">CH2</input>
+                <input axis="y">CH2_cal</input>
             </graph>
             <value label="Temperature" size="2" precision="3" unit="&#xB0;C" color="orange">
-                <input>CH2</input>
+                <input>CH2_cal</input>
             </value>
         </view>
         
         <view label="Humidity">
-            <graph label="Humidity" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" history="1" labelX="t" labelY="rH" labelZ="" unitX="s" unitY="%" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
+            <graph label="Humidity" aspectRatio="2.5" style="lines" lineWidth="1" color="blue" partialUpdate="false" labelX="t" labelY="rH" labelZ="" unitX="s" unitY="%" unitZ="" logX="false" logY="false" logZ="false" xPrecision="3" yPrecision="3" zPrecision="3" scaleMinX="auto" scaleMaxX="auto" scaleMinY="auto" scaleMaxY="auto" scaleMinZ="auto" scaleMaxZ="auto" minX="0" maxX="0" minY="0" maxY="0" minZ="0" maxZ="0" mapWidth="0">
                 <input axis="x">CH1</input>
-                <input axis="y">CH3</input>
+                <input axis="y">CH3_cal</input>
             </graph>
             <value label="Humidity" size="2" precision="3" unit="%" color="blue">
-                <input>CH3</input>
+                <input>CH3_cal</input>
             </value>
         </view>
         
         <view label="Simple">
             <value label="Temperature" size="2" precision="3" unit="&#xB0;C" color="orange">
-                <input>CH2</input>
+                <input>CH2_cal</input>
             </value>
             <value label="Humidity" size="2" precision="3" unit="%" color="blue">
-                <input>CH3</input>
+                <input>CH3_cal</input>
             </value>
         </view>
         
+    <view label="Setup">
+    <info label="Place calibrated temperature and humidity references beside the sensor in controlled airflow. Shield from lamp radiation and board heating; avoid condensation. Allow several sensor response times after each change. Enter indicated-minus-reference biases; do not clamp readings outside 0&#x2013;100% RH, investigate them. A fall in relative humidity during warming does not by itself show water loss. Temperature and humidity are acquired sequentially and describe the local sensor environment."/>
+    <info label="Record a stable reference before and after each trial. The BLE interval is at least 50 ms; unavailable sensor readings remain NaN. Fast signals need an independently verified bandwidth and anti-alias filtering."/>
+</view>
+    <view label="Calibration">
+    <info label="Enter coefficients measured on this apparatus. Defaults are nominal, not a calibration. Changing a coefficient recalculates the entire trace; original readings and settings are exported separately. Clearing data restores the defaults."/>
+    <edit label="Temperature bias" unit="&#xB0;C" default="0" decimal="true" signed="true">
+        <output>temperature_bias</output>
+    </edit>
+    <edit label="Humidity bias" unit="%" default="0" decimal="true" signed="true">
+        <output>humidity_bias</output>
+    </edit>
+</view>
     </views>
-    <analysis sleep="0" onUserInput="false"/>
+    <analysis sleep="0.05" onUserInput="false">
+    <formula formula="[1_]-[2]">
+        <input clear="false">CH2</input>
+        <input clear="false">temperature_bias</input>
+        <output clear="true">CH2_cal</output>
+    </formula>
+    <formula formula="[1_]-[2]">
+        <input clear="false">CH3</input>
+        <input clear="false">humidity_bias</input>
+        <output clear="true">CH3_cal</output>
+    </formula>
+</analysis>
     <export>
         <set name="Raw data">
             <data name="Time t (s)">CH1</data>
             <data name="Temperature (&#xB0;C)">CH2</data>
             <data name="relative Humidity (%)">CH3</data>
         </set>
+    <set name="Calibrated temperature and humidity">
+    <data name="Time t (s)">CH1</data>
+    <data name="Temperature (&#xB0;C)">CH2_cal</data>
+    <data name="Relative humidity (%)">CH3_cal</data>
+</set>
+    <set name="Calibration settings">
+    <data name="Temperature bias (&#xB0;C)">temperature_bias</data>
+    <data name="Humidity bias (%)">humidity_bias</data>
+</set>
+    <set name="Timing">
+    <data name="Device time (s)">CH1</data>
+    <data name="BLE receive time (s)">CH0</data>
+</set>
     </export>
 </phyphox>

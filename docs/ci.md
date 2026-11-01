@@ -17,7 +17,23 @@ make check-generated
 
 Validation covers the protocol catalog, source inventory, XInclude safety, core
 XML, the expanded core experiments, the committed generated artifacts, and the
-astronomy XML and locales.
+astronomy XML and locales. It also runs `scripts/check_experiment_math.py`:
+known-input fixtures exercise the actual XML analysis for calibration, optical
+ratios, decoder selection, missing values, complete-event timing and independent
+sensor clocks. The focused interpreter covers the modules used by the fixtures;
+it does not replace Android/iOS import or hardware testing.
+
+Validation also runs `scripts/check_drafts.py`: all additional drafts must have
+a companion and metadata entry, valid container/export references and a real
+declared acquisition path. Five numerical fixture groups exercise their XML,
+including native button replacement, empty inputs, IEEE nonfinite values,
+calibration gates and repeated capture/clear cycles. Full official RelaxNG and
+Schematron validation is an additional explicit check documented in
+[the draft validation notes](drafts/validation.md); those schemas and lxml are
+not part of the default dependency set.
+
+Finally, `scripts/check_doc_links.py` fails if a tracked Markdown file links to
+a path the repository does not contain, such as the gitignored `output/`.
 
 `make check-generated` rebuilds in a temporary directory and compares bytes. CI
 never runs `make build`, so a job can fail on drift but can never rewrite a
@@ -70,7 +86,10 @@ and nothing else from the repository.
 refuses tags whose commit is not on `main`, reruns `make validate` and
 `make check-generated`, then publishes a GitHub release for that tag with the
 `make bundle` ZIP of the seven core experiments, a ZIP of the astronomy
-collection, and every `.phyphox` file as a separate asset. Only this job gets
+collection, the `make bundle-drafts` ZIP of the twenty-eight drafts (XML, licences
+and attribution notes, not the companion collection), and every core, astronomy and
+draft `.phyphox` file as a separate asset; it fails if two of those files share
+a name. Only this job gets
 `contents: write`.
 
 To cut a release from a commit that is already on `main`:

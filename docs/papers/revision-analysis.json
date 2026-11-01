@@ -1,0 +1,1375 @@
+{
+  "inputs": {},
+  "papers": {
+    "albedo": {
+      "inputs": {
+        "astronomy/albedo_phone.example.csv": {
+          "sha256": "2e9f0a96379381a636001bf6866c9d46947fb0845a7580a6655837403b938c13",
+          "rows": 601,
+          "columns": [
+            "t (s)",
+            "Relative light level (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "astronomy/albedo_sensortag.example.csv": {
+          "sha256": "6b3a8d309c8901d0b25c20b241b686a8ffed9e9217a930383aab6269f3a19a6f",
+          "rows": 76,
+          "columns": [
+            "t (s)",
+            "Relative light level (a.u.)",
+            "Raw OPT3001 word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/rgb-filter-transmission.example.csv": {
+          "sha256": "9788ab9b8b4380dee7b3890253538cf103a35eca95fe218da85c4e71e92cb5e5",
+          "rows": 1201,
+          "columns": [
+            "device_t (s)",
+            "receive_t (s)",
+            "clear (counts)",
+            "red (counts)",
+            "green (counts)",
+            "blue (counts)",
+            "clear transmission (1)",
+            "red transmission (1)",
+            "green transmission (1)",
+            "blue transmission (1)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_optical.py",
+        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+      }
+    },
+    "transit-method": {
+      "inputs": {
+        "astronomy/transitmethode_owon.example.csv": {
+          "sha256": "dd3efd0211d246bb9e09fb25dd4c937ea9f8d5413ba8e8b5e75e23f71cfaca72",
+          "rows": 181,
+          "columns": [
+            "Time (s)",
+            "Relative Signal (a.u.)",
+            "Raw numeric field (a.u.)",
+            "Raw decimal code (a.u.)",
+            "Raw unit code (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "astronomy/transitmethode_phone.example.csv": {
+          "sha256": "e9f0f47f640d2bdf3f5d82d69bbe7000f78fdadf7947cf7821d652bd6055e098",
+          "rows": 901,
+          "columns": [
+            "t (s)",
+            "Relative Signal (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "astronomy/transitmethode_sensortag.example.csv": {
+          "sha256": "ed872470593e791c12018af2da31f61d3b70f200feda1bb4f83f10dc39e1147d",
+          "rows": 113,
+          "columns": [
+            "t (s)",
+            "Relative Signal (a.u.)",
+            "Raw OPT3001 word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/nano-transit.example.csv": {
+          "sha256": "7680ae787ddbe2c68c88b30543e825f1f20e753ef375b1e453a91e5ace0f34b0",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/exomoon-photometry.example.csv": {
+          "sha256": "cd879411089ba6ae212466cf485c286463caaaedfd32f4ca5e5d899da6b41636",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/starspot-crossing.example.csv": {
+          "sha256": "5d7c62fb5974d7b0b49c53a99bb21bb06bd1c94a2e3d91a5eda4e3677728dcb7",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/eclipsing-binary.example.csv": {
+          "sha256": "b19a37f2d21abbfb250c5b1640731410e08503317afcd177902886d881dd09e4",
+          "rows": 2401,
+          "columns": [
+            "receive_time",
+            "device_time",
+            "clear",
+            "red",
+            "green",
+            "blue",
+            "normalized",
+            "phase"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_optical.py",
+        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+      }
+    },
+    "owon-interface": {
+      "inputs": {
+        "astronomy/owon_digital_multimeter-debug.example.csv": {
+          "sha256": "43094d8e347f0edba1928225eab64f1c665c0d1ba3a64b394ddbef5f3bc2b4ce",
+          "rows": 121,
+          "columns": [
+            "Time (s)",
+            "y",
+            "Raw numeric field (a.u.)",
+            "Raw decimal code (a.u.)",
+            "Raw unit code (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "core/analog_input_plot_v1-2.example.csv": {
+          "sha256": "c1fcdd51c9ba255e33f799cefeef7b987b31a0f4bc125eb15215788330b3a65c",
+          "rows": 1201,
+          "columns": [
+            "Time t (s)",
+            "Analog Input A0",
+            "Analog Input A1",
+            "Analog Input A2",
+            "Voltage at A0 (mV)",
+            "Voltage at A1 (mV)",
+            "Voltage at A2 (mV)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_optical.py",
+        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+      }
+    },
+    "ir-distance": {
+      "inputs": {
+        "astronomy/ir-dist_habitable.example.csv": {
+          "sha256": "190b5a2e9c01500e7834032fa8adb469969b4d66396643bb076b4a9d16f4c989",
+          "rows": 101,
+          "columns": [
+            "Time (s)",
+            "d (a.u.)",
+            "T_IR (°C)",
+            "T_amb (°C)",
+            "Raw object word (a.u.)",
+            "Raw die word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/illuminance-distance-manual_observations.example.csv": {
+          "sha256": "783e248a446fac582df7f0c7873937b5ff7b4de67bbd89507a8ef2cdcdbd557f",
+          "rows": 12,
+          "columns": [
+            "Entered ruler distance (m)",
+            "Captured device time (s)",
+            "Captured receive time (s)",
+            "Captured clear signal (counts)",
+            "Background-corrected signal (counts)",
+            "Positive ruler distance (m)",
+            "Inverse square distance (1/m²)",
+            "Corrected signal times distance squared (count m²)",
+            "ln(distance / m)",
+            "ln(corrected signal / count)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_optical.py",
+        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+      }
+    },
+    "greenhouse": {
+      "inputs": {
+        "astronomy/greenhouse.example.csv": {
+          "sha256": "41bb88fff5836f474fc57152ddc0cdb88b102b9f3b03e126efe56d9b5e6f4b1a",
+          "rows": 601,
+          "columns": [
+            "Time (min)",
+            "Temperature 1 (°C)",
+            "Temperature 2 (°C)",
+            "Raw temperature 1 word (a.u.)",
+            "Raw temperature 2 word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/greenhouse-single.example.csv": {
+          "sha256": "7ca658a88b15b949ffa1895176f6167c1735a8652fee96134acc2bf4040e3dc3",
+          "rows": 301,
+          "columns": [
+            "Receive time (s)",
+            "Receive time (min)",
+            "Signed BMP280 packet count",
+            "Die temperature (°C)",
+            "Baseline corrected rise (K)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_thermal.py",
+        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+      }
+    },
+    "mission-to-mars": {
+      "inputs": {
+        "astronomy/missiontomars_phone.example.csv": {
+          "sha256": "92c59bbe440467ba8d574a14397e9ad42fb4a86ec58fd25dc605008bd84affb2",
+          "rows": 1201,
+          "columns": [
+            "Time (s)",
+            "Pressure (hPa)"
+          ],
+          "missing_cells": 0
+        },
+        "astronomy/missiontomars_sensortag.example.csv": {
+          "sha256": "bce5a2f1138d9540354865880e773483db21d9c583828e41b125e0946d96d701",
+          "rows": 1201,
+          "columns": [
+            "Time (s)",
+            "Pressure (hPa)",
+            "Raw pressure word (a.u.)",
+            "Raw temperature word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/pressure-boiling.example.csv": {
+          "sha256": "f21f15d6b97a47fe1b31644b7c42d1381bd573be1f9fb3a8869b2f3f289f4cb1",
+          "rows": 15,
+          "columns": [
+            "Observation ID",
+            "Absolute pressure (kPa)",
+            "Liquid temperature (degC)",
+            "Observation code (0 liquid, 1 sustained boiling, 2 uncertain)",
+            "Pair checked (1=yes)",
+            "Pressure uncertainty (kPa)",
+            "Temperature uncertainty (K)",
+            "Checked liquid temperature (K)",
+            "Checked absolute pressure (kPa)",
+            "Observed sustained-boiling pressure (kPa)"
+          ],
+          "missing_cells": 10
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_thermal.py",
+        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+      }
+    },
+    "pt-star": {
+      "inputs": {
+        "astronomy/pt-star.example.csv": {
+          "sha256": "4b55566a4b87bfb1f8285874cdef04591a101c421417224229fa0141c5bef864",
+          "rows": 181,
+          "columns": [
+            "Time (min)",
+            "Pressure (hPa)",
+            "Temperature (°C)",
+            "Raw pressure word (a.u.)",
+            "Raw temperature word (a.u.)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_thermal.py",
+        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+      }
+    },
+    "tidal-locking": {
+      "inputs": {
+        "astronomy/tidal-locking_bmp280.example.csv": {
+          "sha256": "76d830aab94355b13867a93a3eefa83aeb10449e82bab9851d6886000898848e",
+          "rows": 301,
+          "columns": [
+            "Time (s)",
+            "Temperature 1 (°C)",
+            "Temperature 2 (°C)",
+            "Raw temperature 1 word (a.u.)",
+            "Raw temperature 2 word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "astronomy/tidal-locking_opt3001.example.csv": {
+          "sha256": "65b9177ad47be72099418ac61e17e2a4277760d397d55828d6e5575ce87d06a4",
+          "rows": 376,
+          "columns": [
+            "Time (s)",
+            "Illuminance 1 (lx)",
+            "Illuminance 2 (lx)",
+            "Raw light 1 word (a.u.)",
+            "Raw light 2 word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "astronomy/tidal-locking_tmp007.example.csv": {
+          "sha256": "1611b9a47ad8d4e9e944dcf486e656d3b16ad2ff426d5a2affbf0d9ea6a065ba",
+          "rows": 1001,
+          "columns": [
+            "Time (s)",
+            "Ambient temperature 1 (°C)",
+            "Object temperature 1 (°C)",
+            "Ambient temperature 2 (°C)",
+            "Object temperature 2 (°C)",
+            "Raw ambient 1 word (a.u.)",
+            "Raw object 1 word (a.u.)",
+            "Raw ambient 2 word (a.u.)",
+            "Raw object 2 word (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/seasons-obliquity_observations.example.csv": {
+          "sha256": "2bb981bdbfc45dc11c76d8019bd3c9cdbcdd93c3a597fc7d638ac69111843ec3",
+          "rows": 12,
+          "columns": [
+            "row_device_time",
+            "row_receive_time",
+            "row_clear",
+            "row_red",
+            "row_green",
+            "row_blue",
+            "row_trial",
+            "row_latitude",
+            "row_orbit_position",
+            "row_obliquity",
+            "row_source_distance",
+            "row_enabled",
+            "row_dark",
+            "row_baseline",
+            "row_relative"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_astro_thermal.py",
+        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+      }
+    },
+    "accelerometer": {
+      "inputs": {
+        "core/accelerometer_plot_v1-2.example.csv": {
+          "sha256": "70a9bf8624ec322f7b4f553aeb18c364c0b597be5c2fab34e08154721c6e8cad",
+          "rows": 1201,
+          "columns": [
+            "Time t (s)",
+            "Acceleration x (g)",
+            "Acceleration y (g)",
+            "Acceleration z (g)",
+            "Absolute Acceleration (g)",
+            "Acceleration x (m/s²)",
+            "Acceleration y (m/s²)",
+            "Acceleration z (m/s²)",
+            "Absolute Acceleration (m/s²)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/cc2541-accelerometer.example.csv": {
+          "sha256": "43cff6176549a62a5471cee1bcd449e926ae797e5ec45fc01091dd32cbc6a109",
+          "rows": 601,
+          "columns": [
+            "Receive time (s)",
+            "Signed packet x (count)",
+            "Signed packet y (count)",
+            "Signed packet z (count)",
+            "Bias corrected x (m/s²)",
+            "Bias corrected y (m/s²)",
+            "Bias corrected z (m/s²)",
+            "Vector magnitude (m/s²)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_core.py",
+        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+      }
+    },
+    "gyroscope": {
+      "inputs": {
+        "core/gyroscope_plot_v1-2.example.csv": {
+          "sha256": "298e2fe92888f8db9370c8e02c9c79bd1cf02869adc041e05a7e7b5cfe0ba39f",
+          "rows": 1201,
+          "columns": [
+            "Time t (s)",
+            "Angular Velocity x (deg/s)",
+            "Angular Velocity y (deg/s)",
+            "Angular Velocity z (deg/s)",
+            "Absolute Angular Velocity (deg/s)",
+            "Angular Velocity x (rad/s)",
+            "Angular Velocity y (rad/s)",
+            "Angular Velocity z (rad/s)",
+            "Absolute Angular Velocity (rad/s)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/cc2541-gyroscope.example.csv": {
+          "sha256": "3b826ee4328391f51087e93dff1bb126091fcfbf96218e9479049f455766392b",
+          "rows": 601,
+          "columns": [
+            "Receive time (s)",
+            "Signed packet x (count)",
+            "Signed packet y (count)",
+            "Signed packet z (count)",
+            "Bias corrected x (rad/s)",
+            "Bias corrected y (rad/s)",
+            "Bias corrected z (rad/s)",
+            "Vector magnitude (rad/s)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_core.py",
+        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+      }
+    },
+    "magnetometer": {
+      "inputs": {
+        "core/magnetometer_plot_v1-2.example.csv": {
+          "sha256": "80e748cff3b78817371533d28aab080526dd56b1bec7c6b27ae393c050bac790",
+          "rows": 1201,
+          "columns": [
+            "Time t (s)",
+            "Magnetometer x (µT)",
+            "Magnetometer y (µT)",
+            "Magnetometer z (µT)",
+            "Absolute magnetic field (µT)"
+          ],
+          "missing_cells": 16
+        },
+        "drafts/magnetic-current.example.csv": {
+          "sha256": "204095e9c087ab14b92ce9694ad441d115c34802d8d704c61cf2735427de56e6",
+          "rows": 601,
+          "columns": [
+            "mag_t",
+            "bx",
+            "by",
+            "bz",
+            "mag_accuracy",
+            "current"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_core.py",
+        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+      }
+    },
+    "pressure": {
+      "inputs": {
+        "core/pressure_plot_v1-2.example.csv": {
+          "sha256": "ac48508efbb5db93e2f61e59df02d18570e68d4254322ed39c65614be5ba7af9",
+          "rows": 3601,
+          "columns": [
+            "Time t (s)",
+            "Pressure (kPa)",
+            "Pressure (hPa)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/pressure-boiling.example.csv": {
+          "sha256": "f21f15d6b97a47fe1b31644b7c42d1381bd573be1f9fb3a8869b2f3f289f4cb1",
+          "rows": 15,
+          "columns": [
+            "Observation ID",
+            "Absolute pressure (kPa)",
+            "Liquid temperature (degC)",
+            "Observation code (0 liquid, 1 sustained boiling, 2 uncertain)",
+            "Pair checked (1=yes)",
+            "Pressure uncertainty (kPa)",
+            "Temperature uncertainty (K)",
+            "Checked liquid temperature (K)",
+            "Checked absolute pressure (kPa)",
+            "Observed sustained-boiling pressure (kPa)"
+          ],
+          "missing_cells": 10
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_core.py",
+        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+      }
+    },
+    "temperature-humidity": {
+      "inputs": {
+        "core/temperature_plot_v1-2.example.csv": {
+          "sha256": "9019f4e59b9fc19bf3acb6189d0dd6c00004964735cefd3678ecc1f58ae3245f",
+          "rows": 3601,
+          "columns": [
+            "Time t (s)",
+            "Temperature (°C)",
+            "relative Humidity (%)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/sensortag-environmental_humidity.example.csv": {
+          "sha256": "d82ef016174f7e3918d27231c1600a0a2c4187f93a402255524a5536a1a2d747",
+          "rows": 48,
+          "columns": [
+            "Receive time (s)",
+            "Relative humidity (%)",
+            "HDC1000 temperature (°C)",
+            "humidity_raw (packet count)",
+            "hdc_temperature_raw (packet count)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/cc2541-humidity.example.csv": {
+          "sha256": "55bda0dca772a44e5d6969f2e7e80b84552de0d53739ed5491fd6688baee351b",
+          "rows": 61,
+          "columns": [
+            "Receive time (s)",
+            "Unsigned temperature packet word",
+            "Unsigned humidity packet word",
+            "Unbounded RH equation (%)",
+            "Domain checked RH (%)",
+            "SHT21 temperature (°C)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_core.py",
+        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+      }
+    },
+    "light-rgb": {
+      "inputs": {
+        "core/light_plot_v1-2.example.csv": {
+          "sha256": "12ee7cd6bfe715a2f60a90950befa101f5c7edaa4013dc13574a1aba14509ce4",
+          "rows": 1201,
+          "columns": [
+            "Time t (s)",
+            "Relative light level (a.u.)",
+            "Red (a.u.)",
+            "Green (a.u.)",
+            "Blue (a.u.)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/rgb-filter-transmission.example.csv": {
+          "sha256": "9788ab9b8b4380dee7b3890253538cf103a35eca95fe218da85c4e71e92cb5e5",
+          "rows": 1201,
+          "columns": [
+            "device_t (s)",
+            "receive_t (s)",
+            "clear (counts)",
+            "red (counts)",
+            "green (counts)",
+            "blue (counts)",
+            "clear transmission (1)",
+            "red transmission (1)",
+            "green transmission (1)",
+            "blue transmission (1)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_core.py",
+        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+      }
+    },
+    "analog-inputs": {
+      "inputs": {
+        "core/analog_input_plot_v1-2.example.csv": {
+          "sha256": "c1fcdd51c9ba255e33f799cefeef7b987b31a0f4bc125eb15215788330b3a65c",
+          "rows": 1201,
+          "columns": [
+            "Time t (s)",
+            "Analog Input A0",
+            "Analog Input A1",
+            "Analog Input A2",
+            "Voltage at A0 (mV)",
+            "Voltage at A1 (mV)",
+            "Voltage at A2 (mV)"
+          ],
+          "missing_cells": 0
+        },
+        "drafts/uv-transmission_observations.example.csv": {
+          "sha256": "c2f43c473dead59195c3dd7025efbe6742583425352a66caea12ae681a404797",
+          "rows": 6,
+          "columns": [
+            "Observation ID",
+            "Unfiltered reference (count)",
+            "Covered detector dark (count)",
+            "Paired linear readings checked (1=yes)",
+            "Measured ADC voltage gain (V/count)",
+            "Measured ADC voltage offset (V)",
+            "ADC calibration checked (1=yes)",
+            "Measured detector irradiance gain (W/m2/V)",
+            "Irradiance calibration checked (1=yes)",
+            "Captured A0 (count)",
+            "Captured device time (s)",
+            "Captured receive time (s)",
+            "UV detector weighted transmission",
+            "Calibrated sample voltage (V)",
+            "Calibrated dark voltage (V)",
+            "Calibrated detector-band irradiance (W/m2)"
+          ],
+          "missing_cells": 0
+        }
+      },
+      "analysis": {
+        "file": "analysis/revision_core.py",
+        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+      }
+    }
+  },
+  "metrics": {
+    "albedo": {
+      "auxiliary_dataset": "drafts/rgb-filter-transmission.example.csv",
+      "channel_order": [
+        "clear (counts)",
+        "red (counts)",
+        "green (counts)",
+        "blue (counts)"
+      ],
+      "dark_window_s": [
+        56,
+        60
+      ],
+      "reference_window_s": [
+        4,
+        6
+      ],
+      "late_reference_window_s": [
+        44,
+        46
+      ],
+      "dark_counts": [
+        13.125,
+        7.0375,
+        7.7,
+        4.55
+      ],
+      "reference_counts": [
+        1798.625,
+        927.2,
+        999.35,
+        558.7
+      ],
+      "later_reference_change_percent": [
+        1.4728690519785441,
+        1.5248142834302896,
+        1.4023506535985735,
+        1.7013814180646096
+      ],
+      "selected_windows": {
+        "red": {
+          "device_window_s": [
+            14,
+            16
+          ],
+          "n": 39,
+          "mean_counts": [
+            1228.948717948718,
+            819.4615384615385,
+            249.35897435897436,
+            95.17948717948718
+          ],
+          "ratios": [
+            0.6809429952107073,
+            0.8829136576001939,
+            0.243693817737079,
+            0.16354685045472736
+          ]
+        },
+        "green": {
+          "device_window_s": [
+            24,
+            26
+          ],
+          "n": 40,
+          "mean_counts": [
+            1126.425,
+            214.375,
+            791.275,
+            141.1
+          ],
+          "ratios": [
+            0.6235228227387286,
+            0.22532704821159305,
+            0.7901729440830938,
+            0.24641342596769822
+          ]
+        },
+        "blue": {
+          "device_window_s": [
+            34,
+            36
+          ],
+          "n": 40,
+          "mean_counts": [
+            928.225,
+            163.525,
+            223.05,
+            477.725
+          ],
+          "ratios": [
+            0.512517502100252,
+            0.17006507002839175,
+            0.21716331366913733,
+            0.8538753045204366
+          ]
+        }
+      },
+      "method": "Ratios of window means after covered-detector subtraction; fixed initial reference, device clock. Smooth transitions remain; no plateau-equilibrium assumption."
+    },
+    "transit-method": {
+      "nano-transit": {
+        "auxiliary_dataset": "drafts/nano-transit.example.csv",
+        "baseline_receive_windows_s": [
+          [
+            2,
+            15
+          ],
+          [
+            95,
+            118
+          ]
+        ],
+        "baseline_mean_clear_counts": 115.26256983240224,
+        "assumed_dark_counts": 10.0,
+        "states": {
+          "event1": {
+            "receive_windows_s": [
+              [
+                19,
+                21
+              ]
+            ],
+            "n": 40,
+            "mean_clear_counts": 111.3,
+            "conditional_depth": 0.03764462371298167
+          },
+          "event2": {
+            "receive_windows_s": [
+              [
+                49,
+                51
+              ]
+            ],
+            "n": 40,
+            "mean_clear_counts": 110.25,
+            "conditional_depth": 0.04761967943954995
+          },
+          "event3": {
+            "receive_windows_s": [
+              [
+                79,
+                81
+              ]
+            ],
+            "n": 39,
+            "mean_clear_counts": 110.64102564102564,
+            "conditional_depth": 0.04390491509693299
+          }
+        },
+        "median_receive_spacing_s": 0.050426219999997635,
+        "method": "Raw clear-channel means on receive clock; dark fixed at example's entered 10 counts, not independently measured. Device clock remains separate.",
+        "mean_conditional_depth": 0.04305640608315487,
+        "conditional_projected_radius_ratio": 0.2075003761036468
+      },
+      "exomoon-photometry": {
+        "auxiliary_dataset": "drafts/exomoon-photometry.example.csv",
+        "baseline_receive_windows_s": [
+          [
+            2,
+            15
+          ],
+          [
+            95,
+            118
+          ]
+        ],
+        "baseline_mean_clear_counts": 115.29230769230769,
+        "assumed_dark_counts": 10.0,
+        "states": {
+          "planet": {
+            "receive_windows_s": [
+              [
+                22,
+                33
+              ],
+              [
+                77,
+                88
+              ]
+            ],
+            "n": 436,
+            "mean_clear_counts": 104.99311926605505,
+            "conditional_depth": 0.09781520276248125
+          },
+          "separated": {
+            "receive_windows_s": [
+              [
+                37,
+                48
+              ],
+              [
+                62,
+                73
+              ]
+            ],
+            "n": 437,
+            "mean_clear_counts": 102.02517162471396,
+            "conditional_depth": 0.1260028995315009
+          },
+          "overlap": {
+            "receive_windows_s": [
+              [
+                52,
+                58
+              ]
+            ],
+            "n": 119,
+            "mean_clear_counts": 103.5798319327731,
+            "conditional_depth": 0.11123771542515312
+          }
+        },
+        "median_receive_spacing_s": 0.050347950000002584,
+        "method": "Raw clear-channel means on receive clock; dark fixed at example's entered 10 counts, not independently measured. Device clock remains separate.",
+        "extra_depth": 0.028187696769019648,
+        "overlap_brightening": 0.014765184106347775
+      },
+      "starspot-crossing": {
+        "auxiliary_dataset": "drafts/starspot-crossing.example.csv",
+        "baseline_receive_windows_s": [
+          [
+            2,
+            15
+          ],
+          [
+            95,
+            118
+          ]
+        ],
+        "baseline_mean_clear_counts": 115.21398601398602,
+        "assumed_dark_counts": 10.0,
+        "states": {
+          "adjacent": {
+            "receive_windows_s": [
+              [
+                45,
+                49
+              ],
+              [
+                55,
+                59
+              ]
+            ],
+            "n": 158,
+            "mean_clear_counts": 100.09493670886076,
+            "conditional_depth": 0.143698094501576
+          },
+          "crossing": {
+            "receive_windows_s": [
+              [
+                50,
+                54
+              ]
+            ],
+            "n": 80,
+            "mean_clear_counts": 103.5,
+            "conditional_depth": 0.1113348753123837
+          }
+        },
+        "median_receive_spacing_s": 0.05024744999999342,
+        "method": "Raw clear-channel means on receive clock; dark fixed at example's entered 10 counts, not independently measured. Device clock remains separate.",
+        "anomaly": 0.0323632191891923
+      },
+      "eclipsing-binary": {
+        "auxiliary_dataset": "drafts/eclipsing-binary.example.csv",
+        "baseline_receive_windows_s": [
+          [
+            2,
+            12
+          ],
+          [
+            40,
+            44
+          ],
+          [
+            100,
+            104
+          ]
+        ],
+        "baseline_mean_clear_counts": 217.1488764044944,
+        "assumed_dark_counts": 10.0,
+        "states": {
+          "primary": {
+            "receive_windows_s": [
+              [
+                19,
+                21
+              ],
+              [
+                49,
+                51
+              ],
+              [
+                79,
+                81
+              ],
+              [
+                109,
+                111
+              ]
+            ],
+            "n": 158,
+            "mean_clear_counts": 152.98101265822785,
+            "conditional_depth": 0.3097668925848652
+          },
+          "secondary": {
+            "receive_windows_s": [
+              [
+                34,
+                36
+              ],
+              [
+                64,
+                66
+              ],
+              [
+                94,
+                96
+              ]
+            ],
+            "n": 118,
+            "mean_clear_counts": 195.61016949152543,
+            "conditional_depth": 0.10397694299297512
+          }
+        },
+        "median_receive_spacing_s": 0.05036580000000157,
+        "method": "Raw clear-channel means on receive clock; dark fixed at example's entered 10 counts, not independently measured. Device clock remains separate."
+      }
+    },
+    "owon-interface": {
+      "auxiliary_dataset": "core/analog_input_plot_v1-2.example.csv",
+      "display_mV_per_count": 3.226,
+      "maximum_scale_residual_mV": 4.547473508864641e-13,
+      "ideal_3V3_10bit_mV_per_bin": 3.22265625,
+      "Owon_example_V_per_digit": 0.001,
+      "nominal_bin_ratio_ADC_to_Owon": 3.226,
+      "conditional_1V_B35_specification_limit_mV": 7.0,
+      "method": "Exact conversion consistency across all three raw-count channels; numerical resolution comparison only; B35 manufacturer limit at 1 V on 6.000 V range."
+    },
+    "ir-distance": {
+      "auxiliary_dataset": "drafts/illuminance-distance-manual_observations.example.csv",
+      "distance_range_m": [
+        0.2,
+        0.7
+      ],
+      "n_captures": 12,
+      "background_counts": 10,
+      "maximum_subtraction_residual_counts": 0.0,
+      "log_log_fit": {
+        "slope": -1.9860526273556387,
+        "intercept": 4.641837360307066,
+        "residual_rms": 0.01590749421462647
+      },
+      "outward_return_log_log_fits": [
+        {
+          "slope": -1.9873333096740449,
+          "intercept": 4.641078641786131,
+          "residual_rms": 0.016306891719819073
+        },
+        {
+          "slope": -1.9847719450372325,
+          "intercept": 4.642596078828001,
+          "residual_rms": 0.015469815204413978
+        }
+      ],
+      "signal_times_r2_mean_count_m2": 102.48166666666667,
+      "signal_times_r2_range_count_m2": [
+        100.35,
+        105.35
+      ],
+      "signal_times_r2_relative_sample_sd_percent": 1.7770862345033003,
+      "endpoint_power_exponent": -1.9838510055216039,
+      "method": "OLS ln(background-corrected clear counts) against ln(entered ruler distance), all 12 captures; each direction also fit separately. No interpolation or clock alignment with IR data; fit scatter is not total uncertainty."
+    },
+    "greenhouse": {
+      "related_datasets": [
+        "drafts/greenhouse-single.example.csv"
+      ],
+      "auxiliary_windows_s": {
+        "baseline": [
+          0,
+          60
+        ],
+        "late_heating": [
+          210,
+          240
+        ]
+      },
+      "auxiliary_window_rule": "receive time, lower inclusive/upper exclusive; no clock alignment to paired run",
+      "baseline_die_C": 22.700819672131146,
+      "late_heating_die_C": 28.035172413793102,
+      "late_heating_rise_K": 5.334352741661956,
+      "mean_displayed_rise_K": 6.035172413793103,
+      "display_reference_C": 22.0,
+      "display_reference_minus_measured_baseline_K": -0.7008196721311464,
+      "switch_off_step_K": 2.6099999999999994,
+      "switch_off_times_s": [
+        239.003618,
+        240.003464
+      ],
+      "note": "A finite-capacitance thermal model is continuous across a finite power step; do not fit through the observed jump."
+    },
+    "mission-to-mars": {
+      "related_datasets": [
+        "drafts/pressure-boiling.example.csv"
+      ],
+      "selection": "checked pairs with observation code 1, sustained boiling; no time-series alignment",
+      "all_pressure_range_kPa": [
+        5.03909921,
+        101.182685
+      ],
+      "sustained_boiling": [
+        {
+          "observation_id": 2,
+          "pressure_kPa": 90.0428352,
+          "liquid_temperature_C": 96.600776,
+          "saturation_temperature_C": 96.70010344593902,
+          "observed_minus_saturation_K": -0.09932744593902498,
+          "combined_standard_uncertainty_K": 0.20231135276145054
+        },
+        {
+          "observation_id": 5,
+          "pressure_kPa": 59.9971377,
+          "liquid_temperature_C": 85.6195599,
+          "saturation_temperature_C": 85.9242889551906,
+          "observed_minus_saturation_K": -0.3047290551905917,
+          "combined_standard_uncertainty_K": 0.20452116188681632
+        },
+        {
+          "observation_id": 8,
+          "pressure_kPa": 39.9220823,
+          "liquid_temperature_C": 75.3506476,
+          "saturation_temperature_C": 75.80916307896678,
+          "observed_minus_saturation_K": -0.458515478966774,
+          "combined_standard_uncertainty_K": 0.2088618870003042
+        },
+        {
+          "observation_id": 11,
+          "pressure_kPa": 25.1380293,
+          "liquid_temperature_C": 65.0945137,
+          "saturation_temperature_C": 65.0849456914865,
+          "observed_minus_saturation_K": 0.009568008513497261,
+          "combined_standard_uncertainty_K": 0.218905480301021
+        },
+        {
+          "observation_id": 14,
+          "pressure_kPa": 10.1251024,
+          "liquid_temperature_C": 46.0000825,
+          "saturation_temperature_C": 46.048989633035376,
+          "observed_minus_saturation_K": -0.048907133035356765,
+          "combined_standard_uncertainty_K": 0.2782951388120381
+        }
+      ],
+      "residual_rms_K": 0.251175491437721,
+      "triple_point_pressure_kPa": 0.6116570697405119,
+      "representative_Mars_pressure_kPa": 0.636,
+      "conditional_Mars_saturation_temperature_C": 0.5483801538664466,
+      "lowest_observation_to_Mars_pressure_ratio": 7.923111965408805,
+      "BMP280_lower_limit_to_Mars_pressure_ratio": 47.16981132075472,
+      "uncertainty_note": "u(p)=0.1 kPa, u(T)=0.2 K treated as independent standard uncertainties; finite- difference sensitivity, no fitted calibration."
+    },
+    "pt-star": {
+      "datasets": [
+        "astronomy/pt-star.example.csv"
+      ],
+      "comparison_windows_s": {
+        "baseline": [
+          0,
+          30
+        ],
+        "compressed": [
+          55,
+          60
+        ],
+        "later_compressed": [
+          70,
+          85
+        ]
+      },
+      "comparison_window_rule": "original minute clock converted to seconds and rounded to 6 decimals, lower inclusive/upper exclusive",
+      "assumed_gamma": 1.4,
+      "pressure_ratio": 1.0746138337643774,
+      "conditional_isothermal_volume_ratio": 0.9305668404593259,
+      "conditional_reversible_adiabatic_volume_ratio": 0.9498977037433837,
+      "conditional_adiabatic_gas_rise_K": 6.1602894214848805,
+      "die_substitution_volume_ratio": 0.9349610580628634,
+      "die_substitution_p_over_T_change_percent": 6.9563262957593075,
+      "conditional_gas_cooling_at_fixed_V_n_K": 0.6959348434848448,
+      "observed_die_cooling_K": 0.0026666666666983474,
+      "note": "Only pressure and die temperature are observed; gas predictions assume initial gas temperature equals baseline die temperature. Path endpoints do not identify heat flow, leakage or piston motion."
+    },
+    "tidal-locking": {
+      "related_datasets": [
+        "drafts/seasons-obliquity_observations.example.csv"
+      ],
+      "selection": "enabled labeled observations at +/-60 deg; one value per geometry, distinct from thermal and lux records",
+      "relative_definition": "(clear-dark)/(baseline-dark)",
+      "groups": [
+        {
+          "tilt_deg": 0,
+          "orbital_label_deg": 0,
+          "south_relative": 0.522018349,
+          "north_relative": 0.513761468,
+          "north_minus_south": -0.008256880999999994
+        },
+        {
+          "tilt_deg": 0,
+          "orbital_label_deg": 180,
+          "south_relative": 0.188073394,
+          "north_relative": 0.188990826,
+          "north_minus_south": 0.0009174319999999958
+        },
+        {
+          "tilt_deg": 23.5,
+          "orbital_label_deg": 0,
+          "south_relative": 0.449541284,
+          "north_relative": 0.453211009,
+          "north_minus_south": 0.0036697250000000126
+        },
+        {
+          "tilt_deg": 23.5,
+          "orbital_label_deg": 180,
+          "south_relative": 0.104587156,
+          "north_relative": 0.111926606,
+          "north_minus_south": 0.007339449999999997
+        }
+      ],
+      "max_relative_reconstruction_error": 2.018348599364117e-09,
+      "ideal_noon_north_south_ratio_for_declination_23_5_deg": 7.1010074172038316,
+      "note": "The labeled examples show almost symmetric hemispheres at both tilts and a strong orbital-label dependence already at zero tilt; unrecorded local orientation prevents attribution to obliquity."
+    },
+    "accelerometer": {
+      "auxiliary_dataset": "drafts/cc2541-accelerometer.example.csv",
+      "code_step_m_s2": 0.15322890616213,
+      "local_small_angle_code_step_degree": 0.8952465543785271,
+      "nominal_nano_step_m_s2": 0.0011964113,
+      "step_ratio_cc2541_to_nano": 128.07377041835863,
+      "flat_window_s": [
+        0,
+        8
+      ],
+      "flat_samples": 81,
+      "flat_x_unique_codes": 1,
+      "flat_x_sd_m_s2": 0.0,
+      "flat_mean_norm_m_s2": 9.76338308,
+      "method": "OLS corrected x versus packet x over complete record; no time alignment"
+    },
+    "gyroscope": {
+      "window_s": [
+        9,
+        29
+      ],
+      "actual_endpoints_s": [
+        9.01099968,
+        28.9880009
+      ],
+      "signed_z_integral_degree": 2.4672079294371354,
+      "norm_integral_degree": 742.912065277174,
+      "method": "trapezoidal integration on timestamps; indicated, uncorrected Nano rates",
+      "auxiliary_dataset": "drafts/cc2541-gyroscope.example.csv",
+      "cc2541_step_rad_s": 0.0001331580544842616,
+      "cc2541_final_z_mean_degree_s": 0.22583105445555238
+    },
+    "magnetometer": {
+      "auxiliary_dataset": "drafts/magnetic-current.example.csv",
+      "Bz_vs_derived_current_slope_uT_A": 49.99999999188895,
+      "Bz_vs_derived_current_intercept_uT": 30.00000000105915,
+      "maximum_affine_residual_uT": 5.2282171481010664e-08,
+      "current_error_per_1uT_background_shift_A": 0.02000000000324442,
+      "method": "OLS full record; current derives from Bz, not an independent reference"
+    },
+    "pressure": {
+      "auxiliary_dataset": "drafts/pressure-boiling.example.csv",
+      "observation_count": 15,
+      "pressure_range_kPa": [
+        5.03909921,
+        101.182685
+      ],
+      "outside_lps22hb_range_ids": [
+        11,
+        12,
+        13,
+        14,
+        15
+      ],
+      "boiling_observation_count": 5,
+      "boiling_outside_lps22hb_count": 2,
+      "method": "classify all observations against 26--126 kPa range, irrespective of phase"
+    },
+    "temperature-humidity": {
+      "hts_baseline_20_30s": {
+        "n": 198,
+        "mean_temperature_C": 22.788282828282828,
+        "mean_RH_percent": 46.842060606060606,
+        "mean_vapour_pressure_Pa": 1296.6297253431492,
+        "method": "paired-channel Magnus transform, then arithmetic mean"
+      },
+      "hts_warming_90_96s": {
+        "n": 119,
+        "mean_temperature_C": 25.12349579831933,
+        "mean_RH_percent": 40.40326050420168,
+        "mean_vapour_pressure_Pa": 1286.880601589451,
+        "method": "paired-channel Magnus transform, then arithmetic mean"
+      },
+      "hdc_baseline_0_25s": {
+        "n": 10,
+        "mean_temperature_C": 23.0029297,
+        "mean_RH_percent": 44.16137696,
+        "mean_vapour_pressure_Pa": 1238.4408607038317,
+        "method": "paired-channel Magnus transform, then arithmetic mean"
+      },
+      "hdc_pulse_45_60s": {
+        "n": 6,
+        "mean_temperature_C": 24.491729733333333,
+        "mean_RH_percent": 66.97387695,
+        "mean_vapour_pressure_Pa": 2054.1908831093497,
+        "method": "paired-channel Magnus transform, then arithmetic mean"
+      },
+      "sht_baseline_0_20s": {
+        "n": 20,
+        "mean_temperature_C": 22.50920653,
+        "mean_RH_percent": 46.41088868,
+        "mean_vapour_pressure_Pa": 1263.1745779963903,
+        "method": "paired-channel Magnus transform, then arithmetic mean"
+      },
+      "auxiliary_datasets": [
+        "drafts/sensortag-environmental_humidity.example.csv",
+        "drafts/cc2541-humidity.example.csv"
+      ],
+      "method": "independent receive clocks; paired T and RH within each sensor only",
+      "hts_warming_vapour_change_percent": -0.7518818644326575
+    },
+    "light-rgb": {
+      "auxiliary_dataset": "drafts/rgb-filter-transmission.example.csv",
+      "local_red_window_s": [
+        14.8,
+        15.2
+      ],
+      "local_red_RGB_transmissions": [
+        0.912026726125,
+        0.2309160305,
+        0.14903069462500002
+      ],
+      "local_blue_window_s": [
+        34.8,
+        35.2
+      ],
+      "local_blue_RGB_transmissions": [
+        0.17678173725000002,
+        0.20348282425,
+        0.777059773875
+      ],
+      "method": "mean dark/reference-normalized transmission in local device-time windows",
+      "max_reported_transmission_residual": 4.855233992628882e-09
+    },
+    "analog-inputs": {
+      "auxiliary_datasets": [
+        "drafts/uv-transmission_observations.example.csv"
+      ],
+      "valid_observations": [
+        {
+          "observation_id": 1,
+          "sample_count": 310.0,
+          "dark_count": 10.0,
+          "reference_count": 610.0,
+          "transmission": 0.5,
+          "uncorrected_count_ratio": 0.5081967213114754,
+          "reported_ratio_residual": 0.0
+        },
+        {
+          "observation_id": 2,
+          "sample_count": 250.0,
+          "dark_count": 10.0,
+          "reference_count": 610.0,
+          "transmission": 0.4,
+          "uncorrected_count_ratio": 0.4098360655737705,
+          "reported_ratio_residual": 0.0
+        },
+        {
+          "observation_id": 3,
+          "sample_count": 180.0,
+          "dark_count": 10.0,
+          "reference_count": 610.0,
+          "transmission": 0.2833333333333333,
+          "uncorrected_count_ratio": 0.29508196721311475,
+          "reported_ratio_residual": 3.3333330540230577e-10
+        },
+        {
+          "observation_id": 4,
+          "sample_count": 310.0,
+          "dark_count": 10.0,
+          "reference_count": 610.0,
+          "transmission": 0.5,
+          "uncorrected_count_ratio": 0.5081967213114754,
+          "reported_ratio_residual": 0.0
+        },
+        {
+          "observation_id": 5,
+          "sample_count": 250.0,
+          "dark_count": 10.0,
+          "reference_count": 610.0,
+          "transmission": 0.4,
+          "uncorrected_count_ratio": 0.4098360655737705,
+          "reported_ratio_residual": 0.0
+        },
+        {
+          "observation_id": 6,
+          "sample_count": 310.0,
+          "dark_count": 10.0,
+          "reference_count": 610.0,
+          "transmission": 0.5,
+          "uncorrected_count_ratio": 0.5081967213114754,
+          "reported_ratio_residual": 0.0
+        }
+      ],
+      "method": "independent sample-minus-dark / reference-minus-dark; checked linear pairs"
+    }
+  },
+  "generated_figures_sha256": {},
+  "derived_tables_sha256": {}
+}

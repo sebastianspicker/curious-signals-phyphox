@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "light-rgb",
+    "title": "Optical Response, Reference Substitution and Detector-Weighted Transmission",
+    "short_title": "Optical Response and Transmission",
+    "group": "Optics and radiometry",
+    "analysis_ids": [
+      "light-rgb",
+      "rgb-filter-transmission",
+      "puck-light",
+      "uv-transmission"
+    ],
+    "figures": [
+      "topic-figures/light-rgb-response.tex",
+      "topic-figures/light-rgb-reference-transfer.tex"
+    ],
+    "markdown": "companions/light-rgb.md"
+  },
+  {
+    "slug": "albedo",
+    "title": "From Reflected Light to Relative Reflectance",
+    "short_title": "Relative Reflectance",
+    "group": "Optics and radiometry",
+    "analysis_ids": [
+      "albedo"
+    ],
+    "figures": [
+      "figures/albedo.tex"
+    ],
+    "markdown": "companions/albedo.md"
+  },
+  {
+    "slug": "malus-law",
+    "title": "Settled-Angle Polarimetry: Scale, Floor and Angular Zero in Malus' Law",
+    "short_title": "Settled-Angle Polarimetry",
+    "group": "Optics and radiometry",
+    "analysis_ids": [
+      "malus-law"
+    ],
+    "figures": [
+      "figures/malus-law.tex"
+    ],
+    "markdown": "companions/malus-law.md"
+  },
+  {
+    "slug": "colour-temperature",
+    "title": "Indicative Colour Temperature and the Limits of a Transferred Sensor Matrix",
+    "short_title": "Indicative Colour Temperature",
+    "group": "Optics and radiometry",
+    "analysis_ids": [
+      "colour-temperature"
+    ],
+    "figures": [
+      "figures/colour-temperature.tex"
+    ],
+    "markdown": "companions/colour-temperature.md"
+  }
+]

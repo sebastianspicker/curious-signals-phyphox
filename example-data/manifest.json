@@ -1,0 +1,540 @@
+{
+  "schema_version": 1,
+  "source": "example-data/generate_example_data.py",
+  "seed": 20261026,
+  "example": true,
+  "note": "Example exports for software, UI, and analysis development.",
+  "datasets": [
+    {
+      "file": "astronomy/albedo_phone.example.csv",
+      "experiment": "albedo.phyphox",
+      "sensor": "Phone ambient-light sensor",
+      "acquisition_path": "phyphox phone light sensor",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 60.0,
+      "rows": 601,
+      "columns": [
+        "t (s)",
+        "Relative light level (a.u.)"
+      ],
+      "scenario": "Same reference/sample/dark sequence as the SensorTag run, recorded on a phone.",
+      "realism": [
+        "Phone light sensors are model-dependent; this trace assumes a 10 Hz sensor with 2% noise.",
+        "The values differ from the SensorTag run because the optical gain and spectral weighting differ.",
+        "Time jitter is small but nonzero because the phone supplies sensor timestamps.",
+        "The two files are alternative runs, not simultaneous measurements."
+      ],
+      "example": true
+    },
+    {
+      "file": "astronomy/albedo_sensortag.example.csv",
+      "experiment": "albedo.phyphox",
+      "sensor": "TI OPT3001 ambient light sensor (SensorTag)",
+      "acquisition_path": "SensorTag BLE AA71 notification, AA73=0x50 (0.8 s)",
+      "nominal_rate_hz": 1.25,
+      "duration_s": 60.0,
+      "rows": 76,
+      "columns": [
+        "t (s)",
+        "Relative light level (a.u.)",
+        "Raw OPT3001 word (a.u.)"
+      ],
+      "scenario": "Covered sensor, white reference tile, grey sample, black sample, then covered again; the lamp is left running throughout.",
+      "realism": [
+        "Exact OPT3001 exponent/mantissa encoding; the exported value is decoded from the raw word.",
+        "0.01 lx resolution at the lowest range, automatic range selection, 3% gain error, and 1% noise.",
+        "The XML reconstructs time as 0.8 s times the sample count, not from packet timestamps.",
+        "The built-in contrast (max-min)/max is an extrema statistic, not a calibrated albedo."
+      ],
+      "example": true,
+      "notes": "The trailing raw word is not part of the phyphox export; it is provided for decoder checks."
+    },
+    {
+      "file": "astronomy/greenhouse.example.csv",
+      "experiment": "greenhouse.phyphox",
+      "sensor": "Bosch BMP280 die temperature (two SensorTags)",
+      "acquisition_path": "SensorTag BLE AA41 notification, AA44=0x64 (1 s)",
+      "nominal_rate_hz": 1.0,
+      "duration_s": 600.0,
+      "rows": 601,
+      "columns": [
+        "Time (min)",
+        "Temperature 1 (°C)",
+        "Temperature 2 (°C)",
+        "Raw temperature 1 word (a.u.)",
+        "Raw temperature 2 word (a.u.)"
+      ],
+      "scenario": "Open and covered vessels start at 22 °C, a lamp is switched on at 60 s, and both cool after 360 s; the covered vessel rises faster and higher.",
+      "realism": [
+        "The XML uses the BMP280 die-temperature word, not the HDC1000 air sensor; a self-heating offset is included.",
+        "Signed 24-bit temperature word with 0.01 °C scaling, as in the experiment.",
+        "The covered vessel has a larger asymptote and a shorter time constant than the open vessel.",
+        "Time is reconstructed from the first tag's sample count at 1 s per sample.",
+        "The two tags have different offsets and noise, so the difference is not a clean physical contrast."
+      ],
+      "example": true,
+      "notes": "The trailing raw words are not exported by the XML; they let the decoder be checked."
+    },
+    {
+      "file": "astronomy/ir-dist_habitable.example.csv",
+      "experiment": "ir-dist_habitable.phyphox",
+      "sensor": "TI TMP007 infrared thermopile (SensorTag) and Bluetooth HID mouse",
+      "acquisition_path": "SensorTag AA01 notification, AA03=0x1E (0.3 s), plus BLE HID mouse",
+      "nominal_rate_hz": 3.333,
+      "duration_s": 30.0,
+      "rows": 101,
+      "columns": [
+        "Time (s)",
+        "d (a.u.)",
+        "T_IR (°C)",
+        "T_amb (°C)",
+        "Raw object word (a.u.)",
+        "Raw die word (a.u.)"
+      ],
+      "scenario": "A warm target and SensorTag move together on a rail from 0.15 m to 0.80 m and back; the apparent IR temperature settles at each stop.",
+      "realism": [
+        "TMP007 conversion time is 0.25 s; the file samples at 0.3 s and includes a 1.4 s thermal lag.",
+        "Object temperature word is 0.03125 °C resolution; the die word is the ambient channel.",
+        "Mouse distance uses about 0.0002 m/count, with a small slip event near 60 samples.",
+        "The unsigned XML conversion requires nonnegative temperatures; this run stays above 20 °C.",
+        "The file has no export timestamp in the XML; Time (s) is added here for readability."
+      ],
+      "example": true,
+      "notes": "d (a.u.) is accumulated mouse counts, not metres. Divide by 5000 for an approximate metre reading after calibration."
+    },
+    {
+      "file": "astronomy/missiontomars_phone.example.csv",
+      "experiment": "missiontomars.phyphox",
+      "sensor": "Phone barometer",
+      "acquisition_path": "phyphox phone pressure sensor",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 120.0,
+      "rows": 1201,
+      "columns": [
+        "Time (s)",
+        "Pressure (hPa)"
+      ],
+      "scenario": "The same chamber pressure profile recorded on a phone barometer.",
+      "realism": [
+        "Phone barometers are model-dependent; this trace assumes 10 Hz, 0.01 hPa resolution, and 0.015 hPa noise.",
+        "A -0.3 hPa offset and a slightly different noise level distinguish it from the SensorTag run.",
+        "Phone timestamps have small arrival jitter.",
+        "The two files are alternative runs, not simultaneous measurements."
+      ],
+      "example": true
+    },
+    {
+      "file": "astronomy/missiontomars_sensortag.example.csv",
+      "experiment": "missiontomars.phyphox",
+      "sensor": "Bosch BMP280 absolute pressure (SensorTag)",
+      "acquisition_path": "SensorTag BLE AA41 notification, AA44=0x0A (0.1 s)",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 120.0,
+      "rows": 1201,
+      "columns": [
+        "Time (s)",
+        "Pressure (hPa)",
+        "Raw pressure word (a.u.)",
+        "Raw temperature word (a.u.)"
+      ],
+      "scenario": "Near-ambient baseline, pump to +35 hPa, a slow 1.5 hPa leak over 30 s, release, and a final baseline.",
+      "realism": [
+        "BMP280 range is 300-1100 hPa; the 35 hPa excursion remains inside it.",
+        "Pressure word is 0.01 hPa resolution, with +0.6 hPa offset and 0.02 hPa noise.",
+        "A 0.35 s port/equilibration lag is applied to the chamber step.",
+        "The XML reconstructs time as 0.1 s times the sample count.",
+        "The auxiliary temperature word is included as a raw column even though the XML does not export it."
+      ],
+      "example": true,
+      "notes": "This is a classroom chamber run, not a Martian pressure measurement."
+    },
+    {
+      "file": "astronomy/owon_digital_multimeter-debug.example.csv",
+      "experiment": "owon_digital_multimeter-debug.phyphox",
+      "sensor": "Owon B35T digital multimeter, DC voltage",
+      "acquisition_path": "Owon BDM BLE notification, characteristic FFF4",
+      "nominal_rate_hz": 2.0,
+      "duration_s": 60.0,
+      "rows": 121,
+      "columns": [
+        "Time (s)",
+        "y",
+        "Raw numeric field (a.u.)",
+        "Raw decimal code (a.u.)",
+        "Raw unit code (a.u.)"
+      ],
+      "scenario": "A DC calibration staircase: 0 V, 1 V, 1.5 V, 2 V, -1 V, and 0.5 V, each held for about 10 s.",
+      "realism": [
+        "The Owon B35T updates digital data 3 times/s on the meter and about 2 times/s in the app.",
+        "The 6 V DC range has 1 mV resolution; a 0.2% gain error, 0.4 mV offset, and 0.3 mV noise are included.",
+        "Raw fields follow the B35T branch of the supplied decoder: 5-character numeric field, decimal code 1, unit code 0.",
+        "The debug XML exports only Time (s) and y; the raw fields are extra columns for decoder testing.",
+        "The analysis sleep of 0.05 s is not a 20 Hz acquisition rate."
+      ],
+      "example": true,
+      "notes": "The positive and negative steps exercise the decoder's sign handling."
+    },
+    {
+      "file": "astronomy/pt-star.example.csv",
+      "experiment": "pt-star.phyphox",
+      "sensor": "Bosch BMP280 pressure and die temperature (SensorTag)",
+      "acquisition_path": "SensorTag BLE AA41 notification, AA44=0x64 (1 s)",
+      "nominal_rate_hz": 1.0,
+      "duration_s": 180.0,
+      "rows": 181,
+      "columns": [
+        "Time (min)",
+        "Pressure (hPa)",
+        "Temperature (°C)",
+        "Raw pressure word (a.u.)",
+        "Raw temperature word (a.u.)"
+      ],
+      "scenario": "A slow 7% volume reduction raises pressure by about 75 hPa and warms the barometer die by about 1.4 °C, followed by a release.",
+      "realism": [
+        "Pressure is the compensated BMP280 absolute value, scaled by 0.01 hPa.",
+        "Temperature is the barometer die temperature, not an independent gas thermometer.",
+        "The compression is slow enough to be nearly isothermal; the die warming is mostly self-heating and work.",
+        "Reconstructed time is 1 s per sample and is exported in minutes.",
+        "A +0.55 hPa and +0.40 °C offset plus 0.02 hPa and 0.015 °C noise are included."
+      ],
+      "example": true,
+      "notes": "The 1081 hPa peak stays inside the BMP280 300-1100 hPa rated interval. The scenario is illustrative, not a validated chamber run."
+    },
+    {
+      "file": "astronomy/tidal-locking_bmp280.example.csv",
+      "experiment": "tidal-locking.phyphox",
+      "sensor": "Bosch BMP280 die temperature (two SensorTags)",
+      "acquisition_path": "SensorTag BLE AA41 notification, AA44=0x64 (1 s)",
+      "nominal_rate_hz": 1.0,
+      "duration_s": 300.0,
+      "rows": 301,
+      "columns": [
+        "Time (s)",
+        "Temperature 1 (°C)",
+        "Temperature 2 (°C)",
+        "Raw temperature 1 word (a.u.)",
+        "Raw temperature 2 word (a.u.)"
+      ],
+      "scenario": "Day-side and night-side model regions; the lamp is on from 30 s to 210 s, then both sides cool.",
+      "realism": [
+        "Both columns are BMP280 die temperatures, not validated surface or air temperatures.",
+        "The day side has a larger rise and a faster initial response; the night side stays nearly flat.",
+        "Offsets differ between tags and 0.01 °C quantisation/noise is included.",
+        "Time is reconstructed from tag 1's sample count for both columns."
+      ],
+      "example": true
+    },
+    {
+      "file": "astronomy/tidal-locking_opt3001.example.csv",
+      "experiment": "tidal-locking.phyphox",
+      "sensor": "TI OPT3001 ambient light sensor (two SensorTags)",
+      "acquisition_path": "SensorTag BLE AA71 notification, AA73=0x50 (0.8 s)",
+      "nominal_rate_hz": 1.25,
+      "duration_s": 300.0,
+      "rows": 376,
+      "columns": [
+        "Time (s)",
+        "Illuminance 1 (lx)",
+        "Illuminance 2 (lx)",
+        "Raw light 1 word (a.u.)",
+        "Raw light 2 word (a.u.)"
+      ],
+      "scenario": "Day-side illuminance near 12,000 lx and night-side stray light near 28 lx, lamp on 30-210 s.",
+      "realism": [
+        "OPT3001 automatic range selection and 0.01 lx encoding; the raw words are exported here for traceability.",
+        "The 12,000 lx day side and 28 lx night side differ by more than two orders of magnitude.",
+        "A 3% gain error, 0.8% noise, and a slow lamp ripple are included.",
+        "The XML labels both light columns identically; this file suffixes them 1 and 2 for readability."
+      ],
+      "example": true
+    },
+    {
+      "file": "astronomy/tidal-locking_tmp007.example.csv",
+      "experiment": "tidal-locking.phyphox",
+      "sensor": "TI TMP007 infrared thermopile (two SensorTags)",
+      "acquisition_path": "SensorTag BLE AA01 notification, AA03=0x1E (0.3 s)",
+      "nominal_rate_hz": 3.333,
+      "duration_s": 300.0,
+      "rows": 1001,
+      "columns": [
+        "Time (s)",
+        "Ambient temperature 1 (°C)",
+        "Object temperature 1 (°C)",
+        "Ambient temperature 2 (°C)",
+        "Object temperature 2 (°C)",
+        "Raw ambient 1 word (a.u.)",
+        "Raw object 1 word (a.u.)",
+        "Raw ambient 2 word (a.u.)",
+        "Raw object 2 word (a.u.)"
+      ],
+      "scenario": "The same day/night illumination cycle seen by two TMP007 channels.",
+      "realism": [
+        "Object and ambient/die temperature words use 0.03125 °C resolution.",
+        "The object channel includes a 1 °C offset and 0.08 °C noise; the die channel is smoother.",
+        "The day-side object temperature rises by about 22 °C under the lamp; the night side stays near ambient.",
+        "The XML's unsigned conversion is valid here because all temperatures are positive."
+      ],
+      "example": true,
+      "notes": "The trailing raw words are extra columns; the XML exports the four converted temperatures."
+    },
+    {
+      "file": "astronomy/transitmethode_owon.example.csv",
+      "experiment": "transitmethode.phyphox",
+      "sensor": "Solar cell through an Owon B35T digital multimeter",
+      "acquisition_path": "Owon BDM BLE notification, characteristic FFF4",
+      "nominal_rate_hz": 2.0,
+      "duration_s": 90.0,
+      "rows": 181,
+      "columns": [
+        "Time (s)",
+        "Relative Signal (a.u.)",
+        "Raw numeric field (a.u.)",
+        "Raw decimal code (a.u.)",
+        "Raw unit code (a.u.)"
+      ],
+      "scenario": "The same three-transit sequence seen as a 1.85 V solar-cell signal with 4% dips.",
+      "realism": [
+        "The Owon app path updates about twice per second, so a 4 s transit contains only about 8 samples.",
+        "The solar-cell voltage is assumed to be in a linear operating region; real open-circuit cells are logarithmic.",
+        "1 mV quantisation, 0.2% gain error, 0.4 mV offset, and 0.4 mV noise are included.",
+        "The raw fields follow the B35T decoder branch used by the experiment.",
+        "The XML exports this path as a relative signal in volts, not as a normalized light curve."
+      ],
+      "example": true,
+      "notes": "This path demonstrates why transducer linearity and meter range are part of the measurement model."
+    },
+    {
+      "file": "astronomy/transitmethode_phone.example.csv",
+      "experiment": "transitmethode.phyphox",
+      "sensor": "Phone ambient-light sensor",
+      "acquisition_path": "phyphox phone light sensor",
+      "nominal_rate_hz": 10.0,
+      "duration_s": 90.0,
+      "rows": 901,
+      "columns": [
+        "t (s)",
+        "Relative Signal (a.u.)"
+      ],
+      "scenario": "The same three-transit sequence recorded at 10 Hz on a phone.",
+      "realism": [
+        "The 10 Hz cadence resolves the 4 s events with about 40 samples each.",
+        "A 0.15% noise level and small timestamp jitter are included.",
+        "The baseline differs from the SensorTag run because the phone's optical gain and spectral response differ.",
+        "The file is an alternative acquisition path, not a simultaneous measurement."
+      ],
+      "example": true
+    },
+    {
+      "file": "astronomy/transitmethode_sensortag.example.csv",
+      "experiment": "transitmethode.phyphox",
+      "sensor": "TI OPT3001 ambient light sensor (SensorTag)",
+      "acquisition_path": "SensorTag BLE AA71 notification, AA73=0x50 (0.8 s)",
+      "nominal_rate_hz": 1.25,
+      "duration_s": 89.6,
+      "rows": 113,
+      "columns": [
+        "t (s)",
+        "Relative Signal (a.u.)",
+        "Raw OPT3001 word (a.u.)"
+      ],
+      "scenario": "Three 4% transits of 4 s duration at 22 s, 52 s, and 82 s, with a stable 850 lx baseline.",
+      "realism": [
+        "Transit depth is 4.0%, with 0.8 s ingress/egress, comparable to the sampling interval.",
+        "The 0.8 s cadence gives only about 5 samples per transit, so the event is intentionally undersampled.",
+        "A 0.2% noise level and slow lamp drift are included.",
+        "The XML reconstructs time as 0.8 s times the sample count.",
+        "The trailing raw word is provided for decoder checks, not by the XML export."
+      ],
+      "example": true,
+      "notes": "The event centres and duration are chosen so the built-in threshold logic can find six on/off transitions."
+    },
+    {
+      "file": "core/accelerometer_plot_v1-2.example.csv",
+      "experiment": "accelerometer_plot_v1-2.phyphox",
+      "sensor": "ST LSM9DS1 accelerometer",
+      "acquisition_path": "Nano 33 BLE Sense -> BLE notification (mode 1)",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Acceleration x (g)",
+        "Acceleration y (g)",
+        "Acceleration z (g)",
+        "Absolute Acceleration (g)",
+        "Acceleration x (m/s²)",
+        "Acceleration y (m/s²)",
+        "Acceleration z (m/s²)",
+        "Absolute Acceleration (m/s²)"
+      ],
+      "scenario": "Board resting flat, tilted ±30 degrees, picked up and shaken, tapped three times, then rolled 90 degrees and returned flat.",
+      "realism": [
+        "Firmware sends acceleration in g; phyphox multiplies by 9.81 for the m/s² columns.",
+        "±4 g selected by the pinned Arduino_LSM9DS1 library; 16-bit LSB = 4/32768 g.",
+        "119 Hz internal rate is decimated to a 20 Hz notification stream.",
+        "Magnitude is computed from the transmitted components, not added independently.",
+        "Small zero-g offsets, 1/f drift, broadband noise, and a 7.5 Hz ring-down are included."
+      ],
+      "example": true,
+      "notes": "The timestamp advances in 50 ms or 51 ms steps, matching millis()-driven scheduling."
+    },
+    {
+      "file": "core/analog_input_plot_v1-2.example.csv",
+      "experiment": "analog_input_plot_v1-2.phyphox",
+      "sensor": "nRF52840 SAADC, 10-bit software range",
+      "acquisition_path": "Nano 33 BLE Sense -> BLE notification (mode 9)",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Analog Input A0",
+        "Analog Input A1",
+        "Analog Input A2",
+        "Voltage at A0 (mV)",
+        "Voltage at A1 (mV)",
+        "Voltage at A2 (mV)"
+      ],
+      "scenario": "A0 potentiometer sweep, A1 light-dependent-resistor step, and A2 RC charge/discharge with tau = 1 s.",
+      "realism": [
+        "Default 10-bit codes 0-1023; phyphox multiplies by 3.226 mV/count.",
+        "Actual reference 3.31 V and per-channel gain/offset errors make the displayed mV slightly wrong.",
+        "Counts are integers and clip at the ADC rails.",
+        "A2 includes 50 Hz mains pickup, which aliases at the 20 Hz sampling rate.",
+        "A0, A1, and A2 are converted sequentially; there is no simultaneous-sample guarantee."
+      ],
+      "example": true,
+      "notes": "The RC curve is sampled about 20 times per time constant, so the shape is resolved but not oversampled."
+    },
+    {
+      "file": "core/gyroscope_plot_v1-2.example.csv",
+      "experiment": "gyroscope_plot_v1-2.phyphox",
+      "sensor": "ST LSM9DS1 gyroscope",
+      "acquisition_path": "Nano 33 BLE Sense -> BLE notification (mode 2)",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Angular Velocity x (deg/s)",
+        "Angular Velocity y (deg/s)",
+        "Angular Velocity z (deg/s)",
+        "Absolute Angular Velocity (deg/s)",
+        "Angular Velocity x (rad/s)",
+        "Angular Velocity y (rad/s)",
+        "Angular Velocity z (rad/s)",
+        "Absolute Angular Velocity (rad/s)"
+      ],
+      "scenario": "Stationary baseline, ±45 deg/s yaw plateaus, +60 deg/s roll, -35 deg/s pitch, then stationary again.",
+      "realism": [
+        "Firmware sends deg/s; phyphox multiplies by pi/180 for the rad/s columns.",
+        "±2000 deg/s range; 16-bit LSB = 2000/32768 deg/s = 0.061035 deg/s.",
+        "The library-to-datasheet scale ratio 0.87193 is applied, so a true 45 deg/s plateau reads about 39.2 deg/s.",
+        "Zero-rate bias, 1/f drift, 0.06 deg/s broadband noise, and hand tremor are included.",
+        "Magnitude is computed from the three transmitted components."
+      ],
+      "example": true,
+      "notes": "A stationary board still reports a small nonzero rate; the bias is not removed."
+    },
+    {
+      "file": "core/light_plot_v1-2.example.csv",
+      "experiment": "light_plot_v1-2.phyphox",
+      "sensor": "Broadcom APDS-9960 RGBC sensor",
+      "acquisition_path": "Nano 33 BLE Sense -> BLE notification (mode 6)",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Relative light level (a.u.)",
+        "Red (a.u.)",
+        "Green (a.u.)",
+        "Blue (a.u.)"
+      ],
+      "scenario": "Dim room, warm white lamp, red/green/blue cards, a saturated phone flashlight, then dim room again.",
+      "realism": [
+        "Raw 16-bit RGBC counts, not lux; phyphox displays arbitrary units.",
+        "The library's 4-cycle integration gives a nominal 4100-count saturation, not 65535.",
+        "Channel gains, dark counts, shot-like noise, and a 3.7 Hz lamp ripple are included.",
+        "Clear is generally larger than each colour channel; all channels clip at 4100.",
+        "The 11.12 ms integration is much shorter than the 50 ms notification interval."
+      ],
+      "example": true,
+      "notes": "Counts are integers, matching the sensor registers and the firmware's int-to-float cast."
+    },
+    {
+      "file": "core/magnetometer_plot_v1-2.example.csv",
+      "experiment": "magnetometer_plot_v1-2.phyphox",
+      "sensor": "ST LSM9DS1 magnetometer",
+      "acquisition_path": "Nano 33 BLE Sense -> BLE notification (mode 3)",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 60.0,
+      "rows": 1201,
+      "columns": [
+        "Time t (s)",
+        "Magnetometer x (µT)",
+        "Magnetometer y (µT)",
+        "Magnetometer z (µT)",
+        "Absolute magnetic field (µT)"
+      ],
+      "scenario": "Earth-field baseline, 80 degree yaw, 25 degree tilt, a magnet approach near 30 s, then return to the starting orientation.",
+      "realism": [
+        "±4 gauss range = ±400 µT; 16-bit LSB = 400/32768 µT = 0.012207 µT.",
+        "The library-to-datasheet scale ratio 0.87193 is applied, so the uncalibrated magnitude reads low.",
+        "Earth field is about 48.3 µT total in Cologne; hard-iron and soft-iron terms shift the components.",
+        "Four NaN rows represent magneticFieldAvailable() returning false at the 20 Hz frame boundary.",
+        "Magnitude is computed from the transmitted components, including the disturbed interval."
+      ],
+      "example": true,
+      "notes": "µT values are sensor-frame components; they are not a calibrated compass heading."
+    },
+    {
+      "file": "core/pressure_plot_v1-2.example.csv",
+      "experiment": "pressure_plot_v1-2.phyphox",
+      "sensor": "ST LPS22HB barometer",
+      "acquisition_path": "Nano 33 BLE Sense -> BLE notification (mode 4)",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 180.0,
+      "rows": 3601,
+      "columns": [
+        "Time t (s)",
+        "Pressure (kPa)",
+        "Pressure (hPa)"
+      ],
+      "scenario": "Indoor baseline near 1009 hPa, a 1.2 m lift, a 3 m stair climb, a sealed-bag squeeze near 120 s, and slow room drift.",
+      "realism": [
+        "Firmware sends kPa; phyphox multiplies by 10 for the hPa column.",
+        "24-bit output with 4096 LSB/hPa, i.e. 0.000244 hPa per code.",
+        "A +0.55 hPa uncalibrated offset, 0.02 hPa noise, and 30 s drift are included.",
+        "Pressure follows a 0.8 s port/equilibration lag rather than the height step instantly.",
+        "A 1.2 m lift changes pressure by about 0.144 hPa; 3 m by about 0.36 hPa."
+      ],
+      "example": true,
+      "notes": "The 8 hPa bag excursion stays well inside the 260-1260 hPa sensor range."
+    },
+    {
+      "file": "core/temperature_plot_v1-2.example.csv",
+      "experiment": "temperature_plot_v1-2.phyphox",
+      "sensor": "ST HTS221 temperature and humidity sensor",
+      "acquisition_path": "Nano 33 BLE Sense -> BLE notification (mode 5)",
+      "nominal_rate_hz": 20.0,
+      "duration_s": 180.0,
+      "rows": 3601,
+      "columns": [
+        "Time t (s)",
+        "Temperature (°C)",
+        "relative Humidity (%)"
+      ],
+      "scenario": "Powered-board warm-up, two breath events, and a lamp/hand warming interval that raises temperature and lowers relative humidity.",
+      "realism": [
+        "Humidity is derived from a conserved vapour pressure and the Magnus saturation curve, so it falls when temperature rises.",
+        "A 15 s temperature lag and a 10 s humidity lag follow the HTS221 response times.",
+        "Typical offsets (+0.32 °C, +1.7 %RH), 0.016 °C and 0.004 %RH quantisation, and 1/f drift are included.",
+        "The firmware reads temperature first and humidity second; the two numbers are not simultaneous conversions.",
+        "The board self-heating term is separate from the air-temperature changes."
+      ],
+      "example": true,
+      "notes": "Relative humidity is a percentage, not a fraction; 45 %RH is written 45.0 here."
+    }
+  ]
+}

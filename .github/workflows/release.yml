@@ -59,7 +59,17 @@ jobs:
           make bundle
           mv phyphox-experiments.zip dist/
           (cd experiments/astronomy && zip -X -q ../../dist/astronomy-experiments.zip ./*.phyphox)
-          cp experiments/*.phyphox experiments/astronomy/*.phyphox dist/
+          # Drafts: XML, licences and attribution notes; the collection ZIP also
+          # carries the paper companions and is not a release asset.
+          make bundle-drafts
+          mv output/drafts/curious-signals-draft-experiments.zip dist/
+          # Individual files share one namespace in the release.
+          dupes="$(for f in experiments/*.phyphox experiments/astronomy/*.phyphox experiments/drafts/*.phyphox; do basename "$f"; done | sort | uniq -d)"
+          if [ -n "$dupes" ]; then
+            echo "::error::Duplicate experiment file names: $dupes"
+            exit 1
+          fi
+          cp experiments/*.phyphox experiments/astronomy/*.phyphox experiments/drafts/*.phyphox dist/
 
       # Not marked as a pre-release on purpose: releases/latest/download/<file>
       # URLs (used for phyphox QR codes) only resolve to full releases.

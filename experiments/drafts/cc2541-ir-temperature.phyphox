@@ -1,0 +1,178 @@
+<!-- Original Curious Signals draft from documented protocols; archive provenance is in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+    <title>Draft: CC2541 TMP006 infrared temperature</title>
+    <category>Curious Signals drafts</category>
+    <description>Receive signed TMP006 thermopile voltage and die temperature. Object-temperature compensation stays disabled until an application sensitivity is entered and explicitly verified.</description>
+    <data-containers>
+        <container size="0">voltage_raw</container>
+        <container size="0">die_raw</container>
+        <container size="0">receive_s</container>
+        <container size="0">voltage_V</container>
+        <container size="0">die_C</container>
+        <container size="0">die_K</container>
+        <container size="1" init="0">S0</container>
+        <container size="1" init="0.00175">A1</container>
+        <container size="1" init="-1.678e-05">A2</container>
+        <container size="1" init="-2.94e-05">B0</container>
+        <container size="1" init="-5.7e-07">B1</container>
+        <container size="1" init="4.63e-09">B2</container>
+        <container size="1" init="13.4">C2</container>
+        <container size="1" init="298.15">Tref</container>
+        <container size="1" init="0">calibration_verified</container>
+        <container size="0">delta_K</container>
+        <container size="0">sensitivity</container>
+        <container size="0">voltage_offset</container>
+        <container size="0">net_voltage</container>
+        <container size="0">flux_model</container>
+        <container size="0">object_candidate</container>
+        <container size="0">object_C_invalid</container>
+        <container size="0">object_C</container>
+    </data-containers>
+    <input>
+        <bluetooth id="tmp006" name="SensorTag" mode="notification">
+            <config char="F000AA02-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
+            <output char="F000AA01-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="0" length="2">voltage_raw</output>
+            <output char="F000AA01-0451-4000-B000-000000000000" conversion="int16LittleEndian" offset="2" length="2">die_raw</output>
+            <output char="F000AA01-0451-4000-B000-000000000000" extra="time">receive_s</output>
+        </bluetooth>
+    </input>
+    <analysis sleep="0.1" onUserInput="false">
+        <formula formula="[1_]*0.00000015625">
+            <input clear="false">voltage_raw</input>
+            <output clear="true">voltage_V</output>
+        </formula>
+        <formula formula="[1_]/128">
+            <input clear="false">die_raw</input>
+            <output clear="true">die_C</output>
+        </formula>
+        <formula formula="[1_]+273.15">
+            <input clear="false">die_C</input>
+            <output clear="true">die_K</output>
+        </formula>
+        <formula formula="[1_]-[2]">
+            <input clear="false">die_K</input>
+            <input clear="false">Tref</input>
+            <output clear="true">delta_K</output>
+        </formula>
+        <formula formula="[1]*1e-14*(1+[2]*[3_]+[4]*[3_]^2)">
+            <input clear="false">S0</input>
+            <input clear="false">A1</input>
+            <input clear="false">delta_K</input>
+            <input clear="false">A2</input>
+            <output clear="true">sensitivity</output>
+        </formula>
+        <formula formula="[1]+[2]*[3_]+[4]*[3_]^2">
+            <input clear="false">B0</input>
+            <input clear="false">B1</input>
+            <input clear="false">delta_K</input>
+            <input clear="false">B2</input>
+            <output clear="true">voltage_offset</output>
+        </formula>
+        <formula formula="[1_]-[2_]">
+            <input clear="false">voltage_V</input>
+            <input clear="false">voltage_offset</input>
+            <output clear="true">net_voltage</output>
+        </formula>
+        <formula formula="[1_]+[2]*[1_]^2">
+            <input clear="false">net_voltage</input>
+            <input clear="false">C2</input>
+            <output clear="true">flux_model</output>
+        </formula>
+        <formula formula="sqrt(sqrt([1_]^4+[2_]/[3_]))-273.15+0*sqrt([3_])/sqrt([3_])+0*sqrt([1_])/sqrt([1_])">
+            <input clear="false">die_K</input>
+            <input clear="false">flux_model</input>
+            <input clear="false">sensitivity</input>
+            <output clear="true">object_candidate</output>
+        </formula>
+        <formula formula="[1_]*0/0">
+            <input clear="false">object_candidate</input>
+            <output clear="true">object_C_invalid</output>
+        </formula>
+        <if equal="true">
+            <input clear="false">calibration_verified</input>
+            <input type="value">1</input>
+            <input clear="false">object_candidate</input>
+            <input clear="false">object_C_invalid</input>
+            <output clear="true">object_C</output>
+        </if>
+    </analysis>
+    <views>
+        <view label="Application calibration">
+            <info label="Coefficients below use the TI example model; they are not a calibration certificate. Enter measured application sensitivity and verify the other coefficients against known targets before enabling." />
+            <edit label="Application S0" default="0" unit="10^-14 V/K^4" signed="true" decimal="true">
+                <output>S0</output>
+            </edit>
+            <edit label="A1" default="0.00175" unit="1/K" signed="true" decimal="true">
+                <output>A1</output>
+            </edit>
+            <edit label="A2" default="-1.678e-05" unit="1/K²" signed="true" decimal="true">
+                <output>A2</output>
+            </edit>
+            <edit label="B0" default="-2.94e-05" unit="V" signed="true" decimal="true">
+                <output>B0</output>
+            </edit>
+            <edit label="B1" default="-5.7e-07" unit="V/K" signed="true" decimal="true">
+                <output>B1</output>
+            </edit>
+            <edit label="B2" default="4.63e-09" unit="V/K²" signed="true" decimal="true">
+                <output>B2</output>
+            </edit>
+            <edit label="C2" default="13.4" unit="1/V" signed="true" decimal="true">
+                <output>C2</output>
+            </edit>
+            <edit label="Reference temperature" default="298.15" unit="K" signed="true" decimal="true">
+                <output>Tref</output>
+            </edit>
+            <edit label="Application calibration verified (0 or 1)" default="0" unit="" signed="true" decimal="true">
+                <output>calibration_verified</output>
+            </edit>
+        </view>
+        <view label="Temperature">
+            <graph label="TMP006 die temperature" labelX="Receive time" unitX="s" labelY="TMP006 die temperature" unitY="°C" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">die_C</input>
+            </graph>
+            <graph label="Model object temperature" labelX="Receive time" unitX="s" labelY="Model object temperature" unitY="°C" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">object_C</input>
+            </graph>
+        </view>
+        <view label="Packet diagnostics">
+            <graph label="Thermopile voltage" labelX="Receive time" unitX="s" labelY="Thermopile voltage" unitY="V" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">voltage_V</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Use the CC2541 TMP006 service, not the CC2650 TMP007 direct-temperature decoder. AA01 bytes 0..1 are signed little-endian thermopile voltage; bytes 2..3 are the signed die register. Decode die_C=word/128, not the unsigned value." />
+            <info label="Object temperature needs calibrated S0, offset coefficients, known emissivity, a target filling the field of view, and controlled board gradients. S0 defaults to zero and the verification gate to 0; the object graph is therefore invalid until calibration is supplied." />
+            <info label="TI example coefficients are editable starting models. Determine S0 with reference targets following TI calibration guidance and document geometry, target temperature, surface and ambient conditions. Set Application calibration verified to 1 only after independent reference checks." />
+            <info label="Compensation squares the per-sample voltage residual; no latest-sample scalar is substituted into earlier rows. Nonpositive sensitivity, invalid Kelvin temperature or negative fourth-root domain yields gaps." />
+            <info label="Raw data and both packet-derived quantities remain available even while object calibration is disabled. Bench-test signed negative voltage/die packets, thermal gradients, reference targets and native BLE behavior before quantitative use." />
+        </view>
+    </views>
+    <export>
+        <set name="TMP006">
+            <data name="Receive time (s)">receive_s</data>
+            <data name="Signed thermopile packet word">voltage_raw</data>
+            <data name="Signed die packet word">die_raw</data>
+            <data name="Thermopile voltage (V)">voltage_V</data>
+            <data name="Die temperature (°C)">die_C</data>
+            <data name="Temperature dependent sensitivity (V/K^4)">sensitivity</data>
+            <data name="Voltage offset (V)">voltage_offset</data>
+            <data name="Compensated flux voltage (V)">flux_model</data>
+            <data name="Application model object temperature (°C)">object_C</data>
+        </set>
+        <set name="Settings">
+            <data name="Application S0 (10^-14 V/K^4)">S0</data>
+            <data name="A1 (1/K)">A1</data>
+            <data name="A2 (1/K²)">A2</data>
+            <data name="B0 (V)">B0</data>
+            <data name="B1 (V/K)">B1</data>
+            <data name="B2 (V/K²)">B2</data>
+            <data name="C2 (1/V)">C2</data>
+            <data name="Reference temperature (K)">Tref</data>
+            <data name="Application calibration verified (0 or 1)">calibration_verified</data>
+        </set>
+    </export>
+</phyphox>

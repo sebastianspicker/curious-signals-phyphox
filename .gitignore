@@ -42,6 +42,8 @@ __pycache__/
 /arduino/**/build/
 /phyphox-experiments.zip
 /reference/
+/output/
+/arxiv/*/*.pdf
 
 # Logs and local environment
 *.log

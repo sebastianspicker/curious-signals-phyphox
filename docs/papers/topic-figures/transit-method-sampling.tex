@@ -1,0 +1,16 @@
+% Canonical photometry comparison; existing prepared tables are unchanged.
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 2,vertical sep=1.0cm},
+width=0.96\columnwidth,height=3.8cm,grid=major,enlarge x limits=false,
+legend style={font=\scriptsize,at={(0.5,1.03)},anchor=south,legend columns=3,draw=none,fill=none},
+title style={font=\scriptsize,at={(0.02,0.98)},anchor=north west,fill=white},
+label style={font=\footnotesize},tick label style={font=\scriptsize}]
+\nextgroupplot[ylabel={Clear (count)},xmin=29,xmax=49,ymin=920,ymax=1060,title={(a) Feature windows; device time (s)}]
+\addplot[csblue,solid,line width=0.6pt] table[col sep=comma,x=c0,y expr={\thisrow{c2}}] {data/drafts/detector-characterization.csv};
+\nextgroupplot[ylabel={Interval (ms)},xmin=0,xmax=60,xlabel={Device time of later sample (s)},title={(b) Adjacent notification intervals}]
+\addplot[csblue,solid,line width=0.6pt] table[col sep=comma,x=c0,y expr={\thisrow{c1}}] {data/drafts/optics-detector-intervals.csv};
+\addlegendentry{Device}
+\addplot[csred,dashed,line width=0.6pt] table[col sep=comma,x=c0,y expr={\thisrow{c2}}] {data/drafts/optics-detector-intervals.csv};
+\addlegendentry{Receive}
+\end{groupplot}
+\end{tikzpicture}

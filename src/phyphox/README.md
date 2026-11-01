@@ -8,6 +8,29 @@ Sources pull in the shared data containers and Bluetooth mappings from
 a single attribute or a translation string, so view definitions and translated
 text are repeated wherever they are needed.
 
+## Calibration and physical setup
+
+Each experiment includes **Setup** and **Calibration** views in English,
+German, and French. Coefficients start at nominal values; measure them on the
+actual apparatus. Changing a coefficient recomputes the recorded trace, and
+clearing experiment data restores the defaults. Exports include original
+readings, corrected quantities, calibration settings, device time and BLE
+receive time. Receive time is a delivery timestamp, not a second sensor clock.
+
+| Experiment | Calculation and calibration |
+| --- | --- |
+| Accelerometer | Per-axis `k(raw − b)` in g, converted with standard gravity `9.80665 m/s²`; magnitude is recalculated from corrected components. Six stationary orientations constrain offsets and gains. This does not remove gravity. |
+| Gyroscope | Per-axis `k(raw − b) × π/180`; determine bias at rest and gain with independently measured positive/negative rates. The library/datasheet nominal scale comparison is not a measured calibration. |
+| Magnetometer | Per-axis `k(raw − b)` and corrected magnitude. This diagonal model cannot correct cross-axis coupling; a complete soft-iron calibration needs a matrix. |
+| Pressure | `10 × raw_kPa − bias_hPa`; pressure change is shown only after entering a positive reference pressure. Reference means and event readings must use the same bias correction. |
+| Temperature/humidity | Separate indicated-minus-reference biases; values are not silently restricted to a physical range. Use nearby reference probes, radiation shielding and controlled airflow. |
+| Light/RGB | Separate covered-sensor dark subtraction. A raw-channel ceiling indicator screens for the approximately 4100-count limit at the pinned gain/integration settings; it does not certify linearity. |
+| Analogue inputs | Independent `U = kq + c` calibrations. The default `k = 3300/1023 mV/count` is a nominal endpoint scale. Keep pin voltages within 0–3.3 V and account for source impedance and loading. |
+
+The existing example CSVs and papers describe the acquisition revision that
+preceded these changes. Their original numerical results are retained; see
+[acquisition notes](../../docs/papers/implementation-notes.md) for the distinction.
+
 ## Editing
 
 Work on the `.phyphox.xml` sources and the shared include files. Treat the

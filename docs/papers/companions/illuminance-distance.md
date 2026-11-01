@@ -1,0 +1,100 @@
+# Inverse-Square Photometry: Distance, Timing and Averaging
+
+*March 2020*
+
+**Data provenance.** The datasets analysed here are deterministic example data, generated for the October 2026 edition from fixed seeds by the scripts in `example-data/`. They are modelled on the named sensors' units, sampling, resolution, noise and limits, so the methods can be followed and rerun; they are not recordings from the original work. The date above is the author's approximate dating of that work, not of these data.
+
+**Abstract.** An inverse-square photometry experiment tests a distance dependence only after light and position have been associated with the same optical state. Two example investigations compare electronically tracked position with paired ruler observations. Fifteen stationary electronic windows give a power exponent of 2.0012. Twelve ruler snapshots give 1.9861; replacing each snapshot with a two-second interior mean gives 1.9880 while reducing the scatter of the distance-normalized signal from 1.82 to 0.58 count m². A one-millimetre change of distance origin shifts either mean-based exponent by approximately 0.005–0.006. Together the examples distinguish improvements in temporal averaging from knowledge of source geometry, background and the absolute photometric scale.
+
+**Keywords:**
+Inverse-square law, photometry, distance calibration, paired observations, averaging, finite sources.
+
+## A common distance model
+
+A detector moved away from a compact lamp receives less light, but the appearance of a decaying curve does not identify its cause. Source dimensions, detector orientation, background and the definition of distance all enter the comparison. Electronic tracking and a ruler can supply the same independent variable; their different acquisition paths chiefly change how a light reading is assigned to a position.
+
+For a point source observed along a fixed direction, the illuminance on a perpendicular detector obeys
+
+$$
+E_v(r)-B=\frac{I_v}{r^2},
+\tag{1}
+$$
+
+where $I_v$ is luminous intensity and $B$ a lamp-independent background. The distance runs from a defined source centre to the detector reference plane. Photometric calibration practice controls these reference locations and the distance range over which finite-source departures are negligible[1]. An extended source can produce a different dependence at short distances[2]. Background isolation is likewise part of the physical test; Vera and colleagues explicitly addressed this problem in an inverse-square experiment under daylight conditions[3].
+
+A relative detector supports the corresponding shape test without an absolute illuminance calibration. With fixed source spectrum, geometry and linear response, its background-corrected signal $Q=C-B$ can be fitted as
+
+$$
+Q=A(r/1\,\mathrm{m})^{-n}.
+\tag{2}
+$$
+
+The target exponent is $n=2$. The amplitude $A$ retains the detector's units: lux for the SensorTag example and counts for the Nano example. Thus the two investigations test the same geometrical dependence while carrying different information about the signal scale. Their independent runs compare the geometrical dependence on each detector's own signal scale.
+
+## Assigning light to a stationary position
+
+Figure 1 shows a common rail arrangement. Fix the source direction, detector aperture and carriage orientation. A ruler establishes the source-to-aperture distance; an attached mouse can subsequently track changes without replacing that length calibration. Stop at each position before selecting a light observation.
+
+**Figure 1.** One rail supports two position methods. Ruler observations supply distance directly; electronic tracking uses a separately calibrated count scale and origin. Both retain the detector's orientation and optical reference plane. View figure in the paper (built locally at `output/pdf/illuminance-distance.pdf`).
+
+For electronic tracking, signed mouse increments accumulate into coordinates $x$ and $y$. On a straight rail restricted to one side of the origin,
+
+$$
+d=\sqrt{x^2+y^2},\qquad r=r_0+kd.
+\tag{3}
+$$
+
+The example uses $r_0=0.15\,\mathrm{m}$, $k=2.0\times10^{-4}\,\mathrm{m/count}$ and an initial position of 250 counts, corresponding to $0.20\,\mathrm{m}$. The initial position is part of the calibration, rather than an additional distance inferred from the light signal. The norm is displacement from the reset origin, not accumulated travel length; unrestricted curved motion or crossing the origin would require a signed rail coordinate.
+
+Light and mouse reports have separate receive times. For each light time $t_i$, select the mouse report with the largest timestamp not exceeding $t_i$. This previous-position rule retains elapsed time and avoids pairing equal row numbers from unequal-rate streams. Its physical justification is strongest during a stationary interval. During motion, an old position report and unequal delivery delays can change the apparent light–position relation. Missing notifications leave time gaps rather than a compressed time axis.
+
+The electronic example has light readings spaced by $0.8\,\mathrm{s}$. For station $j=0,\ldots,14$, use the half-open receive-time window $[4j+1,4j+3.5)\,\mathrm{s}$. Each contains three readings inside a stationary state. Previous-position association reproduces the example distances to numerical rounding. The OPT3001 conversion from its result word is consistent with the illuminance indication[4]; this checks numerical scaling separately from the mounted detector's responsivity. Subtract the adopted $2\,\mathrm{lx}$ background before fitting.
+
+The ruler investigation instead supplies twelve paired observations: positions 0.20, 0.30, 0.40, 0.50, 0.60 and $0.70\,\mathrm{m}$ outward, followed by the same positions in reverse order. Each observation identifies a light snapshot by its device time, receive time and captured count. Matching these quantities to the continuous light sequence establishes the association without interpolating ruler positions. The APDS-9960 clear response remains a relative count[5].
+
+Subtract a 10-count background. A second estimator averages the continuous light over $[5j+1.5,5j+3.5)\,\mathrm{s}$ on the device clock, for $j=0,\ldots,11$. These two-second interior windows contain approximately forty readings and exclude state changes. Snapshot and interval mean then describe the same ruler position using different temporal support. Averaging the light readings cannot retroactively improve the length observation.
+
+## Shape, averaging and return travel
+
+Fit $\ln Q$ against $\ln(r/1\,\mathrm{m})$ by unweighted least squares. Equal weights in logarithmic signal emphasize fractional deviations rather than the much larger absolute signals near the lamp. All corrected signals in these reductions are positive. Table 1 reports the three estimators; Fig. 2 displays the electronic fit and the ruler comparison.
+
+**Table 1.** Power-law fits to stationary-window means and ruler snapshots. Log-residual SD summarizes station-to-station scatter in $\ln Q$.
+
+| Position/light estimator | States | $n$ | Log SD |
+| --- | --- | --- | --- |
+| Electronic / stationary mean | 15 | 2.0012 | 0.00766 |
+| Ruler / snapshot | 12 | 1.9861 | 0.01743 |
+| Ruler / two-second mean | 12 | 1.9880 | 0.00195 |
+
+**Figure 2.** Upper: stationary-window light means and power-law fit for electronic positions. Lower: ruler snapshots and two-second means expressed as $Qr^2$, showing reduced scatter after averaging. The independent sequences retain lux and count scales. View figure in the paper (built locally at `output/pdf/illuminance-distance.pdf`).
+
+The electronic fit gives $A=103.18\,\mathrm{lx}$ and $n=2.0012$. Its mean $Qr^2$ is $103.28\,\mathrm{lx\,m^2}$ with between-window sample SD $0.76\,\mathrm{lx\,m^2}$. A stable responsivity error would rescale every product while leaving the exponent largely unchanged. The exponent tests the distance dependence, while the absolute intensity $I_v$ also depends on detector responsivity.
+
+For the ruler observations, the mean product changes only from 102.48 to $102.81\,\mathrm{count\,m^2}$ when snapshots are replaced by interval means. Its sample SD falls from 1.82 to $0.58\,\mathrm{count\,m^2}$, while the exponent changes by less than 0.002. This reduction of scatter identifies a contribution from the instantaneous light reading. It does not remove the modest increase of the averaged product with distance.
+
+Return travel also retains information that a single fitted line can conceal. At $0.20\,\mathrm{m}$, the averaged outward and return products are 102.24 and $101.90\,\mathrm{count\,m^2}$; at $0.70\,\mathrm{m}$ they are 103.62 and $103.37\,\mathrm{count\,m^2}$. The small within-position differences coexist with a larger change across the rail. Repeated positioning and a distance-dependent bias are consequently different questions, even when both enter the scatter of a global fit.
+
+## Distance origin and the interpretation of residuals
+
+An origin error changes every station coherently. Shifting all electronic distances by $-1\,\mathrm{mm}$ or $+1\,\mathrm{mm}$ gives exponents 1.9962 and 2.0062. The same perturbations applied to the ruler interval means give 1.9824 and 1.9936. These are sensitivity calculations under changed geometrical assumptions, not confidence limits. Their size is comparable to the deviations that might otherwise be assigned to the inverse-square law.
+
+Deleting one electronic stationary window at a time gives exponents from 1.9966 to 2.0032. That diagnostic concerns which stations constrain the fit; it cannot determine a shared origin error. Similarly, more light samples at one station constrain that optical state without creating new independent positions. For the ruler example, each position assignment remains common to the snapshot and approximately forty readings in its mean.
+
+Background error has another recognizable dependence. A residual additive offset $\Delta B$ contributes $\Delta B r^2$ to the inverse-square product, becoming relatively more important at distant stations. A source-centre error instead changes the distance argument and can introduce curvature. Finite source extent is most consequential nearby. The remaining trend should therefore be assessed against these physically distinct alternatives before adding detector-response parameters.
+
+For an ideal product, small independent errors contribute relative terms $u(Q)/Q$ and $2u(r)/r$. Here background, origin and count scale are shared across stations, so their joint covariance belongs in any uncertainty assigned to source intensity or exponent. Lamp ripple and repeated integration can also correlate adjacent readings. The applicability of a $1/\sqrt N$ uncertainty law depends on those correlations and the independence of repeated replacements.
+
+Both examples support an inverse-square description over their selected ranges. Their complementary contribution is methodological: electronic timing makes light–position association explicit, while snapshots and interval means separate instantaneous light scatter from geometrical knowledge. Absolute photometry additionally requires a calibrated optical response, a defined aperture and a traceable length scale. Those requirements remain even when the normalized product looks nearly constant.
+
+## References
+
+1. [Y. Zong, M. E. Nadal, B. K. Tsai and C. C. Miller, *NIST Measurement Services: Photometric Calibrations*, NIST SP 250-95 (2018).](https://doi.org/10.6028/NIST.SP.250-95)
+
+2. [M. Campione, A. Pietropaolo and G. Bussetti, “Investigative Photometry Experiments on Planar Extended-Light Sources,” *European Journal of Physics* 45, 065301 (2024).](https://doi.org/10.1088/1361-6404/ad6e44)
+
+3. [F. Vera, R. Rivera and M. Ortíz, “A Simple Experiment to Measure the Inverse Square Law of Light in Daylight Conditions,” *European Journal of Physics* 35, 015015 (2014).](https://doi.org/10.1088/0143-0807/35/1/015015)
+
+4. [Texas Instruments, *OPT3001 Ambient Light Sensor*, SBOS681C (2017).](https://www.ti.com/lit/ds/symlink/opt3001.pdf)
+
+5. [Avago Technologies, *APDS-9960: Digital Proximity, Ambient Light, RGB and Gesture Sensor*, AV02-4191EN.](https://docs.broadcom.com/doc/AV02-4191EN)
+

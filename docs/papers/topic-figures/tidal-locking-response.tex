@@ -1,0 +1,29 @@
+\begin{tikzpicture}
+\begin{groupplot}[group style={group size=1 by 3,vertical sep=1.2cm},width=0.97\columnwidth,height=3.3cm,
+grid=major,enlarge x limits=false,xmin=0,
+legend style={font=\scriptsize,at={(0.5,1.03)},anchor=south,legend columns=3,draw=none,fill=none},
+title style={font=\scriptsize,at={(0.02,0.98)},anchor=north west,fill=white},
+ylabel style={font=\footnotesize},xlabel style={font=\footnotesize},tick label style={font=\scriptsize}]
+\nextgroupplot[ylabel={(a) Clear (count)},xlabel={Seasonal receive time (s)},xmax=61]
+\addplot[csblue,line width=0.6pt] table[col sep=comma,x=c0,y=c2] {data/drafts/seasons-obliquity.csv};
+\addlegendentry{Continuous}
+\addplot[csred,only marks,mark=*,mark size=1.6pt] table[col sep=comma,x=c1,y=c2] {data/drafts/seasons-obliquity_observations.csv};
+\addlegendentry{Snapshots}
+\nextgroupplot[ylabel={(b) Illuminance (lx)},xlabel={Fixed-illumination time (s)},xmax=300,ymode=log,ymin=1,ymax=20000,ytick={1,100,10000}]
+\addplot[csblue,line width=0.8pt] table[col sep=comma,x=c0,y=c1] {data/tidal-locking_opt3001.csv};
+\addlegendentry{Day}
+\addplot[csred,dashed,line width=0.8pt] table[col sep=comma,x=c0,y=c2] {data/tidal-locking_opt3001.csv};
+\addlegendentry{Night}
+\draw[black!40,densely dashed] (axis cs:30,1)--(axis cs:30,20000);
+\draw[black!40,densely dashed] (axis cs:210,1)--(axis cs:210,20000);
+\nextgroupplot[ylabel={(c) $D_T$ (K)},xlabel={Fixed-illumination time (s)},xmax=300,ymin=-1,ymax=24]
+\addplot[csblue,line width=0.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c2}-\thisrow{c4}-0.6015625}] {data/tidal-locking_tmp007.csv};
+\addlegendentry{IR object}
+\addplot[csred,dashed,line width=0.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c1}-\thisrow{c2}-0.5016666667}] {data/tidal-locking_bmp280.csv};
+\addlegendentry{BMP die}
+\addplot[csteal,dashdotted,line width=0.8pt] table[col sep=comma,x=c0,y expr={\thisrow{c1}-\thisrow{c3}-0.093125}] {data/tidal-locking_tmp007.csv};
+\addlegendentry{IR die}
+\draw[black!40,densely dashed] (axis cs:30,-1)--(axis cs:30,24);
+\draw[black!40,densely dashed] (axis cs:210,-1)--(axis cs:210,24);
+\end{groupplot}
+\end{tikzpicture}

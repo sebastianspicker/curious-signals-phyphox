@@ -1,0 +1,64 @@
+<!-- Original Curious Signals draft from documented protocols; archive provenance is in the companion manuscript. -->
+<phyphox version="1.17" locale="en">
+    <title>Draft: CC2541 humidity and SHT21 temperature</title>
+    <category>Curious Signals drafts</category>
+    <description>Receive the four-byte CC2541 SHT21 notification, remove its status bits and calculate relative humidity and sensor temperature with the Sensirion equations.</description>
+    <data-containers>
+        <container size="0">temperature_raw</container>
+        <container size="0">humidity_raw</container>
+        <container size="0">receive_s</container>
+        <container size="0">temperature_C</container>
+        <container size="0">humidity_unbounded</container>
+        <container size="0">humidity_pct</container>
+    </data-containers>
+    <input>
+        <bluetooth id="sht21" name="SensorTag" mode="notification">
+            <config char="F000AA22-0451-4000-B000-000000000000" conversion="hexadecimal">01</config>
+            <output char="F000AA21-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="0" length="2">temperature_raw</output>
+            <output char="F000AA21-0451-4000-B000-000000000000" conversion="uInt16LittleEndian" offset="2" length="2">humidity_raw</output>
+            <output char="F000AA21-0451-4000-B000-000000000000" extra="time">receive_s</output>
+        </bluetooth>
+    </input>
+    <analysis sleep="0.1" onUserInput="false">
+        <formula formula="floor([1_]/4)*4*175.72/65536-46.85">
+            <input clear="false">temperature_raw</input>
+            <output clear="true">temperature_C</output>
+        </formula>
+        <formula formula="floor([1_]/4)*4*125/65536-6">
+            <input clear="false">humidity_raw</input>
+            <output clear="true">humidity_unbounded</output>
+        </formula>
+        <formula formula="[1_]+0*sqrt([1_])*sqrt(100-[1_])">
+            <input clear="false">humidity_unbounded</input>
+            <output clear="true">humidity_pct</output>
+        </formula>
+    </analysis>
+    <views>
+        <view label="SHT21">
+            <graph label="Relative humidity" labelX="Receive time" unitX="s" labelY="Relative humidity" unitY="%" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">humidity_pct</input>
+            </graph>
+            <graph label="Sensor temperature" labelX="Receive time" unitX="s" labelY="Sensor temperature" unitY="°C" partialUpdate="false">
+                <input axis="x">receive_s</input>
+                <input axis="y">temperature_C</input>
+            </graph>
+        </view>
+        <view label="Setup">
+            <info label="Use the first-generation CC2541 SensorTag with SHT21; CC2650 HDC1000 conversion is different. AA21 contains temperature little-endian at byte 0 and humidity at byte 2." />
+            <info label="Both words have two status bits removed before conversion. RH=125 raw/65536-6%; T=175.72 raw/65536-46.85°C. Negative/above-100 RH remains visible in the unbounded export but becomes a graph gap." />
+            <info label="Keep the vent exposed, avoid breath heating and condensation, equilibrate against a humidity reference, and record room temperature. No apparatus correction is silently applied." />
+            <info label="Times are Bluetooth receive times from the same four-byte notification. Native connection, climatic reference comparisons and response time still require bench verification." />
+        </view>
+    </views>
+    <export>
+        <set name="SHT21">
+            <data name="Receive time (s)">receive_s</data>
+            <data name="Unsigned temperature packet word">temperature_raw</data>
+            <data name="Unsigned humidity packet word">humidity_raw</data>
+            <data name="Unbounded RH equation (%)">humidity_unbounded</data>
+            <data name="Domain checked RH (%)">humidity_pct</data>
+            <data name="SHT21 temperature (°C)">temperature_C</data>
+        </set>
+    </export>
+</phyphox>
