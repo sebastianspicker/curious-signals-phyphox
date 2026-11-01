@@ -131,7 +131,7 @@
     </edit>
 </view>
     </views>
-    <analysis sleep="0.05" onUserInput="false">
+    <analysis sleep="0.5" onUserInput="false">
     <formula formula="[1_]-[2]">
         <input clear="false">CH2</input>
         <input clear="false">temperature_bias</input>

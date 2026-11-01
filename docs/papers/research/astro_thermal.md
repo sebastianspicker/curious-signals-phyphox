@@ -89,9 +89,9 @@ Wood is therefore omitted. The astro-lab programme paper was read, but its gener
 context was redundant here and removed to keep six substantive references.
 Unsourced sensor-forum offsets and climate polemics were excluded.
 
-The single-sensor auxiliary example has baseline 22.70082 °C and late heating
-28.03517 °C, hence a rise of 5.33435 K. Its 22 °C subtraction reference instead gives
-6.03517 K: a baseline choice contributes 0.70082 K. A 2.61 K jump at switch-off
+The single-sensor auxiliary example has baseline 22.70089 °C (0–55 s) and late heating
+27.99250 °C (210–235 s), hence a rise of 5.29161 K. Its 22 °C subtraction reference
+instead gives 5.99250 K: a baseline choice contributes 0.70089 K. A 2.61 K jump at switch-off
 violates continuity for the proposed finite-capacitance cooling model. The article
 therefore does not fit across it or compare unmatched heating amplitudes as though
 they came from simultaneous conditions. A second sensor node explains why an

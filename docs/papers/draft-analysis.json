@@ -581,7 +581,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "puck-light": {
@@ -601,7 +601,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "cc2541-accelerometer": {
@@ -624,7 +624,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "cc2541-gyroscope": {
@@ -647,7 +647,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "cc2541-magnetometer": {
@@ -670,7 +670,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "cc2541-humidity": {
@@ -691,7 +691,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "cc2541-pressure": {
@@ -711,7 +711,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "cc2541-ir-temperature": {
@@ -735,7 +735,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "pocketlab-gyroscope": {
@@ -758,7 +758,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "sensortag-environmental": {
@@ -790,7 +790,7 @@
       },
       "analysis": {
         "file": "analysis/draft_adapters.py",
-        "sha256": "0c10c07bf35060a1c0208af3b29e5fea704b07d9c310451d3b32dff7bfb0a370"
+        "sha256": "68c75ccf91397c5c36a9eb93d913c2f628e2078908664a9a961433a166d4c138"
       }
     },
     "static-friction": {
@@ -820,7 +820,7 @@
       },
       "analysis": {
         "file": "analysis/draft_mechanics.py",
-        "sha256": "bd7f20f853d4a0db9a9eb68f3caac764e459bd734a6fccb8c727d54a453b45c4"
+        "sha256": "424c1772945d445966ca8421a3382f5912405e3f6a53646ed9ab0371522a580a"
       }
     },
     "audio-magnetic": {
@@ -855,7 +855,7 @@
       },
       "analysis": {
         "file": "analysis/draft_mechanics.py",
-        "sha256": "bd7f20f853d4a0db9a9eb68f3caac764e459bd734a6fccb8c727d54a453b45c4"
+        "sha256": "424c1772945d445966ca8421a3382f5912405e3f6a53646ed9ab0371522a580a"
       }
     },
     "magnetic-current": {
@@ -876,7 +876,7 @@
       },
       "analysis": {
         "file": "analysis/draft_mechanics.py",
-        "sha256": "bd7f20f853d4a0db9a9eb68f3caac764e459bd734a6fccb8c727d54a453b45c4"
+        "sha256": "424c1772945d445966ca8421a3382f5912405e3f6a53646ed9ab0371522a580a"
       }
     },
     "pressure-boiling": {
@@ -901,7 +901,7 @@
       },
       "analysis": {
         "file": "analysis/draft_observations.py",
-        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+        "sha256": "198cec385284f1a58736f31f26603130af336b7a298003b475894604f646b21d"
       }
     },
     "spectral-fingerprints": {
@@ -931,7 +931,7 @@
       },
       "analysis": {
         "file": "analysis/draft_observations.py",
-        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+        "sha256": "198cec385284f1a58736f31f26603130af336b7a298003b475894604f646b21d"
       }
     },
     "coronagraph-contrast": {
@@ -961,7 +961,7 @@
       },
       "analysis": {
         "file": "analysis/draft_observations.py",
-        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+        "sha256": "198cec385284f1a58736f31f26603130af336b7a298003b475894604f646b21d"
       }
     },
     "uv-transmission": {
@@ -1004,7 +1004,7 @@
       },
       "analysis": {
         "file": "analysis/draft_observations.py",
-        "sha256": "7e5ade0a9e7bb386d9194c9426fe0bc67e5f8819b88380f458948196c1a38995"
+        "sha256": "198cec385284f1a58736f31f26603130af336b7a298003b475894604f646b21d"
       }
     },
     "rgb-filter-transmission": {
@@ -1029,7 +1029,7 @@
       },
       "analysis": {
         "file": "analysis/draft_optics.py",
-        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+        "sha256": "bb68f531f829c68046a72e8173f31fafc438672741156037caa44773683fe60f"
       }
     },
     "illuminance-distance": {
@@ -1067,7 +1067,7 @@
       },
       "analysis": {
         "file": "analysis/draft_optics.py",
-        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+        "sha256": "bb68f531f829c68046a72e8173f31fafc438672741156037caa44773683fe60f"
       }
     },
     "illuminance-distance-manual": {
@@ -1105,7 +1105,7 @@
       },
       "analysis": {
         "file": "analysis/draft_optics.py",
-        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+        "sha256": "bb68f531f829c68046a72e8173f31fafc438672741156037caa44773683fe60f"
       }
     },
     "malus-law": {
@@ -1141,7 +1141,7 @@
       },
       "analysis": {
         "file": "analysis/draft_optics.py",
-        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+        "sha256": "bb68f531f829c68046a72e8173f31fafc438672741156037caa44773683fe60f"
       }
     },
     "colour-temperature": {
@@ -1175,7 +1175,7 @@
       },
       "analysis": {
         "file": "analysis/draft_optics.py",
-        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+        "sha256": "bb68f531f829c68046a72e8173f31fafc438672741156037caa44773683fe60f"
       }
     },
     "detector-characterization": {
@@ -1215,7 +1215,7 @@
       },
       "analysis": {
         "file": "analysis/draft_optics.py",
-        "sha256": "fb3f636450a1518c41be62d5c10aa438e12da7f55c6e0260a6c2bf96c027ff82"
+        "sha256": "bb68f531f829c68046a72e8173f31fafc438672741156037caa44773683fe60f"
       }
     },
     "nano-transit": {
@@ -1237,7 +1237,7 @@
       },
       "analysis": {
         "file": "analysis/draft_photometry.py",
-        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+        "sha256": "5e94e8063c66d1c5867f3cf33a5712a22d22f3b74f4ee9dc39ee145ab21fac9d"
       }
     },
     "exomoon-photometry": {
@@ -1259,7 +1259,7 @@
       },
       "analysis": {
         "file": "analysis/draft_photometry.py",
-        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+        "sha256": "5e94e8063c66d1c5867f3cf33a5712a22d22f3b74f4ee9dc39ee145ab21fac9d"
       }
     },
     "starspot-crossing": {
@@ -1281,7 +1281,7 @@
       },
       "analysis": {
         "file": "analysis/draft_photometry.py",
-        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+        "sha256": "5e94e8063c66d1c5867f3cf33a5712a22d22f3b74f4ee9dc39ee145ab21fac9d"
       }
     },
     "eclipsing-binary": {
@@ -1304,7 +1304,7 @@
       },
       "analysis": {
         "file": "analysis/draft_photometry.py",
-        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+        "sha256": "5e94e8063c66d1c5867f3cf33a5712a22d22f3b74f4ee9dc39ee145ab21fac9d"
       }
     },
     "seasons-obliquity": {
@@ -1347,7 +1347,7 @@
       },
       "analysis": {
         "file": "analysis/draft_photometry.py",
-        "sha256": "fda5a2a492eaad469f49b8ffaef89567e0dd6ec35994ef37655ccaae8e055514"
+        "sha256": "5e94e8063c66d1c5867f3cf33a5712a22d22f3b74f4ee9dc39ee145ab21fac9d"
       }
     }
   },

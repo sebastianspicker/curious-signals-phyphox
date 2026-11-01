@@ -101,7 +101,9 @@ def check_common(path: Path, rows: list[dict[str, str]]) -> list[str]:
 def check_count_range(
     path: Path, rows: list[dict[str, str]], columns: tuple[str, ...], low: float, high: float
 ) -> list[str]:
-    errors: list[str] = []
+    errors = [
+        f"{path.name}: missing column {key}" for key in columns if rows and key not in rows[0]
+    ]
     for index, row in enumerate(rows):
         for key in columns:
             if key not in row:
@@ -136,28 +138,24 @@ def check_drafts() -> list[str]:
             continue
         errors += check_common(path, rows)
 
-    # APDS / Nano files
-    for name in (
-        "detector-characterization.example.csv",
-        "eclipsing-binary.example.csv",
-        "exomoon-photometry.example.csv",
-        "illuminance-distance-manual.example.csv",
-        "malus-law.example.csv",
-        "nano-transit.example.csv",
-        "rgb-filter-transmission.example.csv",
-        "seasons-obliquity.example.csv",
-        "starspot-crossing.example.csv",
-        "colour-temperature.example.csv",
+    # APDS / Nano files; the photometry records use bare channel names.
+    labelled = ("clear (counts)", "red (counts)", "green (counts)", "blue (counts)")
+    bare = ("clear", "red", "green", "blue")
+    for name, columns in (
+        ("detector-characterization.example.csv", labelled),
+        ("eclipsing-binary.example.csv", bare),
+        ("exomoon-photometry.example.csv", bare),
+        ("illuminance-distance-manual.example.csv", labelled),
+        ("malus-law.example.csv", labelled),
+        ("nano-transit.example.csv", bare),
+        ("rgb-filter-transmission.example.csv", labelled),
+        ("seasons-obliquity.example.csv", bare),
+        ("starspot-crossing.example.csv", bare),
+        ("colour-temperature.example.csv", labelled),
     ):
         path = ROOT / name
         _, rows = read_csv(path)
-        errors += check_count_range(
-            path,
-            rows,
-            ("clear (counts)", "red (counts)", "green (counts)", "blue (counts)"),
-            0.0,
-            4100.0,
-        )
+        errors += check_count_range(path, rows, columns, 0.0, 4100.0)
 
     path = ROOT / "cc2541-accelerometer.example.csv"
     _, rows = read_csv(path)

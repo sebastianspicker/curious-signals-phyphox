@@ -2,12 +2,43 @@
 
 from __future__ import annotations
 
+import re
+
 from . import ToolError
 from .checkout import Checkout
 from .generation import render_core_experiments, source_inventory_errors, xml_safety_errors
 from .phyphox_xml import check_astronomy_experiment, check_core_experiment
 from .protocol import contract_errors, parse_protocol, read_contract
 from .xmllint import find_xmllint, run_xmllint
+
+
+def firmware_contract_errors(sketch: str, raw: dict) -> list[str]:
+    """Return contract literals the self-contained firmware sketch does not repeat."""
+
+    # shortcut: substring match, so a literal kept only in a comment also passes;
+    # parse the declarations if the sketch ever carries stale copies in comments.
+
+    name = raw["device"]["name"]
+    frame = raw["frame"]
+    expected = [
+        f'"{raw["bluetooth"][key]}"'
+        for key in ("service_uuid", "data_char_uuid", "config_char_uuid")
+    ]
+    expected += [
+        f'BLE.setDeviceName("{name}")',
+        f'BLE.setLocalName("{name}")',
+        f"kSendPeriodMs = {frame['sample_period_ms']};",
+        f"kPayloadSizeBytes = {frame['data']['byte_length']};",
+        f"kConfigWireSizeBytes = {frame['config']['byte_length']};",
+    ]
+    errors = [
+        f"firmware: missing contract literal {item}" for item in expected if item not in sketch
+    ]
+    enum = re.search(r"enum class Mode : int \{(.*?)\};", sketch, re.DOTALL)
+    ids = {int(value) for value in re.findall(r"=\s*(\d+)", enum.group(1))} if enum else set()
+    if ids != {mode["id"] for mode in raw["modes"]["active"]}:
+        errors.append(f"firmware: Mode enum {sorted(ids)} differs from the contract's active modes")
+    return errors
 
 
 def validate(checkout: Checkout) -> list[str]:
@@ -25,6 +56,16 @@ def validate(checkout: Checkout) -> list[str]:
     protocol = None if errors else parse_protocol(raw)
     if protocol is not None:
         errors.extend(source_inventory_errors(checkout, protocol))
+        sketch_path = checkout.sketch_dir / f"{checkout.sketch_dir.name}.ino"
+        try:
+            sketch = sketch_path.read_text(encoding="utf-8")
+        except OSError as error:
+            errors.append(f"{sketch_path}: cannot read firmware: {error}")
+        else:
+            errors.extend(firmware_contract_errors(sketch, raw))
+            # The guard must fire on a copy without the data UUID, or it proves nothing.
+            if not firmware_contract_errors(sketch.replace(protocol.data_char_uuid, ""), raw):
+                errors.append("firmware contract check cannot detect a missing UUID")
     errors.extend(
         xml_safety_errors([*sources, *includes, *generated, *astronomy], checkout.include_dir)
     )

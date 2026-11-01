@@ -9,11 +9,13 @@ of fluctuation, not a standard error inferred from all recorded rows.
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import math
 import statistics as st
 from pathlib import Path
+
+from _common import draft_rows as read
+from _common import in_window
 
 SLUGS = (
     "nano-transit",
@@ -24,17 +26,10 @@ SLUGS = (
 )
 
 
-def read(data_root: Path, name: str) -> list[list[float]]:
-    with (data_root / "drafts" / f"{name}.example.csv").open(newline="") as stream:
-        reader = csv.reader(stream)
-        next(reader)
-        return [[float(x) for x in row] for row in reader]
-
-
 def selected(
     rows: list[list[float]], windows: list[tuple[float, float]], clock: int = 1
 ) -> list[list[float]]:
-    return [r for r in rows if any(a <= r[clock] < b for a, b in windows)]
+    return [r for r in rows if any(in_window(r[clock], a, b) for a, b in windows)]
 
 
 def state(rows: list[list[float]], windows: list[tuple[float, float]]) -> dict:
@@ -282,6 +277,7 @@ def tables(data_root: Path) -> dict[str, list[list[float]]]:
     for slug in SLUGS[:-1]:
         rows = read(data_root, slug)
         binned = []
+        # The final partial second is deliberately dropped so every block averages a full second.
         for start in range(120):
             block = selected(rows, [(start, start + 1)])
             if block:

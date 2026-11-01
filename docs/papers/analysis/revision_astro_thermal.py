@@ -2,25 +2,18 @@
 
 from __future__ import annotations
 
-import csv
 import json
 import math
 import statistics
 from pathlib import Path
 
-
-def read(data_root: Path, relative: str) -> list[list[float]]:
-    """Read numeric columns without altering missing-value markers or clocks."""
-    with (data_root / relative).open(encoding="utf-8", newline="") as stream:
-        reader = csv.reader(stream)
-        next(reader)
-        return [[float(value) for value in row] for row in reader]
+from _common import in_window, read_lists
 
 
 def mean_window(
     rows: list[list[float]], column: int, start: float, stop: float, *, scale: float = 1
 ) -> float:
-    return statistics.mean(row[column] for row in rows if start <= round(row[0] * scale, 6) < stop)
+    return statistics.mean(row[column] for row in rows if in_window(row[0] * scale, start, stop))
 
 
 def saturation_pressure_kPa(temperature_K: float) -> float:
@@ -51,20 +44,20 @@ def saturation_temperature_K(pressure_kPa: float) -> float:
 def analyze(data_root: Path) -> dict[str, dict]:
     """Return JSON-compatible extensions with explicit selection/physical assumptions."""
     result: dict[str, dict] = {}
-    rows = read(data_root, "drafts/greenhouse-single.example.csv")
-    baseline = mean_window(rows, 3, 0, 60)
-    late = mean_window(rows, 3, 210, 240)
+    rows = read_lists(data_root / "drafts/greenhouse-single.example.csv")
+    baseline = mean_window(rows, 3, 0, 55)
+    late = mean_window(rows, 3, 210, 235)
     edge = next(i for i, row in enumerate(rows) if row[0] >= 240)
     result["greenhouse"] = {
         "related_datasets": ["drafts/greenhouse-single.example.csv"],
-        "auxiliary_windows_s": {"baseline": [0, 60], "late_heating": [210, 240]},
+        "auxiliary_windows_s": {"baseline": [0, 55], "late_heating": [210, 235]},
         "auxiliary_window_rule": (
             "receive time, lower inclusive/upper exclusive; no clock alignment to paired run"
         ),
         "baseline_die_C": baseline,
         "late_heating_die_C": late,
         "late_heating_rise_K": late - baseline,
-        "mean_displayed_rise_K": mean_window(rows, 4, 210, 240),
+        "mean_displayed_rise_K": mean_window(rows, 4, 210, 235),
         "display_reference_C": statistics.mean(row[3] - row[4] for row in rows),
         "display_reference_minus_measured_baseline_K": 22 - baseline,
         "switch_off_step_K": rows[edge][3] - rows[edge - 1][3],
@@ -75,7 +68,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
         ),
     }
 
-    rows = read(data_root, "drafts/pressure-boiling.example.csv")
+    rows = read_lists(data_root / "drafts/pressure-boiling.example.csv")
     selected = [row for row in rows if row[3] == 1 and row[4] == 1]
     residuals = []
     for row in selected:
@@ -114,7 +107,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
         ),
     }
 
-    rows = read(data_root, "astronomy/pt-star.example.csv")
+    rows = read_lists(data_root / "astronomy/pt-star.example.csv")
     p0 = mean_window(rows, 1, 0, 30, scale=60)
     p1 = mean_window(rows, 1, 55, 60, scale=60)
     p2 = mean_window(rows, 1, 70, 85, scale=60)
@@ -149,7 +142,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
         ),
     }
 
-    rows = read(data_root, "drafts/seasons-obliquity_observations.example.csv")
+    rows = read_lists(data_root / "drafts/seasons-obliquity_observations.example.csv")
     groups = []
     for tilt in (0, 23.5):
         for orbit in (0, 180):

@@ -74,7 +74,7 @@ The KXTJ9 is configured for ±2 g and an 8-bit output. The draft uses 64 counts
 per g. A signed count of −64 is −9.80665 m/s² before bias subtraction; −128 must
 remain negative. The requested period is 100 ms, or 10 Hz. Zero-g offset, axis
 orientation, and the low 8-bit resolution dominate the uncertainty. The example
-data use a bias of 0.20, −0.25, 0.35 m/s² and 0.02 m/s² noise.
+data use a bias of 0.20, −0.25, 0.35 m/s² and add no noise.
 
 ## CC2541 IMU-3000 gyroscope
 

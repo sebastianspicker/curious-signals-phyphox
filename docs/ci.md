@@ -17,7 +17,8 @@ make validate
 make check-generated
 ```
 
-Validation covers the protocol catalog, source inventory, XInclude safety, core
+Validation covers the protocol catalog, the firmware's UUID, device-name,
+timing, frame-size and mode literals, source inventory, XInclude safety, core
 XML, the expanded core experiments, the committed generated artifacts, and the
 astronomy XML and locales. It also runs `scripts/check_experiment_math.py`:
 known-input fixtures exercise the actual XML analysis for calibration, optical
@@ -34,8 +35,12 @@ Schematron validation is an additional explicit check documented in
 [the draft validation notes](drafts/validation.md); those schemas and lxml are
 not part of the default dependency set.
 
-Finally, `scripts/check_doc_links.py` fails if a tracked Markdown file links to
+`scripts/check_doc_links.py` fails if a tracked Markdown file links to
 a path the repository does not contain, such as the gitignored `output/`.
+
+Finally, the two example-data validators check every CSV in both manifests:
+increasing time, no infinite values, detector count ranges, magnitudes and
+decoded raw words.
 
 `make check-generated` rebuilds in a temporary directory and compares bytes. CI
 never runs `make build`, so a job can fail on drift but can never rewrite a

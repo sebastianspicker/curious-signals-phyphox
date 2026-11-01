@@ -7,6 +7,8 @@ import json
 import statistics as stats
 from pathlib import Path
 
+from _common import in_window
+
 
 def read(data_root: Path, name: str) -> tuple[list[str], list[dict[str, str]]]:
     with (data_root / "astronomy" / name).open(newline="", encoding="utf-8") as stream:
@@ -16,11 +18,11 @@ def read(data_root: Path, name: str) -> tuple[list[str], list[dict[str, str]]]:
 
 
 def mean_window(t: list[float], y: list[float], a: float, b: float) -> float:
-    return stats.mean(v for ti, v in zip(t, y) if a <= ti < b)
+    return stats.mean(v for ti, v in zip(t, y) if in_window(ti, a, b))
 
 
 def slope(t: list[float], y: list[float], a: float, b: float) -> float:
-    xy = [(ti, yi) for ti, yi in zip(t, y) if a <= ti < b]
+    xy = [(ti, yi) for ti, yi in zip(t, y) if in_window(ti, a, b)]
     tm, ym = stats.mean(x for x, _ in xy), stats.mean(y for _, y in xy)
     return sum((x - tm) * (y - ym) for x, y in xy) / sum((x - tm) ** 2 for x, _ in xy)
 
@@ -147,6 +149,4 @@ if __name__ == "__main__":
     import sys
 
     data = Path(sys.argv[1]) if len(sys.argv) > 1 else Path.cwd() / "example-data"
-    output = Path(__file__).with_name("metrics.json")
-    output.write_text(json.dumps(analyze(data), indent=2) + "\n", encoding="utf-8")
-    print(output.read_text())
+    print(json.dumps(analyze(data), indent=2))

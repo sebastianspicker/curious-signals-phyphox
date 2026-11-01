@@ -71,7 +71,13 @@ def check_xml(path: Path, entry: dict, contract: dict) -> list[str]:
     config_char = bluetooth["config_char_uuid"].lower()
     for source in root.findall("./input/bluetooth"):
         data = [n for n in source.findall("output") if n.get("char", "").lower() == data_char]
+        # Recognise the Nano by name too: a mistyped data UUID must not skip these checks.
+        if source.get("name") != contract["device"]["name"] and not data:
+            continue
         if not data:
+            errors.append(
+                f"{path.name}: Nano source does not read the contract data characteristic"
+            )
             continue
         if source.get("name") != contract["device"]["name"] or not source.get("id"):
             errors.append(f"{path.name}: Nano needs the contract device name and id")

@@ -9,7 +9,6 @@ Only the Python standard library is needed; --check never writes outputs.
 from __future__ import annotations
 
 import argparse
-import csv
 import hashlib
 import importlib.util
 import json
@@ -17,18 +16,16 @@ import math
 import sys
 from pathlib import Path
 
-from prepare_examples import DATA_ROOT, HERE, plot_source, table_text
-from publication import load_manifest
+sys.path.insert(0, str(Path(__file__).resolve().parent / "analysis"))
+
+from _common import read_table  # noqa: E402
+from prepare_examples import DATA_ROOT, HERE, plot_source, table_text  # noqa: E402
+from publication import load_manifest  # noqa: E402
 
 
 def read_csv(path: Path) -> tuple[list[str], list[list[float]]]:
     """Read numeric columns without assuming the first column is a clock."""
-    with path.open(encoding="utf-8", newline="") as stream:
-        reader = csv.reader(stream)
-        headers = next(reader)
-        rows = [[float(value) for value in row] for row in reader]
-    if not rows or any(len(row) != len(headers) for row in rows):
-        raise ValueError(f"Invalid CSV shape: {path}")
+    headers, rows = read_table(path)
     if any(math.isinf(value) for row in rows for value in row):
         raise ValueError(f"Infinite CSV value: {path}")
     return headers, rows
@@ -163,7 +160,11 @@ def prepare(*, check: bool = False) -> None:
                 target.write_text(text, encoding="utf-8")
     if stale:
         raise ValueError("Stale draft analysis outputs: " + ", ".join(stale))
-    print(f"{'Checked' if check else 'Prepared'} 37 draft CSV sources and supplementary analyses.")
+    sources = len(list((DATA_ROOT / "drafts").glob("*.example.csv")))
+    print(
+        f"{'Checked' if check else 'Prepared'} {sources} draft CSV sources"
+        " and supplementary analyses."
+    )
 
 
 if __name__ == "__main__":

@@ -7,11 +7,13 @@ not standard error; no independence between successive rows is assumed.
 from __future__ import annotations
 
 import argparse
-import csv
 import json
 import math
 import statistics as st
 from pathlib import Path
+
+from _common import draft_rows as read
+from _common import window
 
 SLUGS = (
     "greenhouse-single",
@@ -27,19 +29,8 @@ SLUGS = (
 )
 
 
-def read(root: Path, name: str) -> list[list[float]]:
-    with (root / "drafts" / (name + ".example.csv")).open(newline="", encoding="utf-8") as stream:
-        reader = csv.reader(stream)
-        next(reader)
-        return [[float(value) for value in row] for row in reader]
-
-
-def select(rows: list[list[float]], low: float, high: float) -> list[list[float]]:
-    return [r for r in rows if low <= r[0] < high]
-
-
 def stats(rows: list[list[float]], column: int, low: float, high: float) -> dict:
-    chosen = select(rows, low, high)
+    chosen = window(rows, low, high)
     values = [r[column] for r in chosen if math.isfinite(r[column])]
     return {
         "window_s": [low, high],
@@ -73,7 +64,7 @@ def integral(
     bias: float = 0,
     absolute: bool = False,
 ) -> float:
-    selected = select(rows, low, high)
+    selected = window(rows, low, high)
     value = 0.0
     for a, b in zip(selected, selected[1:]):
         ya, yb = a[column] - bias, b[column] - bias
@@ -90,7 +81,7 @@ def vapor_pressure(temp_C: float, rh_pct: float) -> float:
 
 def heating_fit(rows: list[list[float]]) -> dict:
     baseline = stats(rows, 3, 0, 55)["mean"]
-    chosen = select(rows, 65, 235)
+    chosen = window(rows, 65, 235)
 
     def fit(tau: float) -> tuple[float, float]:
         basis = [1 - math.exp(-(r[0] - 60) / tau) for r in chosen]
@@ -230,7 +221,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
     a["roll_deg"] = math.degrees(math.atan2(-a["roll"]["y"]["mean"], a["roll"]["z"]["mean"]))
     a["step_m_s2"] = 9.80665 / 64
     a["angular_step_deg"] = math.degrees(1 / 64)
-    a["flat_unique_raw_xyz"] = len({tuple(x[1:4]) for x in select(r, 0, 8)})
+    a["flat_unique_raw_xyz"] = len({tuple(x[1:4]) for x in window(r, 0, 8)})
     for slug in ["cc2541-gyroscope", "pocketlab-gyroscope"]:
         r = read(data_root, slug)
         q = result[slug]
@@ -253,7 +244,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
         bias = q["stationary"]["y" if col == 5 else "x"]["mean"]
         q["integrals"] = {
             "window_s": [lo, hi],
-            "sample_extent_s": [select(r, lo, hi)[0][0], select(r, lo, hi)[-1][0]],
+            "sample_extent_s": [window(r, lo, hi)[0][0], window(r, lo, hi)[-1][0]],
             "bias_rad_s": bias,
             "signed_deg": math.degrees(integral(r, col, lo, hi, bias)),
             "absolute_component_deg": math.degrees(integral(r, col, lo, hi, bias, True)),
@@ -297,7 +288,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
     q["peak"] = stats(r, 3, 26, 30)
     q["released"] = stats(r, 3, 52, 60)
     q["excursion_hPa"] = q["peak"]["mean"] - q["baseline"]["mean"]
-    chosen = select(r, 28, 44)
+    chosen = window(r, 28, 44)
     q["decay_fit"] = linear([x[0] for x in chosen], [x[3] for x in chosen])
     q["decay_fit"]["window_s"] = [28, 44]
     q["temperature_C"] = stats(r, 4, 0, 61)
@@ -318,7 +309,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
             "die_C": stats(r, 4, lo, hi),
             "voltage_V": stats(r, 3, lo, hi),
         }
-    chosen = select(r, 28, 38)
+    chosen = window(r, 28, 38)
 
     def changed_sensitivity(scale: float) -> float:
         return st.mean(

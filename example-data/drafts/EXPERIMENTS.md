@@ -64,7 +64,7 @@ The example has 601 samples over 60 s.
 
 **Accuracy.** The 8-bit step is 0.153 m/s². Zero-g offset, axis orientation, and
 mounting dominate. A raw −128 count must remain negative. The example uses bias
-0.20, −0.25, 0.35 m/s² and 0.02 m/s² noise.
+0.20, −0.25, 0.35 m/s² and adds no noise.
 
 **Example scenario.** Flat, ±20° tilts, a short shake, a 60° roll, and a return
 to flat.

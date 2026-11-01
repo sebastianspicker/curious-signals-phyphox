@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import calendar
+import csv
 import hashlib
 import json
 import os
@@ -200,9 +201,16 @@ def source_files(paper: dict) -> tuple[dict[str, bytes], set[str]]:
     files["00README.json"] = (json.dumps(config, indent=2) + "\n").encode("utf-8")
     if paper["slug"] == "transit-method":
         source = "drafts/detector-characterization_summary.example.csv"
-        files["anc/detector-characterization-summary.csv"] = checked_path(
-            ROOT / "example-data", source
-        ).read_bytes()
+        summary = checked_path(ROOT / "example-data", source)
+        files["anc/detector-characterization-summary.csv"] = summary.read_bytes()
+        with summary.open(encoding="utf-8", newline="") as stream:
+            row = next(csv.DictReader(stream))
+        analysis = json.loads((HERE / "draft-analysis.json").read_text(encoding="utf-8"))
+        detector = analysis["metrics"]["detector-characterization"]
+        start, stop = detector["baseline_window_s"]
+        count = int(float(row["Selected baseline count (1)"]))
+        drop = float(row["Proposed signal drop (counts)"])
+        ratio = float(row["Expected single-sample SNR (1)"])
         files["anc/README.txt"] = (
             "Detector characterization: numerical summary\n\n"
             "detector-characterization-summary.csv is an unchanged copy of\n"
@@ -211,11 +219,12 @@ def source_files(paper: dict) -> tuple[dict[str, bytes], set[str]]:
             "accompanying numerical summary discussed in this paper.\n\n"
             "Sensor: Arduino Nano 33 BLE Sense APDS-9960. Acquisition path:\n"
             "derived summary from the 20 Hz example record. The selected\n"
-            "illuminated baseline spans device times 12 to 28 s and has 318\n"
+            f"illuminated baseline spans device times {start} to {stop} s and has {count}\n"
             "readings. This is an example dataset, not a newly measured result.\n\n"
             "The proposed 2% signal drop uses an entered dark value of 8 counts,\n"
-            "giving a 20.295-count decrement and a single-sample planning\n"
-            "amplitude ratio of 1.908. The observed dark mean is 11.156 counts.\n"
+            f"giving a {drop:.3f}-count decrement and a single-sample planning\n"
+            f"amplitude ratio of {ratio:.3f}. The observed dark mean is "
+            f"{detector['dark_mean_counts']:.3f} counts.\n"
             "These distinct values are retained as explained in the manuscript;\n"
             "the planning ratio is not a detection significance.\n"
         ).encode("utf-8")
@@ -511,7 +520,34 @@ def main() -> int:
             )
             return result
 
-    results = []
+    order = {paper["slug"]: index for index, paper in enumerate(catalog["papers"])}
+    report_path = OUTPUT / "build-summary.json"
+    pdflatex = None if args.check else command(["pdflatex", "--version"], HERE).splitlines()[0]
+
+    def record(result: dict) -> None:
+        """Merge one finished paper into the build summary, so evidence matches the files."""
+        try:
+            previous = json.loads(report_path.read_text(encoding="utf-8"))["papers"]
+        except (OSError, ValueError, KeyError):
+            previous = []
+        kept = [
+            item
+            for item in previous
+            if item.get("slug") in order and item["slug"] != result["slug"]
+        ]
+        report = {
+            "edition_date": catalog["edition_date"],
+            "target_texlive": 2025,
+            "local_pdflatex": pdflatex,
+            "compiler": "pdflatex",
+            "shell_escape": False,
+            "papers": sorted([*kept, result], key=lambda item: order[item["slug"]]),
+        }
+        OUTPUT.mkdir(parents=True, exist_ok=True)
+        temporary = report_path.with_name(report_path.name + ".tmp")
+        temporary.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+        os.replace(temporary, report_path)
+
     failures = []
     with ThreadPoolExecutor(max_workers=args.jobs) as executor:
         pending = {executor.submit(process, paper): paper["slug"] for paper in papers}
@@ -519,26 +555,11 @@ def main() -> int:
             try:
                 result = future.result()
                 if result is not None:
-                    results.append(result)
-            except (OSError, ValueError, RuntimeError) as error:
+                    record(result)
+            except (OSError, ValueError, RuntimeError, KeyError, zipfile.BadZipFile) as error:
                 failures.append(f"{pending[future]}: {error}")
     if failures:
         raise RuntimeError("\n".join(failures))
-    if not args.check:
-        report_path = OUTPUT / "build-summary.json"
-        if args.only and report_path.is_file():
-            old = json.loads(report_path.read_text(encoding="utf-8"))
-            results.extend(item for item in old["papers"] if item["slug"] != args.only)
-        order = {paper["slug"]: index for index, paper in enumerate(catalog["papers"])}
-        report = {
-            "edition_date": catalog["edition_date"],
-            "target_texlive": 2025,
-            "local_pdflatex": command(["pdflatex", "--version"], HERE).splitlines()[0],
-            "compiler": "pdflatex",
-            "shell_escape": False,
-            "papers": sorted(results, key=lambda item: order[item["slug"]]),
-        }
-        report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(f"{'Checked' if args.check else 'Prepared'} {len(papers)} independent arXiv submissions.")
     return 0
 
@@ -546,6 +567,6 @@ def main() -> int:
 if __name__ == "__main__":
     try:
         raise SystemExit(main())
-    except (OSError, ValueError, RuntimeError) as error:
+    except (OSError, ValueError, RuntimeError, KeyError, zipfile.BadZipFile) as error:
         print(f"arxiv: {error}", file=sys.stderr)
         raise SystemExit(1) from error

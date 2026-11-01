@@ -2,20 +2,12 @@
 
 from __future__ import annotations
 
-import csv
 import json
 import math
 import statistics as st
 from pathlib import Path
 
-
-def read(root: Path, relative: str) -> list[dict[str, float]]:
-    with (root / relative).open(encoding="utf-8", newline="") as stream:
-        return [{key: float(value) for key, value in row.items()} for row in csv.DictReader(stream)]
-
-
-def window(rows, clock, start, stop):
-    return [row for row in rows if start - 1e-9 <= row[clock] < stop - 1e-9]
+from _common import read_dicts, window
 
 
 def mean(rows, column):
@@ -38,14 +30,14 @@ def linear_fit(x, y):
 
 def analyze(data_root: Path) -> dict[str, dict]:
     result = {slug: {} for slug in ("albedo", "transit-method", "owon-interface", "ir-distance")}
-    rgb = read(data_root, "drafts/rgb-filter-transmission.example.csv")
+    rgb = read_dicts(data_root / "drafts/rgb-filter-transmission.example.csv")
     channels = [f"{name} (counts)" for name in ("clear", "red", "green", "blue")]
-    dark = [mean(window(rgb, "device_t (s)", 56, 60), col) for col in channels]
-    reference = [mean(window(rgb, "device_t (s)", 4, 6), col) for col in channels]
-    late = [mean(window(rgb, "device_t (s)", 44, 46), col) for col in channels]
+    dark = [mean(window(rgb, 56, 60, "device_t (s)"), col) for col in channels]
+    reference = [mean(window(rgb, 4, 6, "device_t (s)"), col) for col in channels]
+    late = [mean(window(rgb, 44, 46, "device_t (s)"), col) for col in channels]
     ratios = {}
     for name, bounds in {"red": (14, 16), "green": (24, 26), "blue": (34, 36)}.items():
-        rows = window(rgb, "device_t (s)", *bounds)
+        rows = window(rgb, *bounds, "device_t (s)")
         values = [mean(rows, col) for col in channels]
         ratios[name] = {
             "device_window_s": list(bounds),
@@ -74,12 +66,12 @@ def analyze(data_root: Path) -> dict[str, dict]:
 
     photometry = {}
     for slug in ("nano-transit", "exomoon-photometry", "starspot-crossing", "eclipsing-binary"):
-        rows = read(data_root, f"drafts/{slug}.example.csv")
+        rows = read_dicts(data_root / f"drafts/{slug}.example.csv")
         tc = "receive_time"
         baseline_windows = (
             [(2, 15), (95, 118)] if slug != "eclipsing-binary" else [(2, 12), (40, 44), (100, 104)]
         )
-        baseline_rows = [row for a, b in baseline_windows for row in window(rows, tc, a, b)]
+        baseline_rows = [row for a, b in baseline_windows for row in window(rows, a, b, tc)]
         baseline = mean(baseline_rows, "clear")
         dark = 10.0
         specs = {
@@ -97,7 +89,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
         }[slug]
         states = {}
         for name, bounds in specs.items():
-            selected = [row for a, b in bounds for row in window(rows, tc, a, b)]
+            selected = [row for a, b in bounds for row in window(rows, a, b, tc)]
             value = mean(selected, "clear")
             states[name] = {
                 "receive_windows_s": bounds,
@@ -137,7 +129,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
         photometry[slug] = info
     result["transit-method"] = photometry
 
-    analog = read(data_root, "core/analog_input_plot_v1-2.example.csv")
+    analog = read_dicts(data_root / "core/analog_input_plot_v1-2.example.csv")
     result["owon-interface"] = {
         "auxiliary_dataset": "core/analog_input_plot_v1-2.example.csv",
         "display_mV_per_count": 3.226,
@@ -157,7 +149,7 @@ def analyze(data_root: Path) -> dict[str, dict]:
         ),
     }
 
-    obs = read(data_root, "drafts/illuminance-distance-manual_observations.example.csv")
+    obs = read_dicts(data_root / "drafts/illuminance-distance-manual_observations.example.csv")
     distance = [row["Entered ruler distance (m)"] for row in obs]
     corrected = [row["Background-corrected signal (counts)"] for row in obs]
     products = [s * r * r for s, r in zip(corrected, distance, strict=True)]

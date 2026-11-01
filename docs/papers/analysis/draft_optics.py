@@ -8,11 +8,13 @@ sensitivity analyses, not confidence intervals. Clocks are paired explicitly.
 from __future__ import annotations
 
 import bisect
-import csv
 import json
 import math
 import statistics as st
 from pathlib import Path
+
+from _common import draft_rows as read
+from _common import window
 
 SLUGS = (
     "rgb-filter-transmission",
@@ -24,15 +26,11 @@ SLUGS = (
 )
 
 
-def read(root: Path, name: str) -> list[list[float]]:
-    with (root / "drafts" / (name + ".example.csv")).open(newline="", encoding="utf-8") as stream:
-        reader = csv.reader(stream)
-        next(reader)
-        return [[float(value) for value in row] for row in reader]
-
-
-def window(rows: list[list[float]], start: float, stop: float, x: int = 0) -> list[list[float]]:
-    return [row for row in rows if start <= row[x] < stop]
+def finite_max(values: list[float]) -> float:
+    """max() over NaN is order-dependent, so refuse NaN."""
+    if any(math.isnan(v) for v in values):
+        raise ValueError("NaN in values to be maximised")
+    return max(values)
 
 
 def mean(rows: list[list[float]], col: int) -> float:
@@ -166,13 +164,11 @@ def reductions(data_root: Path) -> tuple[dict, dict[str, list[list[float]]]]:
     mouse_t = [row[0] for row in mouse]
     paired = []
     mismatches = []
-    discrepancies = []
     for row in light:
         index = bisect.bisect_right(mouse_t, row[0]) - 1
         r = 0.15 + 0.0002 * mouse[index][5] if index >= 0 else math.nan
         paired.append([row[0], r, row[3]])
         mismatches.append(abs(r - row[5]))
-        discrepancies.append(mouse[index][5] - row[4])
         word = int(row[1])
         decoded = 0.01 * (2 ** (word // 4096)) * (word % 4096)
         assert math.isclose(decoded, row[2], rel_tol=1e-8)
@@ -203,7 +199,7 @@ def reductions(data_root: Path) -> tuple[dict, dict[str, list[list[float]]]]:
         "plateaux_r_m_lux_product": plateaux,
         "product_mean_lx_m2": st.mean(row[2] for row in plateaux),
         "product_sd_lx_m2": st.stdev(row[2] for row in plateaux),
-        "max_repaired_pairing_distance_difference_m": max(mismatches),
+        "max_repaired_pairing_distance_difference_m": finite_max(mismatches),
         "pairing_rows_differing": sum(v > 1e-8 for v in mismatches),
         "hid_signed_byte_overflow_rows": sum(abs(row[j]) > 127 for row in mouse for j in [1, 2]),
         "units": {"distance": "m", "illuminance": "lx", "product": "lx m^2"},
@@ -323,7 +319,7 @@ def reductions(data_root: Path) -> tuple[dict, dict[str, list[list[float]]]]:
     results[SLUGS[4]] = {
         "windows": colour_windows,
         "dark_counts": [3, 2, 2, 1],
-        "max_reduction_difference_K": max(discrepancies),
+        "max_reduction_difference_K": finite_max(discrepancies),
         "method": (
             "Dark-correct raw counts; normalize by corrected "
             "clear; donor matrix; guarded McCamy cubic"

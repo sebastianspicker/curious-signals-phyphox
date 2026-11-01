@@ -38,6 +38,8 @@ validate:
 	$(PYTHON) scripts/check_experiment_math.py
 	$(PYTHON) scripts/check_drafts.py
 	$(PYTHON) scripts/check_doc_links.py
+	$(PYTHON) example-data/validate_example_data.py
+	$(PYTHON) example-data/validate_draft_example_data.py
 
 check-experiment-math:
 	$(PYTHON) scripts/check_experiment_math.py
@@ -45,7 +47,7 @@ check-experiment-math:
 check-drafts:
 	$(PYTHON) scripts/check_drafts.py
 
-bundle-drafts: check-drafts
+bundle-drafts:
 	$(PYTHON) scripts/bundle_drafts.py
 
 check-generated:

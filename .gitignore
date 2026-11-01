@@ -43,7 +43,7 @@ __pycache__/
 /phyphox-experiments.zip
 /reference/
 /output/
-/arxiv/*/*.pdf
+/arxiv/
 
 # Logs and local environment
 *.log

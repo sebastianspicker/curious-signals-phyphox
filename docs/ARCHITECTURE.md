@@ -42,8 +42,8 @@ duplicates the few values it needs, and checks derived from the contract stop
 those copies from drifting apart:
 
 - **Firmware:** the sketch stays one self-contained `.ino` that teachers can
-  copy into the Arduino IDE; keep its literals in step with
-  `protocol/contract.json` by hand.
+  copy into the Arduino IDE; `make validate` checks its UUID, device-name,
+  timing, frame-size and mode literals against `protocol/contract.json`.
 - **Core experiments:** `make validate` checks sources and generated files
   against the parsed contract (UUIDs, offsets, conversions, mode per filename).
 - **Preview:** keep the modes and channel shapes in the preview data module in step
@@ -234,8 +234,8 @@ a disposable `Checkout` copy instead of patching module internals.
 - Change shared wire or mode facts in `protocol/contract.json`, update every
   affected concrete implementation (firmware, XML sources and includes, preview
   preview data, docs tables), and describe the compatibility impact. `make validate`
-  checks the XML against the contract; the firmware and preview are kept in step
-  by hand here and by the maintainer's separate behaviour tests.
+  checks the XML and the firmware literals against the contract; the preview is
+  kept in step by hand here and by the maintainer's separate behaviour tests.
 - Edit core experiments under `src/phyphox/` and rebuild their matching root
   artifacts. Generated root experiments never become source inputs.
 - Edit astronomy files directly and retain English root content plus the German

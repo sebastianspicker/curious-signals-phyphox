@@ -157,7 +157,7 @@ def write_all() -> None:
         ],
     }
     MANIFEST_PATH.write_text(
-        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8", newline="\n"
     )
 
 
@@ -308,8 +308,8 @@ def make_cc2541_accelerometer() -> None:
         scenario="Flat, ±20° tilts, a short shake, a 60° roll, and a return to flat.",
         realism=[
             "±2 g, 8-bit KXTJ9 setting with 64 counts per g.",
-            "Signed int8 counts, including the -128 minimum byte.",
-            "Bias of 0.20, -0.25, 0.35 m/s² and 0.02 m/s² noise.",
+            "Signed int8 counts; -128 decodes as -2 g (not reached in this record).",
+            "Bias of 0.20, -0.25, 0.35 m/s²; no added noise.",
             "10 Hz receive-time stream; the 100 ms request is not a guaranteed conversion clock.",
         ],
     )

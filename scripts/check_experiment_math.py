@@ -112,6 +112,10 @@ class Experiment:
         self.buffers[name] = list(values) if isinstance(values, list) else [values]
 
     def last(self, name: str) -> float:
+        """Latest value; NaN for an empty buffer, because phyphox shows neither as a value.
+
+        A fixture that needs a produced value must assert on ``self.buffers[name]``.
+        """
         values = self.buffers[name]
         return values[-1] if values else NAN
 

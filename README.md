@@ -266,8 +266,9 @@ PYTHONPATH=src python3 -m curious_signals build --output /tmp/phyphox-output
 
 `protocol/contract.json` is the normative record of the device name, UUIDs,
 frame encoding, mode numbers, channel meanings, and filenames. The firmware, the
-experiment XML, and the preview are concrete implementations, and validation
-keeps them in step with that record.
+experiment XML, and the preview are concrete implementations. `make validate`
+checks the firmware literals and the experiment XML against that record; the
+preview's modes in `demo/fixtures.js` are kept in step by hand.
 
 Know the limits before you build a lesson around it:
 

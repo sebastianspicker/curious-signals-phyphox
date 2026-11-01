@@ -45,8 +45,9 @@ The notification interval is at least 50 ms, so the maximum nominal rate is
 - APDS9960: about 11.12 ms integration per RGBC conversion.
 - SAADC: three sequential conversions per frame.
 
-The example core files start at `t = 0` for readability. A real device time is
-`millis()` since firmware start and may begin at several seconds. The timestamp
+The example core files start at `t = 0` for readability. A real device time
+counts from the BLE connection and may begin at several seconds when recording
+starts after connecting. The timestamp
 advances in 50 ms or 51 ms steps because the loop is scheduled from integer
 milliseconds, not from a hardware timer.
 

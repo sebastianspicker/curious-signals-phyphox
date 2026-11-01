@@ -55,6 +55,7 @@ def check_manifest() -> list[str]:
             errors.append(f"{entry['file']}: columns differ from manifest")
         if len(rows) != entry["rows"]:
             errors.append(f"{entry['file']}: row count differs from manifest")
+        errors += check_common(path, rows)
         if entry["file"] != "core/magnetometer_plot_v1-2.example.csv":
             if any(value == "nan" for row in rows for value in row.values()):
                 errors.append(f"{entry['file']}: unexpected NaN value")
@@ -62,10 +63,14 @@ def check_manifest() -> list[str]:
 
 
 def check_common(path: Path, rows: list[dict[str, str]]) -> list[str]:
+    if not rows:
+        return [f"{path.name}: no data rows"]
     errors: list[str] = []
     time_keys = ("Time t (s)", "Time (s)", "t (s)", "Time (min)")
     time_key = next((key for key in time_keys if key in rows[0]), None)
-    if time_key is not None:
+    if time_key is None:
+        errors.append(f"{path.name}: no recognised time column")
+    else:
         previous = -math.inf
         for index, row in enumerate(rows):
             try:
@@ -112,7 +117,6 @@ def check_core() -> list[str]:
 
     path = ROOT / "core/accelerometer_plot_v1-2.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     errors += check_magnitude(path, rows, "Acceleration ", " (g)", "Absolute Acceleration (g)")
     errors += check_magnitude(
         path, rows, "Acceleration ", " (m/s²)", "Absolute Acceleration (m/s²)"
@@ -128,7 +132,6 @@ def check_core() -> list[str]:
 
     path = ROOT / "core/gyroscope_plot_v1-2.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     errors += check_magnitude(
         path, rows, "Angular Velocity ", " (deg/s)", "Absolute Angular Velocity (deg/s)"
     )
@@ -146,7 +149,6 @@ def check_core() -> list[str]:
 
     path = ROOT / "core/magnetometer_plot_v1-2.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     errors += check_magnitude(path, rows, "Magnetometer ", " (µT)", "Absolute magnetic field (µT)")
     nan_rows = sum(1 for row in rows if row["Magnetometer x (µT)"] == "nan")
     if nan_rows != 4:
@@ -154,7 +156,6 @@ def check_core() -> list[str]:
 
     path = ROOT / "core/pressure_plot_v1-2.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         if not close(
             number(row["Pressure (hPa)"]),
@@ -165,7 +166,6 @@ def check_core() -> list[str]:
 
     path = ROOT / "core/light_plot_v1-2.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         values = [int(row[key]) for key in row if key != "Time t (s)"]
         if any(value < 0 or value > 4100 for value in values):
@@ -185,7 +185,6 @@ def check_core() -> list[str]:
 
     path = ROOT / "core/analog_input_plot_v1-2.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         for channel in ("A0", "A1", "A2"):
             counts = int(row[f"Analog Input {channel}"])
@@ -221,7 +220,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/albedo_sensortag.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         if not close(
             number(row["Relative light level (a.u.)"]),
@@ -232,7 +230,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/greenhouse.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         for tag in ("1", "2"):
             if not close(
@@ -244,7 +241,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/ir-dist_habitable.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         if not close(
             number(row["T_IR (°C)"]),
@@ -261,7 +257,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/missiontomars_sensortag.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         if not close(
             number(row["Pressure (hPa)"]),
@@ -272,7 +267,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/owon_digital_multimeter-debug.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         decoded = b35t_decode(
             row["Raw numeric field (a.u.)"],
@@ -284,7 +278,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/pt-star.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         pressure = number(row["Pressure (hPa)"])
         if not 300.0 <= pressure <= 1100.0:
@@ -304,7 +297,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/tidal-locking_bmp280.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         for tag in ("1", "2"):
             if not close(
@@ -316,7 +308,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/tidal-locking_tmp007.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         pairs = (
             ("Ambient temperature 1 (°C)", "Raw ambient 1 word (a.u.)"),
@@ -334,7 +325,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/tidal-locking_opt3001.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         for tag in ("1", "2"):
             if not close(
@@ -346,7 +336,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/transitmethode_sensortag.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         if not close(
             number(row["Relative Signal (a.u.)"]),
@@ -357,7 +346,6 @@ def check_astronomy() -> list[str]:
 
     path = ROOT / "astronomy/transitmethode_owon.example.csv"
     _, rows = read_csv(path)
-    errors += check_common(path, rows)
     for index, row in enumerate(rows):
         decoded = b35t_decode(
             row["Raw numeric field (a.u.)"],

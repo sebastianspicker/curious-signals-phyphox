@@ -16,9 +16,14 @@ import io
 import json
 import math
 import statistics
+import sys
 from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
+sys.path.insert(0, str(HERE / "analysis"))
+
+from _common import in_window, read_table  # noqa: E402
+
 REPOSITORY_DATA = HERE.parents[1] / "example-data"
 DATA_ROOT = HERE / "example-data" if (HERE / "example-data").is_dir() else REPOSITORY_DATA
 COLORS = ("csblue", "csred", "csteal", "csgold")
@@ -26,12 +31,7 @@ STYLES = ("solid", "dashed", "dashdotted", "densely dotted")
 
 
 def read_csv(path: Path) -> tuple[list[str], list[list[float]]]:
-    with path.open(encoding="utf-8", newline="") as stream:
-        reader = csv.reader(stream)
-        headers = next(reader)
-        rows = [[float(value) for value in row] for row in reader]
-    if not rows or any(len(row) != len(headers) for row in rows):
-        raise ValueError(f"Invalid CSV shape: {path}")
+    headers, rows = read_table(path)
     if any(b[0] <= a[0] for a, b in zip(rows, rows[1:])):
         raise ValueError(f"Time is not strictly increasing: {path}")
     return headers, rows
@@ -46,7 +46,7 @@ def table_text(rows: list[list[float]]) -> str:
 
 
 def window_mean(rows: list[list[float]], column: int, start: float, stop: float) -> float:
-    return statistics.mean(row[column] for row in rows if start <= row[0] < stop)
+    return statistics.mean(row[column] for row in rows if in_window(row[0], start, stop))
 
 
 def series(
@@ -130,14 +130,17 @@ def plot_source(panels: list[dict], xlabel: str = "Time (s)", height: str = "3.5
     return "\n".join(lines)
 
 
+def source_csvs() -> list[Path]:
+    paths = sorted(DATA_ROOT.glob("astronomy/*.example.csv"))
+    return paths + sorted(DATA_ROOT.glob("core/*.example.csv"))
+
+
 def products() -> dict[Path, str]:
     outputs: dict[Path, str] = {}
     records: dict[str, list[list[float]]] = {}
     provenance = {}
     # The draft collection is separate from the fifteen-paper source set.
-    source_paths = sorted(DATA_ROOT.glob("astronomy/*.example.csv"))
-    source_paths += sorted(DATA_ROOT.glob("core/*.example.csv"))
-    for path in source_paths:
+    for path in source_csvs():
         headers, rows = read_csv(path)
         name = path.name.removesuffix(".example.csv")
         records[name] = rows
@@ -441,7 +444,11 @@ def prepare(*, check: bool = False) -> None:
             if not target.is_file() or target.read_text(encoding="utf-8") != text:
                 target.parent.mkdir(parents=True, exist_ok=True)
                 target.write_text(text, encoding="utf-8")
-    print(f"{'Checked' if check else 'Prepared'} 21 CSV sources and 15 data figures.")
+    figures = sum(relative.parts[0] == "figures" for relative in outputs)
+    print(
+        f"{'Checked' if check else 'Prepared'} {len(source_csvs())} CSV sources"
+        f" and {figures} data figures."
+    )
 
 
 if __name__ == "__main__":

@@ -2,21 +2,17 @@
 
 from __future__ import annotations
 
-import csv
 import json
 import math
 import statistics
 import sys
+from functools import partial
 from pathlib import Path
 
+from _common import read_dicts
+from _common import window as _window
 
-def rows(data_root: Path, name: str) -> list[dict[str, float]]:
-    with (data_root / "core" / name).open(encoding="utf-8", newline="") as stream:
-        return [{key: float(value) for key, value in row.items()} for row in csv.DictReader(stream)]
-
-
-def window(record: list[dict[str, float]], start: float, stop: float) -> list[dict[str, float]]:
-    return [row for row in record if start <= row["Time t (s)"] < stop]
+window = partial(_window, clock="Time t (s)")
 
 
 def mean(record: list[dict[str, float]], column: str) -> float:
@@ -70,7 +66,7 @@ def fit_exponential(record, start, stop, column, t0):
         sse = sum((y - asymptote - amplitude * x) ** 2 for x, y in zip(basis, values))
         return sse, asymptote, amplitude
 
-    low, high = 0.3, 3.0
+    low, high = bounds = 0.3, 3.0
     ratio = (math.sqrt(5) - 1) / 2
     for _ in range(100):
         left, right = high - ratio * (high - low), low + ratio * (high - low)
@@ -79,6 +75,8 @@ def fit_exponential(record, start, stop, column, t0):
         else:
             low = left
     tau = (low + high) / 2
+    if any(abs(tau - bound) < 1e-6 for bound in bounds):
+        raise ValueError("tau search ended at its bound; widen the search interval")
     sse, asymptote, amplitude = profile(tau)
     return {
         "window_s": [start, stop],
@@ -96,9 +94,9 @@ def fit_exponential(record, start, stop, column, t0):
 
 
 def analyze(data_root: Path) -> dict:
-    pressure = rows(data_root, "pressure_plot_v1-2.example.csv")
-    humidity = rows(data_root, "temperature_plot_v1-2.example.csv")
-    analog = rows(data_root, "analog_input_plot_v1-2.example.csv")
+    pressure = read_dicts(data_root / "core" / "pressure_plot_v1-2.example.csv")
+    humidity = read_dicts(data_root / "core" / "temperature_plot_v1-2.example.csv")
+    analog = read_dicts(data_root / "core" / "analog_input_plot_v1-2.example.csv")
     first_breath = window(humidity, 35, 60)
     heating = window(humidity, 65, 115)
     temp_max = max(heating, key=lambda row: row["Temperature (°C)"])

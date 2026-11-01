@@ -5,20 +5,15 @@ from __future__ import annotations
 
 import argparse
 import bisect
-import csv
 import json
 import math
 import statistics as st
 from pathlib import Path
 
+from _common import draft_rows as read
+from _common import window
+
 SLUGS = ("static-friction", "audio-magnetic", "magnetic-current")
-
-
-def read(data_root: Path, name: str) -> list[list[float]]:
-    with (data_root / "drafts" / (name + ".example.csv")).open(newline="", encoding="utf-8") as f:
-        reader = csv.reader(f)
-        next(reader)
-        return [[float(x) for x in row] for row in reader]
 
 
 def finite(values):
@@ -28,10 +23,6 @@ def finite(values):
 def stats(values) -> dict:
     xs = finite(values)
     return {"n": len(xs), "mean": st.mean(xs), "sd": st.stdev(xs) if len(xs) > 1 else None}
-
-
-def window(rows, start, stop, time_column=0):
-    return [r for r in rows if start <= r[time_column] < stop]
 
 
 def line_fit(x, y) -> dict:

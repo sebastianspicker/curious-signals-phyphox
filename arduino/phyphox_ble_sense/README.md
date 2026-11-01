@@ -37,7 +37,7 @@ Each notification carries five little-endian `float32` values:
 
 | Offset | phyphox channel | Value |
 | --- | --- | --- |
-| 0 | CH1 | seconds since firmware start |
+| 0 | CH1 | seconds since the phone connected |
 | 4 | CH2 | first mode value |
 | 8 | CH3 | second mode value |
 | 12 | CH4 | third mode value |
@@ -75,8 +75,10 @@ Sensor initialization results are captured during `setup()`. If a required
 sensor did not initialize, or has no fresh sample, its output channels stay
 `NaN`. Analog mode reads A0, A1, and A2 for every sample.
 
-Device time comes from unsigned `millis()` subtraction, so the transmitted time
-restarts after the roughly 49-day `millis()` wrap.
+Device time counts seconds since the phone connected and restarts at every
+connection. Sent as float32, it keeps sub-millisecond resolution for the first
+4.5 hours of a connection; counted from power-on instead, its steps would exceed
+the 50 ms sample period after about six days.
 
 ## Diagnostics
 

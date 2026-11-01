@@ -25,6 +25,8 @@ Canonical reductions:
   Measured baseline 22.700893 °C, late mean 27.992500 °C, rise **5.291607 K**.
   Fitted amplitude 7.995735 K, time constant 149.6618 s, RMS 0.019198 K.
   The older auxiliary [210,240) result of 5.334353 K is deliberately omitted.
+  Since 2026-11-01 the auxiliary record in `revision-analysis.json` uses the same
+  [0,55) and [210,235) s windows, so both records give 5.291607 K.
 - The entered 22 °C reference contributes an initial 0.700893-K offset. The
   single adjacent-sample change at nominal lamp-off is 2.61 K; paired changes
   are 1.06 and 1.34 K. The text relates these to failure of the fitted single-node

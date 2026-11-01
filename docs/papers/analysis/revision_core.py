@@ -6,22 +6,12 @@ separate clocks; no row-wise comparison between instruments is performed.
 
 from __future__ import annotations
 
-import csv
 import json
 import math
 import statistics as stats
 from pathlib import Path
 
-
-def read(data_root: Path, relative: str) -> list[list[float]]:
-    with (data_root / relative).open(encoding="utf-8", newline="") as stream:
-        reader = csv.reader(stream)
-        next(reader)
-        return [[float(value) for value in row] for row in reader]
-
-
-def window(rows: list[list[float]], start: float, stop: float) -> list[list[float]]:
-    return [row for row in rows if start <= row[0] < stop]
+from _common import read_lists, window
 
 
 def mean(rows: list[list[float]], column: int) -> float:
@@ -53,22 +43,22 @@ def vapour(rows: list[list[float]], temperature: int, humidity: int) -> dict:
 
 
 def analyze(data_root: Path) -> dict[str, dict]:
-    accel = read(data_root, "drafts/cc2541-accelerometer.example.csv")
+    accel = read_lists(data_root / "drafts/cc2541-accelerometer.example.csv")
     accel_step = slope(accel, 1, 4)
     flat = window(accel, 0, 8)
-    gyro = read(data_root, "core/gyroscope_plot_v1-2.example.csv")
+    gyro = read_lists(data_root / "core/gyroscope_plot_v1-2.example.csv")
     gyro_turn = window(gyro, 9, 29)
-    ccgyro = read(data_root, "drafts/cc2541-gyroscope.example.csv")
-    mag = read(data_root, "drafts/magnetic-current.example.csv")
+    ccgyro = read_lists(data_root / "drafts/cc2541-gyroscope.example.csv")
+    mag = read_lists(data_root / "drafts/magnetic-current.example.csv")
     mag_slope = slope(mag, 5, 3)
     mag_intercept = mean(mag, 3) - mag_slope * mean(mag, 5)
-    boiling = read(data_root, "drafts/pressure-boiling.example.csv")
+    boiling = read_lists(data_root / "drafts/pressure-boiling.example.csv")
     out_of_range = [r for r in boiling if not 26 <= r[1] <= 126]
-    hts = read(data_root, "core/temperature_plot_v1-2.example.csv")
-    hdc = read(data_root, "drafts/sensortag-environmental_humidity.example.csv")
-    sht = read(data_root, "drafts/cc2541-humidity.example.csv")
-    rgb = read(data_root, "drafts/rgb-filter-transmission.example.csv")
-    uv = read(data_root, "drafts/uv-transmission_observations.example.csv")
+    hts = read_lists(data_root / "core/temperature_plot_v1-2.example.csv")
+    hdc = read_lists(data_root / "drafts/sensortag-environmental_humidity.example.csv")
+    sht = read_lists(data_root / "drafts/cc2541-humidity.example.csv")
+    rgb = read_lists(data_root / "drafts/rgb-filter-transmission.example.csv")
+    uv = read_lists(data_root / "drafts/uv-transmission_observations.example.csv")
     valid_uv = [r for r in uv if r[3] == 1 and 0 < r[2] < r[1] < 1023 and r[2] <= r[9] < 1023]
     uv_result = []
     for r in valid_uv:

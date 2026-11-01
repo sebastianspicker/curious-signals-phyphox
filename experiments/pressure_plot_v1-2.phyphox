@@ -124,7 +124,7 @@
     </views>
     
     <!-- kPa to hPa -->
-    <analysis sleep="0.05">
+    <analysis sleep="0.5">
     <formula formula="[1_]*10-[2]">
         <input clear="false">CH2</input>
         <input clear="false">pressure_bias</input>

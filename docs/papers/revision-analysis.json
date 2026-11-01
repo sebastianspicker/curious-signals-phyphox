@@ -42,7 +42,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
       }
     },
     "transit-method": {
@@ -138,7 +138,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
       }
     },
     "owon-interface": {
@@ -172,7 +172,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
       }
     },
     "ir-distance": {
@@ -210,7 +210,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "9cb8e8e253408dab825fee142dc924a06bdb8c9e5672ad13f366acbf89f5fb09"
+        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
       }
     },
     "greenhouse": {
@@ -242,7 +242,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
       }
     },
     "mission-to-mars": {
@@ -287,7 +287,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
       }
     },
     "pt-star": {
@@ -307,7 +307,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
       }
     },
     "tidal-locking": {
@@ -377,7 +377,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "e62a169b825d4e17dcd4a2efc134564e2ef4a6f6c91156bd9804b7ca38241f9b"
+        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
       }
     },
     "accelerometer": {
@@ -416,7 +416,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
       }
     },
     "gyroscope": {
@@ -455,7 +455,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
       }
     },
     "magnetometer": {
@@ -488,7 +488,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
       }
     },
     "pressure": {
@@ -523,7 +523,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
       }
     },
     "temperature-humidity": {
@@ -566,7 +566,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
       }
     },
     "light-rgb": {
@@ -603,7 +603,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
       }
     },
     "analog-inputs": {
@@ -648,7 +648,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "316c39050c7a1a2b87d679a0e4a57596b9212a75d9ea2c57959e0cf391e0168c"
+        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
       }
     }
   },
@@ -1033,20 +1033,20 @@
       "auxiliary_windows_s": {
         "baseline": [
           0,
-          60
+          55
         ],
         "late_heating": [
           210,
-          240
+          235
         ]
       },
       "auxiliary_window_rule": "receive time, lower inclusive/upper exclusive; no clock alignment to paired run",
-      "baseline_die_C": 22.700819672131146,
-      "late_heating_die_C": 28.035172413793102,
-      "late_heating_rise_K": 5.334352741661956,
-      "mean_displayed_rise_K": 6.035172413793103,
+      "baseline_die_C": 22.700892857142858,
+      "late_heating_die_C": 27.9925,
+      "late_heating_rise_K": 5.291607142857142,
+      "mean_displayed_rise_K": 5.9925,
       "display_reference_C": 22.0,
-      "display_reference_minus_measured_baseline_K": -0.7008196721311464,
+      "display_reference_minus_measured_baseline_K": -0.7008928571428577,
       "switch_off_step_K": 2.6099999999999994,
       "switch_off_times_s": [
         239.003618,

@@ -21,21 +21,22 @@ fi
 
 echo "== Secret scan (tracked and untracked files) =="
 secret_patterns=(
-  "BEGIN (RSA|EC|OPENSSH) PRIVATE KEY"
+  "BEGIN ([A-Z]+ )?PRIVATE KEY"
   "AKIA[0-9A-Z]{16}"
   "ASIA[0-9A-Z]{16}"
   "xox[baprs]-[0-9A-Za-z-]{10,}"
-  "ghp_[0-9A-Za-z]{36}"
+  "gh[pousr]_[0-9A-Za-z]{36}"
   "github_pat_[0-9A-Za-z_]{20,}"
   "glpat-[0-9A-Za-z-]{20,}"
 )
 
-matches="$(mktemp)"
-files="$(mktemp)"
+matches="$(mktemp "${TMPDIR:-/tmp}/secret-scan.XXXXXX")"
+files="$(mktemp "${TMPDIR:-/tmp}/secret-scan.XXXXXX")"
 trap 'rm -f "$matches" "$files"' EXIT
 
 git ls-files -z --cached --others --exclude-standard -- . >"$files"
-scan_arguments=(--null --line-number --with-filename)
+# --text: a match inside a binary file is still reported with its file name.
+scan_arguments=(--null --line-number --with-filename --text)
 for pattern in "${secret_patterns[@]}"; do
   scan_arguments+=(--regexp "$pattern")
 done

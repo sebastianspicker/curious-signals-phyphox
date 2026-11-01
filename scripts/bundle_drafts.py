@@ -111,7 +111,7 @@ def archive(path: Path, files: list[Path], overrides: dict[Path, bytes] | None =
 
 
 def main() -> None:
-    catalog = check(ROOT, fixtures=False)
+    catalog = check(ROOT)
     destination = ROOT / "output/drafts"
     destination.mkdir(parents=True, exist_ok=True)
     experiments = [ROOT / e["experiment"] for e in catalog["experiments"]]
@@ -143,7 +143,7 @@ def main() -> None:
         str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in experiments
     }
     (destination / "experiment-sha256.json").write_text(
-        json.dumps(hashes, indent=2) + "\n", encoding="utf-8"
+        json.dumps(hashes, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
     print(f"Draft experiment ZIP, companion ZIP, and hashes written to {destination}")
 

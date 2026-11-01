@@ -2,16 +2,12 @@
 
 from __future__ import annotations
 
-import csv
 import json
 import math
 import statistics
 from pathlib import Path
 
-
-def read(data_root: Path, name: str) -> list[dict[str, float]]:
-    with (data_root / "astronomy" / f"{name}.example.csv").open(encoding="utf-8") as stream:
-        return [{key: float(value) for key, value in row.items()} for row in csv.DictReader(stream)]
+from _common import in_window, read_dicts
 
 
 def time_s(row: dict[str, float]) -> float:
@@ -19,7 +15,7 @@ def time_s(row: dict[str, float]) -> float:
 
 
 def window(rows: list[dict[str, float]], start: float, end: float) -> list[dict[str, float]]:
-    return [row for row in rows if start <= time_s(row) < end]
+    return [row for row in rows if in_window(time_s(row), start, end)]
 
 
 def average(rows: list[dict[str, float]], column: str) -> float:
@@ -39,7 +35,7 @@ def fit_heating(rows: list[dict[str, float]], column: str, baseline: float) -> d
         sse = sum((value - amplitude * x) ** 2 for x, (_, value) in zip(basis, points, strict=True))
         return sse, amplitude
 
-    lo, hi = 20.0, 1000.0
+    lo, hi = bounds = 20.0, 1000.0
     ratio = (math.sqrt(5) - 1) / 2
     left, right = hi - ratio * (hi - lo), lo + ratio * (hi - lo)
     for _ in range(100):
@@ -50,6 +46,8 @@ def fit_heating(rows: list[dict[str, float]], column: str, baseline: float) -> d
             lo, left = left, right
             right = lo + ratio * (hi - lo)
     tau = (lo + hi) / 2
+    if any(abs(tau - bound) < 1e-6 for bound in bounds):
+        raise ValueError("tau search ended at its bound; widen the search interval")
     sse, amplitude = evaluate(tau)
     return {
         "tau_s": tau,
@@ -61,7 +59,7 @@ def fit_heating(rows: list[dict[str, float]], column: str, baseline: float) -> d
 
 def analyze(data_root: Path) -> dict:
     result = {}
-    rows = read(data_root, "greenhouse")
+    rows = read_dicts(data_root / "astronomy" / "greenhouse.example.csv")
     baseline, heating, cooling = window(rows, 0, 60), window(rows, 330, 360), window(rows, 540, 600)
     columns = ["Temperature 1 (°C)", "Temperature 2 (°C)"]
     initial = [average(baseline, col) for col in columns]
@@ -102,7 +100,7 @@ def analyze(data_root: Path) -> dict:
         ],
     }
 
-    rows = read(data_root, "pt-star")
+    rows = read_dicts(data_root / "astronomy" / "pt-star.example.csv")
     specs = {
         "baseline": [0, 30],
         "compressed": [55, 60],
@@ -143,9 +141,9 @@ def analyze(data_root: Path) -> dict:
         ),
     }
 
-    bmp = read(data_root, "tidal-locking_bmp280")
-    ir = read(data_root, "tidal-locking_tmp007")
-    light = read(data_root, "tidal-locking_opt3001")
+    bmp = read_dicts(data_root / "astronomy" / "tidal-locking_bmp280.example.csv")
+    ir = read_dicts(data_root / "astronomy" / "tidal-locking_tmp007.example.csv")
+    light = read_dicts(data_root / "astronomy" / "tidal-locking_opt3001.example.csv")
     channel_specs = [
         ("bmp280", bmp, ["Temperature 1 (°C)", "Temperature 2 (°C)"]),
         ("tmp007_object", ir, ["Object temperature 1 (°C)", "Object temperature 2 (°C)"]),

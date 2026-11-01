@@ -2,7 +2,7 @@
   "inspected_date": "2026-10-26",
   "evidence": "Source inspection, official format validation and numerical XML fixtures; no new laboratory observations",
   "sha256": {
-    "arduino/phyphox_ble_sense/phyphox_ble_sense.ino": "41b8a2cb5b149d1ae4eead2aee68879b1c0d160324826da5259978cf5d8f08d4",
+    "arduino/phyphox_ble_sense/phyphox_ble_sense.ino": "82424373f0e078848a46a697f542050f6b16984fba73d5af9736d47bb8ceff8c",
     "arduino/toolchain.json": "770b41ef9d98a155aba7b86efb20fd8aca8d4d27f0eb33172d14cfd331b1c505",
     "experiments/accelerometer_plot_v1-2.phyphox": "0fbdd384c0d72249a448eb616e29185d6980e266f767cbcae20b7dcbbaf8c8a2",
     "experiments/analog_input_plot_v1-2.phyphox": "7e4f7c7a7d26f7a619f705069b621598d09b1b26233386104eb47bd86248bc71",
@@ -17,8 +17,8 @@
     "experiments/gyroscope_plot_v1-2.phyphox": "fbf861eca5a32206ea83d9d0f7c2444072896fabec159f8a6fa272d564fc1045",
     "experiments/light_plot_v1-2.phyphox": "614177f104ba96e66b848e833902b4e3aefa4dd88af1757a1f10b37c8f020da2",
     "experiments/magnetometer_plot_v1-2.phyphox": "3b680fb215d0e9f411c9f84181d9fb69d2b749caa3a85e15f174f74d50339c56",
-    "experiments/pressure_plot_v1-2.phyphox": "aebd62338c31007142785164204b7c8eb0d20d2bafc9418ed962c59068d808b1",
-    "experiments/temperature_plot_v1-2.phyphox": "1704b2ff475929a87f8f701b17a684e38f28f70457700b7b16fefe254e1341b1",
+    "experiments/pressure_plot_v1-2.phyphox": "f6c1f4ddb8a1a908df6d74153147fce1302201377fd833555bba8e768c617c57",
+    "experiments/temperature_plot_v1-2.phyphox": "d5135c8d55bbd67d3bf18248b7a8a7a445c1d4e9581bede228d4b158de043090",
     "protocol/contract.json": "9eaad1193e83eab075f000ed9de66197ac7f45a3eb6f13a177b1afff2aaa63af",
     "src/phyphox/README.md": "d5b6c26d77ba0ecbbcbcbab6afc208ef51f444e515a2b985f9b19334d1898891",
     "src/phyphox/accelerometer_plot_v1-2.phyphox.xml": "ea5a413fe46b011596492de830c4829e676d2a58d83320b6d07da32e2cf36699",
@@ -28,10 +28,23 @@
     "src/phyphox/includes/containers_ch0_ch5.xml": "b17dba07aae6a8d98003af6b5aabd6508c8ab7410b7055d89c359c1a184de447",
     "src/phyphox/light_plot_v1-2.phyphox.xml": "59d7169b9a9699e5e096b0c057ea74112b30d7214b186b7fae04369334347c91",
     "src/phyphox/magnetometer_plot_v1-2.phyphox.xml": "2b5b5f0edc66ac4bafd01a41ceb64101cb3a43f7889bcd00d064a42f18c89eb7",
-    "src/phyphox/pressure_plot_v1-2.phyphox.xml": "5b522b2f24b14e0c4913cc8f470872813c8d28183ecf5f401f54602ab915a699",
-    "src/phyphox/temperature_plot_v1-2.phyphox.xml": "addac250f81cf6143870b02b5824b4f9a8d4a887fa628db677a75f24b92aaf31"
+    "src/phyphox/pressure_plot_v1-2.phyphox.xml": "5e17513797e860f9308f980d088c6236bc214d9800d5f58a03f6205c380a934f",
+    "src/phyphox/temperature_plot_v1-2.phyphox.xml": "586b0c0e9e77e4a49bf4173250c12e8a400f556bf8754e6010e595453f0735c1"
   },
   "base_commit": "0a5cf6f79442d9a2a115c415eee21ffdbf99cc07",
   "revision": "Research-informed experiment improvements in working tree",
-  "example_acquisition_snapshot": "example-source-snapshot.json"
+  "example_acquisition_snapshot": "example-source-snapshot.json",
+  "kit_revisions": [
+    {
+      "date": "2026-11-01",
+      "files": [
+        "arduino/phyphox_ble_sense/phyphox_ble_sense.ino",
+        "experiments/pressure_plot_v1-2.phyphox",
+        "experiments/temperature_plot_v1-2.phyphox",
+        "src/phyphox/pressure_plot_v1-2.phyphox.xml",
+        "src/phyphox/temperature_plot_v1-2.phyphox.xml"
+      ],
+      "reason": "Audit fixes after the research inspection: device time restarts at each BLE connection (float32 resolution), and temperature/pressure analysis runs every 0.5 s instead of 0.05 s. Neither changes a paper's data, analysis or text."
+    }
+  ]
 }

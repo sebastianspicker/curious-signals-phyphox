@@ -2,24 +2,16 @@
 
 from __future__ import annotations
 
-import csv
 import json
 import math
 import statistics as stats
 from pathlib import Path
 
+from _common import draft_rows as read
+
 R_GAS = 8.31446261815324
 SAT_COEFFICIENTS = (-7.85951783, 1.84408259, -11.7866497, 22.6807411, -15.9618719, 1.80122502)
 SAT_POWERS = (1, 1.5, 3, 3.5, 4, 7.5)
-
-
-def read(data_root: Path, name: str) -> list[list[float]]:
-    with (data_root / "drafts" / f"{name}.example.csv").open(newline="") as stream:
-        reader = csv.reader(stream)
-        headers = next(reader)
-        rows = [[float(value) for value in row] for row in reader]
-    assert rows and all(len(row) == len(headers) for row in rows)
-    return rows
 
 
 def saturation_pressure(temperature_k: float) -> float:

@@ -11,6 +11,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 import zipfile
 from pathlib import Path
 from urllib.parse import quote, unquote, urlsplit
@@ -464,7 +465,7 @@ def prepared_papers(papers: list[dict]) -> dict[str, dict]:
         files, keys = source_files(paper)
         try:
             check_paper(paper, files, keys)
-        except (OSError, ValueError) as error:
+        except (OSError, ValueError, KeyError, zipfile.BadZipFile) as error:
             print(f"Preparing {paper['slug']}: {error}", flush=True)
             print(
                 run(
@@ -506,12 +507,29 @@ def main() -> int:
     output = args.output.resolve()
     build_dir = output / ".build"
     build_dir.mkdir(parents=True, exist_ok=True)
-    stage = build_dir / "edition-stage"
-    if not args.only:
-        if stage.exists():
+    # A fresh stage per run, so nothing under a user-chosen --output is ever deleted;
+    # a failed run removes only the mkdtemp directory it created itself.
+    stage = None if args.only else Path(tempfile.mkdtemp(dir=build_dir, prefix="edition-stage-"))
+    try:
+        assemble(args, catalog, chosen, prepared, output, stage)
+    except BaseException:
+        if stage is not None and stage.is_dir():
             shutil.rmtree(stage)
-        stage.mkdir()
-    destination = output if args.only else stage
+        raise
+    return 0
+
+
+def assemble(
+    args: argparse.Namespace,
+    catalog: dict,
+    chosen: list[dict],
+    prepared: dict[str, dict],
+    output: Path,
+    stage: Path | None,
+) -> None:
+    """Copy verified proofs; for a full edition, also build and publish the collection."""
+    papers = catalog["papers"]
+    destination = output if stage is None else stage
     paths = []
     counts = []
     for paper in chosen:
@@ -587,7 +605,6 @@ def main() -> int:
             f"Collected {len(paths)} canonical papers: {report['collection']['pages']} pages. "
             "Source and PDF ZIPs ready."
         )
-    return 0
 
 
 if __name__ == "__main__":

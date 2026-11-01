@@ -216,7 +216,7 @@ void readChannels(float& ch2, float& ch3, float& ch4, float& ch5) {
 }
 
 void sendSample() {
-  // Unsigned wrap-around is well-defined; t is correct for ~49 days, then wraps.
+  // Seconds since the phone connected; float32 steps stay below 1 ms for 4.5 hours.
   const uint32_t elapsedMs = static_cast<uint32_t>(millis() - startMs);
   float t = (float)elapsedMs / 1000.0f;
   float ch2 = 0, ch3 = 0, ch4 = 0, ch5 = 0;
@@ -260,7 +260,6 @@ void blinkBleFailurePattern() {
 }  // namespace
 
 void setup() {
-  startMs = millis();
   Serial.begin(kSerialBaud);
   pinMode(LED_BUILTIN, OUTPUT);
   digitalWrite(LED_BUILTIN, LOW);
@@ -312,6 +311,9 @@ void loop() {
   if (!central) {
     return;
   }
+  // Restart device time per connection: counting from boot, float32 steps exceed
+  // the 50 ms sample period after about six days of uptime.
+  startMs = millis();
   // Repeated here because boot output is lost unless a serial monitor was open.
   Serial.println("phyphox-sense: central connected");
   printSensorStatus();

@@ -8,14 +8,19 @@ blocks and external URLs are not checked.
 
 from __future__ import annotations
 
+import os
 import posixpath
 import re
 import subprocess
 import sys
 from urllib.parse import unquote, urlsplit
 
-LINK = re.compile(r"\]\(([^)\s]+)")
-FENCE = re.compile(r"```.*?```", re.DOTALL)
+LINKS = (
+    re.compile(r"\]\((<[^>]+>|[^)\s]+)"),  # inline [text](target) and [text](<target>)
+    re.compile(r"^ {0,3}\[(?!\^)[^\]]+\]:\s*(<[^>]+>|\S+)", re.MULTILINE),  # [ref]: target
+    re.compile(r"""\b(?:href|src)=["']([^"']+)["']"""),  # inline HTML
+)
+FENCE = re.compile(r"^[ \t]*(`{3,}|~{3,}).*?^[ \t]*\1", re.DOTALL | re.MULTILINE)
 
 
 def tracked_files() -> list[str]:
@@ -24,24 +29,29 @@ def tracked_files() -> list[str]:
 
 
 def broken_links(files: list[str]) -> list[str]:
-    tracked = set(files)
+    tracked = {name for name in files if os.path.exists(name)}
     folders = set()
     for name in files:
         folder = posixpath.dirname(name)
         while folder:
             folders.add(folder)
             folder = posixpath.dirname(folder)
+    folders.add(".")
     problems = []
     for name in files:
-        if not name.endswith(".md"):
+        # A tracked file deleted in the working tree has no text to check.
+        if not name.endswith(".md") or not os.path.isfile(name):
             continue
         with open(name, encoding="utf-8") as handle:
             text = FENCE.sub("", handle.read())
-        for match in LINK.finditer(text):
-            url = urlsplit(match.group(1))
+        for match in (m for pattern in LINKS for m in pattern.finditer(text)):
+            url = urlsplit(match.group(1).strip("<>"))
             if url.scheme or url.netloc or not url.path:
                 continue
-            target = posixpath.normpath(posixpath.join(posixpath.dirname(name), unquote(url.path)))
+            path = unquote(url.path)
+            # GitHub resolves a leading slash from the repository root.
+            base = "" if path.startswith("/") else posixpath.dirname(name)
+            target = posixpath.normpath(posixpath.join(base, path.lstrip("/")))
             if target not in tracked and target not in folders:
                 problems.append(f"{name}: link to untracked path {match.group(1)}")
     return problems
