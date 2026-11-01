@@ -7,10 +7,34 @@ Plug an original Arduino Nano 33 BLE Sense into a laptop, flash one sketch, and
 read its sensors live in the [phyphox](https://phyphox.org) app on a phone. No
 server, no account, and no mobile app to build.
 
+<details>
+<summary>Status and limitations</summary>
+
+Curious Signals is an independent exploratory project combining classroom sensor software,
+experiment drafts and research materials. Developed independently alongside my main
+professional work. The kit and analysis tools are reference implementations for adapting
+experiments to a particular apparatus and teaching context. Draft app, BLE and apparatus
+checks remain outstanding where documented; the research papers retain their own evidence and
+provenance statements.
+
+**Disclaimer.** Review calibration, acquisition and interpretation limits for each experiment,
+and validate the actual hardware and phyphox setup. Example workflows and lesson measurements
+do not certify educational outcomes or establish instrument accuracy. You are responsible for
+the apparatus, measurement decisions and classroom use.
+
+</details>
+
 This repository packages that workflow as a classroom kit: the firmware, seven
 ready-to-import experiments, a separate astronomy collection that uses phone and
 lab sensors on its own, and a static browser preview you can open without any
 hardware.
+
+```mermaid
+flowchart LR
+  Nano[Nano 33 BLE Sense sensors] --> BLE[Bluetooth stream]
+  BLE --> Phone[Readings in the phyphox app]
+  Example[Fixed example traces] --> Preview[Browser preview without hardware]
+```
 
 **Live preview:** <https://sebastianspicker.github.io/curious-signals-phyphox/>
 
@@ -45,7 +69,7 @@ Each mode has its own chart, units, and readouts:
 
 ## Get the experiments
 
-You do not need to clone the repository. Once the first release is tagged, each
+You do not need to clone the repository. Once the first release is published, each
 [GitHub release](https://github.com/sebastianspicker/curious-signals-phyphox/releases/latest)
 carries:
 

@@ -1,8 +1,10 @@
 # Continuous integration
 
-`.github/workflows/ci.yml` runs on every push, pull request, and manual dispatch.
-It asks for read-only repository permissions and cancels superseded runs on the
-same ref, so a branch that is pushed twice only tests once.
+`.github/workflows/ci.yml` starts on pushes, pull requests and manual dispatch.
+Its security job remains automatic. The XML/Python and Arduino jobs run only
+for Dependabot-authored pull requests or manual dispatch; pushes and ordinary
+pull requests do not start those generic checks. Permissions are read-only,
+and superseded runs on the same ref are canceled.
 
 ## XML and Python
 
@@ -71,8 +73,8 @@ firmware review, hardware or electrical testing, or content-provenance review.
 ## Preview deployment
 
 `.github/workflows/pages.yml` publishes the static preview in `demo/` to GitHub
-Pages. It triggers on pushes to `main` that touch `demo/` or the workflow
-itself, and it can also be started by hand.
+Pages. It runs only when manually dispatched on the repository's default
+branch. Pushes and pull requests do not publish the preview.
 
 This workflow needs a one-time repository setup: under **Settings → Pages**, set
 **Source** to **GitHub Actions**. Once that is done, the preview is served at
@@ -82,8 +84,10 @@ and nothing else from the repository.
 
 ## Releases
 
-`.github/workflows/release.yml` runs when a tag matching `v*` is pushed. It
-refuses tags whose commit is not on `main`, reruns `make validate` and
+`.github/workflows/release.yml` runs only when manually dispatched on the
+default branch, with an existing `v`-prefixed `tag` input. It checks out that
+exact tag and refuses tags whose commit is not on the default branch. It
+reruns `make validate` and
 `make check-generated`, then publishes a GitHub release for that tag with the
 `make bundle` ZIP of the seven core experiments, a ZIP of the astronomy
 collection, the `make bundle-drafts` ZIP of the twenty-eight drafts (XML, licences
@@ -97,7 +101,11 @@ To cut a release from a commit that is already on `main`:
 ```sh
 git tag -a v0.1.0-alpha.1 -m "Curious Signals 0.1.0 alpha 1"
 git push origin v0.1.0-alpha.1
+gh workflow run release.yml --ref main -f tag=v0.1.0-alpha.1
 ```
+
+Creating or pushing a tag alone does not publish anything. Dispatch from the
+default branch (currently `main`) after reviewing the tagged commit.
 
 Releases are published as full releases, not pre-releases, because
 `releases/latest/download/<file>` links (which the README offers for phyphox QR

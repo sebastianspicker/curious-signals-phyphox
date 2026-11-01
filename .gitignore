@@ -140,3 +140,8 @@ credentials.local.*
 # Internal design and test files (not published)
 /DESIGN_BRIEF.md
 /tests/
+
+# Private local audit and root agent-ledger material
+/ALPHA_AUDIT_REPORT.md
+/*_LEDGER.md
+/*-LEDGER.md
