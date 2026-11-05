@@ -84,6 +84,51 @@ experimental validation status.
 `make bundle-drafts` packages the reviewed XML and editable companions locally
 under `output/drafts/`; it does not add them to the core release bundle.
 
+How a CSV becomes a page in the retrospective:
+
+```mermaid
+flowchart LR
+    gen["generate_*example_data.py"]
+    csv[("example-data/*.csv")]
+    prep["prepare_examples.py<br/>prepare_drafts.py"]
+    derived[("docs/papers/data/<br/>*-analysis.json")]
+    tex["Paper LaTeX<br/>docs/papers/"]
+    arxiv["prepare_arxiv.py"]
+    proofs[("arxiv/ folders<br/>and PDF proofs")]
+    build["build.py"]
+    retro["build_retrospective.py"]
+    pdf[("output/pdf/")]
+
+    gen -->|fixed seeds| csv
+    csv -->|read, never modified| prep
+    prep -->|"plot CSVs, reductions"| derived
+    derived -->|pgfplots data, numbers| tex
+    tex -->|make arxiv| arxiv
+    arxiv -->|compile, zip, recompile| proofs
+    proofs -->|make papers| build
+    build -->|stage| retro
+    retro -->|PyMuPDF assembly| pdf
+```
+
+The reductions in `prep` call the topic modules in `docs/papers/analysis/`;
+their results are committed, so `build.py` only re-runs both preparers with
+`--check` to prove the committed numbers are still current. It then reuses
+fresh arXiv proofs, re-runs `prepare_arxiv.py --only <slug>` for stale ones,
+and hands the staged PDFs to `build_retrospective.py`. Nothing in this chain
+reads recorded hardware data.
+
+Where in the code:
+
+- [example-data/generate_example_data.py](../example-data/generate_example_data.py),
+  [example-data/generate_draft_example_data.py](../example-data/generate_draft_example_data.py)
+- [docs/papers/prepare_examples.py](papers/prepare_examples.py),
+  [docs/papers/prepare_drafts.py](papers/prepare_drafts.py),
+  [docs/papers/analysis/](papers/analysis/)
+- [docs/papers/manifest.json](papers/manifest.json): papers and their analysis sources
+- [docs/papers/prepare_arxiv.py](papers/prepare_arxiv.py),
+  [docs/papers/build.py](papers/build.py),
+  [docs/papers/build_retrospective.py](papers/build_retrospective.py)
+
 `make arxiv` prepares the twenty-one canonical papers as independent submission
 sources. `docs/papers/prepare_arxiv.py` copies each article's required inputs,
 adds the retrospective title note, and builds in temporary directories outside
@@ -107,17 +152,46 @@ final article PDFs and sources needed to rebuild independently of this checkout.
 
 ## Runtime data flow
 
-```mermaid
-flowchart LR
-    Sensors["Board sensors and analog inputs"]
-    Firmware["Nano 33 BLE Sense firmware"]
-    Data["20-byte notification<br/>five little-endian float32 values"]
-    Phyphox["Imported core phyphox experiment"]
-    Config["4-byte configuration write<br/>one little-endian float32 mode"]
+What happens when a student opens a core experiment (here
+`pressure_plot_v1-2.phyphox`, mode 4) and connects to the board:
 
-    Sensors --> Firmware --> Data --> Phyphox
-    Phyphox --> Config --> Firmware
+```mermaid
+sequenceDiagram
+    autonumber
+    actor S as Student
+    participant app as phyphox app
+    participant fw as Firmware loop()
+    participant sens as Board sensors
+    S->>app: Open experiment, pick phyphox-sense
+    app->>fw: BLE connect
+    Note over fw: BLE.central() found,<br/>device time restarts
+    app->>fw: Write config: float32 4.0
+    fw->>fw: pollConfigCharacteristic()<br/>setModeFromConfig()
+    app->>fw: Subscribe to data
+    loop every 50 ms while connected
+        fw->>sens: readChannels(mode)
+        sens-->>fw: values or NaN
+        fw--)app: Notify 20 bytes: t, CH2..CH5
+    end
+    app-->>S: Graphs and readouts
 ```
+
+Each experiment hard-codes its mode in a `<config>` output and maps the five
+data offsets to `CH1`–`CH5` through the shared include; `CH0` is the phone's
+receive time (step 8). The firmware starts streaming as soon as a subscription
+exists (step 5): it does not know whether the student has pressed play. When
+phyphox writes the config and subscribes (steps 3 and 5) is phyphox app
+behaviour (`subscribeOnStart="false"`), inferred from the phyphox file format
+rather than from code in this repository.
+
+Where in the code:
+
+- [arduino/phyphox_ble_sense/phyphox_ble_sense.ino](../arduino/phyphox_ble_sense/phyphox_ble_sense.ino):
+  `loop()`, `pollConfigCharacteristic()`, `setModeFromConfig()`, `readChannels()`, `sendSample()`
+- [src/phyphox/pressure_plot_v1-2.phyphox.xml](../src/phyphox/pressure_plot_v1-2.phyphox.xml):
+  the `<bluetooth>` input and `<config>` output
+- [src/phyphox/includes/bluetooth_outputs_ch1_ch5.xml](../src/phyphox/includes/bluetooth_outputs_ch1_ch5.xml):
+  byte offsets and `float32LittleEndian` conversion
 
 The firmware advertises as `phyphox-sense`. A connected app picks one active
 mode by writing to the configuration characteristic. While it is subscribed to
@@ -187,14 +261,50 @@ timestamps. Astronomy files and the preview are not part of that bundle.
   versions and compiles without installing anything. The full `make ci` gate
   provisions before compiling. None of those downloads are vendored, so hosted
   CI verifies the Arduino CLI checksum separately.
-- The repository holds no runtime service configuration, persistence layer,
-  credentials, deployment definition, or release automation.
+- The repository holds no runtime service configuration, persistence layer or
+  credentials. Its only delivery paths are the two manually dispatched
+  workflows shown under [Delivery](#delivery).
 - Validation is structural and behavioral software evidence. It cannot prove a
   physical sensor, a BLE radio, an external circuit, mobile import and
   rendering, calibration, classroom safety, content provenance, or distribution
   rights.
 
 Hosted job details and their local equivalents are in [ci.md](ci.md).
+
+## Delivery
+
+How the artifacts reach teachers and the preview reaches the web:
+
+```mermaid
+flowchart LR
+    tag["v* tag on main"]
+    rel["release.yml"]
+    ghr["GitHub release"]
+    app["phyphox app"]
+    demo["demo/"]
+    pages["pages.yml"]
+    site["GitHub Pages"]
+
+    tag -->|manual dispatch| rel
+    rel -->|"validate, bundle,<br/>gh release create"| ghr
+    ghr -.->|"latest/download URL or QR"| app
+    demo -->|manual dispatch| pages
+    pages -->|upload demo/ as is| site
+```
+
+`release.yml` refuses a tag that is not on the default branch, runs
+`make validate` and `make check-generated`, then publishes the three ZIPs
+(`make bundle`, the astronomy folder, `make bundle-drafts`) and every
+`.phyphox` file under one flat namespace. `pages.yml` deploys `demo/` with no
+build step. In `ci.yml`, only the security scan runs on every push; the XML
+and Arduino jobs run on manual dispatch and Dependabot pull requests. Papers
+and arXiv packages are built locally and never published by a workflow.
+
+Where in the code:
+
+- [.github/workflows/release.yml](../.github/workflows/release.yml),
+  [.github/workflows/pages.yml](../.github/workflows/pages.yml),
+  [.github/workflows/ci.yml](../.github/workflows/ci.yml)
 
 ## Tooling internals
 

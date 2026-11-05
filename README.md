@@ -7,6 +7,8 @@ Plug an original Arduino Nano 33 BLE Sense into a laptop, flash one sketch, and
 read its sensors live in the [phyphox](https://phyphox.org) app on a phone. No
 server, no account, and no mobile app to build.
 
+> _Claude was used to polish and proof-read the code and documentation of this repository._
+
 <details>
 <summary>Status and limitations</summary>
 
