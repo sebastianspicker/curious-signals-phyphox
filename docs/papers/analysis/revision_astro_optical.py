@@ -7,7 +7,7 @@ import math
 import statistics as st
 from pathlib import Path
 
-from _common import read_dicts, window
+from _common import ols, read_dicts, window
 
 
 def mean(rows, column):
@@ -15,11 +15,7 @@ def mean(rows, column):
 
 
 def linear_fit(x, y):
-    xm, ym = st.fmean(x), st.fmean(y)
-    slope = sum((a - xm) * (b - ym) for a, b in zip(x, y, strict=True)) / sum(
-        (a - xm) ** 2 for a in x
-    )
-    intercept = ym - slope * xm
+    slope, intercept = ols(x, y)
     residual = [b - intercept - slope * a for a, b in zip(x, y, strict=True)]
     return {
         "slope": slope,

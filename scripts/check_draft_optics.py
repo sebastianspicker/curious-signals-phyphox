@@ -10,7 +10,7 @@ import re
 import struct
 from pathlib import Path
 
-from check_experiment_math import Experiment
+from check_experiment_math import Experiment, all_nan, ingest_nano, reference_errors
 
 SLUGS = (
     "rgb-filter-transmission",
@@ -50,18 +50,7 @@ def nano_frame(exp: Experiment, values: tuple[float, ...], receive: float) -> No
     assert bluetooth is not None and bluetooth.get("name") == "phyphox-sense"
     assert bluetooth.get("id") == exp.root.find("./output/bluetooth").get("id")
     assert exp.root.findtext("./output/bluetooth/config") == "6"
-    decoded = {}
-    for output in bluetooth.findall("output"):
-        name = output.text.strip()
-        if output.get("extra") == "time":
-            value = receive
-        else:
-            assert output.get("conversion") == "float32LittleEndian"
-            value = struct.unpack_from("<f", payload, int(output.get("offset", "0")))[0]
-        decoded[name] = value
-        history = exp.buffers[name] + [value]
-        size = exp.sizes[name]
-        exp.set(name, history[-size:] if size else history)
+    decoded = ingest_nano(exp, payload, receive)
     expected = dict(
         zip(["device_t", "clear", "red", "green", "blue", "receive_t"], [*values, receive])
     )
@@ -82,20 +71,7 @@ def check(root: Path) -> None:
         assert exp.root.findtext("title").startswith("Draft: ")
         assert exp.root.findtext("category") == "Curious Signals drafts"
         assert exp.root.find("analysis").get("onUserInput") == "false"
-        names = [n.text for n in exp.root.findall("./data-containers/container")]
-        assert len(names) == len(set(names))
-        for tag in ["input", "output", "data"]:
-            for node in exp.root.iter(tag):
-                if (
-                    node is exp.root.find("output")
-                    or len(node)
-                    or node.get("type") in {"value", "empty"}
-                ):
-                    continue
-                assert (node.text or "").strip() in names, (slug, tag, node.text)
-        for export in exp.root.findall("./export/set"):
-            headings = [n.get("name") for n in export.findall("data")]
-            assert len(headings) == len(set(headings))
+        assert not reference_errors(exp.root, slug)
         for formula in exp.root.findall("./analysis/formula"):
             # Check syntax even when missing buffers mean no numerical output rows.
             code = re.sub(r"\[\d+_?\]", "(1)", formula.get("formula")).replace("^", "**")
@@ -111,14 +87,14 @@ def check(root: Path) -> None:
         rgb.set("reference_" + channel, 1010)
     rgb.set("device_t", [1, 2, 3, 4, 5])
     rgb.run()
-    assert all(math.isnan(v) for v in rgb.buffers["transmission_red"])
+    assert all_nan(rgb.buffers["transmission_red"])
     rgb.set("enabled", 1)
     rgb.run()
     rows(rgb.buffers["transmission_red"], [0, 0.5, 1, nan, nan])
     unchanged(rgb)
     rgb.set("reference_red", 10)
     rgb.run()
-    assert all(math.isnan(v) for v in rgb.buffers["transmission_red"])
+    assert all_nan(rgb.buffers["transmission_red"])
 
     distance = experiments["illuminance-distance"]
     distance.set("dx", [0, 10, 10])
@@ -130,7 +106,7 @@ def check(root: Path) -> None:
     distance.set("origin", 0.2)
     distance.set("background", 2)
     distance.run()
-    assert all(math.isnan(v) for v in distance.buffers["distance"])
+    assert all_nan(distance.buffers["distance"])
     distance.set("enabled", 1)
     distance.run()
     rows(distance.buffers["distance"], [nan, 0.2, 0.3, 0.4])
@@ -140,7 +116,7 @@ def check(root: Path) -> None:
     unchanged(distance)
     distance.set("scale", 0)
     distance.run()
-    assert all(math.isnan(v) for v in distance.buffers["distance"])
+    assert all_nan(distance.buffers["distance"])
     missing = load("illuminance-distance")
     missing.set("light_t", [1])
     missing.set("light_raw", [1000])
@@ -151,12 +127,12 @@ def check(root: Path) -> None:
     distance.set("background", 11)
     distance.run()
     assert math.isnan(distance.buffers["distance"][1])
-    assert all(math.isnan(v) for v in distance.buffers["log_light"])
+    assert all_nan(distance.buffers["log_light"])
     distance.set("origin", -1)
     distance.run()
-    assert all(math.isnan(v) for v in distance.buffers["distance"])
-    assert all(math.isnan(v) for v in distance.buffers["inverse_square"])
-    assert all(math.isnan(v) for v in distance.buffers["scaled_light"])
+    assert all_nan(distance.buffers["distance"])
+    assert all_nan(distance.buffers["inverse_square"])
+    assert all_nan(distance.buffers["scaled_light"])
 
     manual = experiments["illuminance-distance-manual"]
     manual.run()
@@ -210,7 +186,7 @@ def check(root: Path) -> None:
         malus.set("entered_angle", angle)
         malus.press("Record")
         malus.run()
-    assert all(math.isnan(v) for v in malus.buffers["normalized"])
+    assert all_nan(malus.buffers["normalized"])
     malus.set("enabled", 1)
     malus.run()
     rows(malus.buffers["row_device_t"], [nan, 20, 21, 22])
@@ -222,7 +198,7 @@ def check(root: Path) -> None:
     unchanged(malus)
     malus.set("parallel", 10)
     malus.run()
-    assert all(math.isnan(v) for v in malus.buffers["normalized"])
+    assert all_nan(malus.buffers["normalized"])
     malus.press("Clear observations")
     malus.run()
     assert not malus.buffers["row_angle"] and len(malus.buffers["clear"]) == 3
@@ -239,7 +215,7 @@ def check(root: Path) -> None:
     colour.set("green", [30, 35, 30, 30, 18.58, 30])
     colour.set("blue", [36.8, 30, 36.8, 36.8, 48.22, 71])
     colour.run()
-    assert all(math.isnan(v) for v in colour.buffers["cct"])
+    assert all_nan(colour.buffers["cct"])
     colour.set("enabled", 1)
     colour.run()
     n = (0.35 - 0.3320) / (0.1858 - 0.35)

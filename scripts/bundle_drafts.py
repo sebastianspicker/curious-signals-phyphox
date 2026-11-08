@@ -16,35 +16,14 @@ from check_drafts import ROOT, check
 
 sys.path.insert(0, str(ROOT / "docs/papers"))
 
-from publication import load_manifest, local_path, source_hashes  # noqa: E402
+from build import current_pdfs as build_current_pdfs  # noqa: E402
+from publication import load_manifest, local_path  # noqa: E402
 
 
 def current_pdfs(catalog: dict) -> list[Path]:
     """Include proofs only when they belong to this exact completed edition."""
-    output = ROOT / "output/pdf"
     try:
-        summary = json.loads((output / "build-summary.json").read_text(encoding="utf-8"))
-        digest = hashlib.sha256((ROOT / "docs/papers/manifest.json").read_bytes()).hexdigest()
-        if summary.get("manifest_sha256") != digest:
-            return []
-        records = {paper["slug"]: paper for paper in summary["papers"]}
-        if len(records) != len(summary["papers"]):
-            return []
-        if set(records) != {paper["slug"] for paper in catalog["papers"]}:
-            return []
-        paths = []
-        for paper in catalog["papers"]:
-            name = f"{paper['slug']}.pdf"
-            record = records[paper["slug"]]
-            if record["file"] != name or record["analysis_ids"] != paper["analysis_ids"]:
-                return []
-            if record.get("source_sha256") != source_hashes(paper, ROOT / "docs/papers"):
-                return []
-            path = output / name
-            if hashlib.sha256(path.read_bytes()).hexdigest() != summary["sha256"][name]:
-                return []
-            paths.append(path)
-        return paths
+        return build_current_pdfs(catalog)
     except (OSError, ValueError, KeyError, TypeError):
         return []
 

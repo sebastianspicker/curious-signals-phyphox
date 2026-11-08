@@ -12,7 +12,7 @@ import math
 import struct
 from pathlib import Path
 
-from check_experiment_math import Experiment
+from check_experiment_math import Experiment, ingest_nano, reference_errors
 
 SLUGS = (
     "nano-transit",
@@ -25,20 +25,6 @@ SLUGS = (
 
 def near(actual: float, expected: float) -> None:
     assert math.isclose(actual, expected, rel_tol=1e-10, abs_tol=1e-10), (actual, expected)
-
-
-def ingest(exp: Experiment, packet: bytes, arrival: float) -> None:
-    """Decode the fixture packet using the checked-in offsets, preserving history."""
-    for item in exp.root.findall("./input/bluetooth/output"):
-        name = item.text.strip()
-        if item.get("extra") == "time":
-            value = arrival
-        else:
-            assert item.get("conversion") == "float32LittleEndian"
-            value = struct.unpack_from("<f", packet, int(item.get("offset", "0")))[0]
-        values = exp.buffers[name] + [value]
-        size = exp.sizes[name]
-        exp.set(name, values[-size:] if size else values)
 
 
 def calibrated(exp: Experiment) -> None:
@@ -55,29 +41,15 @@ def check(root: Path) -> None:
         assert xml.findtext("title").startswith("Draft: ")
         assert xml.findtext("category") == "Curious Signals drafts"
         assert xml.find("analysis").get("onUserInput", "false") == "false"
-        names = [e.text for e in xml.findall("./data-containers/container")]
-        assert len(names) == len(set(names)), slug
-        for section, tags in [
-            ("input", {"output"}),
-            ("output", {"input"}),
-            ("analysis", {"input", "output"}),
-            ("views", {"input", "output"}),
-            ("export", {"data"}),
-        ]:
-            for item in xml.find(section).iter():
-                if item.tag in tags and item.get("type", "buffer") == "buffer":
-                    assert (item.text or "").strip() in names, (slug, item.text)
-        for dataset in xml.findall("./export/set"):
-            headings = [item.get("name") for item in dataset]
-            assert len(headings) == len(set(headings)), (slug, headings)
+        assert not reference_errors(xml, slug)
         inp, out = xml.find("./input/bluetooth"), xml.find("./output/bluetooth")
         assert inp.get("name") == out.get("name") == "phyphox-sense"
         assert inp.get("id") == out.get("id")
         config = out.find("config")
         assert config.get("char") == "cddf1003-30f7-4671-8b43-5e40ba53514a"
         assert config.get("conversion") == "float32LittleEndian" and float(config.text) == 6
-        ingest(exp, struct.pack("<5f", 100, 70, 30, 40, 50), 0.2)
-        ingest(exp, struct.pack("<5f", 100.5, 90, 31, 41, 51), 1.7)
+        ingest_nano(exp, struct.pack("<5f", 100, 70, 30, 40, 50), 0.2)
+        ingest_nano(exp, struct.pack("<5f", 100.5, 90, 31, 41, 51), 1.7)
         assert exp.buffers["device_time"] == [100, 100.5]
         assert exp.buffers["receive_time"] == [0.2, 1.7]
         assert exp.buffers["clear"] == [70, 90]
@@ -222,7 +194,7 @@ def check(root: Path) -> None:
     # survive a leading NaN without compaction or division-based false values.
     calibrated(exp)
     exp.set("source_distance", 100)
-    ingest(exp, struct.pack("<5f", 99, 70, 30, 40, 50), 0.1)
+    ingest_nano(exp, struct.pack("<5f", 99, 70, 30, 40, 50), 0.1)
     exp.press("Record observation")
     exp.run()
     assert len(exp.buffers["row_clear"]) == 2
@@ -244,7 +216,7 @@ def check(root: Path) -> None:
     exp.set("obliquity", 23.5)
     exp.set("orbit_position", 0)
     exp.set("trial", 1)
-    ingest(exp, struct.pack("<5f", 100, 70, 30, 40, 50), 0.2)
+    ingest_nano(exp, struct.pack("<5f", 100, 70, 30, 40, 50), 0.2)
     exp.run()
     exp.press("Record observation")
     exp.run()
@@ -255,7 +227,7 @@ def check(root: Path) -> None:
     exp.set("latitude", -30)
     exp.set("orbit_position", 180)
     exp.set("trial", 2)
-    ingest(exp, struct.pack("<5f", 101, 90, 31, 41, 51), 1.7)
+    ingest_nano(exp, struct.pack("<5f", 101, 90, 31, 41, 51), 1.7)
     exp.run()
     exp.press("Record observation")
     exp.run()
@@ -268,6 +240,7 @@ def check(root: Path) -> None:
     exp.set("baseline", 999)
     exp.run()
     assert exp.buffers["row_baseline"] == [110, 110]
+    assert len(exp.buffers["row_relative"]) == 2
     for a, b in zip(exp.buffers["row_relative"], [0.6, 0.8]):
         near(a, b)
     exp.set("enabled", 0)

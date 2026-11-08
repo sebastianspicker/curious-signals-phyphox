@@ -12,7 +12,7 @@ import math
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from check_experiment_math import Experiment
+from check_experiment_math import Experiment, reference_errors
 
 SLUGS = ("pressure-boiling", "spectral-fingerprints", "uv-transmission", "coronagraph-contrast")
 NAN = float("nan")
@@ -85,22 +85,15 @@ def check_structure(path: Path) -> None:
     root = ET.parse(path).getroot()
     assert root.get("version") == "1.17" and root.get("locale") == "en"
     assert root.findtext("title").startswith("Draft: ")
-    names = {item.text for item in root.findall("./data-containers/container")}
+    assert not reference_errors(root, path.name)
     sizes = {
         item.text: int(item.get("size", "1"))
         for item in root.findall("./data-containers/container")
     }
-    for node in root.iter():
-        if node.tag in {"input", "output", "data"} and node.text and node.text.strip():
-            if node.get("type", "buffer") == "buffer":
-                assert node.text.strip() in names, (path.name, node.text)
     for button in root.findall("./views/view/button"):
         for item in button.findall("input"):
             if item.get("type", "buffer") == "buffer":
                 assert sizes[item.text] == 1, (path.name, button.get("label"), item.text)
-    for dataset in root.findall("./export/set"):
-        labels = [node.get("name") for node in dataset.findall("data")]
-        assert len(labels) == len(set(labels)), (path.name, labels)
     # Histories are appended only by request-gated if modules.
     for module in root.findall("./analysis/*"):
         for output in module.findall("output"):

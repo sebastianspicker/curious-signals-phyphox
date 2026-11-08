@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
+from check_experiment_math import reference_errors  # noqa: E402
 from defusedxml import ElementTree as ET  # noqa: E402
 
 from curious_signals.phyphox_xml import _data_errors  # noqa: E402
@@ -46,6 +47,7 @@ def check_xml(path: Path, entry: dict, contract: dict) -> list[str]:
         errors.append(f"{path.name}: no exported measurements")
     if not root.findall("./views/view/info"):
         errors.append(f"{path.name}: missing setup information")
+    errors += reference_errors(root, path.name)
     inputs = root.find("input")
     if entry["acquisition"] == "manual":
         if inputs is not None and len(inputs):
@@ -142,6 +144,7 @@ def check(root: Path, *, fixtures: bool = True) -> dict:
     if errors:
         raise ValueError("\n".join(errors))
     if fixtures:
+        covered_slugs: list[str] = []
         for name in catalog["fixture_scripts"]:
             path = inside(root, name, "scripts")
             spec = importlib.util.spec_from_file_location(path.stem, path)
@@ -150,6 +153,12 @@ def check(root: Path, *, fixtures: bool = True) -> dict:
             module = importlib.util.module_from_spec(spec)
             spec.loader.exec_module(module)
             module.check(root)
+            covered_slugs += module.SLUGS
+        # Fixture scripts hard-code their slugs; they must cover exactly the manifest ids.
+        if sorted(covered_slugs) != sorted(ids):
+            raise ValueError(
+                f"Fixture slugs differ from manifest ids: {sorted(set(covered_slugs) ^ set(ids))}"
+            )
     print(f"Checked {len(entries)} draft experiments and {len(manuscripts)} companion manuscripts.")
     return catalog
 
@@ -176,6 +185,8 @@ def check_schemas(root: Path, catalog: dict, rng: Path, sch: Path) -> None:
 
 
 def main() -> None:
+    if not __debug__:
+        sys.exit("Fixture checks rely on assert; run without -O or PYTHONOPTIMIZE.")
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--root", type=Path, default=ROOT)
     parser.add_argument("--rng", type=Path)

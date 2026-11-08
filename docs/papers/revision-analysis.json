@@ -42,7 +42,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
+        "sha256": "d8e9e72ffd62802730fa0207aeda8798a1f2ed31e8bb247b29defdc79aa64c9c"
       }
     },
     "transit-method": {
@@ -138,7 +138,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
+        "sha256": "d8e9e72ffd62802730fa0207aeda8798a1f2ed31e8bb247b29defdc79aa64c9c"
       }
     },
     "owon-interface": {
@@ -172,7 +172,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
+        "sha256": "d8e9e72ffd62802730fa0207aeda8798a1f2ed31e8bb247b29defdc79aa64c9c"
       }
     },
     "ir-distance": {
@@ -210,7 +210,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_optical.py",
-        "sha256": "bbac00fa8701674d792ff390a3fd43dc9cb88cb92f14338ad5871d18d057c0cb"
+        "sha256": "d8e9e72ffd62802730fa0207aeda8798a1f2ed31e8bb247b29defdc79aa64c9c"
       }
     },
     "greenhouse": {
@@ -242,7 +242,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
+        "sha256": "fe0e13a7a9065c8f885a00ec7c2a8b76864222b426f20a53958131c29b14cb6b"
       }
     },
     "mission-to-mars": {
@@ -287,7 +287,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
+        "sha256": "fe0e13a7a9065c8f885a00ec7c2a8b76864222b426f20a53958131c29b14cb6b"
       }
     },
     "pt-star": {
@@ -307,7 +307,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
+        "sha256": "fe0e13a7a9065c8f885a00ec7c2a8b76864222b426f20a53958131c29b14cb6b"
       }
     },
     "tidal-locking": {
@@ -377,7 +377,7 @@
       },
       "analysis": {
         "file": "analysis/revision_astro_thermal.py",
-        "sha256": "69cc3a5205df804a448434591b5802fe5ee0477d05b1fcf908c0b15cb0cd6c97"
+        "sha256": "fe0e13a7a9065c8f885a00ec7c2a8b76864222b426f20a53958131c29b14cb6b"
       }
     },
     "accelerometer": {
@@ -416,7 +416,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
+        "sha256": "989eeb239593e41f774fa246a6ad916482676dca8a26a087ad757f4c49a135f2"
       }
     },
     "gyroscope": {
@@ -455,7 +455,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
+        "sha256": "989eeb239593e41f774fa246a6ad916482676dca8a26a087ad757f4c49a135f2"
       }
     },
     "magnetometer": {
@@ -488,7 +488,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
+        "sha256": "989eeb239593e41f774fa246a6ad916482676dca8a26a087ad757f4c49a135f2"
       }
     },
     "pressure": {
@@ -523,7 +523,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
+        "sha256": "989eeb239593e41f774fa246a6ad916482676dca8a26a087ad757f4c49a135f2"
       }
     },
     "temperature-humidity": {
@@ -566,7 +566,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
+        "sha256": "989eeb239593e41f774fa246a6ad916482676dca8a26a087ad757f4c49a135f2"
       }
     },
     "light-rgb": {
@@ -603,7 +603,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
+        "sha256": "989eeb239593e41f774fa246a6ad916482676dca8a26a087ad757f4c49a135f2"
       }
     },
     "analog-inputs": {
@@ -648,7 +648,7 @@
       },
       "analysis": {
         "file": "analysis/revision_core.py",
-        "sha256": "e1fa750134d358f901b365743baaee131f6a2817712f7b91ef4a91297ede0231"
+        "sha256": "989eeb239593e41f774fa246a6ad916482676dca8a26a087ad757f4c49a135f2"
       }
     }
   },

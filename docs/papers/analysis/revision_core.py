@@ -11,7 +11,7 @@ import math
 import statistics as stats
 from pathlib import Path
 
-from _common import read_lists, window
+from _common import ols, read_lists, window
 
 
 def mean(rows: list[list[float]], column: int) -> float:
@@ -19,8 +19,7 @@ def mean(rows: list[list[float]], column: int) -> float:
 
 
 def slope(rows: list[list[float]], x: int, y: int) -> float:
-    xm, ym = mean(rows, x), mean(rows, y)
-    return sum((r[x] - xm) * (r[y] - ym) for r in rows) / sum((r[x] - xm) ** 2 for r in rows)
+    return ols([r[x] for r in rows], [r[y] for r in rows])[0]
 
 
 def integral(rows: list[list[float]], column: int) -> float:

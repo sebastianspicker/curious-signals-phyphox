@@ -2,19 +2,22 @@
 
 from __future__ import annotations
 
-import csv
 import json
 import statistics as stats
 from pathlib import Path
 
-from _common import in_window
+from _common import (
+    MARS_BASELINE_S,
+    TRANSIT_BASELINE_OFFSET_S,
+    in_window,
+    ols,
+    read_dicts,
+)
 
 
-def read(data_root: Path, name: str) -> tuple[list[str], list[dict[str, str]]]:
-    with (data_root / "astronomy" / name).open(newline="", encoding="utf-8") as stream:
-        reader = csv.DictReader(stream)
-        rows = list(reader)
-        return list(reader.fieldnames or []), rows
+def read(data_root: Path, name: str) -> tuple[list[str], list[dict[str, float]]]:
+    rows = read_dicts(data_root / "astronomy" / name)
+    return list(rows[0]), rows
 
 
 def mean_window(t: list[float], y: list[float], a: float, b: float) -> float:
@@ -23,8 +26,7 @@ def mean_window(t: list[float], y: list[float], a: float, b: float) -> float:
 
 def slope(t: list[float], y: list[float], a: float, b: float) -> float:
     xy = [(ti, yi) for ti, yi in zip(t, y) if in_window(ti, a, b)]
-    tm, ym = stats.mean(x for x, _ in xy), stats.mean(y for _, y in xy)
-    return sum((x - tm) * (y - ym) for x, y in xy) / sum((x - tm) ** 2 for x, _ in xy)
+    return ols([x for x, _ in xy], [y for _, y in xy])[0]
 
 
 def analyze(data_root: Path) -> dict:
@@ -34,7 +36,7 @@ def analyze(data_root: Path) -> dict:
         fields, rows = read(data_root, name)
         t = [float(r[fields[0]]) for r in rows]
         y = [float(r[fields[1]]) for r in rows]
-        baseline = mean_window(t, y, 0, 15)
+        baseline = mean_window(t, y, *MARS_BASELINE_S)
         early = mean_window(t, y, 30, 35)
         late = mean_window(t, y, 50, 55)
         result["mission-to-mars"][path] = {
@@ -43,7 +45,7 @@ def analyze(data_root: Path) -> dict:
             "signal_column": fields[1],
             "rows": len(t),
             "median_dt_s": stats.median(b - a for a, b in zip(t, t[1:])),
-            "baseline_window_s": [0, 15],
+            "baseline_window_s": list(MARS_BASELINE_S),
             "baseline_hpa": baseline,
             "early_window_s": [30, 35],
             "early_excess_hpa": early - baseline,
@@ -66,7 +68,7 @@ def analyze(data_root: Path) -> dict:
     decoded = [float(r[fields[2]]) * d[int(r[fields[3]])] * u[int(r[fields[4]])] for r in rows]
     steps = []
     for a, nominal in ((0, 0), (10, 1), (20, 1.5), (30, 2), (40, -1), (50, 0.5)):
-        vals = [yi for ti, yi in zip(t, y) if a + 1 <= ti < a + 9]
+        vals = [yi for ti, yi in zip(t, y) if in_window(ti, a + 1, a + 9)]
         steps.append(
             {
                 "window_s": [a + 1, a + 9],
@@ -106,7 +108,11 @@ def analyze(data_root: Path) -> dict:
         y = [float(r[fields[1]]) for r in rows]
         events = []
         for center in (22, 52, 82):
-            baseline = stats.mean(yi for ti, yi in zip(t, y) if 3 <= abs(ti - center) < 6)
+            baseline = stats.mean(
+                yi
+                for ti, yi in zip(t, y)
+                if in_window(abs(ti - center), *TRANSIT_BASELINE_OFFSET_S)
+            )
             floor = stats.mean(yi for ti, yi in zip(t, y) if abs(ti - center) <= 1)
             below = [
                 (ti, yi) for ti, yi in zip(t, y) if abs(ti - center) < 3 and yi / baseline < 0.98
@@ -116,7 +122,7 @@ def analyze(data_root: Path) -> dict:
             events.append(
                 {
                     "center_s": center,
-                    "baseline_window_abs_offset_s": [3, 6],
+                    "baseline_window_abs_offset_s": list(TRANSIT_BASELINE_OFFSET_S),
                     "plateau_window_abs_offset_s": [0, 1],
                     "baseline": baseline,
                     "plateau_mean": floor,

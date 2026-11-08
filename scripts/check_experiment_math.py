@@ -15,6 +15,7 @@ import bisect
 import math
 import re
 import struct
+import sys
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
@@ -390,21 +391,64 @@ class Experiment:
                 self._write(item, data)
 
 
+def all_nan(values: list[float]) -> bool:
+    """True only for a non-empty buffer of NaN; an empty buffer must not pass."""
+    return len(values) > 0 and all(math.isnan(v) for v in values)
+
+
+def all_close(actual: list[float], expected: list[float]) -> bool:
+    return len(actual) == len(expected) and all(
+        math.isclose(a, b) for a, b in zip(actual, expected)
+    )
+
+
+def reference_errors(root: ET.Element, name: str) -> list[str]:
+    """Unique containers and export headings; every buffer reference is declared."""
+    names = [n.text for n in root.findall("./data-containers/container")]
+    errors = []
+    if len(names) != len(set(names)):
+        errors.append(f"{name}: duplicate data container")
+    for section in ("input", "output", "analysis", "views", "export"):
+        parent = root.find(section)
+        if parent is None:
+            continue
+        for item in parent.iterfind(".//*"):
+            if (
+                item.tag in {"input", "output", "data"}
+                and len(item) == 0
+                and item.get("type", "buffer") == "buffer"
+                and (item.text or "").strip() not in names
+            ):
+                errors.append(f"{name}: {section} references undeclared buffer {item.text!r}")
+    for export in root.findall("./export/set"):
+        headings = [n.get("name") for n in export.findall("data")]
+        if len(headings) != len(set(headings)):
+            errors.append(f"{name}: duplicate export heading in {export.get('name')!r}")
+    return errors
+
+
+def ingest_nano(exp: Experiment, payload: bytes, arrival: float) -> dict[str, float]:
+    """Decode a float32 Nano packet using the checked-in XML offsets, keeping history."""
+    decoded = {}
+    for item in exp.root.findall("./input/bluetooth/output"):
+        name = item.text.strip()
+        if item.get("extra") == "time":
+            value = arrival
+        else:
+            assert item.get("conversion") == "float32LittleEndian"
+            value = struct.unpack_from("<f", payload, int(item.get("offset", "0")))[0]
+        decoded[name] = value
+        history = exp.buffers[name] + [value]
+        size = exp.sizes[name]
+        exp.set(name, history[-size:] if size else history)
+    return decoded
+
+
 def check(path: Path) -> None:
     for name in ["albedo", "transitmethode", "ir-dist_habitable", "owon_digital_multimeter-debug"]:
         root = ET.parse(path / (name + ".phyphox")).getroot()
-        containers = [n.text for n in root.findall("./data-containers/container")]
-        assert len(containers) == len(set(containers)), name
-        known = set(containers)
-        for section, tags in [
-            ("input", {"output"}),
-            ("analysis", {"input", "output"}),
-            ("views", {"input", "output"}),
-            ("export", {"data"}),
-        ]:
-            for item in root.find(section).iter():
-                if item.tag in tags and item.get("type", "buffer") == "buffer":
-                    assert (item.text or "").strip() in known, (name, item.tag, item.text)
+        errors = reference_errors(root, name)
+        assert not errors, errors
         assert {"de", "fr"} <= {n.get("locale") for n in root.findall("./translations/translation")}
         assert all(
             g.get("partialUpdate", "false") == "false" for g in root.findall("./views/view/graph")
@@ -456,7 +500,7 @@ def check(path: Path) -> None:
         for _ in range(3):
             exp.run()
             assert exp.buffers["t"] == times
-            assert all(math.isclose(a, b) for a, b in zip(exp.buffers["amplitude"], values))
+            assert all_close(exp.buffers["amplitude"], values)
         assert exp.buffers["phone_t"] == [0, 1, 2]
     # Model selection never accepts a W18B interpretation for an invalid B35T code.
     for name in ["transitmethode", "owon_digital_multimeter-debug"]:
@@ -540,7 +584,7 @@ def check(path: Path) -> None:
     exp.run()
     assert exp.buffers["T_IRHist"] == [-1, 0, 25]
     assert exp.buffers["dHist"] == [0, 10, 20]
-    assert all(math.isclose(a, b) for a, b in zip(exp.buffers["distance_m"], [0.2, 0.21, 0.22]))
+    assert all_close(exp.buffers["distance_m"], [0.2, 0.21, 0.22])
     for _ in range(5):
         exp.run()
         assert len(exp.buffers["T_IRHist"]) == 3
@@ -552,7 +596,7 @@ def check(path: Path) -> None:
     assert len(exp.buffers["T_IRHist"]) == 3
     exp.set("distance_scale", 0)
     exp.run()
-    assert all(math.isnan(v) for v in exp.buffers["distance_m"])
+    assert all_nan(exp.buffers["distance_m"])
     print(
         "Optical XML references, model guards, source isolation, "
         "event timing, and IR cycle fixtures passed."
@@ -707,6 +751,8 @@ def check_thermal(path: Path) -> None:
 
 
 def main() -> None:
+    if not __debug__:
+        sys.exit("Fixture checks rely on assert; run without -O or PYTHONOPTIMIZE.")
     assert Experiment._formula("sqrt([1_]^2+[2_]^2)", [[-3, 4], [0]]) == [3]
     assert Experiment._formula("[1]+0*[2]", [[], [1]]) == []
     assert Experiment._formula("[1]", [[1, 2], [0]]) == [2, 2]

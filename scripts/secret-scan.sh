@@ -28,6 +28,12 @@ secret_patterns=(
   "gh[pousr]_[0-9A-Za-z]{36}"
   "github_pat_[0-9A-Za-z_]{20,}"
   "glpat-[0-9A-Za-z-]{20,}"
+  "sk-ant-[0-9A-Za-z_-]{20,}"
+  "sk-(proj-)?[0-9A-Za-z_-]{32,}"
+  "AIza[0-9A-Za-z_-]{35}"
+  "[rs]k_live_[0-9A-Za-z]{20,}"
+  "xapp-[0-9A-Za-z-]{10,}"
+  "hooks\\.slack\\.com/services/"
 )
 
 matches="$(mktemp "${TMPDIR:-/tmp}/secret-scan.XXXXXX")"

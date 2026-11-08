@@ -7,12 +7,14 @@ excluded per channel without deleting their timestamps from the source.
 
 from __future__ import annotations
 
-import csv
 import json
 import math
 import statistics
 import sys
 from pathlib import Path
+
+from _common import read_dicts
+from _common import window as rows_in_window
 
 WINDOWS = {
     "accelerometer": {
@@ -45,10 +47,7 @@ def analyze(data_root: Path) -> dict:
     time_column = "Time t (s)"
     for slug, windows in WINDOWS.items():
         relative_path = Path("core") / f"{slug}_plot_v1-2.example.csv"
-        with (data_root / relative_path).open(encoding="utf-8", newline="") as stream:
-            rows = [
-                {key: float(value) for key, value in row.items()} for row in csv.DictReader(stream)
-            ]
+        rows = read_dicts(data_root / relative_path)
         columns = list(rows[0])
         summary = {
             "file": str(relative_path),
@@ -61,7 +60,7 @@ def analyze(data_root: Path) -> dict:
             "windows": {},
         }
         for name, (lower, upper) in windows.items():
-            selected = [row for row in rows if lower <= row[time_column] < upper]
+            selected = rows_in_window(rows, lower, upper, time_column)
             window = {
                 "interval_s": [lower, upper],
                 "closed": "left",

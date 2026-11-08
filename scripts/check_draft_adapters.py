@@ -11,7 +11,7 @@ import math
 import struct
 from pathlib import Path
 
-from check_experiment_math import Experiment
+from check_experiment_math import Experiment, reference_errors
 
 NAN = float("nan")
 SLUGS = (
@@ -78,26 +78,10 @@ def check(root: Path) -> None:
     base = root / "experiments/drafts"
     for slug in SLUGS:
         exp = Experiment(base / (slug + ".phyphox"))
-        known = set(exp.buffers)
         assert exp.root.get("version") == "1.17"
         assert exp.root.get("locale") == "en"
         assert exp.root.findtext("title").startswith("Draft: ")
-        names = [n.text for n in exp.root.findall("./data-containers/container")]
-        assert len(names) == len(set(names)), slug
-        for section in ["input", "output", "analysis", "views", "export"]:
-            parent = exp.root.find(section)
-            if parent is None:
-                continue
-            for item in parent.iter():
-                if (
-                    item.tag in {"input", "output", "data"}
-                    and len(item) == 0
-                    and item.get("type", "buffer") == "buffer"
-                ):
-                    assert item.text.strip() in known, (slug, item.text)
-        for export in exp.root.findall("./export/set"):
-            headings = [n.get("name") for n in export.findall("data")]
-            assert len(headings) == len(set(headings)), slug
+        assert not reference_errors(exp.root, slug)
         assert not exp.root.findall("./analysis/ramp"), slug
         exp.run()  # Empty acquisition must not fabricate a sample.
         for output in exp.root.findall("./input/bluetooth/output"):

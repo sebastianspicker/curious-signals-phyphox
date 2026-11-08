@@ -11,7 +11,7 @@ import statistics as st
 from pathlib import Path
 
 from _common import draft_rows as read
-from _common import window
+from _common import ols, window
 
 SLUGS = ("static-friction", "audio-magnetic", "magnetic-current")
 
@@ -28,9 +28,7 @@ def stats(values) -> dict:
 def line_fit(x, y) -> dict:
     pairs = [(a, b) for a, b in zip(x, y) if math.isfinite(a) and math.isfinite(b)]
     xx, yy = zip(*pairs)
-    xm, ym = st.mean(xx), st.mean(yy)
-    slope = sum((a - xm) * (b - ym) for a, b in pairs) / sum((a - xm) ** 2 for a in xx)
-    intercept = ym - slope * xm
+    slope, intercept = ols(xx, yy)
     residual = [b - intercept - slope * a for a, b in pairs]
     return {
         "n": len(pairs),

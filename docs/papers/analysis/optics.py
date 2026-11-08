@@ -6,7 +6,7 @@ import json
 import statistics
 from pathlib import Path
 
-from _common import read_dicts, window
+from _common import ALBEDO_DARK_S, ALBEDO_REFERENCE_S, read_dicts, window
 
 
 def describe(rows: list[dict[str, float]], column: str) -> dict[str, float]:
@@ -53,15 +53,17 @@ def analyze(data_root: Path) -> dict:
     for name in ("sensortag", "phone"):
         rows = read_dicts(data_root / f"astronomy/albedo_{name}.example.csv")
         time_column, signal_column = list(rows[0])[:2]
-        dark_rows = window(rows, 0, 7, time_column) + window(rows, 57, 60.5, time_column)
+        dark_rows = window(rows, *ALBEDO_DARK_S[0], time_column) + window(
+            rows, *ALBEDO_DARK_S[1], time_column
+        )
         dark = describe(dark_rows, signal_column)["mean"]
-        reference = describe(window(rows, 9, 23, time_column), signal_column)["mean"]
+        reference = describe(window(rows, *ALBEDO_REFERENCE_S, time_column), signal_column)["mean"]
         signals = [row[signal_column] for row in rows]
         result = {
             "n": len(rows),
-            "dark_windows_s": [[0, 7], [57, 60.5]],
+            "dark_windows_s": [list(bounds) for bounds in ALBEDO_DARK_S],
             "dark_mean": dark,
-            "reference_window_s": [9, 23],
+            "reference_window_s": list(ALBEDO_REFERENCE_S),
             "reference_mean": reference,
             "plateaus": {},
             "extrema_contrast_percent": 100 * (max(signals) - min(signals)) / max(signals),

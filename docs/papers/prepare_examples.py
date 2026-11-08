@@ -22,7 +22,15 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE / "analysis"))
 
-from _common import in_window, read_table  # noqa: E402
+from _common import (  # noqa: E402
+    ALBEDO_DARK_S,
+    ALBEDO_REFERENCE_S,
+    MARS_BASELINE_S,
+    PRESSURE_BASELINE_S,
+    TRANSIT_BASELINE_OFFSET_S,
+    in_window,
+    read_table,
+)
 
 REPOSITORY_DATA = HERE.parents[1] / "example-data"
 DATA_ROOT = HERE / "example-data" if (HERE / "example-data").is_dir() else REPOSITORY_DATA
@@ -185,7 +193,7 @@ def products() -> dict[Path, str]:
         )
 
     name = "pressure_plot_v1-2"
-    p0 = window_mean(records[name], 2, 0, 20)
+    p0 = window_mean(records[name], 2, *PRESSURE_BASELINE_S)
     add(
         "pressure",
         [
@@ -246,8 +254,10 @@ def products() -> dict[Path, str]:
     for i, kind in enumerate(("sensortag", "phone")):
         name = "albedo_" + kind
         rows = records[name]
-        dark = statistics.mean(row[1] for row in rows if 0 <= row[0] < 7 or 57 <= row[0] < 60.5)
-        white = window_mean(rows, 1, 9, 23)
+        dark = statistics.mean(
+            row[1] for row in rows if any(in_window(row[0], *bounds) for bounds in ALBEDO_DARK_S)
+        )
+        white = window_mean(rows, 1, *ALBEDO_REFERENCE_S)
         curves.append(
             series(name, 1, ("SensorTag", "Phone")[i], i, scale=1 / (white - dark), offset=dark)
         )
@@ -315,7 +325,11 @@ def products() -> dict[Path, str]:
         name = "missiontomars_" + kind
         curves.append(
             series(
-                name, 1, ("SensorTag", "Phone")[i], i, offset=window_mean(records[name], 1, 0, 15)
+                name,
+                1,
+                ("SensorTag", "Phone")[i],
+                i,
+                offset=window_mean(records[name], 1, *MARS_BASELINE_S),
             )
         )
     add(
@@ -390,7 +404,11 @@ def products() -> dict[Path, str]:
     curves = []
     for i, kind in enumerate(("sensortag", "phone", "owon")):
         name = "transitmethode_" + kind
-        baseline = statistics.mean(row[1] for row in records[name] if 3 <= abs(row[0] - 22) < 6)
+        baseline = statistics.mean(
+            row[1]
+            for row in records[name]
+            if in_window(abs(row[0] - 22), *TRANSIT_BASELINE_OFFSET_S)
+        )
         curves.append(series(name, 1, ("SensorTag", "Phone", "Owon")[i], i, scale=1 / baseline))
     add(
         "transit-method",

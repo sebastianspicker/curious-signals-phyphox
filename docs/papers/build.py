@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import os
 import posixpath
 import re
 import shutil
@@ -39,6 +40,11 @@ DATA_PROVENANCE = (
 DATA_PROVENANCE_TEX = r"\thanks{\dataprovenance}"
 
 
+def strip_comments(text: str) -> str:
+    """Drop unescaped TeX comments (``%`` to end of line) before scanning commands."""
+    return re.sub(r"(?<!\\)((?:\\\\)*)%[^\n]*", r"\1", text)
+
+
 def manifest() -> list[dict[str, str]]:
     return load_manifest(HERE / "manifest.json")["papers"]
 
@@ -53,6 +59,9 @@ def snapshots() -> list[dict]:
 
 
 def check_sources(papers: list[dict], catalog: dict | None = None) -> None:
+    # Imported here because the arXiv packager imports this module's helpers.
+    from prepare_arxiv import citations
+
     catalog = load_manifest(HERE / "manifest.json") if catalog is None else catalog
     sources = catalog["analysis_sources"]
     indexes = [
@@ -109,7 +118,7 @@ def check_sources(papers: list[dict], catalog: dict | None = None) -> None:
             raise ValueError(f"{body.name}: declare a nonempty, unique figure list")
         inputs = {
             name if name.endswith(".tex") else name + ".tex"
-            for name in re.findall(r"\\input\{([^}]+)\}", text)
+            for name in re.findall(r"\\input\{([^}]+)\}", strip_comments(text))
             if name.startswith(("figures/", "topic-figures/"))
         }
         if inputs != set(declared):
@@ -134,11 +143,7 @@ def check_sources(papers: list[dict], catalog: dict | None = None) -> None:
             )
         if DATA_PROVENANCE not in companion.read_text(encoding="utf-8"):
             raise ValueError(f"{paper['slug']}: companion must state its data provenance")
-        cited = {
-            key.strip()
-            for citation in re.findall(r"\\cite\{([^}]+)\}", text)
-            for key in citation.split(",")
-        }
+        cited = citations(strip_comments(text))
         if cited - keys:
             raise ValueError(f"{body.name}: unknown bibliography keys {sorted(cited - keys)}")
         if not 3 <= len(cited) <= 10:
@@ -200,7 +205,15 @@ def run(command: list[str], *, cwd: Path) -> str:
     return result.stdout
 
 
-def check_tex_log(path: Path, name: str) -> None:
+TEX_ENV_VARS = ("TEXINPUTS", "BIBINPUTS", "BSTINPUTS", "TEXMFHOME", "TEXMFOUTPUT")
+
+
+def tex_env() -> dict[str, str]:
+    """Do not let a developer's search path hide a missing package input."""
+    return {key: value for key, value in os.environ.items() if key not in TEX_ENV_VARS}
+
+
+def tex_log_problems(path: Path) -> list[str]:
     log = path.read_text(encoding="utf-8", errors="replace")
     bad = (
         "There were undefined references",
@@ -210,9 +223,22 @@ def check_tex_log(path: Path, name: str) -> None:
         "Float too large",
         "Missing character:",
     )
-    warnings = [line for line in log.splitlines() if any(term in line for term in bad)]
+    return [line for line in log.splitlines() if any(term in line for term in bad)]
+
+
+def check_tex_log(path: Path, name: str) -> None:
+    warnings = tex_log_problems(path)
     if warnings:
         raise RuntimeError(f"{name}: unresolved typesetting diagnostics:\n" + "\n".join(warnings))
+
+
+def write_zip_member(
+    archive: zipfile.ZipFile, name: str, content: bytes, date_time: tuple[int, ...]
+) -> None:
+    info = zipfile.ZipInfo(name, date_time=date_time)
+    info.compress_type = zipfile.ZIP_DEFLATED
+    info.external_attr = 0o644 << 16
+    archive.writestr(info, content)
 
 
 def pages_in(path: Path) -> int:
@@ -419,10 +445,7 @@ def source_archive(output: Path) -> None:
                 content = portable_markdown(
                     content.decode("utf-8"), path, relative, mapping, pdf_names
                 ).encode("utf-8")
-            info = zipfile.ZipInfo(str(relative), date_time=(2026, 10, 26, 0, 0, 0))
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.external_attr = 0o644 << 16
-            archive.writestr(info, content)
+            write_zip_member(archive, str(relative), content, (2026, 10, 26, 0, 0, 0))
 
 
 def publish_edition(catalog: dict, stage: Path, output: Path) -> None:
@@ -454,6 +477,65 @@ def publish_edition(catalog: dict, stage: Path, output: Path) -> None:
             continue
         path.replace(output / path.name)
     stage.rmdir()
+
+
+def sha256_of(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def current_pdfs(catalog: dict) -> list[Path]:
+    """Return the proofs of the completed edition; raise ValueError naming what is stale."""
+    output = ROOT / "output/pdf"
+    summary = json.loads((output / "build-summary.json").read_text(encoding="utf-8"))
+    if summary.get("manifest_sha256") != sha256_of(HERE / "manifest.json"):
+        raise ValueError("manifest changed since the build")
+    records = {paper["slug"]: paper for paper in summary["papers"]}
+    if len(records) != len(summary["papers"]) or set(records) != {
+        paper["slug"] for paper in catalog["papers"]
+    }:
+        raise ValueError("paper list differs from the manifest")
+    paths = []
+    for paper in catalog["papers"]:
+        name = f"{paper['slug']}.pdf"
+        record = records[paper["slug"]]
+        if record["file"] != name or record["analysis_ids"] != paper["analysis_ids"]:
+            raise ValueError(f"{name}: record differs from the manifest")
+        if record.get("source_sha256") != source_hashes(paper, HERE):
+            raise ValueError(f"{name}: sources changed since the build")
+        if sha256_of(output / name) != summary["sha256"][name]:
+            raise ValueError(f"{name}: file differs from the build")
+        paths.append(output / name)
+    return paths
+
+
+def check_built(catalog: dict) -> None:
+    """When a finished build exists, require it to match the current sources."""
+    output = ROOT / "output/pdf"
+    if not (output / "build-summary.json").is_file():
+        print("No output/pdf build summary; skipped built-artifact check.")
+        return
+    # Imported here because the arXiv packager imports this module's helpers.
+    from prepare_arxiv import paper_stem
+
+    try:
+        current_pdfs(catalog)
+        summary = json.loads((output / "build-summary.json").read_text(encoding="utf-8"))
+        for name, expected in summary["sha256"].items():
+            if sha256_of(output / name) != expected:
+                raise ValueError(f"{name}: file differs from the build")
+        for paper in summary["papers"]:
+            stem = paper_stem(next(p for p in catalog["papers"] if p["slug"] == paper["slug"]))
+            for path, key in (
+                (ROOT / "arxiv" / paper["slug"] / f"{stem}.pdf", "arxiv_pdf_sha256"),
+                (ROOT / "output/arxiv" / f"{stem}.zip", "arxiv_source_zip_sha256"),
+            ):
+                if sha256_of(path) != paper[key]:
+                    raise ValueError(f"{path.relative_to(ROOT)}: differs from the build")
+    except ValueError as error:
+        raise ValueError(f"output/pdf is stale: {error}; run make papers") from error
+    except (OSError, KeyError, TypeError, StopIteration) as error:
+        raise ValueError(f"output/pdf is incomplete or unreadable ({error!r})") from error
+    print("Built papers and archives match the current sources.")
 
 
 def prepared_papers(papers: list[dict]) -> dict[str, dict]:
@@ -491,6 +573,7 @@ def main() -> int:
     prepare_drafts(check=True)
     check_sources(papers, catalog)
     if args.check:
+        check_built(catalog)
         return 0
     for program in ("latexmk", "pdflatex", "bibtex", "pdfinfo"):
         if shutil.which(program) is None:
@@ -565,10 +648,7 @@ def assemble(
         ) as archive:
             for paper, path in zip(papers, paths, strict=True):
                 name = prepared[paper["slug"]]["stem"] + ".pdf"
-                info = zipfile.ZipInfo(name, date_time=(2026, 10, 27, 0, 0, 0))
-                info.compress_type = zipfile.ZIP_DEFLATED
-                info.external_attr = 0o644 << 16
-                archive.writestr(info, path.read_bytes())
+                write_zip_member(archive, name, path.read_bytes(), (2026, 10, 27, 0, 0, 0))
         report = {
             "edition_date": catalog["edition_date"],
             "manifest_sha256": hashlib.sha256((HERE / "manifest.json").read_bytes()).hexdigest(),

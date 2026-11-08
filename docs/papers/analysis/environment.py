@@ -9,7 +9,7 @@ import sys
 from functools import partial
 from pathlib import Path
 
-from _common import read_dicts
+from _common import PRESSURE_BASELINE_S, read_dicts
 from _common import window as _window
 
 window = partial(_window, clock="Time t (s)")
@@ -111,7 +111,7 @@ def analyze(data_root: Path) -> dict:
             "lift": pressure_difference(pressure, [20, 28], [36, 42], [52, 60]),
             "stairs": pressure_difference(pressure, [60, 68], [78, 84], [98, 106]),
             "bag": pressure_difference(pressure, [110, 118], [124, 128], [145, 153]),
-            "initial_baseline": summary(window(pressure, 0, 20), "Pressure (hPa)"),
+            "initial_baseline": summary(window(pressure, *PRESSURE_BASELINE_S), "Pressure (hPa)"),
             "maximum_kpa_to_hpa_residual": max(
                 abs(row["Pressure (hPa)"] - 10 * row["Pressure (kPa)"]) for row in pressure
             ),

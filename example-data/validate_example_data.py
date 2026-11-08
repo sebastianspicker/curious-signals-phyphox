@@ -25,6 +25,9 @@ def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
     with path.open(newline="", encoding="utf-8") as handle:
         reader = csv.DictReader(handle)
         rows = list(reader)
+        # DictReader files ragged extra cells under key None and pads short rows with None.
+        if any(None in row or None in row.values() for row in rows):
+            raise ValueError(f"{path.name}: ragged row")
         return list(reader.fieldnames or []), rows
 
 
@@ -40,24 +43,44 @@ def close(actual: float, expected: float, tolerance: float = 1e-6) -> bool:
     return abs(actual - expected) <= tolerance * max(1.0, abs(expected))
 
 
+def is_nonfinite(value: str, *, nan: bool = True) -> bool:
+    try:
+        parsed = float(value)
+    except ValueError:
+        return False
+    return math.isinf(parsed) or (nan and math.isnan(parsed))
+
+
 def check_manifest() -> list[str]:
     errors: list[str] = []
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     if manifest.get("example") is not True:
         errors.append("manifest does not mark the data as example")
+    listed = {entry["file"] for entry in manifest["datasets"]}
+    on_disk = {
+        path.relative_to(ROOT).as_posix()
+        for path in ROOT.rglob("*.csv")
+        if "drafts" not in path.relative_to(ROOT).parts
+    }
+    for name in sorted(on_disk - listed):
+        errors.append(f"{name}: not in manifest")
     for entry in manifest["datasets"]:
         path = ROOT / entry["file"]
         if not path.exists():
             errors.append(f"missing file: {entry['file']}")
             continue
-        columns, rows = read_csv(path)
+        try:
+            columns, rows = read_csv(path)
+        except ValueError as error:
+            errors.append(str(error))
+            continue
         if columns != entry["columns"]:
             errors.append(f"{entry['file']}: columns differ from manifest")
         if len(rows) != entry["rows"]:
             errors.append(f"{entry['file']}: row count differs from manifest")
         errors += check_common(path, rows)
         if entry["file"] != "core/magnetometer_plot_v1-2.example.csv":
-            if any(value == "nan" for row in rows for value in row.values()):
+            if any(is_nonfinite(value) for row in rows for value in row.values()):
                 errors.append(f"{entry['file']}: unexpected NaN value")
     return errors
 
@@ -71,24 +94,37 @@ def check_common(path: Path, rows: list[dict[str, str]]) -> list[str]:
     if time_key is None:
         errors.append(f"{path.name}: no recognised time column")
     else:
-        previous = -math.inf
-        for index, row in enumerate(rows):
-            try:
-                current = number(row[time_key])
-            except (KeyError, ValueError):
-                errors.append(f"{path.name}: row {index} has a non-numeric time")
-                continue
-            if not math.isfinite(current) or current < 0:
-                errors.append(f"{path.name}: row {index} has invalid time {current}")
-            if current <= previous:
-                errors.append(f"{path.name}: row {index} time is not increasing")
-            previous = current
+        errors += check_time_column(path, rows, time_key)
+    return errors + check_infinite(path, rows)
 
-    for row in rows:
-        for key, value in row.items():
-            if value == "inf" or value == "-inf":
-                errors.append(f"{path.name}: infinite value in {key}")
+
+def check_time_column(
+    path: Path, rows: list[dict[str, str]], time_key: str, *, strict: bool = True
+) -> list[str]:
+    """Finite, non-negative and increasing (strictly, unless strict is False) time."""
+    errors: list[str] = []
+    previous = -math.inf
+    for index, row in enumerate(rows):
+        try:
+            current = number(row[time_key])
+        except (KeyError, ValueError):
+            errors.append(f"{path.name}: row {index} has a non-numeric time in {time_key}")
+            continue
+        if not math.isfinite(current) or current < 0:
+            errors.append(f"{path.name}: row {index} has invalid time {current} in {time_key}")
+        if current < previous or (strict and current == previous):
+            errors.append(f"{path.name}: row {index} time is not increasing in {time_key}")
+        previous = current
     return errors
+
+
+def check_infinite(path: Path, rows: list[dict[str, str]]) -> list[str]:
+    return [
+        f"{path.name}: infinite value in {key}"
+        for row in rows
+        for key, value in row.items()
+        if is_nonfinite(value, nan=False)
+    ]
 
 
 def check_magnitude(

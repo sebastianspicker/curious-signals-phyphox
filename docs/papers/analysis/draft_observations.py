@@ -8,45 +8,23 @@ import statistics as stats
 from pathlib import Path
 
 from _common import draft_rows as read
+from _common import ols, saturation_pressure_kPa, saturation_temperature_K
 
 R_GAS = 8.31446261815324
-SAT_COEFFICIENTS = (-7.85951783, 1.84408259, -11.7866497, 22.6807411, -15.9618719, 1.80122502)
-SAT_POWERS = (1, 1.5, 3, 3.5, 4, 7.5)
-
-
-def saturation_pressure(temperature_k: float) -> float:
-    """IAPWS SR1-86(1992), p3 Eq1: saturation pressure in kPa."""
-    if not 273.16 <= temperature_k <= 647.096:
-        return math.nan
-    tau = 1 - temperature_k / 647.096
-    series = sum(a * tau**power for a, power in zip(SAT_COEFFICIENTS, SAT_POWERS))
-    return 22064 * math.exp(647.096 / temperature_k * series)
-
-
-def saturation_temperature(pressure_kpa: float) -> float:
-    if not saturation_pressure(273.16) <= pressure_kpa <= 22064:
-        return math.nan
-    low, high = 273.16, 647.096
-    for _ in range(70):
-        middle = (low + high) / 2
-        if saturation_pressure(middle) < pressure_kpa:
-            low = middle
-        else:
-            high = middle
-    return (low + high) / 2
 
 
 def slope(x: list[float], y: list[float]) -> tuple[float, float]:
-    xm, ym = stats.mean(x), stats.mean(y)
-    b = sum((a - xm) * (v - ym) for a, v in zip(x, y)) / sum((a - xm) ** 2 for a in x)
-    return ym - b * xm, b
+    b, a = ols(x, y)
+    return a, b
 
 
 def pressure_metrics(rows: list[list[float]]) -> dict:
     residuals = []
     for row in rows:
-        ts = saturation_temperature(row[1])
-        derivative = (saturation_pressure(ts + 0.001) - saturation_pressure(ts - 0.001)) / 0.002
+        ts = saturation_temperature_K(row[1])
+        derivative = (
+            saturation_pressure_kPa(ts + 0.001) - saturation_pressure_kPa(ts - 0.001)
+        ) / 0.002
         u = math.hypot(row[6], row[5] / derivative)
         residuals.append(
             dict(
@@ -205,6 +183,7 @@ def uv_metrics(raw: list[list[float]], observations: list[list[float]]) -> dict:
     for row, label in zip(
         observations,
         ["sample310a", "sample250a", "sample180", "sample310b", "sample250b", "sample310c"],
+        strict=True,
     ):
         q, ref, dark = row[9], row[1], row[2]
         trans = (q - dark) / (ref - dark)
@@ -282,7 +261,7 @@ def tables(data_root: Path) -> dict[str, list[list[float]]]:
     pressure_table = []
     for i in range(151):
         temp = 303.15 + i * 0.5
-        pressure_table.append([temp - 273.15, saturation_pressure(temp)])
+        pressure_table.append([temp - 273.15, saturation_pressure_kPa(temp)])
     contrast = []
     for item in metrics["coronagraph-contrast"]["groups"]:
         contrast.append(
@@ -418,10 +397,15 @@ def figures() -> dict[str, dict]:
 def check(data_root: Path) -> None:
     result = analyze(data_root)
     assert slope([1, 2, 3], [4, 6, 8]) == (2, 2)
-    assert math.isclose(saturation_pressure(373.15), 101.41799, abs_tol=0.002)
-    assert math.isclose(saturation_pressure(273.16), 0.611657, abs_tol=0.00001)
-    assert math.isnan(saturation_pressure(250))
-    assert abs(saturation_temperature(101.325) - 373.124) < 0.02
+    assert math.isclose(saturation_pressure_kPa(373.15), 101.41799, abs_tol=0.002)
+    assert math.isclose(saturation_pressure_kPa(273.16), 0.611657, abs_tol=0.00001)
+    try:
+        saturation_pressure_kPa(250)
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("expected out-of-range saturation to raise")
+    assert abs(saturation_temperature_K(101.325) - 373.124) < 0.02
     for slug, column_pairs in [
         (
             "spectral-fingerprints",

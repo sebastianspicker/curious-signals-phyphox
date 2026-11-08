@@ -14,7 +14,7 @@ import statistics as st
 from pathlib import Path
 
 from _common import draft_rows as read
-from _common import window
+from _common import ols, window
 
 SLUGS = (
     "rgb-filter-transmission",
@@ -42,9 +42,7 @@ def sd(rows: list[list[float]], col: int) -> float:
 
 
 def linear(x: list[float], y: list[float]) -> dict[str, float]:
-    mx, my = st.mean(x), st.mean(y)
-    slope = sum((a - mx) * (b - my) for a, b in zip(x, y)) / sum((a - mx) ** 2 for a in x)
-    intercept = my - slope * mx
+    slope, intercept = ols(x, y)
     residual = [b - intercept - slope * a for a, b in zip(x, y)]
     return {
         "slope": slope,

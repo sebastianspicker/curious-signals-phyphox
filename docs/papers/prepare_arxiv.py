@@ -23,7 +23,7 @@ import zipfile
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
-from build import check_tex_log, pages_in
+from build import check_tex_log, pages_in, strip_comments, tex_env, write_zip_member
 from publication import load_manifest, local_path
 
 HERE = Path(__file__).resolve().parent
@@ -86,8 +86,17 @@ def fit_tex(content: bytes, name: str) -> bytes:
     for environment in ("tikzpicture", "tabular"):
         start = r"\begin{" + environment + "}"
         end = r"\end{" + environment + "}"
-        text = text.replace(start, r"\begin{adjustbox}{max width=\linewidth}" + "\n" + start)
-        text = text.replace(end, end + "\n" + r"\end{adjustbox}")
+        wrap = (
+            (start, r"\begin{adjustbox}{max width=\linewidth}" + "\n" + start),
+            (end, end + "\n" + r"\end{adjustbox}"),
+        )
+        for old, new in wrap:
+            # A match after an unescaped % is commented out; a newline would revive it.
+            def live(match: re.Match) -> str:
+                before = text[text.rfind("\n", 0, match.start()) + 1 : match.start()]
+                return new if strip_comments(before) == before else old
+
+            text = re.sub(re.escape(old), live, text)
     return text.encode("utf-8")
 
 
@@ -170,7 +179,7 @@ def source_files(paper: dict) -> tuple[dict[str, bytes], set[str]]:
     keys = set()
     while pending:
         name = pending.pop()
-        text = files[name].decode("utf-8")
+        text = strip_comments(files[name].decode("utf-8"))
         if re.search(r"\\(?:includegraphics|externaldocument|addbibresource|write18)\b", text):
             raise ValueError(f"{name}: unsupported external dependency command")
         if re.search(r"\\(?:input|include)\b(?!\{)", text):
@@ -238,12 +247,29 @@ def write_files(folder: Path, files: dict[str, bytes]) -> None:
         destination.write_bytes(content)
 
 
+def refuse_hand_edits(slug: str, folder: Path, files: dict[str, bytes]) -> None:
+    """Never overwrite a source file that differs from both the new build and the last one."""
+    try:
+        report = json.loads((OUTPUT / "build-summary.json").read_text(encoding="utf-8"))
+        recorded = next(item for item in report["papers"] if item["slug"] == slug)["source_sha256"]
+    except (OSError, ValueError, KeyError, StopIteration):
+        recorded = {}
+    edited = sorted(
+        name
+        for name, content in existing_files(folder).items()
+        if name in files and content != files[name] and recorded.get(name) != digest(content)
+    )
+    if edited:
+        raise ValueError(
+            f"{slug}: {edited} differ from the previous build; move the hand edits "
+            "into docs/papers or delete the file first"
+        )
+
+
 def command(args: list[str], cwd: Path) -> str:
-    env = os.environ.copy()
-    # Do not let a developer's search path hide a missing package input.
-    for key in ("TEXINPUTS", "BIBINPUTS", "BSTINPUTS", "TEXMFHOME", "TEXMFOUTPUT"):
-        env.pop(key, None)
-    result = subprocess.run(args, cwd=cwd, env=env, capture_output=True, text=True, check=False)
+    result = subprocess.run(
+        args, cwd=cwd, env=tex_env(), capture_output=True, text=True, check=False
+    )
     if result.returncode:
         raise RuntimeError(
             f"Command failed ({result.returncode}): {' '.join(args)}\n"
@@ -314,10 +340,7 @@ def compile_paper(folder: Path, stem: str, *, bibtex: bool) -> None:
 def archive_bytes(files: dict[str, bytes], destination: Path) -> None:
     with zipfile.ZipFile(destination, "w", compression=zipfile.ZIP_DEFLATED) as archive:
         for name, content in sorted(files.items()):
-            info = zipfile.ZipInfo(name, date_time=(2026, 10, 27, 0, 0, 0))
-            info.compress_type = zipfile.ZIP_DEFLATED
-            info.external_attr = 0o644 << 16
-            archive.writestr(info, content)
+            write_zip_member(archive, name, content, (2026, 10, 27, 0, 0, 0))
 
 
 def existing_files(folder: Path) -> dict[str, bytes]:
@@ -358,7 +381,7 @@ def check_paper(paper: dict, files: dict[str, bytes], keys: set[str]) -> None:
     citation_commands = []
 
     def visit(name: str) -> None:
-        text = files[name].decode("utf-8")
+        text = strip_comments(files[name].decode("utf-8"))
         pattern = r"\\(?:input|include)\{([^{}]+)\}|\\cite(?:\[[^\]]*\])?\{([^{}]+)\}"
         for match in re.finditer(pattern, text):
             target, cited = match.groups()
@@ -422,6 +445,7 @@ def build_paper(paper: dict, files: dict[str, bytes], keys: set[str]) -> dict:
         raise ValueError(
             f"{slug}: preserve or relocate unexpected source files first: {sorted(extras)}"
         )
+    refuse_hand_edits(slug, SOURCE_ROOT / slug, files)
     with tempfile.TemporaryDirectory(prefix=f"curious-signals-arxiv-{slug}-") as temporary:
         work = Path(temporary)
         compile_dir = work / "compile"

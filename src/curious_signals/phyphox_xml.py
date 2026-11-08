@@ -122,24 +122,25 @@ def _bluetooth_errors(
     return errors
 
 
+def _time_output_errors(path: str, outputs: list[ET.Element], data_uuid: str) -> list[str]:
+    time_outputs = [output for output in outputs if output.attrib.get("extra") == "time"]
+    if len(time_outputs) != 1:
+        return [f'{path}: expected exactly one bluetooth <output extra="time"> mapping to CH0']
+    time_output = time_outputs[0]
+    errors: list[str] = []
+    if _text(time_output) != "CH0":
+        errors.append(f"{path}: app-managed time output must map to CH0")
+    if time_output.attrib.get("char") != data_uuid:
+        errors.append(f"{path}: bluetooth time output char UUID must be {data_uuid}")
+    if "offset" in time_output.attrib:
+        errors.append(f"{path}: app-managed time output must not have an offset")
+    return errors
+
+
 def _bluetooth_input_errors(path: str, outputs: list[ET.Element], protocol: Protocol) -> list[str]:
     data_uuid = protocol.data_char_uuid
     conversion = protocol.data_encoding
-    errors: list[str] = []
-    time_outputs = [output for output in outputs if output.attrib.get("extra") == "time"]
-    if len(time_outputs) != 1:
-        errors.append(
-            f'{path}: expected exactly one bluetooth <output extra="time"> mapping to CH0'
-        )
-    else:
-        time_output = time_outputs[0]
-        if _text(time_output) != "CH0":
-            errors.append(f"{path}: app-managed time output must map to CH0")
-        if time_output.attrib.get("char") != data_uuid:
-            errors.append(f"{path}: bluetooth time output char UUID must be {data_uuid}")
-        if "offset" in time_output.attrib:
-            errors.append(f"{path}: app-managed time output must not have an offset")
-
+    errors = _time_output_errors(path, outputs, data_uuid)
     data_outputs = [output for output in outputs if output.attrib.get("extra") != "time"]
     offsets: list[int] = []
     channels: list[str] = []
@@ -231,23 +232,25 @@ def _bluetooth_output_errors(
         errors.append(f"{path}: <config> missing required attribute char")
     elif char != protocol.config_char_uuid:
         errors.append(f"{path}: config char UUID must be {protocol.config_char_uuid}")
-    raw_value = _text(config)
+    return errors + _config_value_errors(path, _text(config), protocol, expected_mode)
+
+
+def _config_value_errors(
+    path: str, raw_value: str | None, protocol: Protocol, expected_mode: int | None
+) -> list[str]:
     if raw_value is None:
-        errors.append(f"{path}: <config> must have a numeric value")
-        return errors
+        return [f"{path}: <config> must have a numeric value"]
     try:
         value = float(raw_value)
     except ValueError:
-        errors.append(f"{path}: <config> value is not numeric: {raw_value!r}")
-        return errors
-    valid_modes = {mode.id for mode in protocol.modes}
+        return [f"{path}: <config> value is not numeric: {raw_value!r}"]
     if not math.isfinite(value):
-        errors.append(f"{path}: <config> value must be finite")
-    elif not value.is_integer() or int(value) not in valid_modes:
-        errors.append(f"{path}: <config> value must be an active mode ID")
-    elif expected_mode is not None and int(value) != expected_mode:
-        errors.append(f"{path}: <config> value must match filename mode {expected_mode}")
-    return errors
+        return [f"{path}: <config> value must be finite"]
+    if not value.is_integer() or int(value) not in {mode.id for mode in protocol.modes}:
+        return [f"{path}: <config> value must be an active mode ID"]
+    if expected_mode is not None and int(value) != expected_mode:
+        return [f"{path}: <config> value must match filename mode {expected_mode}"]
+    return []
 
 
 def check_core_experiment(

@@ -8,10 +8,21 @@ Run from the repository root:
 
 from __future__ import annotations
 
-import csv
 import json
 import math
+import sys
 from pathlib import Path
+
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+
+from validate_example_data import (  # noqa: E402
+    check_infinite,
+    check_time_column,
+    number,
+    opt3001_decode,
+    read_csv,
+)
+from validate_example_data import close as shared_close  # noqa: E402
 
 ROOT = Path(__file__).resolve().parent / "drafts"
 MANIFEST = ROOT / "manifest.json"
@@ -35,25 +46,19 @@ TIME_KEYS = (
     "row_device_time",
     "row_receive_time",
 )
-
-
-def read_csv(path: Path) -> tuple[list[str], list[dict[str, str]]]:
-    with path.open(newline="", encoding="utf-8") as handle:
-        reader = csv.DictReader(handle)
-        rows = list(reader)
-        return list(reader.fieldnames or []), rows
-
-
-def number(value: str) -> float:
-    return float(value)
+# Observation tables and summaries that legitimately have no time column.
+NO_TIME_FILES = frozenset(
+    {
+        "coronagraph-contrast.example.csv",
+        "detector-characterization_summary.example.csv",
+        "pressure-boiling.example.csv",
+        "spectral-fingerprints.example.csv",
+    }
+)
 
 
 def close(actual: float, expected: float, tolerance: float = 1e-5) -> bool:
-    if math.isnan(actual) and math.isnan(expected):
-        return True
-    if math.isnan(actual) or math.isnan(expected):
-        return False
-    return abs(actual - expected) <= tolerance * max(1.0, abs(expected))
+    return shared_close(actual, expected, tolerance)
 
 
 def check_manifest() -> list[str]:
@@ -61,6 +66,10 @@ def check_manifest() -> list[str]:
     manifest = json.loads(MANIFEST.read_text(encoding="utf-8"))
     if manifest.get("example") is not True:
         errors.append("manifest does not mark the data as example")
+    listed = {entry["file"].removeprefix("drafts/") for entry in manifest["datasets"]}
+    on_disk = {path.name for path in ROOT.glob("*.csv")}
+    for name in sorted(on_disk - listed):
+        errors.append(f"{name}: not in manifest")
     for entry in manifest["datasets"]:
         path = ROOT / entry["file"].removeprefix("drafts/")
         if not path.exists():
@@ -75,27 +84,15 @@ def check_manifest() -> list[str]:
 
 
 def check_common(path: Path, rows: list[dict[str, str]]) -> list[str]:
+    if not rows:
+        return [f"{path.name}: no data rows"]
     errors: list[str] = []
-    for key in TIME_KEYS:
-        if key not in rows[0]:
-            continue
-        previous = -math.inf
-        for index, row in enumerate(rows):
-            try:
-                value = number(row[key])
-            except (KeyError, ValueError):
-                errors.append(f"{path.name}: row {index} invalid time in {key}")
-                continue
-            if not math.isfinite(value) or value < 0:
-                errors.append(f"{path.name}: row {index} invalid time {value} in {key}")
-            if value < previous:
-                errors.append(f"{path.name}: row {index} time decreases in {key}")
-            previous = value
-    for row in rows:
-        for key, value in row.items():
-            if value in ("inf", "-inf"):
-                errors.append(f"{path.name}: infinite value in {key}")
-    return errors
+    keys = [key for key in TIME_KEYS if key in rows[0]]
+    if not keys and path.name not in NO_TIME_FILES:
+        errors.append(f"{path.name}: no recognised time column")
+    for key in keys:
+        errors += check_time_column(path, rows, key, strict=False)
+    return errors + check_infinite(path, rows)
 
 
 def check_count_range(
@@ -134,8 +131,6 @@ def check_drafts() -> list[str]:
 
     for path in sorted(ROOT.glob("*.csv")):
         _, rows = read_csv(path)
-        if not rows:
-            continue
         errors += check_common(path, rows)
 
     # APDS / Nano files; the photometry records use bare channel names.
@@ -372,12 +367,6 @@ def check_drafts() -> list[str]:
             errors.append(f"{path.name}: row {index} transmission mismatch")
 
     return errors
-
-
-def opt3001_decode(word: int) -> float:
-    exponent = word >> 12
-    mantissa = word & 0x0FFF
-    return 0.01 * mantissa * (2**exponent)
 
 
 def main() -> int:

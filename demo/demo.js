@@ -93,16 +93,10 @@ function chartSize() {
   return { width: Math.round(box.width) || 920, height: Math.round(box.height) || 340 };
 }
 
-function renderChart(mode) {
-  const { width, height } = chartSize();
-  const dualAxis = mode.id === 5;
-  const margin = { left: 54, right: dualAxis ? 46 : 18, top: 14, bottom: 30 };
+function gridLines(width, height, margin) {
+  // Millimetre paper: five minor divisions per labelled division.
   const plotWidth = width - margin.left - margin.right;
   const plotHeight = height - margin.top - margin.bottom;
-  const [min, max] = chartSeriesRange(mode, 0);
-  chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
-
-  // Millimetre paper: five minor divisions per labelled division.
   const grid = [];
   for (let i = 0; i <= 30; i += 1) {
     const x = margin.left + (plotWidth * i) / 30;
@@ -116,6 +110,17 @@ function renderChart(mode) {
       class: i % 5 === 0 ? "grid-line grid-line--major" : "grid-line", x1: margin.left, y1: y, x2: width - margin.right, y2: y,
     }));
   }
+  return grid;
+}
+
+function renderChart(mode) {
+  const { width, height } = chartSize();
+  const dualAxis = mode.id === 5;
+  const margin = { left: 54, right: dualAxis ? 46 : 18, top: 14, bottom: 30 };
+  const plotWidth = width - margin.left - margin.right;
+  const plotHeight = height - margin.top - margin.bottom;
+  const [min, max] = chartSeriesRange(mode, 0);
+  chart.setAttribute("viewBox", `0 0 ${width} ${height}`);
 
   const labels = [];
   for (let i = 0; i <= 6; i += 1) {
@@ -163,7 +168,7 @@ function renderChart(mode) {
     heads.unshift(createSvgElement("line", { class: "playhead", x1: x, y1: margin.top, x2: x, y2: height - margin.bottom }));
   }
 
-  document.querySelector("#chart-grid").replaceChildren(...grid);
+  document.querySelector("#chart-grid").replaceChildren(...gridLines(width, height, margin));
   document.querySelector("#chart-lines").replaceChildren(...lines);
   document.querySelector("#chart-pens").replaceChildren(...heads);
   document.querySelector("#chart-labels").replaceChildren(...labels);
@@ -171,6 +176,10 @@ function renderChart(mode) {
   document.querySelector("#chart-progress").textContent = `${fixtureSeconds(state.visiblePoints)} s trace`;
   document.querySelector("#chart-title").textContent = `Example ${mode.name.toLowerCase()} traces`;
   document.querySelector("#chart-description").textContent = `A deterministic line chart that previews the structure of mode ${mode.id} measurements. It is not recorded sensor data.`;
+  renderLegend(mode);
+}
+
+function renderLegend(mode) {
   const legendItems = mode.series.map((series, seriesIndex) => {
     const item = createElement("span", { class: "legend-item" });
     setSeriesColor(item, penColor(mode, seriesIndex));

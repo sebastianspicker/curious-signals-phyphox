@@ -130,6 +130,16 @@ def _validate_bluetooth(contract: dict[str, Any], errors: list[str]) -> None:
         errors.append("contract: bluetooth UUIDs must be unique")
 
 
+def _span_errors(spans: list[tuple[int, int]], data_length: int | None, errors: list[str]) -> None:
+    starts = [0, *(end for _start, end in spans[:-1])]
+    if [start for start, _end in spans] != starts:
+        errors.append(
+            "contract: frame.data field spans must be ordered, contiguous, and non-overlapping"
+        )
+    if data_length is not None and spans[-1][1] != data_length:
+        errors.append("contract: frame.data.byte_length must end at the final field")
+
+
 def _validate_data_fields(fields: object, data_length: int | None, errors: list[str]) -> set[str]:
     if not isinstance(fields, list) or not fields:
         errors.append("contract: frame.data.fields must be a non-empty list")
@@ -153,18 +163,7 @@ def _validate_data_fields(fields: object, data_length: int | None, errors: list[
     if len(names) != len(set(names)):
         errors.append("contract: frame.data field names must be unique")
     if len(spans) == len(fields):
-        expected_start = 0
-        contiguous = True
-        for start, end in spans:
-            if start != expected_start:
-                contiguous = False
-            expected_start = end
-        if not contiguous:
-            errors.append(
-                "contract: frame.data field spans must be ordered, contiguous, and non-overlapping"
-            )
-        if data_length is not None and expected_start != data_length:
-            errors.append("contract: frame.data.byte_length must end at the final field")
+        _span_errors(spans, data_length, errors)
     return {f"CH{index}" for index in range(1, len(fields) + 1)}
 
 
@@ -254,13 +253,18 @@ def _reserved_mode_ids(modes: dict[str, Any], errors: list[str]) -> list[int]:
     return reserved_ids
 
 
-def _selection_range(contract: dict[str, Any]) -> tuple[object, object]:
+def _selection_range(contract: dict[str, Any]) -> tuple[float, float] | None:
+    """Return the numeric config selection range, or None when it is malformed."""
+
     frame = contract.get("frame", {})
     config = frame.get("config", {}) if isinstance(frame, dict) else {}
     selection = config.get("selection", {}) if isinstance(config, dict) else {}
     if not isinstance(selection, dict):
-        return None, None
-    return selection.get("minimum"), selection.get("maximum_exclusive")
+        return None
+    bounds = selection.get("minimum"), selection.get("maximum_exclusive")
+    if any(isinstance(bound, bool) or not isinstance(bound, (int, float)) for bound in bounds):
+        return None
+    return bounds
 
 
 def _validate_modes(contract: dict[str, Any], channel_keys: set[str], errors: list[str]) -> None:
@@ -288,13 +292,9 @@ def _validate_modes(contract: dict[str, Any], channel_keys: set[str], errors: li
         errors.append("contract: active and reserved mode IDs must not overlap")
     if default is not None and default not in ids:
         errors.append("contract: modes.default must name an active mode")
-    minimum, maximum = _selection_range(contract)
-    if (
-        isinstance(minimum, (int, float))
-        and not isinstance(minimum, bool)
-        and isinstance(maximum, (int, float))
-        and not isinstance(maximum, bool)
-        and any(not minimum <= mode_id < maximum for mode_id in ids)
+    selection_range = _selection_range(contract)
+    if selection_range and any(
+        not selection_range[0] <= mode_id < selection_range[1] for mode_id in ids
     ):
         errors.append("contract: active mode IDs must fit the config selection range")
 

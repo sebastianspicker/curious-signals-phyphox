@@ -8,7 +8,9 @@ import math
 import xml.etree.ElementTree as ET
 from pathlib import Path
 
-from check_experiment_math import Experiment
+from check_experiment_math import Experiment, all_nan, reference_errors
+
+SLUGS = ("static-friction", "audio-magnetic", "magnetic-current")
 
 
 def close(actual: float, expected: float) -> None:
@@ -28,23 +30,10 @@ def load_friction(
 
 def check(root: Path) -> None:
     paths = root / "experiments" / "drafts"
-    for slug in ["static-friction", "audio-magnetic", "magnetic-current"]:
+    for slug in SLUGS:
         xml = ET.parse(paths / f"{slug}.phyphox").getroot()
-        names = [n.text for n in xml.findall("./data-containers/container")]
-        assert len(names) == len(set(names))
+        assert not reference_errors(xml, slug)
         assert xml.find("analysis").get("onUserInput") == "false"
-        for section, tags in [
-            ("input", {"output"}),
-            ("analysis", {"input", "output"}),
-            ("views", {"input", "output"}),
-            ("export", {"data"}),
-        ]:
-            for item in xml.find(section).iter():
-                if item.tag in tags and item.get("type", "buffer") == "buffer":
-                    assert item.text in names, (slug, item.text)
-        for export in xml.findall("./export/set"):
-            headings = [n.get("name") for n in export.findall("data")]
-            assert len(headings) == len(set(headings))
 
     exp = Experiment(paths / "static-friction.phyphox")
     exp.run()
@@ -193,10 +182,11 @@ def check(root: Path) -> None:
     exp.set("mag_t", [0.0, 0.1, 0.2])
     exp.set("bz", [30, 42, 50])
     exp.run()
-    assert all(math.isnan(x) for x in exp.buffers["current"])
+    assert all_nan(exp.buffers["current"])
     for key, val in {"b1": 30, "b2": 50, "i1": 0, "i2": 0.4, "cal_enabled": 1}.items():
         exp.set(key, val)
     exp.run()
+    assert len(exp.buffers["current"]) == 3
     for actual, expected in zip(exp.buffers["current"], [0, 0.24, 0.4]):
         close(actual, expected)
     exp.run()
@@ -215,7 +205,7 @@ def check(root: Path) -> None:
         for key, value in settings.items():
             exp.set(key, value)
         exp.run()
-        assert all(math.isnan(x) for x in exp.buffers["current"]), settings
+        assert all_nan(exp.buffers["current"]), settings
     exp.set("bz", [])
     exp.run()
     assert not exp.buffers["current"]

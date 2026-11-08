@@ -11,6 +11,7 @@ import argparse
 import hashlib
 import json
 import math
+import os
 import re
 import shutil
 import subprocess
@@ -37,6 +38,7 @@ TITLE = "Curious Signals: Measurements and Laboratory Models"
 ALIAS = "curious-signals-research-companions.pdf"
 SUMMARY = "retrospective-build-summary.json"
 NUMBER_FONT = "lmroman8-regular.otf"
+TEX_ENV_VARS = ("TEXINPUTS", "BIBINPUTS", "BSTINPUTS", "TEXMFHOME", "TEXMFOUTPUT")
 RESOLUTION = 2
 
 
@@ -63,7 +65,10 @@ def input_path(name: str) -> Path:
 
 
 def run(command: list[str], cwd: Path) -> str:
-    result = subprocess.run(command, cwd=cwd, capture_output=True, text=True, check=False)
+    # Do not let a developer's search path hide a missing package input. This script
+    # ships alone in the source ZIP, so it cannot import build.tex_env.
+    env = {k: v for k, v in os.environ.items() if k not in TEX_ENV_VARS}
+    result = subprocess.run(command, cwd=cwd, env=env, capture_output=True, text=True, check=False)
     if result.returncode:
         raise RuntimeError(
             f"Command failed ({result.returncode}): {' '.join(command)}\n"

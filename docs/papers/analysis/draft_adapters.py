@@ -13,7 +13,7 @@ import statistics as st
 from pathlib import Path
 
 from _common import draft_rows as read
-from _common import window
+from _common import ols, window
 
 SLUGS = (
     "greenhouse-single",
@@ -46,9 +46,7 @@ def stats(rows: list[list[float]], column: int, low: float, high: float) -> dict
 def linear(xs: list[float], ys: list[float]) -> dict:
     pairs = [(x, y) for x, y in zip(xs, ys) if math.isfinite(x) and math.isfinite(y)]
     xx, yy = zip(*pairs)
-    xm, ym = st.mean(xx), st.mean(yy)
-    slope = sum((x - xm) * (y - ym) for x, y in pairs) / sum((x - xm) ** 2 for x in xx)
-    offset = ym - slope * xm
+    slope, offset = ols(xx, yy)
     return {
         "slope": slope,
         "intercept": offset,
@@ -91,7 +89,7 @@ def heating_fit(rows: list[list[float]]) -> dict:
         loss = st.mean((r[3] - baseline - amplitude * x) ** 2 for x, r in zip(basis, chosen))
         return loss, amplitude
 
-    low, high = 20.0, 500.0
+    low, high = bounds = 20.0, 500.0
     for _ in range(100):
         a, b = low + (high - low) / 3, high - (high - low) / 3
         if fit(a)[0] < fit(b)[0]:
@@ -99,6 +97,8 @@ def heating_fit(rows: list[list[float]]) -> dict:
         else:
             low = a
     tau = (low + high) / 2
+    if any(abs(tau - bound) < 1e-6 for bound in bounds):
+        raise ValueError("tau search ended at its bound; widen the search interval")
     loss, amplitude = fit(tau)
     return {
         "window_s": [65, 235],
