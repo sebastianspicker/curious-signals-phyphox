@@ -41,3 +41,9 @@ select = ["E", "F", "W", "I"]
 
 [tool.ruff.lint.isort]
 known-first-party = ["curious_signals"]
+
+# Read by Codacy's Bandit (config-file mode).
+[tool.bandit]
+# B101: asserts are the check mechanism in scripts/ and the analysis self-tests; CI never runs -O.
+# B311: random only seeds simulated sensor noise in example-data/; nothing in this repo is crypto.
+skips = ["B101", "B311"]
