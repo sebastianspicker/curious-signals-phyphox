@@ -399,7 +399,8 @@ def make_accelerometer() -> None:
             "three times, then rolled 90 degrees and returned flat."
         ),
         realism=[
-            "Firmware sends acceleration in g; phyphox multiplies by 9.81 for the m/s² columns.",
+            "Firmware sends acceleration in g; this example record uses the historical 9.81 factor "
+            "for the m/s² columns (the current experiment uses standard gravity 9.80665).",
             "±4 g selected by the pinned Arduino_LSM9DS1 library; 16-bit LSB = 4/32768 g.",
             "119 Hz internal rate is decimated to a 20 Hz notification stream.",
             "Magnitude is computed from the transmitted components, not added independently.",
@@ -474,6 +475,8 @@ def make_gyroscope() -> None:
         wy = f32(quantize(wy, lsb))
         wz = f32(quantize(wz, lsb))
         magnitude = f32(math.sqrt(wx * wx + wy * wy + wz * wz))
+        # Historical display factor kept so published numbers stay reproducible; the
+        # current experiment uses pi/180.
         factor = 3.14159 / 180.0
         rows.append(
             (
@@ -875,7 +878,8 @@ def make_analog_inputs() -> None:
             "RC charge/discharge with tau = 1 s."
         ),
         realism=[
-            "Default 10-bit codes 0-1023; phyphox multiplies by 3.226 mV/count.",
+            "Default 10-bit codes 0-1023; this example record uses the historical 3.226 mV/count "
+            "(the current experiment defaults to 3300/1023 = 3.2258 mV/count).",
             "Actual reference 3.31 V and per-channel gain/offset errors make the displayed mV slightly wrong.",
             "Counts are integers and clip at the ADC rails.",
             "A2 includes 50 Hz mains pickup, which aliases at the 20 Hz sampling rate.",

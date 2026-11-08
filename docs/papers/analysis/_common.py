@@ -5,7 +5,12 @@ from __future__ import annotations
 import csv
 import math
 import statistics
+import sys
 from pathlib import Path
+
+# Python 3.12 made float sum() compensated; the published numbers depend on it.
+if sys.version_info < (3, 12):
+    raise SystemExit("The paper pipeline needs Python 3.12 or newer (float sum changed in 3.12).")
 
 # Analysis windows (seconds), shared with prepare_examples.py so figures cannot drift.
 PRESSURE_BASELINE_S = (0, 20)

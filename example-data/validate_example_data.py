@@ -161,6 +161,7 @@ def check_core() -> list[str]:
         for axis in ("x", "y", "z"):
             if not close(
                 number(row[f"Acceleration {axis} (m/s²)"]),
+                # Historical example factors, not the current experiment's (see manifest notes).
                 number(row[f"Acceleration {axis} (g)"]) * 9.81,
                 tolerance=1e-6,
             ):

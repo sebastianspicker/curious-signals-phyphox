@@ -61,8 +61,8 @@ come from. The draft collection has its own [README](drafts/README.md),
   uses it, matching the 20 Hz magnetometer rate at a 20 Hz frame boundary.
 - Core files contain both the wire-unit export and the display-unit export where
   the experiment provides both. For example, the accelerometer file has `g` and
-  `m/s²` columns; the m/s² columns are the g columns times 9.81, not independent
-  measurements.
+  `m/s²` columns; the m/s² columns are the g columns times 9.81 (the historical factor;
+  the current experiment uses 9.80665), not independent measurements.
 - Astronomy files follow the experiment's primary measurement export set. Where
   a raw sensor word is important for checking a decoder, it is appended as an
   extra trailing column with `(a.u.)` in the name. The raw columns are not part

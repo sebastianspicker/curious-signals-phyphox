@@ -66,7 +66,8 @@ Euclidean magnitude before transmission.
 **Configuration.** The pinned `Arduino_LSM9DS1` library selects a nominal ±4 g
 range and a 119 Hz internal output rate. The 16-bit code is converted with
 `4/32768 g` per LSB, i.e. 0.122070 mg per code. The experiment multiplies by
-9.81 for the m/s² export; the firmware does **not** send m/s².
+standard gravity 9.80665 for the m/s² export (the example record keeps the
+historical 9.81 factor); the firmware does **not** send m/s².
 
 **Accuracy.** The selected range is not an accuracy statement. Datasheet zero-g
 offset is tens of mg and depends on the part, temperature, and soldering stress.

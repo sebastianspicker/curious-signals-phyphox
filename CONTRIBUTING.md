@@ -16,6 +16,11 @@ source .venv/bin/activate
 python -m pip install -e '.[dev]'
 ```
 
+The paper pipeline (`make check-papers`, `make papers`) needs Python 3.12 or
+newer, because Python 3.12 changed how `sum()` adds floats and the published
+numbers were computed that way. Add the `papers` extra for PDF assembly:
+`python -m pip install -e '.[dev,papers]'`.
+
 Scientific XML regression fixtures run as part of `make validate` and can also
 be run with `make check-experiment-math`. They exercise actual analysis blocks
 with known physical inputs, invalid values and repeated processing cycles.

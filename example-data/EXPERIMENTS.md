@@ -44,8 +44,8 @@ table reads about 1 g on z.
 
 **Acquisition.** Mode 1. The LSM9DS1 is configured for ±4 g and 119 Hz
 internally; the firmware notifies at most every 50 ms, so the export is a 20 Hz
-record. The library returns g. The experiment multiplies by 9.81 for the m/s²
-export. The magnitude is computed in firmware from the three components.
+record. The library returns g. The experiment multiplies by standard gravity 9.80665
+for the m/s² export; this example record keeps the historical 9.81 factor. The magnitude is computed in firmware from the three components.
 
 **Columns.** `Time t (s)`, the x/y/z components and magnitude in g, then the same
 four quantities in m/s². The two sets are not independent measurements; the
